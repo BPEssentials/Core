@@ -12,6 +12,7 @@ public class EssentialsPlugin
     private static string SettingsFile = DirectoryFolder + "settings.txt";
     private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
+    private static string GodListFile = DirectoryFolder + "godlist.txt";
 
     private static string IPListFile = "ip_list.txt";
     private static string AdminListFile = "admin_list.txt";
@@ -39,6 +40,12 @@ public class EssentialsPlugin
 
     private static string cmdReload;
     private static string cmdReload2;
+
+    private static string cmdSay;
+    private static string cmdSay2;
+
+    private static string cmdGodmode;
+    private static string cmdGodmode2;
     #endregion
 
 
@@ -54,7 +61,7 @@ public class EssentialsPlugin
     
     
             Code below here, Don't edit unless you know what you're doing.
-            Information about the api @ https://github.com/deathbykorea/universalunityhooks
+            Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
 
     
      */
@@ -69,7 +76,7 @@ public class EssentialsPlugin
             Thread.Sleep(20);
             File.Create(SettingsFile);
             Debug.Log("[WARNING] Essentials - Settings file does not exist! Creating one.");
-            DownloadFile("https://UserR00T.com/dev/BPEssentials/settings.txt",SettingsFile);
+            DownloadFile("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
         }
         if (!File.Exists(SettingsFile))
         {
@@ -441,6 +448,10 @@ public class EssentialsPlugin
         else if (FileName == ChatBlockFile)
         {
             ChatBlockWords = System.IO.File.ReadAllLines(FileName);
+        }
+        else if (FileName == GodListFile)
+        {
+            GodListPlayers = System.IO.File.ReadAllLines(FileName);
         }
     }
 }
