@@ -13,6 +13,7 @@ public class EssentialsPlugin
     private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
     private static string GodListFile = DirectoryFolder + "godlist.txt";
+    private static string AfkListFile = DirectoryFolder + "afklist.txt";
 
     private static string IPListFile = "ip_list.txt";
     private static string AdminListFile = "admin_list.txt";
@@ -29,7 +30,7 @@ public class EssentialsPlugin
     private static string[] ChatBlockWords;
     private static string[] LanguageBlockWords;
     private static string[] GodListPlayers;
-
+    private static string[] AfkPlayers;
     // Messages
     private static string msgNoPerm;
 
@@ -220,10 +221,12 @@ public class EssentialsPlugin
                     Thread.Sleep(10);
                     ReadFile(GodListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] GodList file reloaded");
+                    return true;
                 }
                 else
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
                 }
             }
             #endregion
@@ -238,20 +241,22 @@ public class EssentialsPlugin
                         if (GodListFile.Contains(player.playerData.username))
                         {
                             ReadFile(GodListFile);
-
-                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode disabled.");
+                            RemoveStringFromFile(GodListFile, player.playerData.username);
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
+                            return true;
                         }
                         else
                         {
-                            File.AppendAllText(player.playerData.username + Environment.NewLine);
-                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode enabled.");
+                            File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode enabled.");
+                            return true;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
-                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
                     return true;
                 }
             }
@@ -292,7 +297,7 @@ public class EssentialsPlugin
                 catch (Expection ex)
                 {
                     Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
-                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
                     return true;
                 }
             }
@@ -308,7 +313,30 @@ public class EssentialsPlugin
             }
             #endregion
 
-
+            #region AFK command handler
+            if (message.StartsWith(afkCmd1) || message.StartsWith(afkCmd2))
+            {
+                try
+                {
+                    if (AfkPlayers.Contains(player.playerData.username))
+                    {
+                        RemoveStringFromFile(AfkListFile, player.playerData.username);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "AFK disabled.");
+                    }
+                    else
+                    {
+                        File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "AFK enabled.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("[ERROR] [AFK] Expection: " + ex.ToString());
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
+                    return true;
+                }
+            }
+            #endregion
             //#region .. command handler
             //else if (message.StartsWith() || message.StarsWith())
             //{
@@ -344,7 +372,7 @@ public class EssentialsPlugin
                 {
                     if (player.IsRealPlayer())
                     {
-                        player.SendToSelf(channel.unsquenced, (btye)10, amount + " DMG blocked from " + attacker + "!");
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG blocked from " + attacker + "!");
                         return true;
                     }
                     return false;
@@ -387,7 +415,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+            Debug.Log("[ERROR] [WriteIPToFile] " + ex.ToString);
         }
 
     }
@@ -483,5 +511,31 @@ public class EssentialsPlugin
         {
             GodListPlayers = System.IO.File.ReadAllLines(FileName);
         }
+        else if (FileName == AfkListFile)
+        {
+            AfkPlayers = System.IO.File.ReadAllLines(FileName);
+        }
+    }
+
+    // /////////////////////// //
+    //   RemoveStringFromFile  //
+    // /////////////////////// //
+    public static void RemoveStringFromFile(string FileName, string RemoveString)
+    {
+        try
+        {
+            var tempFile = Path.GetTempFileName();
+            var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
+
+            File.WriteAllLines(tempFile, linesToKeep);
+
+            File.Delete(FileName);
+            File.Move(tempFile, FileName);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString);
+        }
+
     }
 }
