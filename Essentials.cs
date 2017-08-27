@@ -1,4 +1,4 @@
-// Essentials created by UserR00T
+// Essentials created by UserR00T & DeathByKorea
 using UnityEngine;
 using System;
 using System.Threading;
@@ -209,6 +209,9 @@ public class EssentialsPlugin
                     Thread.Sleep(10);
                     ReadFile(ChatBlockFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Language and chat block files reloaded");
+                    Thread.Sleep(10);
+                    ReadFile(GodListFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] GodList file reloaded");
                 }
                 else
                 {
@@ -218,14 +221,72 @@ public class EssentialsPlugin
             #endregion
 
             #region GodMode command handler
-            if (message.StartsWith() || message.StartsWith())
+            if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
             {
+                try
+                {
+                    if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
+                    {
+                        if (GodListFile.Contains(player.playerData.username))
+                        {
+                            ReadFile(GodListFile);
+
+                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode disabled.");
+                        }
+                        else
+                        {
+                            File.AppendAllText(player.playerData.username + Environment.NewLine);
+                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode enabled.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
+                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    return true;
+                }
             }
             #endregion
 
             #region Say command handler
-            if (message.StartsWith() || message.StartsWith())
+            if (message.StartsWith(cmdSay1) || (message.StartsWith(cmdSay2)))
             {
+                try
+                {
+                    if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
+                    {
+                        if ((message.Length == cmdSay1.Length) || (message.Length == cmdSay2.Length))
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "An argument is required for this command.");
+                        }
+                        else
+                        {
+                            string arg1;
+                            if (message.StartsWith(cmdSay1))
+                            {
+                                arg1 = message.SubString(cmdSay1.Length);
+                            }
+                            else if (message.StartsWith(cmdSay2))
+                            {
+                                arg1 = message.SubString(cmdSay2.Length);
+                            }
+                            player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + player.playerData.username + ": " + arg1);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                        return false;
+                    }
+                }
+                catch (Expection ex)
+                {
+                    Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
+                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    return true;
+                }
             }
             #endregion
 
@@ -233,7 +294,6 @@ public class EssentialsPlugin
             if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T");
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + version);
 
                 //TODO: Subcommands like /essentials reload : executes cmdReload
                 
