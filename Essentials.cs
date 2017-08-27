@@ -293,10 +293,10 @@ public class EssentialsPlugin
             #region Essentials command handler
             if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Version: " + version);
 
                 //TODO: Subcommands like /essentials reload : executes cmdReload
-                
             }
             #endregion
 
