@@ -379,9 +379,9 @@ public class EssentialsPlugin
         Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
         try
         {
-            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
+            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).SubString(7)))
             {
-                File.AppendAllText(IPListFile, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+                File.AppendAllText(IPListFile, player.playerData.username + +": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).SubString(7) + Environment.NewLine);
 
             }
         }
