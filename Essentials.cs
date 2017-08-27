@@ -25,9 +25,10 @@ public class EssentialsPlugin
     private static string msgUnknownCommand;
     private static string ChatBlock;
     private static string LanguageBlock;
-    // Block arrays
+    // arrays
     private static string[] ChatBlockWords;
     private static string[] LanguageBlockWords;
+    private static string[] GodListPlayers;
 
     // Messages
     private static string msgNoPerm;
@@ -328,8 +329,37 @@ public class EssentialsPlugin
         }
         #endregion
     }
-
-
+    // /////////////////////// //
+    //       DamageEvent       //
+    // /////////////////////// //
+    [Hook("SvPlayer.Damage")]
+    public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
+    {
+        #region GodMode Damage handler
+        try
+        {
+            if (player != null)
+            {
+                if (GodListPlayers.Contains(player.playerData.username))
+                {
+                    if (player.IsRealPlayer())
+                    {
+                        player.SendToSelf(channel.unsquenced, (btye)10, amount + " DMG blocked from " + attacker + "!");
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        catch (Expection ex)
+        {
+            Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
+            return false;
+        }
+        #endregion
+    }
     // /////////////////////// //
     //          IpLog          //
     // /////////////////////// //
