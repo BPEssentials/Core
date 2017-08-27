@@ -60,14 +60,13 @@ public class EssentialsPlugin {
 
 
      #region Hooks
-    [Hook("SvNetMan.StartServerNetwork")]
-	[Hook("SvPlayer.SvGlobalChatMessage")]
 	[Hook("SvPlayer.Initialize")]
 
      #endregion
 
 
     //Startup script
+    [Hook("SvNetMan.StartServerNetwork")]
 	public static void StartServerNetwork(SvNetMan netMan)
 	{
 		if (!Directory.Exists(DirectoryFolder))
@@ -89,6 +88,7 @@ public class EssentialsPlugin {
 
 
     //Chat Events 
+	[Hook("SvPlayer.SvGlobalChatMessage")]
 
 	public static bool SvGlobalChatMessage(SvPlayer player, ref string message){
 
@@ -97,12 +97,22 @@ public class EssentialsPlugin {
             command = message
             
         }
-        else if 
+        else { 
+            MessageLog(message);
+
+        }
+        if (LanguageBlock == true) { 
+            if (LanguageBlockWords.Any(message.ToLower().Contains)) { 
+
+            }
+        }
 
     }
+
+
     
     //Message Logging
-    public static void MessageLog(string message){}{
+    public static bool MessageLog(string message){}{
     	if (!message.StartsWith(cmdCommandCharacter))
 		{
 			Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
@@ -118,6 +128,14 @@ public class EssentialsPlugin {
 				}
 			}
         }
+        			return false;
+
+    }
+
+    public static void BlockMessage(string message){
+
+    }
+    
 
 }
 
