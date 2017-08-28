@@ -1,0 +1,90 @@
+/* Button(s) */
+
+.btn {
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid #fff;
+    transition: all .3s ease-in-out;
+    border-radius: inherit;
+}
+.btn:hover {
+    background: rgba(213, 89, 34, 0.75);
+	cursor: hand;
+}
+a.btn {
+    color: #fff;
+	cursor: hand;
+}
+
+/* Resposive title and buttons */
+@media screen and (max-width: 750px) {
+  .title {
+    font-size: xx-large;
+  }
+}
+/* Gradient  */
+/* Project card css */
+
+.projects{
+	background-color: rgba(99, 97, 95, 0.31);
+  padding-bottom: 0.5%;
+  -webkit-box-shadow: 5px 5px 6px 0px rgba(27, 26, 26, 0.61);
+  -moz-box-shadow:    5px 5px 6px 0px rgba(27, 26, 26, 0.61);
+  box-shadow:         5px 5px 6px 0px rgba(27, 26, 26, 0.61);
+}
+.project.title{
+	margin: 4px;
+	font-family: 'Open Sans',sans-serif;
+}
+.pbtn{
+	background-color: #F7F7F7;
+    color: dodgerblue;
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    transition: .25s;
+	text-decoration: none !important;
+	margin-top: 2%;
+}
+.pbtn.download:hover {
+	background-color: #f4511e;
+    color: white;
+    cursor: pointer;
+	
+	
+}
+.pbtn.moreinfo:hover {
+	background-color: dodgerblue;
+    color: white;
+    cursor: pointer;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: slategray;
+}
+
+::-webkit-scrollbar-track {
+  background: #b8c0c8;
+}
+
+body {
+  scrollbar-face-color: slategray;
+  scrollbar-track-color: #b8c0c8;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
