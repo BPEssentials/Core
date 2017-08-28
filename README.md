@@ -42,9 +42,9 @@ BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Pro
 
 ## Contributors
 
-UserR00T: [Website](https://UserR00T.com) [GitHub](https://github.com/UserR00T)
+UserR00T: [Website](https://UserR00T.com) | [GitHub](https://github.com/UserR00T)
 
-DeathByKorea: [Website](https://DeathByKorea.uk) [GitHub](https://github.com/DeathByKorea)
+DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/DeathByKorea)
 
 ## License
 
