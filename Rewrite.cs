@@ -9,7 +9,7 @@ using UnityEngine;
 public class EssentialsPlugin {
 
     #region Folder Locations
-    private static string DirectoryFolder = Directory.GetCurrentDirectory () + " \\Essentials";
+    private static string DirectoryFolder = Directory.GetCurrentDirectory () + " /Essentials";
     private static string SettingsFile = DirectoryFolder + "settings.txt";
     private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
@@ -71,7 +71,7 @@ public class EssentialsPlugin {
     }
 
     //Chat Events
-    [Hook ("SvPlayer.SvGlobalChatMessage")]
+    [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage (SvPlayer player, ref string message) {
         // Checks if the message is a command, if not, log it
         if (message.StartsWith (cmdCommandCharacter)) {
@@ -236,7 +236,7 @@ public class EssentialsPlugin {
 
     }
 
-    [Hook ("SvPlayer.Initialize")]
+    [Hook("SvPlayer.Initialize")]
     public static void Initialize (SvPlayer player) {
         if (player.playerData.username != null) {
             Thread thread = new Thread (new ParameterizedThreadStart (WriteIPToFile));
