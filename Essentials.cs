@@ -1,18 +1,20 @@
-// BP:Essentials created by UserR00T & Death By Korea
+// Essentials created by UserR00T & DeathByKorea
 using UnityEngine;
 using System;
 using System.Threading;
 using System.IO;
 using System.Linq;
+using System.Net;
 
-public class BPEssentialsPlugin
+public class EssentialsPlugin
 {
     // Folder locations --------------------------------------------------------------------
-    private static string DirectoryFolder = "/Essentials/";
+    private static string DirectoryFolder = Directory.GetCurrentDirectory() + " \\Essentials";
     private static string SettingsFile = DirectoryFolder + "settings.txt";
     private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
     private static string GodListFile = DirectoryFolder + "godlist.txt";
+    private static string AfkListFile = DirectoryFolder + "afklist.txt";
 
     private static string IPListFile = "ip_list.txt";
     private static string AdminListFile = "admin_list.txt";
@@ -25,10 +27,11 @@ public class BPEssentialsPlugin
     private static string msgUnknownCommand;
     private static string ChatBlock;
     private static string LanguageBlock;
-    // Block arrays
+    // arrays
     private static string[] ChatBlockWords;
     private static string[] LanguageBlockWords;
-
+    private static string[] GodListPlayers;
+    private static string[] AfkPlayers;
     // Messages
     private static string msgNoPerm;
     private static string msgSayPrefix;
@@ -47,6 +50,9 @@ public class BPEssentialsPlugin
 
     private static string cmdGodmode;
     private static string cmdGodmode2;
+
+    private static string cmdAfk;
+    private static string cmdAfk2;
     #endregion
 
 
@@ -58,10 +64,6 @@ public class BPEssentialsPlugin
 
 
 
-    // !!! Code below! !!! //
-    // !!! Code below! !!! //
-    // !!! Code below! !!! //
-    // !!! Code below! !!! //
 
 
     [Hook("SvNetMan.StartServerNetwork")]
@@ -72,7 +74,7 @@ public class BPEssentialsPlugin
             Directory.CreateDirectory(DirectoryFolder);
             Thread.Sleep(20);
             File.Create(SettingsFile);
-            Debug.Log("[WARNING] BP:Essentials - Settings file does not exist! Creating one.");
+            Debug.Log("[WARNING] Essentials - Settings file does not exist! Creating one.");
             DownloadFile("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
         }
         if (!File.Exists(SettingsFile))
@@ -81,7 +83,7 @@ public class BPEssentialsPlugin
             Debug.Log("[WARNING] Essentials - Settings file does not exist! Creating one.");
             DownloadFile("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
         }
-        Debug.Log("[INFO] BP:Essentials - version: " + version + " Loaded in successfully!");
+        Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
     }
 
 
@@ -97,9 +99,8 @@ public class BPEssentialsPlugin
             Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
 
             #region ChatBlock message handler
-            if (ChatBlock == true)
+            if (ChatBlock == "true")
             {
-                
                 if (ChatBlockWords.Any(message.ToLower().Contains))
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
@@ -110,11 +111,11 @@ public class BPEssentialsPlugin
             #endregion
 
             #region LanguageBlock message handler
-            if (LanguageBlock == true)
+            if (LanguageBlock == "true")
             {
                 if (LanguageBlockWords.Any(message.ToLower().Contains))
                 {
-                    if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username))
+                    if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
                         return false;
@@ -122,7 +123,7 @@ public class BPEssentialsPlugin
                     else
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "             ¡Solo inglés! Tu mensaje ha sido bloqueado.");
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo inglÃ¯Â¿Â½s! Tu mensaje ha sido bloqueado.");
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "             Only English! Your message has been blocked.");
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
                         return true;
@@ -164,6 +165,7 @@ public class BPEssentialsPlugin
                             player.SendToSelf(Channel.Unsequenced, (byte)10, " ");
                         }
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "Cleared the chat for yourself.");
+                        return true;
                     }
                     else if (arg1ClearChat == "all" || arg1ClearChat == "everyone")
                     {
@@ -175,25 +177,28 @@ public class BPEssentialsPlugin
                                 player.SendToAll(Channel.Unsequenced, (byte)10, " ");
                             }
                             player.SendToAll(Channel.Unsequenced, (byte)10, "Chat has been cleared for everyone.");
+                            return true;
 
                         }
                         else
                         {
                             player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                            return true;
                         }
                     }
                     else
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
+                        return true;
                     }
-                    return true;
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log("Something went wrong while trying to make a SubString: Expection: " + ex);
+                    Debug.Log("Something went wrong while trying to make a Substring: Expection: " + ex);
                     Debug.Log("Please DM the error to UserR00T!");
                     Debug.Log("Try reinstalling the newest version.");
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error occured. Please check output_log.txt for more info.");
+                    return true;
                 }
             }
             #endregion
@@ -216,10 +221,12 @@ public class BPEssentialsPlugin
                     Thread.Sleep(10);
                     ReadFile(GodListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] GodList file reloaded");
+                    return true;
                 }
                 else
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
                 }
             }
             #endregion
@@ -231,49 +238,52 @@ public class BPEssentialsPlugin
                 {
                     if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
                     {
-                        if(GodListFile.Contains(player.playerData.username))
+                        if (GodListFile.Contains(player.playerData.username))
                         {
                             ReadFile(GodListFile);
-
-                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode disabled.");
+                            RemoveStringFromFile(GodListFile, player.playerData.username);
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
+                            return true;
                         }
                         else
                         {
-                            File.AppendAllText(player.playerData.username + Environment.NewLine);
-                            player.SendToSelf(channel.unsquenced, (btye)10, "Godmode enabled.");
+                            File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode enabled.");
+                            return true;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
-                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
                     return true;
                 }
             }
             #endregion
 
             #region Say command handler
-            if (message.StartsWith(cmdSay1) || (message.StartsWith(cmdSay2)))
+            if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
             {
                 try
                 {
                     if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
                     {
-                        if ((message.Length == cmdSay1.Length) || (message.Length == cmdSay2.Length))
+                        if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length))
                         {
                             player.SendToSelf(Channel.Unsequenced, (byte)10, "An argument is required for this command.");
+                            return true;
                         }
                         else
                         {
-                            string arg1;
-                            if (message.StartsWith(cmdSay1))
+                            string arg1 = null;
+                            if (message.StartsWith(cmdSay))
                             {
-                                arg1 = message.SubString(cmdSay1.Length);
+                                arg1 = message.Substring(cmdSay.Length);
                             }
                             else if (message.StartsWith(cmdSay2))
                             {
-                                arg1 = message.SubString(cmdSay2.Length);
+                                arg1 = message.Substring(cmdSay2.Length);
                             }
                             player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + player.playerData.username + ": " + arg1);
                             return true;
@@ -285,10 +295,10 @@ public class BPEssentialsPlugin
                         return false;
                     }
                 }
-                catch (Expection ex)
+                catch (Exception ex)
                 {
                     Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
-                    player.SendToSelf(channel.unsquenced, (btye)10, "Unknown error. Check console for more info");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
                     return true;
                 }
             }
@@ -297,15 +307,39 @@ public class BPEssentialsPlugin
             #region Essentials command handler
             if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T");
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Version" + version);
-
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Version: " + version);
+                return true;
                 //TODO: Subcommands like /essentials reload : executes cmdReload
-                
             }
             #endregion
 
-
+            #region AFK command handler
+            if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
+            {
+                try
+                {
+                    if (AfkPlayers.Contains(player.playerData.username))
+                    {
+                        RemoveStringFromFile(AfkListFile, player.playerData.username);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "AFK disabled.");
+                        return true;
+                    }
+                    else
+                    {
+                        File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "AFK enabled.");
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("[ERROR] [AFK] Expection: " + ex.ToString());
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown error. Check console for more info");
+                    return true;
+                }
+            }
+            #endregion
             //#region .. command handler
             //else if (message.StartsWith() || message.StarsWith())
             //{
@@ -315,7 +349,7 @@ public class BPEssentialsPlugin
             #region else
             else
             {
-                if (msgUnknownCommand == true)
+                if (msgUnknownCommand == "true")
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
                     return true;
@@ -326,8 +360,37 @@ public class BPEssentialsPlugin
         }
         #endregion
     }
-
-
+    // /////////////////////// //
+    //       DamageEvent       //
+    // /////////////////////// //
+    [Hook("SvPlayer.Damage")]
+    public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
+    {
+        #region GodMode Damage handler
+        try
+        {
+            if (player != null)
+            {
+                if (GodListPlayers.Contains(player.playerData.username))
+                {
+                    if (player.IsRealPlayer())
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG blocked from " + attacker + "!");
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
+            return false;
+        }
+        #endregion
+    }
     // /////////////////////// //
     //          IpLog          //
     // /////////////////////// //
@@ -347,15 +410,15 @@ public class BPEssentialsPlugin
         Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
         try
         {
-            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
+            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).Substring(7)))
             {
-                File.AppendAllText(IPListFile, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+                File.AppendAllText(IPListFile, player.playerData.username + ": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).Substring(7) + Environment.NewLine);
 
             }
         }
         catch (Exception ex)
         {
-            Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+            Debug.Log("[ERROR] [WriteIPToFile] " + ex.ToString());
         }
 
     }
@@ -431,31 +494,19 @@ public class BPEssentialsPlugin
                     {
                         cmdReload2 = cmdCommandCharacter + line.Substring(16);
                     }
+
                     else if (line.Contains("SayCommand: "))
                     {
-                        cmdSay = line.Substring(12);
+                        cmdSay = cmdCommandCharacter + line.Substring(12);
                     }
                     else if (line.Contains("SayCommand2: "))
                     {
-                        cmdSay2 = line.Substring(13);
-                    }
-                    else if (line.Contains("SayCommand2: "))
-                    {
-                        cmdSay2 = line.Substring(13);
+                        cmdSay2 = cmdCommandCharacter + line.Substring(13);
                     }
                     else if (line.Contains("msgSayPrefix: "))
                     {
                         msgSayPrefix = line.Substring(14);
                     }
-                    else if (line.Contains("GodmodeCommand: "))
-                    {
-                        cmdGodmode = line.Substring(15);
-                    }
-                    else if (line.Contains("GodmodeCommand2: "))
-                    {
-                        cmdGodmode2 = line.Substring(16);
-                    }
-
                     //else if (line.Contains(""))
                     //{
                     //    = line.Substring();
@@ -475,5 +526,31 @@ public class BPEssentialsPlugin
         {
             GodListPlayers = System.IO.File.ReadAllLines(FileName);
         }
+        else if (FileName == AfkListFile)
+        {
+            AfkPlayers = System.IO.File.ReadAllLines(FileName);
+        }
+    }
+
+    // /////////////////////// //
+    //   RemoveStringFromFile  //
+    // /////////////////////// //
+    public static void RemoveStringFromFile(string FileName, string RemoveString)
+    {
+        try
+        {
+            var tempFile = Path.GetTempFileName();
+            var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
+
+            File.WriteAllLines(tempFile, linesToKeep);
+
+            File.Delete(FileName);
+            File.Move(tempFile, FileName);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString());
+        }
+
     }
 }
