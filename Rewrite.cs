@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.WebClient;
 using UnityEngine;
 
 public class EssentialsPlugin {
@@ -105,13 +106,17 @@ public class EssentialsPlugin {
                 }
             }
             // Clear chat command, self and global
+<<<<<<< HEAD
             if (command = cmdClearChat || command = cmdClearChat2) {
+=======
+            if (command == cmdClearChat || command == cmdClearChat2) {
+>>>>>>> origin/master
             ClearChat (message, true);
             return true;
         }
         string arg1ClearChat = message.Substring (11);
         else if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
-            ClearChat (message, false)
+            ClearChat(message, false);
             return true;
         }
         // Reload command
@@ -121,22 +126,27 @@ public class EssentialsPlugin {
 
         if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
 
-        if (message.StartsWith ("/say") { //TODO: Figure out how this would work.
+        if (message.StartsWith ("/say")) { //TODO: Figure out how this would work.
                 say (message);
 
             }
             // Info command
             if (message.StartsWith ("/essentials") || message.StartsWith ("/ess")) {
-                else {
                     if (msgUnknownCommand == true) {
                         player.SendToSelf (Channel.Unsequenced, (byte) 10, "Unknown command");
                         return true;
                     }
+                    else{
+
+                    
                     return false;
+                    }
+
                 }
 
             }
-        }
+    }
+
 
         // These are the various functions for the commands.
 

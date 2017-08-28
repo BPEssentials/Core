@@ -65,6 +65,16 @@ public class EssentialsPlugin
 
 
 
+<<<<<<< HEAD
+=======
+
+
+          //  Code below here, Don't edit unless you know what you're doing.
+          //  Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
+
+
+
+>>>>>>> origin/master
 
 
     [Hook("SvNetMan.StartServerNetwork")]
