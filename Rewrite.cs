@@ -43,7 +43,7 @@ public class EssentialsPlugin {
 
     private static string cmdReload;
     private static string cmdReload2;
-    private static string arg1ClearChat
+    private static string arg1ClearChat;
         #endregion
 
         
