@@ -1,3 +1,8 @@
+# Website
+
+Check our [Website](https://userr00t.github.io/BP-Essentials/) for more information!
+
+
 ## Synopsis
 
 BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Protocol
