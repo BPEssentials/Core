@@ -33,7 +33,7 @@ BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Pro
 ### Installing the plugin
 * Assuming you have a server already and UniversalUnityHooks installed;
 * Download the plugin from this link: LINK COMING
-* put the Essentials.cs file in the scripts folder
+* put the `Essentials.cs` file in the scripts folder
 * Done! Run it once and start configuring the `Essentials/settings.txt` file
 * Reload with the /reload command
 
