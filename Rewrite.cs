@@ -53,8 +53,7 @@ public class EssentialsPlugin {
         		//Information about the api @ https://github.com/deathbykorea/universalunityhooks
 
 
-        //Startup script
-    [Hook ("SvNetMan.StartServerNetwork")]
+    [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork (SvNetMan netMan) {
         if (!Directory.Exists (DirectoryFolder)) {
             Directory.CreateDirectory (DirectoryFolder);
