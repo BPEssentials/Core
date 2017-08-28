@@ -59,14 +59,14 @@ public class EssentialsPlugin
 
 
 
-    /*
-    
-    
-            Code below here, Don't edit unless you know what you're doing.
-            Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
 
-    
-     */
+
+
+          //  Code below here, Don't edit unless you know what you're doing.
+          //  Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
+
+
+
 
 
     [Hook("SvNetMan.StartServerNetwork")]
@@ -104,7 +104,7 @@ public class EssentialsPlugin
             #region ChatBlock message handler
             if (ChatBlock == true)
             {
-                
+
                 if (ChatBlockWords.Any(message.ToLower().Contains))
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
