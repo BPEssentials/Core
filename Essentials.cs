@@ -1,4 +1,12 @@
+<<<<<<< HEAD
+// Essentials created by UserR00T
+=======
 // Essentials created by UserR00T & DeathByKorea
+<<<<<<< HEAD
+=======
+using UnityEngine;
+>>>>>>> master
+>>>>>>> master
 using System;
 using System.IO;
 using System.Linq;
@@ -49,13 +57,16 @@ public class EssentialsPlugin {
     private static string cmdGodmode2;
     #endregion
 
+<<<<<<< HEAD
+=======
     /*
-    
-    
-            Code below here, Don't edit unless you know what you're doing.
-            Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
 
-    
+
+    		Code below here, Don't edit unless you know what you're doing.
+    		Information about the api @ https://github.com/deathbykorea/universalunityhooks
+
+
+<<<<<<< HEAD
      */
 
     [Hook ("SvNetMan.StartServerNetwork")]
@@ -66,6 +77,45 @@ public class EssentialsPlugin {
             File.Create (SettingsFile);
             Debug.Log ("[WARNING] Essentials - Settings file does not exist! Creating one.");
             DownloadFile ("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
+=======
+
+
+
+
+
+>>>>>>> master
+    /*
+    
+    
+            Code below here, Don't edit unless you know what you're doing.
+            Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
+
+    
+     */
+
+<<<<<<< HEAD
+    [Hook ("SvNetMan.StartServerNetwork")]
+    public static void StartServerNetwork (SvNetMan netMan) {
+        if (!Directory.Exists (DirectoryFolder)) {
+            Directory.CreateDirectory (DirectoryFolder);
+            Thread.Sleep (20);
+            File.Create (SettingsFile);
+            Debug.Log ("[WARNING] Essentials - Settings file does not exist! Creating one.");
+            DownloadFile ("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
+=======
+
+    [Hook("SvNetMan.StartServerNetwork")]
+    public static void StartServerNetwork(SvNetMan netMan)
+    {
+        if (!Directory.Exists(DirectoryFolder))
+        {
+            Directory.CreateDirectory(DirectoryFolder);
+            Thread.Sleep(20);
+            File.Create(SettingsFile);
+            Debug.Log("[WARNING] Essentials - Settings file does not exist! Creating one.");
+            DownloadFile("https://UserR00T.com/dev/BPEssentials/settings.txt", SettingsFile);
+>>>>>>> master
+>>>>>>> master
         }
         if (!File.Exists (SettingsFile)) {
             File.Create (SettingsFile);
@@ -125,10 +175,18 @@ public class EssentialsPlugin {
             if (message.StartsWith (cmdClearChat) || message.StartsWith (cmdClearChat2)) {
                 try {
                     if (message.Length == cmdClearChat.Length || message.Length == cmdClearChat.Length + 1 || message.Length == cmdClearChat2.Length || message.Length == cmdClearChat2.Length + 1) {
+<<<<<<< HEAD
                         for (int i = 0; i < 6; i++) {
                             player.SendToSelf (Channel.Unsequenced, (byte) 10, " ");
                         }
                         player.SendToSelf (Channel.Unsequenced, (byte) 10, "Cleared the chat for yourself.");
+=======
+                        player.SendToSelf (Channel.Unsequenced, (byte) 10, "Clearing the chat for yourself...");
+                        Thread.Sleep (250)
+                        for (int i = 0; i < 6; i++) {
+                            player.SendToSelf (Channel.Unsequenced, (byte) 10, " ");
+                        }
+>>>>>>> master
                         return true;
                     }
                     string arg1ClearChat = message.Substring (11);
@@ -163,6 +221,10 @@ public class EssentialsPlugin {
 
             #region Reload command handler
             // Reload //
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
             if (message.StartsWith (cmdReload) || message.StartsWith (cmdReload2)) {
                 if (System.IO.File.ReadAllText (AdminListFile).Contains (player.playerData.username)) {
                     player.SendToSelf (Channel.Unsequenced, (byte) 10, "Reloading config files...");
@@ -174,18 +236,42 @@ public class EssentialsPlugin {
                     Thread.Sleep (10);
                     ReadFile (ChatBlockFile);
                     player.SendToSelf (Channel.Unsequenced, (byte) 10, "[OK] Language and chat block files reloaded");
+<<<<<<< HEAD
                     Thread.Sleep (10);
                     ReadFile (GodListFile);
                     player.SendToSelf (Channel.Unsequenced, (byte) 10, "[OK] GodList file reloaded");
+=======
+                } else {
+                    player.SendToSelf (Channel.Unsequenced, (byte) 10, msgNoPerm);
+=======
+            if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
+            {
+                if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
+                    ReadFile(SettingsFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
+                    Thread.Sleep(50);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading language and chat block files..");
+                    ReadFile(LanguageBlockFile);
+                    Thread.Sleep(10);
+                    ReadFile(ChatBlockFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Language and chat block files reloaded");
+                    Thread.Sleep(10);
+                    ReadFile(GodListFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] GodList file reloaded");
+>>>>>>> master
                     return true;
                 } else {
                     player.SendToSelf (Channel.Unsequenced, (byte) 10, msgNoPerm);
                     return true;
+>>>>>>> master
                 }
             }
             #endregion
 
             #region GodMode command handler
+<<<<<<< HEAD
             if (message.StartsWith (cmdGodmode) || message.StartsWith (cmdGodmode2)) {
                 try {
                     if (System.IO.File.ReadAllText (AdminListFile).Contains (player.playerData.username)) {
@@ -193,6 +279,38 @@ public class EssentialsPlugin {
                             ReadFile (GodListFile);
                             RemoveStringFromFile (GodListFile, player.playerData.username);
                             player.SendToSelf (Channel.Unsequenced, (byte) 10, "Godmode disabled.");
+=======
+<<<<<<< HEAD
+            if (message.StartsWith () || message.StartsWith ()) { }
+            #endregion
+
+            #region Say command handler
+            if (message.StartsWith () || message.StartsWith ()) { }
+            #endregion
+
+            #region Essentials command handler
+            if (message.StartsWith ("/essentials") || message.StartsWith ("/ess")) {
+                player.SendToSelf (Channel.Unsequenced, (byte) 10, "Essentials Created by UserR00T");
+                player.SendToSelf (Channel.Unsequenced, (byte) 10, "Version " + version);
+
+                //TODO: Subcommands like /essentials reload : executes cmdReload
+
+            }
+            #endregion
+
+=======
+            if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
+            {
+                try
+                {
+                    if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
+                    {
+                        if (GodListFile.Contains(player.playerData.username))
+                        {
+                            ReadFile(GodListFile);
+                            RemoveStringFromFile(GodListFile, player.playerData.username);
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
+>>>>>>> master
                             return true;
                         } else {
                             File.AppendAllText (GodListFile, player.playerData.username + Environment.NewLine);
@@ -262,6 +380,7 @@ public class EssentialsPlugin {
                 }
             }
             #endregion
+>>>>>>> master
             //#region .. command handler
             //else if (message.StartsWith() || message.StarsWith())
             //{
@@ -280,6 +399,9 @@ public class EssentialsPlugin {
         }
         #endregion
     }
+<<<<<<< HEAD
+
+=======
     // /////////////////////// //
     //       DamageEvent       //
     // /////////////////////// //
@@ -304,6 +426,7 @@ public class EssentialsPlugin {
         }
         #endregion
     }
+>>>>>>> master
     // /////////////////////// //
     //          IpLog          //
     // /////////////////////// //
@@ -314,17 +437,48 @@ public class EssentialsPlugin {
             thread.Start (player);
         }
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
     private static void WriteIPToFile (object oPlayer) {
         Thread.Sleep (500);
         SvPlayer player = (SvPlayer) oPlayer;
         Debug.Log ("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress (player.connection));
         try {
+<<<<<<< HEAD
             if (!File.ReadAllText (IPListFile).Contains (player.playerData.username + ": IPv6: " + player.netMan.GetAddress (player.connection) + " | IPv4: " + player.netMan.GetAddress (player.connection).SubString (7))) {
                 File.AppendAllText (IPListFile, player.playerData.username + +": IPv6: " + player.netMan.GetAddress (player.connection) + " | IPv4: " + player.netMan.GetAddress (player.connection).SubString (7) + Environment.NewLine);
 
             }
         } catch (Exception ex) {
             Debug.Log ("[ERROR] [WriteIPToFile] " + ex.ToString);
+=======
+            if (!File.ReadAllText (IPListFile).Contains (player.playerData.username + ": " + player.netMan.GetAddress (player.connection))) {
+                File.AppendAllText (IPListFile, player.playerData.username + ": " + player.netMan.GetAddress (player.connection) + Environment.NewLine);
+
+            }
+        } catch (Exception ex) {
+            Debug.Log ("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+=======
+    private static void WriteIPToFile(object oPlayer)
+    {
+        Thread.Sleep(500);
+        SvPlayer player = (SvPlayer)oPlayer;
+        Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+        try
+        {
+            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).SubString(7)))
+            {
+                File.AppendAllText(IPListFile, player.playerData.username + +": IPv6: " + player.netMan.GetAddress(player.connection) + " | IPv4: " + player.netMan.GetAddress(player.connection).SubString(7) + Environment.NewLine);
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("[ERROR] [WriteIPToFile] " + ex.ToString);
+>>>>>>> master
+>>>>>>> master
         }
 
     }
@@ -383,10 +537,21 @@ public class EssentialsPlugin {
             LanguageBlockWords = System.IO.File.ReadAllLines (FileName);
         } else if (FileName == ChatBlockFile) {
             ChatBlockWords = System.IO.File.ReadAllLines (FileName);
+<<<<<<< HEAD
         } else if (FileName == GodListFile) {
             GodListPlayers = System.IO.File.ReadAllLines (FileName);
         } else if (FileName == AfkListFile) {
             AfkPlayers = System.IO.File.ReadAllLines (FileName);
+=======
+        }
+        else if (FileName == GodListFile)
+        {
+            GodListPlayers = System.IO.File.ReadAllLines(FileName);
+        }
+        else if (FileName == AfkListFile)
+        {
+            AfkPlayers = System.IO.File.ReadAllLines(FileName);
+>>>>>>> master
         }
     }
 
