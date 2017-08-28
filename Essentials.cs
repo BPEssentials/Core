@@ -4,6 +4,9 @@ using System;
 using System.Threading;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Web;
+using System.Webclient;
 
 public class EssentialsPlugin
 {
@@ -48,6 +51,9 @@ public class EssentialsPlugin
 
     private static string cmdGodmode;
     private static string cmdGodmode2;
+
+    private static string cmdAfk;
+    private static string cmdAfk2;
     #endregion
 
 
@@ -59,14 +65,6 @@ public class EssentialsPlugin
 
 
 
-    /*
-    
-    
-            Code below here, Don't edit unless you know what you're doing.
-            Information about the api @ https://github.com/DeathByKorea/UniversalUnityHooks
-
-    
-     */
 
 
     [Hook("SvNetMan.StartServerNetwork")]
@@ -102,9 +100,9 @@ public class EssentialsPlugin
             Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
 
             #region ChatBlock message handler
-            if (ChatBlock == true)
+            if (ChatBlock == "true")
             {
-                
+
                 if (ChatBlockWords.Any(message.ToLower().Contains))
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
@@ -115,11 +113,11 @@ public class EssentialsPlugin
             #endregion
 
             #region LanguageBlock message handler
-            if (LanguageBlock == true)
+            if (LanguageBlock == "true")
             {
                 if (LanguageBlockWords.Any(message.ToLower().Contains))
                 {
-                    if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username))
+                    if (System.IO.File.ReadAllText(AdminListFile).Contains(player.playerData.username))
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
                         return false;
@@ -127,7 +125,7 @@ public class EssentialsPlugin
                     else
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo inglï¿½s! Tu mensaje ha sido bloqueado.");
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "             Only English! Your message has been blocked.");
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
                         return true;
@@ -314,7 +312,7 @@ public class EssentialsPlugin
             #endregion
 
             #region AFK command handler
-            if (message.StartsWith(afkCmd1) || message.StartsWith(afkCmd2))
+            if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
             {
                 try
                 {
