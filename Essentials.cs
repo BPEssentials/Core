@@ -53,6 +53,7 @@ public class EssentialsPlugin
 
     private static string cmdAfk;
     private static string cmdAfk2;
+    private static ShPlayer Splayer;
     #endregion
 
 
@@ -373,7 +374,7 @@ public class EssentialsPlugin
             {
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
-                    if (player.IsRealPlayer())
+                    if (Splayer.IsRealPlayer())
                     {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG blocked from " + attacker + "!");
                         return true;
