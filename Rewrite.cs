@@ -105,7 +105,7 @@ public class EssentialsPlugin {
                 }
             }
             // Clear chat command, self and global
-            if (command = cmdClearChat) || command = cmdClearChat2) {
+            if (command = cmdClearChat || command = cmdClearChat2) {
             ClearChat (message, true);
             return true;
         }
