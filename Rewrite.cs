@@ -477,8 +477,8 @@ public class EssentialsPlugin {
             }
         }
     }
-    public static String GetTimestamp(DateTime value) {
-        return value.ToString(TimestampFormat);
+    public static String GetTimestamp(DateTime Timestamp) {
+        return String.Format("{0:G}", Timestamp);
     }
 
 }
