@@ -156,7 +156,8 @@ public class EssentialsPlugin {
             }
 
             // Info command
-            if (message.StartsWith("/essentials") || message.StartsWith("/ess")) { }
+            if (message.StartsWith("/essentials") || message.StartsWith("/ess")) { 
+            }
                 essentials(message);
             if (msgUnknownCommand) {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
@@ -167,7 +168,7 @@ public class EssentialsPlugin {
             }
 
         }
-        urn false;
+        return false;
     }
 }
 }
