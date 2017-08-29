@@ -19,6 +19,8 @@ public class EssentialsPlugin {
     private static string AnnouncementsFile = DirectoryFolder + "announcements.txt";
     private static string iplist = "ip_list.txt";
     private static string adminlist = "admin_list.txt";
+    private static string GodListFile = DirectoryFolder + "godlist.txt";
+    private static string AfkListFile = DirectoryFolder + "afklist.txt";
 
     #endregion
 
@@ -33,10 +35,13 @@ public class EssentialsPlugin {
     private static SvPlayer player;
     private static string[] admins;
     private static string msgSayPrefix;
+    private static ShPlayer Splayer;
 
     // Block arrays
     private static string[] ChatBlockWords;
     private static string[] LanguageBlockWords;
+    private static string[] GodListPlayers;
+    private static string[] AfkPlayers;
 
     // Messages
     private static string msgNoPerm;
@@ -140,6 +145,10 @@ public class EssentialsPlugin {
                     return say(message);
                 }
 
+                if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
+                    return godMode(message);
+                }
+
                 // Info command
                 if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
                     if (msgUnknownCommand) {
@@ -206,6 +215,32 @@ public class EssentialsPlugin {
         }
     }
 
+    public static bool godMode(string message) {
+        try {
+            if (admins.Contains(player.playerData.username)) {
+                if (GodListFile.Contains(player.playerData.username)) {
+                    ReadFile(GodListFile);
+                    RemoveStringFromFile(GodListFile, player.playerData.username);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode disabled.");
+                    return true;
+                } else {
+                    File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode enabled.");
+                    return true;
+                }
+            } else {
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                return false;
+            }
+
+        } catch (Exception ex) {
+            Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
+            return true;
+        }
+        return true;
+
+    }
     public static void ClearChat(string message, bool self) {
         try {
 
@@ -265,26 +300,26 @@ public class EssentialsPlugin {
     public static bool say(string message) {
         try {
 
-                if (admins.Contains(player.playerData.username)) {
-                    if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length)) {
-                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
-                        return true;
-                    } else {
-                        string arg1 = null;
-                        if (message.StartsWith(cmdSay)) {
-                            arg1 = message.Substring(cmdSay.Length);
-                        } else if (message.StartsWith(cmdSay2)) {
-                            arg1 = message.Substring(cmdSay2.Length);
-                        }
-                        player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + player.playerData.username + ": " + arg1);
-                        return true;
-                    }
+            if (admins.Contains(player.playerData.username)) {
+                if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length)) {
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
+                    return true;
                 } else {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
-                    return false;
+                    string arg1 = null;
+                    if (message.StartsWith(cmdSay)) {
+                        arg1 = message.Substring(cmdSay.Length);
+                    } else if (message.StartsWith(cmdSay2)) {
+                        arg1 = message.Substring(cmdSay2.Length);
+                    }
+                    player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + player.playerData.username + ": " + arg1);
+                    return true;
                 }
+            } else {
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return false;
-            
+            }
+            return false;
+
         } catch (Exception ex) {
             Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
@@ -300,20 +335,52 @@ public class EssentialsPlugin {
         }
     }
     private static void WriteIPToFile(object oPlayer) {
-        Thread.Sleep(500);
-        SvPlayer player = (SvPlayer) oPlayer;
-        Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
-        try {
-            if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
-                File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+            Thread.Sleep(500);
+            SvPlayer player = (SvPlayer) oPlayer;
+            Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+            try {
+                if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
+                    File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
 
+                }
+            } catch (Exception ex) {
+                Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
             }
+
+        }
+        [Hook("SvPlayer.Damage")]
+    public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider) {
+        try {
+            if (player != null) {
+                if (GodListPlayers.Contains(player.playerData.username)) {
+                    if (Splayer.IsRealPlayer()) {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, amount + " DMG blocked from " + attacker + "!");
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
         } catch (Exception ex) {
-            Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+            Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
+            return false;
+        }
+    }
+    public static void RemoveStringFromFile(string FileName, string RemoveString) {
+        try {
+            var tempFile = Path.GetTempFileName();
+            var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
+
+            File.WriteAllLines(tempFile, linesToKeep);
+
+            File.Delete(FileName);
+            File.Move(tempFile, FileName);
+        } catch (Exception ex) {
+            Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString());
         }
 
     }
-
     public static void ReadFile(string FileName) {
         if (FileName == SettingsFile) {
             var lines = File.ReadAllLines(FileName);
@@ -328,6 +395,10 @@ public class EssentialsPlugin {
                     announcements = File.ReadAllLines(AnnouncementsFile);
                 } else if (FileName == adminlist) {
                     admins = File.ReadAllLines(adminlist);
+                } else if (FileName == GodListFile) {
+                    GodListPlayers = System.IO.File.ReadAllLines(FileName);
+                } else if (FileName == AfkListFile) {
+                    AfkPlayers = System.IO.File.ReadAllLines(FileName);
                 } else {
                     // TODO: make this better/compacter
                     if (line.Contains("version: ")) {
