@@ -21,7 +21,7 @@ public class EssentialsPlugin {
     private static string adminlist = "admin_list.txt";
     private static string GodListFile = DirectoryFolder + "godlist.txt";
     private static string AfkListFile = DirectoryFolder + "afklist.txt";
-
+    private static string MuteListFile = DirectoryFolder + "mutelist.txt";
     #endregion
 
     #region predefining variables
@@ -42,6 +42,7 @@ public class EssentialsPlugin {
     private static string[] LanguageBlockWords;
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
+    private static string[] MutePlayers;
 
     // Messages
     private static string msgNoPerm;
@@ -57,6 +58,9 @@ public class EssentialsPlugin {
 
     private static string cmdGodmode;
     private static string cmdGodmode2;
+
+    private static string cmdMute;
+    private static string cmdUnMute;
 
     private static string cmdReload;
     private static string cmdReload2;
@@ -121,48 +125,49 @@ public class EssentialsPlugin {
                     return false;
                 }
             }
-            // Clear chat command, self and global
+        }
+        // Clear chat command, self and global
+        if (command == cmdClearChat || command == cmdClearChat2) {
             if (command == cmdClearChat || command == cmdClearChat2) {
-                if (command == cmdClearChat || command == cmdClearChat2) {
 
-                    ClearChat(message, true);
-                    return true;
-                }
-                arg1ClearChat = message.Substring(11);
-                if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
-                    ClearChat(message, false);
-                    return true;
-                }
-                // Reload command
-                if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
-                    Reload(message);
-                    return true;
-                }
+                ClearChat(message, true);
+                return true;
+            }
+            arg1ClearChat = message.Substring(11);
+            if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
+                ClearChat(message, false);
+                return true;
+            }
+            // Reload command
+            if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
+                Reload(message);
+                return true;
+            }
 
-                // if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
+            if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute))
+                return Mute(message);
 
-                if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
-                    return say(message);
-                }
+            if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
+                return say(message);
+            }
 
-                if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
-                    return godMode(message);
-                }
+            if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
+                return godMode(message);
+            }
 
-                // Info command
-                if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
-                    if (msgUnknownCommand) {
-                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
-                        return true;
-                    } else {
+            // Info command
+            if (message.StartsWith("/essentials") || message.StartsWith("/ess")) { }
+            essentials(message);
+            if (msgUnknownCommand) {
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
+                return true;
+            } else {
 
-                        return false;
-                    }
-
-                }
                 return false;
             }
+
         }
+        return false;
     }
 
     // These are the various functions for the commands.
@@ -191,6 +196,29 @@ public class EssentialsPlugin {
         }
     }
 
+    public static bool Mute(string message) {
+
+        string muteuser = message.Split(' ').Last();
+
+        if (admins.Contains(player.playerData.username)) {
+
+            if (MuteListFile.Contains(muteuser)) {
+                ReadFile(MuteListFile);
+                RemoveStringFromFile(MuteListFile, player.playerData.username);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, muteuser + " Unmuted");
+                return true;
+
+            } else {
+                File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, muteuser + " Unmuted");
+                return true;
+            }
+        } else {
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+            return false;
+        }
+    }
+
     public static bool BlockMessage(string message) {
 
         if (ChatBlock == true) {
@@ -203,7 +231,7 @@ public class EssentialsPlugin {
         }
         return false;
 
-        if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username)) {
+        if (admins.Contains(player.playerData.username)) {
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Because you are staff, your message has NOT been blocked.");
             return false;
         } else {
@@ -388,17 +416,20 @@ public class EssentialsPlugin {
                 if (line.StartsWith("#") || line.Contains("#")) {
                     continue;
                 } else if (FileName == LanguageBlockFile) {
-                    LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
+                    LanguageBlockWords = File.ReadAllLines(FileName);
                 } else if (FileName == ChatBlockFile) {
-                    ChatBlockWords = System.IO.File.ReadAllLines(FileName);
+                    ChatBlockWords = File.ReadAllLines(FileName);
                 } else if (FileName == AnnouncementsFile) {
                     announcements = File.ReadAllLines(AnnouncementsFile);
                 } else if (FileName == adminlist) {
                     admins = File.ReadAllLines(adminlist);
                 } else if (FileName == GodListFile) {
-                    GodListPlayers = System.IO.File.ReadAllLines(FileName);
+                    GodListPlayers = File.ReadAllLines(FileName);
                 } else if (FileName == AfkListFile) {
-                    AfkPlayers = System.IO.File.ReadAllLines(FileName);
+                    AfkPlayers = File.ReadAllLines(FileName);
+                } else if (FileName == MuteListFile) {
+                    MutePlayers = File.ReadAllLines(FileName);
+
                 } else {
                     // TODO: make this better/compacter
                     if (line.Contains("version: ")) {
