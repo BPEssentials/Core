@@ -112,57 +112,68 @@ public class EssentialsPlugin {
             }
         }
         // Check if the message is English, if not, block it
-        if (LanguageBlock) {
-            if (LanguageBlockWords.Any(message.ToLower().Contains)) {
+        if (LanguageBlock)
+        {
+            if (LanguageBlockWords.Any(message.ToLower().Contains))
+            {
                 bool blocked = BlockMessage(message);
-                if (blocked) {
+                if (blocked)
+                {
                     return true;
-                } else {
+                }
+                else
+                {
                     return false;
                 }
             }
-            // Clear chat command, self and global
-            if (command == cmdClearChat || command == cmdClearChat2) {
-                if (command == cmdClearChat || command == cmdClearChat2) {
-
-                    ClearChat(message, true);
-                    return true;
-                }
-                arg1ClearChat = message.Substring(11);
-                if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
-                    ClearChat(message, false);
-                    return true;
-                }
-                // Reload command
-                if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
-                    Reload(message);
-                    return true;
-                }
-
-                // if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
-
-                if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
-                    return say(message);
-                }
-
-                if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
-                    return godMode(message);
-                }
-
-                // Info command
-                if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
-                    if (msgUnknownCommand) {
-                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
-                        return true;
-                    } else {
-
-                        return false;
-                    }
-
-                }
-                return false;
+        }
+        // Clear chat command, self and global
+        if (command == cmdClearChat || command == cmdClearChat2)
+        {
+            if (command == cmdClearChat || command == cmdClearChat2)
+            {
+                ClearChat(message, true);
+                return true;
+            }
+            arg1ClearChat = message.Substring(11);
+            if (arg1ClearChat == "all" || arg1ClearChat == "everyone")
+            {
+                ClearChat(message, false);
+                return true;
             }
         }
+        // Reload command
+        if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
+            Reload(message);
+            return true;
+        }
+
+        // if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
+
+        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
+            return say(message);
+        }
+
+        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
+            return godMode(message);
+        }
+
+        // Info command
+        if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
+
+        }
+        
+        if (msgUnknownCommand)
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
+            return true;
+        }
+        else
+        {
+
+            return false;
+        }
+        return false;
     }
 
     // These are the various functions for the commands.
@@ -173,14 +184,9 @@ public class EssentialsPlugin {
             foreach (var player in netMan.players) {
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
             }
-
-            Debug.Log("Announcement made...");
-
             announceIndex += 1;
             if (announceIndex > announcements.Length - 1)
                 announceIndex = 0;
-
-            //Thread.Sleep(5 * 60 * 1000);
             Thread.Sleep(TimeBetweenAnnounce * 1000);
         }
     }
