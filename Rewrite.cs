@@ -71,6 +71,7 @@ public class EssentialsPlugin {
     private static int announceIndex = 0;
     private static string[] announcements;
     private static int TimeBetweenAnnounce;
+    private static string TimestampFormat;
     #endregion
 
     //Code below here, Don't edit unless you know what you're doing.
@@ -458,8 +459,13 @@ public class EssentialsPlugin {
                         cmdReload = cmdCommandCharacter + line.Substring(15);
                     } else if (line.Contains("ReloadCommand2: ")) {
                         cmdReload2 = cmdCommandCharacter + line.Substring(16);
-                    } else if (line.Contains("TimeBetweenAnnounce: "))
+                    } else if (line.Contains("TimeBetweenAnnounce: ")) {
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
+                    } else if (line.Contains("TimestapFormat: ")) { 
+                        TimestampFormat = line.Substring(17);
+                }
+                
+                
                 }
 
                 //else if (line.Contains(""))
@@ -471,7 +477,7 @@ public class EssentialsPlugin {
         }
     }
     public static String GetTimestamp(DateTime value) {
-        return value.ToString("yyyyMMddHHmmssffff");
+        return value.ToString(TimestampFormat);
     }
 
 }
