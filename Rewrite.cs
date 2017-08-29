@@ -21,7 +21,7 @@ public class EssentialsPlugin {
     private static string adminlist = "admin_list.txt";
     private static string GodListFile = DirectoryFolder + "godlist.txt";
     private static string AfkListFile = DirectoryFolder + "afklist.txt";
-
+    private static string MuteListFile = DirectoryFolder + "mutelist.txt";
     #endregion
 
     #region predefining variables
@@ -42,6 +42,7 @@ public class EssentialsPlugin {
     private static string[] LanguageBlockWords;
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
+    private static string[] MutePlayers;
 
     // Messages
     private static string msgNoPerm;
@@ -57,6 +58,9 @@ public class EssentialsPlugin {
 
     private static string cmdGodmode;
     private static string cmdGodmode2;
+
+    private static string cmdMute;
+    private static string cmdUnMute;
 
     private static string cmdReload;
     private static string cmdReload2;
@@ -121,319 +125,335 @@ public class EssentialsPlugin {
                     return false;
                 }
             }
-            // Clear chat command, self and global
+        }
+        // Clear chat command, self and global
+        if (command == cmdClearChat || command == cmdClearChat2) {
             if (command == cmdClearChat || command == cmdClearChat2) {
-                if (command == cmdClearChat || command == cmdClearChat2) {
 
-                    ClearChat(message, true);
-                    return true;
-                }
-                arg1ClearChat = message.Substring(11);
-                if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
-                    ClearChat(message, false);
-                    return true;
-                }
-                // Reload command
-                if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
-                    Reload(message);
-                    return true;
-                }
+                ClearChat(message, true);
+                return true;
+            }
+            arg1ClearChat = message.Substring(11);
+            if (arg1ClearChat == "all" || arg1ClearChat == "everyone") {
+                ClearChat(message, false);
+                return true;
+            }
+            // Reload command
+            if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2)) {
+                Reload(message);
+                return true;
+            }
 
-                // if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
+            if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute))
+                return mute(message);
 
-                if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
-                    return say(message);
+            if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
+                return say(message);
+            }
+
+            if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
+                return godMode(message);
+            }
+
+            // Info command
+            if (message.StartsWith("/essentials") || message.StartsWith("/ess")) { }
+                essentials(message);
+            if (msgUnknownCommand) {
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
+                return true;
+            } else {
+
+                return false;
+            }
+
+        }
+        urn false;
+    }
+}
+}
+
+// These are the various functions for the commands.
+
+private static void AnnounceThread(object man) {
+    SvNetMan netMan = (SvNetMan) man;
+    while (true) {
+        foreach (var player in netMan.players) {
+            player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
+        }
+
+        Debug.Log("Announcement made...");
+
+        announceIndex += 1;
+        if (announceIndex > announcements.Length - 1)
+            announceIndex = 0;
+
+        //Thread.Sleep(5 * 60 * 1000);
+        Thread.Sleep(TimeBetweenAnnounce * 1000);
+    }
+}
+
+public static void MessageLog(string message) {
+    if (!message.StartsWith(cmdCommandCharacter)) {
+        Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
+    }
+}
+
+public static bool Mute(string message) {
+        string muteuser;
+        if (admins.Contains(player.playerData.username)) {
+            if (MuteListFile.Contains(muteuser)) {
+                ReadFile(MuteListFile);
+                RemoveStringFromFile(MuteListFile, player.playerData.username);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, Username + " Unmuted"
+
                 }
+            }
+            public static bool BlockMessage(string message) {
 
-                if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2)) {
-                    return godMode(message);
-                }
+                if (ChatBlock == true) {
 
-                // Info command
-                if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
-                    if (msgUnknownCommand) {
-                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
+                    if (ChatBlockWords.Any(message.ToLower().Contains)) {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Please don't say a blocked word, the message has been blocked.");
+                        Debug.Log(player.playerData.username + " Said a word that is blocked.");
                         return true;
-                    } else {
+                    }
+                }
+                return false;
 
+                if (admins.Contains(player.playerData.username)) {
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Because you are staff, your message has NOT been blocked.");
+                    return false;
+                } else {
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "             Only English! Your message has been blocked.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
+                    return true;
+                }
+            }
+
+            public static bool godMode(string message) {
+                try {
+                    if (admins.Contains(player.playerData.username)) {
+                        if (GodListFile.Contains(player.playerData.username)) {
+                            ReadFile(GodListFile);
+                            RemoveStringFromFile(GodListFile, player.playerData.username);
+                            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode disabled.");
+                            return true;
+                        } else {
+                            File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+                            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode enabled.");
+                            return true;
+                        }
+                    } else {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                         return false;
                     }
 
+                } catch (Exception ex) {
+                    Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
+                    return true;
                 }
-                return false;
-            }
-        }
-    }
-
-    // These are the various functions for the commands.
-
-    private static void AnnounceThread(object man) {
-        SvNetMan netMan = (SvNetMan) man;
-        while (true) {
-            foreach (var player in netMan.players) {
-                player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
-            }
-
-            Debug.Log("Announcement made...");
-
-            announceIndex += 1;
-            if (announceIndex > announcements.Length - 1)
-                announceIndex = 0;
-
-            //Thread.Sleep(5 * 60 * 1000);
-            Thread.Sleep(TimeBetweenAnnounce * 1000);
-        }
-    }
-
-    public static void MessageLog(string message) {
-        if (!message.StartsWith(cmdCommandCharacter)) {
-            Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
-        }
-    }
-
-    public static bool BlockMessage(string message) {
-
-        if (ChatBlock == true) {
-
-            if (ChatBlockWords.Any(message.ToLower().Contains)) {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Please don't say a blocked word, the message has been blocked.");
-                Debug.Log(player.playerData.username + " Said a word that is blocked.");
                 return true;
+
             }
-        }
-        return false;
+            public static void ClearChat(string message, bool self) {
+                try {
 
-        if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username)) {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Because you are staff, your message has NOT been blocked.");
-            return false;
-        } else {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "             Only English! Your message has been blocked.");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
-            return true;
-        }
-    }
+                    if (self) {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Clearing the chat for yourself...");
+                        Thread.Sleep(250);
+                        for (int i = 0; i < 6; i++) {
+                            player.SendToSelf(Channel.Unsequenced, (byte) 10, " ");
+                        }
+                    } else if (!(self)) {
+                        if (admins.Contains(player.playerData.username)) {
+                            SvPlayer svPlayer = (SvPlayer) player;
+                            player.SendToAll(Channel.Unsequenced, (byte) 10, "Clearing chat for everyone...");
+                            Thread.Sleep(250);
+                            for (int i = 0; i < 6; i++) {
+                                player.SendToAll(Channel.Unsequenced, (byte) 10, " ");
+                            }
 
-    public static bool godMode(string message) {
-        try {
-            if (admins.Contains(player.playerData.username)) {
-                if (GodListFile.Contains(player.playerData.username)) {
-                    ReadFile(GodListFile);
-                    RemoveStringFromFile(GodListFile, player.playerData.username);
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode disabled.");
-                    return true;
-                } else {
-                    File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode enabled.");
-                    return true;
-                }
-            } else {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
-                return false;
-            }
-
-        } catch (Exception ex) {
-            Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
-            return true;
-        }
-        return true;
-
-    }
-    public static void ClearChat(string message, bool self) {
-        try {
-
-            if (self) {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Clearing the chat for yourself...");
-                Thread.Sleep(250);
-                for (int i = 0; i < 6; i++) {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, " ");
-                }
-            } else if (!(self)) {
-                if (admins.Contains(player.playerData.username)) {
-                    SvPlayer svPlayer = (SvPlayer) player;
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, "Clearing chat for everyone...");
-                    Thread.Sleep(250);
-                    for (int i = 0; i < 6; i++) {
-                        player.SendToAll(Channel.Unsequenced, (byte) 10, " ");
+                        } else {
+                            player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                        }
+                    } else {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
                     }
+                } catch (Exception ex) {
+                    Debug.Log("Something went wrong while trying to make a SubString: Expection: " + ex);
+                    Debug.Log("Please Post the error on GitHub!");
+                    Debug.Log("Try reinstalling the newest version.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
+                }
 
+            }
+
+            public static void Reload(string message) {
+                if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username)) {
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading config files...");
+                    ReadFile(SettingsFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Config file reloaded");
+                    Thread.Sleep(50);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading language and chat block files..");
+                    ReadFile(LanguageBlockFile);
+                    Thread.Sleep(10);
+                    ReadFile(ChatBlockFile);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Language and chat block files reloaded");
                 } else {
                     player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 }
-            } else {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
-            }
-        } catch (Exception ex) {
-            Debug.Log("Something went wrong while trying to make a SubString: Expection: " + ex);
-            Debug.Log("Please Post the error on GitHub!");
-            Debug.Log("Try reinstalling the newest version.");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
-        }
-
-    }
-
-    public static void Reload(string message) {
-        if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username)) {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading config files...");
-            ReadFile(SettingsFile);
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Config file reloaded");
-            Thread.Sleep(50);
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading language and chat block files..");
-            ReadFile(LanguageBlockFile);
-            Thread.Sleep(10);
-            ReadFile(ChatBlockFile);
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Language and chat block files reloaded");
-        } else {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
-        }
-    }
-
-    public static void essentials(string message) {
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Essentials Created by UserR00T");
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Version " + version);
-
-        //TODO: Subcommands like /essentials reload : executes cmdReload
-
-    }
-    public static bool say(string message) {
-        try {
-
-            if (admins.Contains(player.playerData.username)) {
-                if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length)) {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
-                    return true;
-                } else {
-                    string arg1 = null;
-                    if (message.StartsWith(cmdSay)) {
-                        arg1 = message.Substring(cmdSay.Length);
-                    } else if (message.StartsWith(cmdSay2)) {
-                        arg1 = message.Substring(cmdSay2.Length);
-                    }
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + player.playerData.username + ": " + arg1);
-                    return true;
-                }
-            } else {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
-                return false;
-            }
-            return false;
-
-        } catch (Exception ex) {
-            Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
-            return true;
-        }
-    }
-
-    [Hook("SvPlayer.Initialize")]
-    public static void Initialize(SvPlayer player) {
-        if (player.playerData.username != null) {
-            Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
-            thread.Start(player);
-        }
-    }
-    private static void WriteIPToFile(object oPlayer) {
-            Thread.Sleep(500);
-            SvPlayer player = (SvPlayer) oPlayer;
-            Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
-            try {
-                if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
-                    File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
-
-                }
-            } catch (Exception ex) {
-                Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
             }
 
-        }
-        [Hook("SvPlayer.Damage")]
-    public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider) {
-        try {
-            if (player != null) {
-                if (GodListPlayers.Contains(player.playerData.username)) {
-                    if (Splayer.IsRealPlayer()) {
-                        player.SendToSelf(Channel.Unsequenced, (byte) 10, amount + " DMG blocked from " + attacker + "!");
-                        return true;
+            public static void essentials(string message) {
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Essentials Created by UserR00T");
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Version " + version);
+
+                //TODO: Subcommands like /essentials reload : executes cmdReload
+
+            }
+            public static bool say(string message) {
+                try {
+
+                    if (admins.Contains(player.playerData.username)) {
+                        if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length)) {
+                            player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
+                            return true;
+                        } else {
+                            string arg1 = null;
+                            if (message.StartsWith(cmdSay)) {
+                                arg1 = message.Substring(cmdSay.Length);
+                            } else if (message.StartsWith(cmdSay2)) {
+                                arg1 = message.Substring(cmdSay2.Length);
+                            }
+                            player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + player.playerData.username + ": " + arg1);
+                            return true;
+                        }
+                    } else {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                        return false;
                     }
                     return false;
+
+                } catch (Exception ex) {
+                    Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
+                    return true;
                 }
-                return false;
             }
-            return false;
-        } catch (Exception ex) {
-            Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
-            return false;
-        }
-    }
-    public static void RemoveStringFromFile(string FileName, string RemoveString) {
-        try {
-            var tempFile = Path.GetTempFileName();
-            var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
 
-            File.WriteAllLines(tempFile, linesToKeep);
+            [Hook("SvPlayer.Initialize")]
+            public static void Initialize(SvPlayer player) {
+                if (player.playerData.username != null) {
+                    Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
+                    thread.Start(player);
+                }
+            }
+            private static void WriteIPToFile(object oPlayer) {
+                    Thread.Sleep(500);
+                    SvPlayer player = (SvPlayer) oPlayer;
+                    Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+                    try {
+                        if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
+                            File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
 
-            File.Delete(FileName);
-            File.Move(tempFile, FileName);
-        } catch (Exception ex) {
-            Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString());
-        }
+                        }
+                    } catch (Exception ex) {
+                        Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+                    }
 
-    }
-    public static void ReadFile(string FileName) {
-        if (FileName == SettingsFile) {
-            var lines = File.ReadAllLines(FileName);
-            foreach (var line in lines) {
-                if (line.StartsWith("#") || line.Contains("#")) {
-                    continue;
-                } else if (FileName == LanguageBlockFile) {
-                    LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
-                } else if (FileName == ChatBlockFile) {
-                    ChatBlockWords = System.IO.File.ReadAllLines(FileName);
-                } else if (FileName == AnnouncementsFile) {
-                    announcements = File.ReadAllLines(AnnouncementsFile);
-                } else if (FileName == adminlist) {
-                    admins = File.ReadAllLines(adminlist);
-                } else if (FileName == GodListFile) {
-                    GodListPlayers = System.IO.File.ReadAllLines(FileName);
-                } else if (FileName == AfkListFile) {
-                    AfkPlayers = System.IO.File.ReadAllLines(FileName);
-                } else {
-                    // TODO: make this better/compacter
-                    if (line.Contains("version: ")) {
-                        version = line.Substring(9);
-                    } else if (line.Contains("CommandCharacter: ")) {
-                        cmdCommandCharacter = line.Substring(17);
-                    } else if (line.Contains("noperm: ")) {
-                        msgNoPerm = line.Substring(8);
-                    } else if (line.Contains("ClearChatCommand: ")) {
-                        cmdClearChat = cmdCommandCharacter + line.Substring(18);
-                    } else if (line.Contains("ClearChatCommand2: ")) {
-                        cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
-                    } else if (line.Contains("msgSayPrefix: ")) {
-                        msgSayPrefix = line.Substring(38);
-                    } else if (line.Contains("UnknownCommand: ")) {
-                        msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-                    } else if (line.Contains("enableChatBlock: ")) {
-                        ChatBlock = Convert.ToBoolean(line.Substring(17));
-                    } else if (line.Contains("enableLanguageBlock: ")) {
-                        LanguageBlock = Convert.ToBoolean(line.Substring(21));
-                    } else if (line.Contains("ReloadCommand: ")) {
-                        cmdReload = cmdCommandCharacter + line.Substring(15);
-                    } else if (line.Contains("ReloadCommand2: ")) {
-                        cmdReload2 = cmdCommandCharacter + line.Substring(16);
-                    } else if (line.Contains("TimeBetweenAnnounce: "))
-                        TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
+                }
+                [Hook("SvPlayer.Damage")]
+            public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider) {
+                try {
+                    if (player != null) {
+                        if (GodListPlayers.Contains(player.playerData.username)) {
+                            if (Splayer.IsRealPlayer()) {
+                                player.SendToSelf(Channel.Unsequenced, (byte) 10, amount + " DMG blocked from " + attacker + "!");
+                                return true;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }
+                    return false;
+                } catch (Exception ex) {
+                    Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
+                    return false;
+                }
+            }
+            public static void RemoveStringFromFile(string FileName, string RemoveString) {
+                try {
+                    var tempFile = Path.GetTempFileName();
+                    var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
+
+                    File.WriteAllLines(tempFile, linesToKeep);
+
+                    File.Delete(FileName);
+                    File.Move(tempFile, FileName);
+                } catch (Exception ex) {
+                    Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString());
                 }
 
-                //else if (line.Contains(""))
-                //{
-                //    = line.Substring();
-                //}
-
             }
-        }
-    }
+            public static void ReadFile(string FileName) {
+                if (FileName == SettingsFile) {
+                    var lines = File.ReadAllLines(FileName);
+                    foreach (var line in lines) {
+                        if (line.StartsWith("#") || line.Contains("#")) {
+                            continue;
+                        } else if (FileName == LanguageBlockFile) {
+                            LanguageBlockWords = File.ReadAllLines(FileName);
+                        } else if (FileName == ChatBlockFile) {
+                            ChatBlockWords = File.ReadAllLines(FileName);
+                        } else if (FileName == AnnouncementsFile) {
+                            announcements = File.ReadAllLines(AnnouncementsFile);
+                        } else if (FileName == adminlist) {
+                            admins = File.ReadAllLines(adminlist);
+                        } else if (FileName == GodListFile) {
+                            GodListPlayers = File.ReadAllLines(FileName);
+                        } else if (FileName == AfkListFile) {
+                            AfkPlayers = File.ReadAllLines(FileName);
+                        } else if (FileName == MuteListFile) {
+                            MutePlayers = File.ReadAllLines(FileName)
 
-}
+                        } else {
+                            // TODO: make this better/compacter
+                            if (line.Contains("version: ")) {
+                                version = line.Substring(9);
+                            } else if (line.Contains("CommandCharacter: ")) {
+                                cmdCommandCharacter = line.Substring(17);
+                            } else if (line.Contains("noperm: ")) {
+                                msgNoPerm = line.Substring(8);
+                            } else if (line.Contains("ClearChatCommand: ")) {
+                                cmdClearChat = cmdCommandCharacter + line.Substring(18);
+                            } else if (line.Contains("ClearChatCommand2: ")) {
+                                cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
+                            } else if (line.Contains("msgSayPrefix: ")) {
+                                msgSayPrefix = line.Substring(38);
+                            } else if (line.Contains("UnknownCommand: ")) {
+                                msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
+                            } else if (line.Contains("enableChatBlock: ")) {
+                                ChatBlock = Convert.ToBoolean(line.Substring(17));
+                            } else if (line.Contains("enableLanguageBlock: ")) {
+                                LanguageBlock = Convert.ToBoolean(line.Substring(21));
+                            } else if (line.Contains("ReloadCommand: ")) {
+                                cmdReload = cmdCommandCharacter + line.Substring(15);
+                            } else if (line.Contains("ReloadCommand2: ")) {
+                                cmdReload2 = cmdCommandCharacter + line.Substring(16);
+                            } else if (line.Contains("TimeBetweenAnnounce: "))
+                                TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
+                        }
+
+                        //else if (line.Contains(""))
+                        //{
+                        //    = line.Substring();
+                        //}
+
+                    }
+                }
+            }
+
+        }
