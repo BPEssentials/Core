@@ -11,16 +11,16 @@ using UnityEngine;
 public class EssentialsPlugin {
 
     #region Folder Locations
-    private static string DirectoryFolder = Directory.GetCurrentDirectory();
-    private static string SettingsFile = DirectoryFolder + "settings.txt";
-	private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
-    private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
-    private static string AnnouncementsFile = DirectoryFolder + "announcements.txt";
+    //private static string DirectoryFolder = Directory.GetCurrentDirectory();
+    private static string SettingsFile = "essentials_settings.txt";
+	private static string LanguageBlockFile = "languageblock.txt";
+    private static string ChatBlockFile = "chatblock.txt";
+    private static string AnnouncementsFile = "announcements.txt";
     private static string iplist = "ip_list.txt";
     private static string adminlist = "admin_list.txt";
-    private static string GodListFile = DirectoryFolder + "godlist.txt";
-    private static string AfkListFile = DirectoryFolder + "afklist.txt";
-    private static string MuteListFile = DirectoryFolder + "mutelist.txt";
+    private static string GodListFile = "godlist.txt";
+    private static string AfkListFile = "afklist.txt";
+    private static string MuteListFile = "mutelist.txt";
     #endregion
 
     #region predefining variables
@@ -32,7 +32,6 @@ public class EssentialsPlugin {
     private static bool LanguageBlock;
     private static string command;
     private static SvPlayer player;
-    private static string[] admins;
     private static string msgSayPrefix;
     private static ShPlayer Splayer;
 
@@ -43,6 +42,8 @@ public class EssentialsPlugin {
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
     private static string[] MutePlayers;
+	private static string[] admins;
+
 
     // Messages
     private static string msgNoPerm;
@@ -81,11 +82,12 @@ public class EssentialsPlugin {
 
 		try{
         ReadFile(SettingsFile);
-			Debug.Log(SetTimeStamp() + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
+		
+			Debug.Log( "[INFO] Essentials - version: " + version + " Loaded in successfully!");
 
 		} catch (Exception ex){
-			Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
-
+			Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory! pwd: "+ Directory.GetCurrentDirectory() + "settings: " + SettingsFile);
+			Debug.Log (ex);
 		}
 
 
@@ -452,9 +454,12 @@ public class EssentialsPlugin {
     }
 
     static void ReadFile(string FileName) {
+		Debug.Log ("ReadFileStarted");
         if (FileName == SettingsFile) {
-            var lines = File.ReadAllLines(FileName);
-            foreach (var line in lines) {
+         //   var lines = File.ReadAllLines(FileName);
+		
+			foreach (var line in File.ReadAllLines(SettingsFile)) {
+				Debug.Log ("Doing a Thing");
                 if (line.StartsWith("#") || line.Contains("#")) {
                     continue;
                 } else if (FileName == LanguageBlockFile) {
