@@ -14,7 +14,7 @@
 # if CommandCharacter is / it will automaticly add a /
 
 # General
-version: 0.0.7
+version: 1.0.0
 noperm: No permission.
 # Character used for commands
 CommandCharacter: /
