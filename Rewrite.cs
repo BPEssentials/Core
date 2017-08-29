@@ -35,7 +35,6 @@ public class EssentialsPlugin {
     private static string[] admins;
     private static string msgSayPrefix;
     private static ShPlayer Splayer;
-    private static string PlaceHolderText;
 
 
     // Block arrays
@@ -79,11 +78,18 @@ public class EssentialsPlugin {
 
     [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan) {
-        if (!File.Exists(SettingsFile)) {
-            Debug.Log(SetTimeStamp() + "[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
-        }
+
+		try{
         ReadFile(SettingsFile);
-        Debug.Log(SetTimeStamp() + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
+			Debug.Log(SetTimeStamp() + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
+
+		} catch (Exception ex){
+			Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
+
+		}
+
+
+			
 
         if (!File.Exists(AnnouncementsFile)) {
             Debug.Log(SetTimeStamp() + "Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
@@ -416,15 +422,12 @@ public class EssentialsPlugin {
 
     }
     public static string SetTimeStamp()
-    {
-        string Hours;
-        string Minutes;
-        string Seconds;
-        var src = DateTime.Now;
-        var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second);
-        Hours = hm.ToString("HH");
-        Minutes = hm.ToString("mm");
-        Seconds = hm.ToString("ss");
+	{     
+		string PlaceHolderText = null;
+		string Hours = hm.ToString("HH");
+		string Minutes = hm.ToString("mm");
+		string Seconds = hm.ToString("ss");
+
 
         if (TimestampFormat.Contains("{H}"))
         {
