@@ -390,17 +390,15 @@ public class EssentialsPlugin {
         [Hook("SvPlayer.Damage")]
     public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider) {
         try {
-            if (player != null) {
+			if (Splayer.IsRealPlayer()) {
                 if (GodListPlayers.Contains(player.playerData.username)) {
-                    if (Splayer.IsRealPlayer()) {
                         player.SendToSelf(Channel.Unsequenced, (byte) 10, amount + " DMG blocked from " + attacker + "!");
                         return true;
                     }
                     return false;
                 }
                 return false;
-            }
-            return false;
+            
         } catch (Exception ex) {
             Debug.Log(SetTimeStamp() + "[ERROR] [GodPlugin] Expection: " + ex.ToString());
             return false;
