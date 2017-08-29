@@ -459,7 +459,7 @@ public class EssentialsPlugin {
          //   var lines = File.ReadAllLines(FileName);
 		
 			foreach (var line in File.ReadAllLines(SettingsFile)) {
-				Debug.Log ("Doing a Thing");
+				Debug.Log ("Doing a Thing Line: " + line);
                 if (line.StartsWith("#") || line.Contains("#")) {
                     continue;
                 } else if (FileName == LanguageBlockFile) {
@@ -480,36 +480,51 @@ public class EssentialsPlugin {
                 }
                 else
                 {
+					try{
                     // TODO: make this better/compacter
                     if (line.Contains("version: ")) {
+						Debug.Log("Adding Version");
                         version = line.Substring(9);
                     } else if (line.Contains("CommandCharacter: ")) {
+						Debug.Log("Adding CmdChar");
                         cmdCommandCharacter = line.Substring(17);
                     } else if (line.Contains("noperm: ")) {
+						Debug.Log("Adding NoPerm");
                         msgNoPerm = line.Substring(8);
                     } else if (line.Contains("ClearChatCommand: ")) {
+							Debug.Log("Adding ClearChat");
                         cmdClearChat = cmdCommandCharacter + line.Substring(18);
                     } else if (line.Contains("ClearChatCommand2: ")) {
+							Debug.Log("Adding ClearChat2");
                         cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
                     } else if (line.Contains("msgSayPrefix: ")) {
-                        msgSayPrefix = line.Substring(38);
+							Debug.Log("Adding MsgSayPrefix");
+							msgSayPrefix = line.Substring(14);
                     } else if (line.Contains("UnknownCommand: ")) {
+							Debug.Log("Adding UnknownCommand");
                         msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
                     } else if (line.Contains("enableChatBlock: ")) {
+							Debug.Log("Addning EnableChatBlock");
                         ChatBlock = Convert.ToBoolean(line.Substring(17));
                     } else if (line.Contains("enableLanguageBlock: ")) {
+							Debug.Log("Adding EnableLanguageBlock");
                         LanguageBlock = Convert.ToBoolean(line.Substring(21));
                     } else if (line.Contains("ReloadCommand: ")) {
+							Debug.Log("Adding ReloadCommand");
                         cmdReload = cmdCommandCharacter + line.Substring(15);
                     } else if (line.Contains("ReloadCommand2: ")) {
+							Debug.Log("Adding ReloadCommand2");
                         cmdReload2 = cmdCommandCharacter + line.Substring(16);
                     } else if (line.Contains("TimeBetweenAnnounce: ")) {
+							Debug.Log("Adding TimeBetweenAnnounce");
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
                     } else if (line.Contains("TimestapFormat: ")) { 
+							Debug.Log("Adding TimestampFormat");
                         TimestampFormat = line.Substring(17);
-                        SetTimeStamp();
                     }
-                
+					} catch(Exception ex){
+						Debug.Log (ex);
+					}
                 
                 }
 
