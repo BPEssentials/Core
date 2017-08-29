@@ -426,11 +426,10 @@ public class EssentialsPlugin {
 		Debug.Log ("Setting Time Stamp");
 		var src = DateTime.Now; 
 		var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second); 
-		string PlaceHolderText = null;
+		string PlaceHolderText = TimestampFormat;
 		string Hours = hm.ToString("HH");
 		string Minutes = hm.ToString("mm");
 		string Seconds = hm.ToString("ss");
-
 
         if (TimestampFormat.Contains("{H}"))
         {
@@ -448,11 +447,12 @@ public class EssentialsPlugin {
         {
             PlaceHolderText = PlaceHolderText.Replace("{S}", Seconds.ToString());
         }
+
         PlaceHolderText = PlaceHolderText + " ";
         return PlaceHolderText;
     } catch(Exception ex){
 		Debug.Log(ex);
-			return "Failed";
+			return "[Failed] ";
 		}
 	}
 	static void ReadFile(string FileName)
@@ -519,8 +519,7 @@ public class EssentialsPlugin {
 					}
 					else if (line.Contains("TimestapFormat: "))
 					{
-						TimestampFormat = line.Substring(17);
-						SetTimeStamp();
+						TimestampFormat = line.Substring(16);
 					}
 
 
