@@ -78,25 +78,25 @@ public class EssentialsPlugin {
     [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan) {
         if (!File.Exists(SettingsFile)) {
-            Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
+            Debug.Log(Timestamp() + "[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
         }
         ReadFile(SettingsFile);
-        Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
+        Debug.Log(Timestamp() + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
 
         if (!File.Exists(AnnouncementsFile)) {
-            Debug.Log("Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
+            Debug.Log(Timestamp() + "Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
         }
         Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
         thread.Start(netMan);
 
-        Debug.Log("Announcer started successfully!");
+        Debug.Log(Timestamp() + "Announcer started successfully!");
     }
 
     //Chat Events
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message) {
         // Checks if the message is a command, if not, log it
-        if (MutePlayers.Contains(player.playerData.username)){
+        if (MutePlayers.Contains(player.playerData.username)) {
             return true;
         }
         if (message.StartsWith(cmdCommandCharacter)) {
@@ -182,7 +182,7 @@ public class EssentialsPlugin {
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
             }
 
-            Debug.Log("Announcement made...");
+            Debug.Log(Timestamp() + "Announcement made...");
 
             announceIndex += 1;
             if (announceIndex > announcements.Length - 1)
@@ -195,7 +195,7 @@ public class EssentialsPlugin {
 
     public static void MessageLog(string message) {
         if (!message.StartsWith(cmdCommandCharacter)) {
-            Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
+            Debug.Log(Timestamp() + "[MESSAGE]" + player.playerData.username + ": " + message);
         }
     }
 
@@ -228,7 +228,7 @@ public class EssentialsPlugin {
 
             if (ChatBlockWords.Any(message.ToLower().Contains)) {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Please don't say a blocked word, the message has been blocked.");
-                Debug.Log(player.playerData.username + " Said a word that is blocked.");
+                Debug.Log(Timestamp() + player.playerData.username + " Said a word that is blocked.");
                 return true;
             }
         }
@@ -265,7 +265,7 @@ public class EssentialsPlugin {
             }
 
         } catch (Exception ex) {
-            Debug.Log("[ERROR] [GODMODE] Expection: " + ex.ToString());
+            Debug.Log(Timestamp() + "[ERROR] [GODMODE] Expection: " + ex.ToString());
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
             return true;
         }
@@ -297,9 +297,9 @@ public class EssentialsPlugin {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
             }
         } catch (Exception ex) {
-            Debug.Log("Something went wrong while trying to make a SubString: Expection: " + ex);
-            Debug.Log("Please Post the error on GitHub!");
-            Debug.Log("Try reinstalling the newest version.");
+            Debug.Log(Timestamp() + "Something went wrong while trying to make a SubString: Expection: " + ex);
+            Debug.Log(Timestamp() + "Please Post the error on GitHub!");
+            Debug.Log(Timestamp() + "Try reinstalling the newest version.");
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
         }
 
@@ -352,7 +352,7 @@ public class EssentialsPlugin {
             return false;
 
         } catch (Exception ex) {
-            Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
+            Debug.Log(Timestamp() + "[ERROR] [SAY] Expection: " + ex.ToString());
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
             return true;
         }
@@ -368,14 +368,14 @@ public class EssentialsPlugin {
     private static void WriteIPToFile(object oPlayer) {
             Thread.Sleep(500);
             SvPlayer player = (SvPlayer) oPlayer;
-            Debug.Log("[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+            Debug.Log(Timestamp() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
             try {
                 if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
                     File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
 
                 }
             } catch (Exception ex) {
-                Debug.Log("[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+                Debug.Log(Timestamp() + "[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
             }
 
         }
@@ -394,7 +394,7 @@ public class EssentialsPlugin {
             }
             return false;
         } catch (Exception ex) {
-            Debug.Log("[ERROR] [GodPlugin] Expection: " + ex.ToString());
+            Debug.Log(Timestamp() + "[ERROR] [GodPlugin] Expection: " + ex.ToString());
             return false;
         }
     }
@@ -408,7 +408,7 @@ public class EssentialsPlugin {
             File.Delete(FileName);
             File.Move(tempFile, FileName);
         } catch (Exception ex) {
-            Debug.Log("[ERROR] [RemoveStringFromFile] " + ex.ToString());
+            Debug.Log(Timestamp() + "[ERROR] [RemoveStringFromFile] " + ex.ToString());
         }
 
     }
@@ -468,6 +468,9 @@ public class EssentialsPlugin {
 
             }
         }
+    }
+    public static String TimeStamp(this DateTime value) {
+        return value.ToString("ddHHmmssfff");
     }
 
 }
