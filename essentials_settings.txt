@@ -2,33 +2,33 @@
 #                             Broke Protocol: Essentials                                   #
 #                        Created by UserR00T and DeathByKorea                              #
 # ---------------------------------------------------------------------------------------- #
-
-
-
-
-
+#
+#
+#
+#
+#
 # NOTE: CommandCharacter will be automaticly added to the commands! No need to do that!
 # Example:
 # INCORRECT: ClearChatCommand: /clearchat
 # CORRECT: ClearChatCommand: clearchat
 # if CommandCharacter is / it will automaticly add a /
-
+#
 # General
-version: 0.0.7
+version: 1.0.0
 noperm: No permission.
 # Character used for commands
 CommandCharacter: /
 # Will display "unknown command" if the command is not found in this plugin
 UnknownCommand: true
-
+#
 # Reload command
 ReloadCommand: reload
 ReloadCommand2: rl
-
+#
 # Clearchat command
 ClearChatCommand: clearchat
 ClearChatCommand2: cc
-
+#
 # Say command
 SayCommand: say
 SayCommand2: broadcast
@@ -36,28 +36,28 @@ SayCommand2: broadcast
 # Example: [!!!] UserR00T: This is a message!
 # A space is not required at the end.
 msgSayPrefix: [!!!]
-
+#
 # Godmode command --- Godmode default saving location - 'godmode.txt'
 GodmodeCommand: god
 GodmodeCommand2: godmode
-
+#
 # Godmode command --- Godmode default saving location - 'afkplayers.txt'
 GodmodeCommand: god
 GodmodeCommand2: godmode
-
-
+#
+#
 # ChatBlock --- Words default location - 'chatblock.txt'
 # Enable chatblock
 enableChatBlock: true
-
-
+#
+#
 # LanguageBlock --- Words default location - 'languageblock.txt'
 # Enable LanguageBlock
 enableLanguageBlock: true
-
+#
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 TimeBetweenAnnounce: 360
-
+#
 # TimestampFormat; This means what you will see infront of a message: 
 # E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]
 # Placeholders:
@@ -65,4 +65,4 @@ TimeBetweenAnnounce: 360
 # {h} Hours (12 hour clock)
 # {M} Minutes
 # {S} Seconds
-TimestampFormat: [{H}:{M}:{S}]
+TimestapFormat: [{H}:{M}:{S}]
