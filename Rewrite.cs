@@ -1,8 +1,11 @@
 // Essentials created by UserR00T
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using UnityEngine;
 
@@ -13,9 +16,10 @@ public class EssentialsPlugin {
     private static string SettingsFile = DirectoryFolder + "settings.txt";
     private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
-
+    private static string AnnouncementsFile = DirectoryFolder + "announcements.txt";
     private static string iplist = "ip_list.txt";
     private static string adminlist = "admin_list.txt";
+
     #endregion
 
     #region predefining variables
@@ -44,6 +48,8 @@ public class EssentialsPlugin {
     private static string cmdReload;
     private static string cmdReload2;
     private static string arg1ClearChat;
+    private static int announceIndex = 0;
+    private static string[] announcements;
     #endregion
 
     //Code below here, Don't edit unless you know what you're doing.
@@ -56,6 +62,14 @@ public class EssentialsPlugin {
     }
     ReadFile(SettingsFile);
     Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
+    
+    if (!File.Exists(AnnouncementsFile)) {
+        Debug.Log("Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory")
+    }
+    Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
+    thread.Start(netMan);
+    
+    Debug.Log("Announcer started successfully!")
 }
 
 //Chat Events
@@ -134,6 +148,24 @@ public static bool SvGlobalChatMessage(SvPlayer player, ref string message) {
 
 // These are the various functions for the commands.
 
+private static void AnnounceThread(object man) {
+    SvNetMan netMan = (SvNetMan) man;
+    while (true) {
+        foreach (var player in netMan.players) {
+            player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
+        }
+
+        Debug.Log("Announcement made...");
+
+        announceIndex += 1;
+        if (announceIndex > announcements.Length - 1)
+            announceIndex = 0;
+
+        //Thread.Sleep(5 * 60 * 1000);
+        Thread.Sleep(SECONDS_BETWEEN_MESSAGES * 1000);
+    }
+}
+}
 public static void MessageLog(string message) {
     if (!message.StartsWith(cmdCommandCharacter)) {
         Debug.Log("[MESSAGE]" + player.playerData.username + ": " + message);
@@ -274,41 +306,20 @@ public static void ReadFile(string FileName) {
                     cmdReload = cmdCommandCharacter + line.Substring(15);
                 } else if (line.Contains("ReloadCommand2: ")) {
                     cmdReload2 = cmdCommandCharacter + line.Substring(16);
-                }
 
-                //else if (line.Contains(""))
-                //{
-                //    = line.Substring();
-                //}
+                    //else if (line.Contains(""))
+                    //{
+                    //    = line.Substring();
+                    //}
+                }
             }
-        }
-    } else if (FileName == LanguageBlockFile) {
-        LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
-    } else if (FileName == ChatBlockFile) {
-        ChatBlockWords = System.IO.File.ReadAllLines(FileName);
-    }
-}
-public bool MyRemoteCertificateValidationCallback(System.Object sender,
-    X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) {
-    bool isOk = true;
-    // If there are errors in the certificate chain,
-    // look at each error to determine the cause.
-    if (sslPolicyErrors != SslPolicyErrors.None) {
-        for (int i = 0; i < chain.ChainStatus.Length; i++) {
-            if (chain.ChainStatus[i].Status == X509ChainStatusFlags.RevocationStatusUnknown) {
-                continue;
-            }
-            chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-            chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 1, 0);
-            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags;
-            bool chainIsValid = chain.Build((X509Certificate2) certificate);
-            if (!chainIsValid) {
-                isOk = false;
-                break;
-            }
+        } else if (FileName == LanguageBlockFile) {
+            LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
+        } else if (FileName == ChatBlockFile) {
+            ChatBlockWords = System.IO.File.ReadAllLines(FileName);
+        } else if (FileName == AnnouncementsFile) {
+            announcements = File.ReadAllLines(ANNOUNCEMENTS_FILE_PATH);
         }
     }
-    return isOk;
 }
 }
