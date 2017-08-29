@@ -96,6 +96,9 @@ public class EssentialsPlugin {
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message) {
         // Checks if the message is a command, if not, log it
+        if (MutePlayers.Contains(player.playerData.username)){
+            return true;
+        }
         if (message.StartsWith(cmdCommandCharacter)) {
             command = message;
             return false;
