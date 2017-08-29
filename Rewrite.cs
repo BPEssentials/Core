@@ -36,7 +36,8 @@ public class EssentialsPlugin {
     private static string[] admins;
     private static string msgSayPrefix;
     private static ShPlayer Splayer;
-    private static string Timestamp = GetTimestamp(DateTime.Now);
+    private static string PlaceHolderText;
+
 
     // Block arrays
     private static string[] ChatBlockWords;
@@ -80,18 +81,18 @@ public class EssentialsPlugin {
     [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan) {
         if (!File.Exists(SettingsFile)) {
-            Debug.Log(Timestamp + "[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
+            Debug.Log(SetTimeStamp() + "[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
         }
         ReadFile(SettingsFile);
-        Debug.Log(Timestamp + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
+        Debug.Log(SetTimeStamp() + "[INFO] Essentials - version: " + version + " Loaded in successfully!");
 
         if (!File.Exists(AnnouncementsFile)) {
-            Debug.Log(Timestamp + "Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
+            Debug.Log(SetTimeStamp() + "Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
         }
         Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
         thread.Start(netMan);
 
-        Debug.Log(Timestamp + "Announcer started successfully!");
+        Debug.Log(SetTimeStamp() + "Announcer started successfully!");
     }
 
     //Chat Events
@@ -99,6 +100,7 @@ public class EssentialsPlugin {
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message) {
         // Checks if the message is a command, if not, log it
         if (MutePlayers.Contains(player.playerData.username)) {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
             return true;
         }
         if (message.StartsWith(cmdCommandCharacter)) {
@@ -110,7 +112,6 @@ public class EssentialsPlugin {
         }
         // Checks if the message is a blocked one, if it is, block it.
         if (ChatBlock) {
-
             if (ChatBlockWords.Any(message.ToLower().Contains)) {
                 bool blocked = BlockMessage(message);
                 if (blocked) {
@@ -162,7 +163,7 @@ public class EssentialsPlugin {
 
             // Info command
             if (message.StartsWith("/essentials") || message.StartsWith("/ess")) { 
-            essentials(message);
+                essentials(message);
             }
             if (msgUnknownCommand) {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
@@ -185,7 +186,7 @@ public class EssentialsPlugin {
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
             }
 
-            Debug.Log(Timestamp + "Announcement made...");
+            Debug.Log(SetTimeStamp() + "Announcement made...");
 
             announceIndex += 1;
             if (announceIndex > announcements.Length - 1)
@@ -198,7 +199,7 @@ public class EssentialsPlugin {
 
     public static void MessageLog(string message) {
         if (!message.StartsWith(cmdCommandCharacter)) {
-            Debug.Log(Timestamp + "[MESSAGE]" + player.playerData.username + ": " + message);
+            Debug.Log(SetTimeStamp() + "[MESSAGE]" + player.playerData.username + ": " + message);
         }
     }
 
@@ -231,7 +232,7 @@ public class EssentialsPlugin {
 
             if (ChatBlockWords.Any(message.ToLower().Contains)) {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Please don't say a blocked word, the message has been blocked.");
-                Debug.Log(Timestamp + player.playerData.username + " Said a word that is blocked.");
+                Debug.Log(SetTimeStamp() + player.playerData.username + " Said a word that is blocked.");
                 return true;
             }
         }
@@ -268,7 +269,7 @@ public class EssentialsPlugin {
             }
 
         } catch (Exception ex) {
-            Debug.Log(Timestamp + "[ERROR] [GODMODE] Expection: " + ex.ToString());
+            Debug.Log(SetTimeStamp() + "[ERROR] [GODMODE] Expection: " + ex.ToString());
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
             return true;
         }
@@ -300,9 +301,9 @@ public class EssentialsPlugin {
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
             }
         } catch (Exception ex) {
-            Debug.Log(Timestamp + "Something went wrong while trying to make a SubString: Expection: " + ex);
-            Debug.Log(Timestamp + "Please Post the error on GitHub!");
-            Debug.Log(Timestamp + "Try reinstalling the newest version.");
+            Debug.Log(SetTimeStamp() + "Something went wrong while trying to make a SubString: Expection: " + ex);
+            Debug.Log(SetTimeStamp() + "Please Post the error on GitHub!");
+            Debug.Log(SetTimeStamp() + "Try reinstalling the newest version.");
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
         }
 
@@ -355,7 +356,7 @@ public class EssentialsPlugin {
             return false;
 
         } catch (Exception ex) {
-            Debug.Log(Timestamp + "[ERROR] [SAY] Expection: " + ex.ToString());
+            Debug.Log(SetTimeStamp() + "[ERROR] [SAY] Expection: " + ex.ToString());
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
             return true;
         }
@@ -371,14 +372,14 @@ public class EssentialsPlugin {
     private static void WriteIPToFile(object oPlayer) {
             Thread.Sleep(500);
             SvPlayer player = (SvPlayer) oPlayer;
-            Debug.Log(Timestamp + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+            Debug.Log(SetTimeStamp() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
             try {
                 if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection))) {
                     File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
 
                 }
             } catch (Exception ex) {
-                Debug.Log(Timestamp + "[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
+                Debug.Log(SetTimeStamp() + "[ERROR] Unknown error occured, please send the following to UserR00T:" + ex);
             }
 
         }
@@ -397,7 +398,7 @@ public class EssentialsPlugin {
             }
             return false;
         } catch (Exception ex) {
-            Debug.Log(Timestamp + "[ERROR] [GodPlugin] Expection: " + ex.ToString());
+            Debug.Log(SetTimeStamp() + "[ERROR] [GodPlugin] Expection: " + ex.ToString());
             return false;
         }
     }
@@ -411,11 +412,42 @@ public class EssentialsPlugin {
             File.Delete(FileName);
             File.Move(tempFile, FileName);
         } catch (Exception ex) {
-            Debug.Log(Timestamp + "[ERROR] [RemoveStringFromFile] " + ex.ToString());
+            Debug.Log(SetTimeStamp() + "[ERROR] [RemoveStringFromFile] " + ex.ToString());
         }
 
     }
-    public static void ReadFile(string FileName) {
+    public static bool SetTimeStamp()
+    {
+        string Hours;
+        string Minutes;
+        string Seconds;
+        var src = DateTime.Now;
+        var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second);
+        Hours = hm.ToString("HH");
+        Minutes = hm.ToString("mm");
+        Seconds = hm.ToString("ss");
+
+        if (TimestampFormat.Contains("{H}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{H}", hm.ToString("HH"));
+        }
+        if (TimestampFormat.Contains("{h}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{h}", hm.ToString("hh"));
+        }
+        if (TimestampFormat.Contains("{M}") || TimestampFormat.Contains("{m}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{M}", Minutes);
+        }
+        if (TimestampFormat.Contains("{S}") || TimestampFormat.Contains("{s}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{S}", Seconds.ToString());
+        }
+        PlaceHolderText = PlaceHolderText + " ";
+        return PlaceHolderText;
+    }
+
+    static void ReadFile(string FileName) {
         if (FileName == SettingsFile) {
             var lines = File.ReadAllLines(FileName);
             foreach (var line in lines) {
@@ -436,7 +468,9 @@ public class EssentialsPlugin {
                 } else if (FileName == MuteListFile) {
                     MutePlayers = File.ReadAllLines(FileName);
 
-                } else {
+                }
+                else
+                {
                     // TODO: make this better/compacter
                     if (line.Contains("version: ")) {
                         version = line.Substring(9);
@@ -464,8 +498,8 @@ public class EssentialsPlugin {
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
                     } else if (line.Contains("TimestapFormat: ")) { 
                         TimestampFormat = line.Substring(17);
-                        
-                }
+                        SetTimeStamp();
+                    }
                 
                 
                 }
@@ -477,9 +511,6 @@ public class EssentialsPlugin {
 
             }
         }
-    }
-    public static String GetTimestamp(DateTime Timestamp) {
-        return String.Format(TimestampFormat, Timestamp);
     }
 
 }

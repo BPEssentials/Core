@@ -58,5 +58,11 @@ enableLanguageBlock: true
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 TimeBetweenAnnounce: 360
 
-#Timestamp format. -- LEAVE THIS ALONE IF YOU DON'T KNOW WHAT IT IS: http://www.csharp-examples.net/string-format-datetime/
-TimestampFormat: {0: "M/d/yyyy HH:mm:ss:ff"
+# TimestampFormat; This means what you will see infront of a message: 
+# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]
+# Placeholders:
+# {H} Hours (24 hour clock)
+# {h} Hours (12 hour clock)
+# {M} Minutes
+# {S} Seconds
+TimestampFormat: [{H}:{M}:{S}]
