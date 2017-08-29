@@ -423,6 +423,8 @@ public class EssentialsPlugin {
     }
     public static string SetTimeStamp()
 	{     
+		var src = DateTime.Now; 
+		var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second); 
 		string PlaceHolderText = null;
 		string Hours = hm.ToString("HH");
 		string Minutes = hm.ToString("mm");
