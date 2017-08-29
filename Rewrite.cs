@@ -31,6 +31,8 @@ public class EssentialsPlugin {
     private static bool LanguageBlock;
     private static string command;
     private static SvPlayer player;
+    private static string[] admins;
+    private static string msgSayPrefix;
 
     // Block arrays
     private static string[] ChatBlockWords;
@@ -45,9 +47,17 @@ public class EssentialsPlugin {
     private static string cmdClearChat;
     private static string cmdClearChat2;
 
+    private static string cmdSay;
+    private static string cmdSay2;
+
+    private static string cmdGodmode;
+    private static string cmdGodmode2;
+
     private static string cmdReload;
     private static string cmdReload2;
+
     private static string arg1ClearChat;
+
     private static int announceIndex = 0;
     private static string[] announcements;
     private static int TimeBetweenAnnounce;
@@ -126,11 +136,10 @@ public class EssentialsPlugin {
 
                 // if (message.StartsWith () || message.StartsWith ()) { } //TODO: Godmode
 
-                /*   if (message.StartsWith ("/say")) { //TODO: Figure out how this would work.
-                      say (message);
+                if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) {
+                    return say(message);
+                }
 
-                   }
-                   */
                 // Info command
                 if (message.StartsWith("/essentials") || message.StartsWith("/ess")) {
                     if (msgUnknownCommand) {
@@ -207,7 +216,7 @@ public class EssentialsPlugin {
                     player.SendToSelf(Channel.Unsequenced, (byte) 10, " ");
                 }
             } else if (!(self)) {
-                if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username)) {
+                if (admins.Contains(player.playerData.username)) {
                     SvPlayer svPlayer = (SvPlayer) player;
                     player.SendToAll(Channel.Unsequenced, (byte) 10, "Clearing chat for everyone...");
                     Thread.Sleep(250);
@@ -253,8 +262,34 @@ public class EssentialsPlugin {
         //TODO: Subcommands like /essentials reload : executes cmdReload
 
     }
-    public static void say(string message) {
+    public static bool say(string message) {
+        try {
 
+                if (admins.Contains(player.playerData.username)) {
+                    if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length)) {
+                        player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
+                        return true;
+                    } else {
+                        string arg1 = null;
+                        if (message.StartsWith(cmdSay)) {
+                            arg1 = message.Substring(cmdSay.Length);
+                        } else if (message.StartsWith(cmdSay2)) {
+                            arg1 = message.Substring(cmdSay2.Length);
+                        }
+                        player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + player.playerData.username + ": " + arg1);
+                        return true;
+                    }
+                } else {
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                    return false;
+                }
+                return false;
+            
+        } catch (Exception ex) {
+            Debug.Log("[ERROR] [SAY] Expection: " + ex.ToString());
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
+            return true;
+        }
     }
 
     [Hook("SvPlayer.Initialize")]
@@ -285,15 +320,15 @@ public class EssentialsPlugin {
             foreach (var line in lines) {
                 if (line.StartsWith("#") || line.Contains("#")) {
                     continue;
-                }
-                    else if (FileName == LanguageBlockFile) {
-                        LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
-                    } else if (FileName == ChatBlockFile) {
-                        ChatBlockWords = System.IO.File.ReadAllLines(FileName);
-                    } else if (FileName == AnnouncementsFile) {
-                        announcements = File.ReadAllLines(AnnouncementsFile);
-                    }
-                 else {
+                } else if (FileName == LanguageBlockFile) {
+                    LanguageBlockWords = System.IO.File.ReadAllLines(FileName);
+                } else if (FileName == ChatBlockFile) {
+                    ChatBlockWords = System.IO.File.ReadAllLines(FileName);
+                } else if (FileName == AnnouncementsFile) {
+                    announcements = File.ReadAllLines(AnnouncementsFile);
+                } else if (FileName == adminlist) {
+                    admins = File.ReadAllLines(adminlist);
+                } else {
                     // TODO: make this better/compacter
                     if (line.Contains("version: ")) {
                         version = line.Substring(9);
@@ -305,6 +340,8 @@ public class EssentialsPlugin {
                         cmdClearChat = cmdCommandCharacter + line.Substring(18);
                     } else if (line.Contains("ClearChatCommand2: ")) {
                         cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
+                    } else if (line.Contains("msgSayPrefix: ")) {
+                        msgSayPrefix = line.Substring(38);
                     } else if (line.Contains("UnknownCommand: ")) {
                         msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
                     } else if (line.Contains("enableChatBlock: ")) {
