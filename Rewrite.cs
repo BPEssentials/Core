@@ -453,88 +453,111 @@ public class EssentialsPlugin {
         return PlaceHolderText;
     }
 
-    static void ReadFile(string FileName) {
-		Debug.Log ("ReadFileStarted");
-        if (FileName == SettingsFile) {
-         //   var lines = File.ReadAllLines(FileName);
-		
-			foreach (var line in File.ReadAllLines(SettingsFile)) {
-				Debug.Log ("Doing a Thing Line: " + line);
-                if (line.StartsWith("#") || line.Contains("#")) {
-                    continue;
-                } else if (FileName == LanguageBlockFile) {
-                    LanguageBlockWords = File.ReadAllLines(FileName);
-                } else if (FileName == ChatBlockFile) {
-                    ChatBlockWords = File.ReadAllLines(FileName);
-                } else if (FileName == AnnouncementsFile) {
-                    announcements = File.ReadAllLines(AnnouncementsFile);
-                } else if (FileName == adminlist) {
-                    admins = File.ReadAllLines(adminlist);
-                } else if (FileName == GodListFile) {
-                    GodListPlayers = File.ReadAllLines(FileName);
-                } else if (FileName == AfkListFile) {
-                    AfkPlayers = File.ReadAllLines(FileName);
-                } else if (FileName == MuteListFile) {
-                    MutePlayers = File.ReadAllLines(FileName);
-
-                }
-                else
-                {
-					try{
-                    // TODO: make this better/compacter
-                    if (line.Contains("version: ")) {
-						Debug.Log("Adding Version");
-                        version = line.Substring(9);
-                    } else if (line.Contains("CommandCharacter: ")) {
-						Debug.Log("Adding CmdChar");
-                        cmdCommandCharacter = line.Substring(17);
-                    } else if (line.Contains("noperm: ")) {
-						Debug.Log("Adding NoPerm");
-                        msgNoPerm = line.Substring(8);
-                    } else if (line.Contains("ClearChatCommand: ")) {
-							Debug.Log("Adding ClearChat");
-                        cmdClearChat = cmdCommandCharacter + line.Substring(18);
-                    } else if (line.Contains("ClearChatCommand2: ")) {
-							Debug.Log("Adding ClearChat2");
-                        cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
-                    } else if (line.Contains("msgSayPrefix: ")) {
-							Debug.Log("Adding MsgSayPrefix");
-							msgSayPrefix = line.Substring(14);
-                    } else if (line.Contains("UnknownCommand: ")) {
-							Debug.Log("Adding UnknownCommand");
-                        msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-                    } else if (line.Contains("enableChatBlock: ")) {
-							Debug.Log("Addning EnableChatBlock");
-                        ChatBlock = Convert.ToBoolean(line.Substring(17));
-                    } else if (line.Contains("enableLanguageBlock: ")) {
-							Debug.Log("Adding EnableLanguageBlock");
-                        LanguageBlock = Convert.ToBoolean(line.Substring(21));
-                    } else if (line.Contains("ReloadCommand: ")) {
-							Debug.Log("Adding ReloadCommand");
-                        cmdReload = cmdCommandCharacter + line.Substring(15);
-                    } else if (line.Contains("ReloadCommand2: ")) {
-							Debug.Log("Adding ReloadCommand2");
-                        cmdReload2 = cmdCommandCharacter + line.Substring(16);
-                    } else if (line.Contains("TimeBetweenAnnounce: ")) {
-							Debug.Log("Adding TimeBetweenAnnounce");
-                        TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
-                    } else if (line.Contains("TimestapFormat: ")) { 
-							Debug.Log("Adding TimestampFormat");
-                        TimestampFormat = line.Substring(17);
-                    }
-					} catch(Exception ex){
-						Debug.Log (ex);
+	static void ReadFile(string FileName)
+	{
+		Debug.Log("ReadFileStarted");
+		if (FileName == SettingsFile)
+		{
+			foreach (var line in File.ReadAllLines(SettingsFile))
+			{
+				if (line.StartsWith("#") || line.Contains("#"))
+				{
+					continue;
+				}
+				else
+				{
+					// TODO: make this better/compacter
+					if (line.Contains("version: "))
+					{
+						version = line.Substring(9);
 					}
-                
-                }
+					else if (line.Contains("CommandCharacter: "))
+					{
+						cmdCommandCharacter = line.Substring(17);
+					}
+					else if (line.Contains("noperm: "))
+					{
+						msgNoPerm = line.Substring(8);
+					}
+					else if (line.Contains("ClearChatCommand: "))
+					{
+						cmdClearChat = cmdCommandCharacter + line.Substring(18);
+					}
+					else if (line.Contains("ClearChatCommand2: "))
+					{
+						cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
+					}
+					else if (line.Contains("msgSayPrefix: "))
+					{
+						msgSayPrefix = line.Substring(14);
+					}
+					else if (line.Contains("UnknownCommand: "))
+					{
+						msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
+					}
+					else if (line.Contains("enableChatBlock: "))
+					{
+						ChatBlock = Convert.ToBoolean(line.Substring(17));
+					}
+					else if (line.Contains("enableLanguageBlock: "))
+					{
+						LanguageBlock = Convert.ToBoolean(line.Substring(21));
+					}
+					else if (line.Contains("ReloadCommand: "))
+					{
+						cmdReload = cmdCommandCharacter + line.Substring(15);
+					}
+					else if (line.Contains("ReloadCommand2: "))
+					{
+						cmdReload2 = cmdCommandCharacter + line.Substring(16);
+					}
+					else if (line.Contains("TimeBetweenAnnounce: "))
+					{
+						TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
+					}
+					else if (line.Contains("TimestapFormat: "))
+					{
+						TimestampFormat = line.Substring(17);
+						SetTimeStamp();
+					}
 
-                //else if (line.Contains(""))
-                //{
-                //    = line.Substring();
-                //}
 
-            }
-        }
-    }
+				}
+
+				//else if (line.Contains(""))
+				//{
+				//    = line.Substring();
+				//}
+
+			}
+		}
+		else if (FileName == LanguageBlockFile)
+		{
+			LanguageBlockWords = File.ReadAllLines(FileName);
+		}
+		else if (FileName == ChatBlockFile)
+		{
+			ChatBlockWords = File.ReadAllLines(FileName);
+		}
+		else if (FileName == AnnouncementsFile)
+		{
+			announcements = File.ReadAllLines(AnnouncementsFile);
+		}
+		else if (FileName == adminlist)
+		{
+			admins = File.ReadAllLines(adminlist);
+		}
+		else if (FileName == GodListFile)
+		{
+			GodListPlayers = File.ReadAllLines(FileName);
+		}
+		else if (FileName == AfkListFile)
+		{
+			AfkPlayers = File.ReadAllLines(FileName);
+		}
+		else if (FileName == MuteListFile)
+		{
+			MutePlayers = File.ReadAllLines(FileName);
+		}
 
 }
