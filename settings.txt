@@ -58,5 +58,5 @@ enableLanguageBlock: true
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 TimeBetweenAnnounce: 360
 
-#Timestamp format. -- LEAVE THIS ALONE IF YOU DON'T KNOW WHAT IT IS: https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-TimestampFormat: ddHHmmssff
+#Timestamp format. -- LEAVE THIS ALONE IF YOU DON'T KNOW WHAT IT IS: http://www.csharp-examples.net/string-format-datetime/
+TimestampFormat: {0: "M/d/yyyy HH:mm:ss:ff"

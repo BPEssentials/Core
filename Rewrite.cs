@@ -462,7 +462,7 @@ public class EssentialsPlugin {
                     } else if (line.Contains("TimeBetweenAnnounce: ")) {
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
                     } else if (line.Contains("TimestapFormat: ")) { 
-                        TimestampFormat = String.Format("{0:G}",line.Substring(17));
+                        TimestampFormat = line.Substring(17);
                         
                 }
                 
@@ -478,7 +478,7 @@ public class EssentialsPlugin {
         }
     }
     public static String GetTimestamp(DateTime Timestamp) {
-        return String.Format("{0:G}", Timestamp);
+        return String.Format(TimestampFormat, Timestamp);
     }
 
 }
