@@ -14,7 +14,7 @@ public class EssentialsPlugin {
     #region Folder Locations
     private static string DirectoryFolder = Directory.GetCurrentDirectory();
     private static string SettingsFile = DirectoryFolder + "settings.txt";
-    private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
+	private static string LanguageBlockFile = DirectoryFolder + "languageblock.txt";
     private static string ChatBlockFile = DirectoryFolder + "chatblock.txt";
     private static string AnnouncementsFile = DirectoryFolder + "announcements.txt";
     private static string iplist = "ip_list.txt";
@@ -416,7 +416,7 @@ public class EssentialsPlugin {
         }
 
     }
-    public static bool SetTimeStamp()
+    public static string SetTimeStamp()
     {
         string Hours;
         string Minutes;
