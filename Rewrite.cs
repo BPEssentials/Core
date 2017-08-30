@@ -203,17 +203,20 @@ public class EssentialsPlugin
 		Debug.Log("mute");
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
-            return Mute(message, player);
+            Mute(message, player);
+            return true;
         }
 		Debug.Log("say");
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
         {
-            return say(message, player);
+            say(message, player);
+            return true;
         }
 		Debug.Log("god");
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))// <broke
         {
-            return godMode(message, player);
+            godMode(message, player);
+            return true;
         }
 		Debug.Log("essentials");
         // Info command
@@ -617,13 +620,13 @@ public class EssentialsPlugin
                     }
                     else if (line.Contains("SayCommand: "))
                     {
-                        cmdSay = line.Substring(12);
+                        cmdSay = cmdCommandCharacter + line.Substring(12);
                         Debug.Log("CmdSay: " + cmdSay);
 
                     }
                     else if (line.Contains("SayCommand2:"))
                     {
-                        cmdSay2 = line.Substring(13);
+                        cmdSay2 = cmdCommandCharacter + line.Substring(13);
                         Debug.Log("CmdSay2: " + cmdSay2);
                     }
                     else if (line.Contains("msgSayPrefix: "))
@@ -633,12 +636,12 @@ public class EssentialsPlugin
                     }
                     else if (line.Contains("GodmodeCommand: "))
                     {
-                        cmdGodmode = line.Substring(16);
+                        cmdGodmode = cmdCommandCharacter + line.Substring(16);
                         Debug.Log("GodmodeCommand: " + cmdGodmode);
                     }
                     else if (line.Contains("GodmodeCommand2: "))
                     {
-                        cmdGodmode2 = line.Substring(17);
+                        cmdGodmode2 = cmdCommandCharacter + line.Substring(17);
                         Debug.Log("GodmodeCommand2: " + cmdGodmode2);
                     }
                     else if (line.StartsWith("MuteCommand: "))
