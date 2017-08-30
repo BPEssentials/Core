@@ -135,11 +135,11 @@ public class EssentialsPlugin
 
 
         // Checks if player is muted, if so, cancel message
-        /*        if (MutePlayers.Contains(player.playerData.username))
-                {
+        /*       if (MutePlayers.Contains(player.playerData.username))
+               {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
                     return true;
-                }*/
+                } */
         // Checks if the message is a command, if not, log it
 
         //return false;
@@ -178,6 +178,7 @@ public class EssentialsPlugin
 
 
         // Clear chat command, self and global
+		Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat))
         {
             if (message == cmdClearChat || message == cmdClearChat2)
@@ -192,27 +193,29 @@ public class EssentialsPlugin
                 return true;
             }
         }
+		Debug.Log("reload");
         // Reload command
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
         {
             Reload(message, player);
             return true;
         }
-
+		Debug.Log("mute");
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
             return Mute(message, player);
         }
+		Debug.Log("say");
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
         {
             return say(message, player);
         }
-
+		Debug.Log("god");
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))// <broke
         {
             return godMode(message, player);
         }
-
+		Debug.Log("essentials");
         // Info command
         if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
         {
@@ -220,13 +223,16 @@ public class EssentialsPlugin
             return true;
         }
         return false;
+		Debug.Log("msgunknown");
 		if (msgUnknownCommand)
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
             return true;
         }
+
         else
         {
+			Debug.Log("else");
             return false;
         }
     }
