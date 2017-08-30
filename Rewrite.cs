@@ -112,6 +112,25 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
+		Debug.Log ("Version: " + version);
+		Debug.Log ("CmdChar: " + cmdCommandCharacter);
+		Debug.Log ("NoPerm: " + msgNoPerm);
+		Debug.Log ("ClearChat: " + cmdClearChat);
+		Debug.Log ("ClearChat2: " + cmdClearChat2);
+		Debug.Log ("CmdSay: " + cmdSay);
+		Debug.Log ("CmdSay2: " + cmdSay2);
+		Debug.Log ("MsgSayPrefix: " + msgSayPrefix);
+		Debug.Log ("GodmodeCommand: " + cmdGodmode); 
+		Debug.Log ("GodmodeCommand2: " + cmdGodmode2);
+		Debug.Log ("MuteCommand: " + cmdMute);
+		Debug.Log ("UnMuteCommand: " + cmdUnMute);
+		Debug.Log ("Unknown: " + msgUnknownCommand);
+		Debug.Log ("ChatBlock?: " + ChatBlock);
+		Debug.Log ("LangBlock?: " + LanguageBlock);
+		Debug.Log ("Reload: " + cmdReload);
+		Debug.Log ("Reload2: " + cmdReload2);
+		Debug.Log ("AnnounceTime: " + TimeBetweenAnnounce);
+		Debug.Log ("TimestampFormat: " + TimestampFormat);
         MessageLog(message, player);
 
 
@@ -201,7 +220,7 @@ public class EssentialsPlugin
             return true;
         }
         return false;
-        if (msgUnknownCommand)
+		if (msgUnknownCommand)
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
             return true;
