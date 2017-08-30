@@ -588,81 +588,106 @@ public class EssentialsPlugin
                 else
                 {
                     // TODO: make this better/compacter
-					if (line.Contains ("version: ")) {
-						version = line.Substring (9);
-						Debug.Log ("Version: " + version);
-					} else if (line.Contains ("CommandCharacter: ")) {
-						cmdCommandCharacter = line.Substring (17);
-						Debug.Log ("CmdChar: " + cmdCommandCharacter);
+                    if (line.Contains("version: "))
+                    {
+                        version = line.Substring(9);
+                        Debug.Log("Version: " + version);
+                    }
+                    else if (line.Contains("CommandCharacter: "))
+                    {
+                        cmdCommandCharacter = line.Substring(17);
+                        Debug.Log("CmdChar: " + cmdCommandCharacter);
 
-					} else if (line.Contains ("noperm: ")) {
-						msgNoPerm = line.Substring (8);
-						Debug.Log ("NoPerm: " + msgNoPerm);
-					} else if (line.Contains ("ClearChatCommand: ")) {
-						cmdClearChat = cmdCommandCharacter + line.Substring (18);
-						Debug.Log ("ClearChat: " + cmdClearChat);
-					} else if (line.Contains ("ClearChatCommand2: ")) {
-						cmdClearChat2 = cmdCommandCharacter + line.Substring (19);
-						Debug.Log ("ClearChat2: " + cmdClearChat2);
+                    }
+                    else if (line.Contains("noperm: "))
+                    {
+                        msgNoPerm = line.Substring(8);
+                        Debug.Log("NoPerm: " + msgNoPerm);
+                    }
+                    else if (line.Contains("ClearChatCommand: "))
+                    {
+                        cmdClearChat = cmdCommandCharacter + line.Substring(18);
+                        Debug.Log("ClearChat: " + cmdClearChat);
+                    }
+                    else if (line.Contains("ClearChatCommand2: "))
+                    {
+                        cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
+                        Debug.Log("ClearChat2: " + cmdClearChat2);
 
-					} else if (line.Contains ("SayCommand: ")) {	
-						cmdSay = line.Substring (12);
-						Debug.Log ("CmdSay: " + cmdSay);
+                    }
+                    else if (line.Contains("SayCommand: "))
+                    {
+                        cmdSay = line.Substring(12);
+                        Debug.Log("CmdSay: " + cmdSay);
 
-					} else if (line.Contains ("SayCommand2:")) {
-						cmdSay2 = line.Substring (13);
-						Debug.Log ("CmdSay2: " + cmdSay2);
-					} else if (line.Contains ("msgSayPrefix: ")) {
-						msgSayPrefix = line.Substring (14);
-						Debug.Log ("MsgSayPrefix: " + msgSayPrefix);
-					} else if (line.Contains ("GodmodeCommand: ")) {
-						cmdGodmode = line.Substring (16);
-						Debug.Log ("GodmodeCommand: " + cmdGodmode); 
-					} else if (line.Contains ("GodmodeCommand2: ")) {
-						cmdGodmode2 = line.Substring (17);
-						Debug.Log ("GodmodeCommand2: " + cmdGodmode2);
-					} else if (line.Contains ("MuteCommand: ")) {
-						cmdMute = line.Substring (13);
-						Debug.Log ("MuteCommand: " + cmdMute);
-					} else if (line.Contains ("UnMuteCommand: ")) {
-						cmdUnMute = line.Substring (15);
-						Debug.Log ("UnMuteCommand: " + cmdUnMute);
-					}
+                    }
+                    else if (line.Contains("SayCommand2:"))
+                    {
+                        cmdSay2 = line.Substring(13);
+                        Debug.Log("CmdSay2: " + cmdSay2);
+                    }
+                    else if (line.Contains("msgSayPrefix: "))
+                    {
+                        msgSayPrefix = line.Substring(14);
+                        Debug.Log("MsgSayPrefix: " + msgSayPrefix);
+                    }
+                    else if (line.Contains("GodmodeCommand: "))
+                    {
+                        cmdGodmode = line.Substring(16);
+                        Debug.Log("GodmodeCommand: " + cmdGodmode);
+                    }
+                    else if (line.Contains("GodmodeCommand2: "))
+                    {
+                        cmdGodmode2 = line.Substring(17);
+                        Debug.Log("GodmodeCommand2: " + cmdGodmode2);
+                    }
+                    else if (line.StartsWith("MuteCommand: "))
+                    {
+                        cmdMute = cmdCommandCharacter + line.Substring(13);
+
+                        Debug.Log("MuteCommand: " + cmdMute);
+                    }
+                    else if (line.StartsWith("UnMuteCommand: "))
+                    {
+                        cmdUnMute = cmdCommandCharacter + line.Substring(15);
+
+                        Debug.Log("UnMuteCommand: " + cmdUnMute);
+                    }
                     else if (line.Contains("UnknownCommand: "))
                     {
                         msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-						Debug.Log ("Unknown: " + msgUnknownCommand);
+                        Debug.Log("Unknown: " + msgUnknownCommand);
                     }
                     else if (line.Contains("enableChatBlock: "))
                     {
                         ChatBlock = Convert.ToBoolean(line.Substring(17));
-						Debug.Log ("ChatBlock?: " + ChatBlock);
+                        Debug.Log("ChatBlock?: " + ChatBlock);
                     }
                     else if (line.Contains("enableLanguageBlock: "))
                     {
                         LanguageBlock = Convert.ToBoolean(line.Substring(21));
-						Debug.Log ("LangBlock?: " + LanguageBlock);
+                        Debug.Log("LangBlock?: " + LanguageBlock);
                     }
                     else if (line.Contains("ReloadCommand: "))
                     {
                         cmdReload = cmdCommandCharacter + line.Substring(15);
-						Debug.Log ("Reload: " + cmdReload);
+                        Debug.Log("Reload: " + cmdReload);
 
                     }
                     else if (line.Contains("ReloadCommand2: "))
                     {
                         cmdReload2 = cmdCommandCharacter + line.Substring(16);
-						Debug.Log ("Reload2: " + cmdReload2);
+                        Debug.Log("Reload2: " + cmdReload2);
                     }
                     else if (line.Contains("TimeBetweenAnnounce: "))
                     {
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
-						Debug.Log ("AnnounceTime: " + TimeBetweenAnnounce);
+                        Debug.Log("AnnounceTime: " + TimeBetweenAnnounce);
                     }
                     else if (line.Contains("TimestapFormat: "))
                     {
                         TimestampFormat = line.Substring(16);
-						Debug.Log ("TimestampFormat: " + TimestampFormat);
+                        Debug.Log("TimestampFormat: " + TimestampFormat);
                     }
 
 
