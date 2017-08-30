@@ -455,7 +455,7 @@ public class EssentialsPlugin
     }
     public static bool say(string message, object oPlayer)
     {
-        SvPlayer player = (SvPlayer)oPlayer;
+		player = (SvPlayer)oPlayer;
         try
         {
 
