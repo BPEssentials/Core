@@ -455,28 +455,34 @@ public class EssentialsPlugin
     }
     public static bool say(string message, object oPlayer)
     {
-		player = (SvPlayer)oPlayer;
+		SvPlayer player = (SvPlayer)oPlayer;
+		Debug.Log ("Set Player");
         try
         {
 
             if (admins.Contains(player.playerData.username))
             {
+				Debug.Log("Got Admin");
                 if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length))
                 {
+					Debug.Log("Checked message args");
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "An argument is required for this command.");
                     return true;
                 }
                 else
                 {
-                    string arg1 = null;
+					string arg1 = "blank";
                     if (message.StartsWith(cmdSay))
                     {
+						Debug.Log("checking arg1 length 1");
                         arg1 = message.Substring(cmdSay.Length);
                     }
                     else if (message.StartsWith(cmdSay2))
                     {
+						Debug.Log("checking arg1 length 2");
                         arg1 = message.Substring(cmdSay2.Length);
                     }
+					Debug.Log("Sending Message");
                     player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + player.playerData.username + ": " + arg1);
                     return true;
                 }
