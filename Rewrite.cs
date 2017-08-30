@@ -257,7 +257,7 @@ public class EssentialsPlugin {
     public static bool godMode(string message) {
         try {
             if (admins.Contains(player.playerData.username)) {
-                if (GodListFile.Contains(player.playerData.username)) {
+                if (GodListPlayers.Contains(player.playerData.username)) {
                     ReadFile(GodListFile);
                     RemoveStringFromFile(GodListFile, player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode disabled.");
