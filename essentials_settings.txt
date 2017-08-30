@@ -45,6 +45,11 @@ GodmodeCommand2: godmode
 GodmodeCommand: god
 GodmodeCommand2: godmode
 #
+# Mute command --- Mute default saving location - 'muteplayers.txt'
+MuteCommand: mute
+#
+# UnMute Command
+UnMuteCommand: unmute
 #
 # ChatBlock --- Words default location - 'chatblock.txt'
 # Enable chatblock
