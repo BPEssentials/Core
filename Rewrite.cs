@@ -17,8 +17,8 @@ public class EssentialsPlugin
     private static string LanguageBlockFile = "languageblock.txt";
     private static string ChatBlockFile = "chatblock.txt";
     private static string AnnouncementsFile = "announcements.txt";
-    private static string iplist = "ip_list.txt";
-    private static string adminlist = "admin_list.txt";
+    private static string IPListFile = "ip_list.txt";
+    private static string AdminListFile = "admin_list.txt";
     private static string GodListFile = "godlist.txt";
     private static string AfkListFile = "afklist.txt";
     private static string MuteListFile = "mutelist.txt";
@@ -43,7 +43,8 @@ public class EssentialsPlugin
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
     private static string[] MutePlayers;
-    private static string[] admins;
+    //private static string[] admins;
+    private static List<string> admins;
 
 
     // Messages
@@ -111,59 +112,56 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
+        MessageLog(message, player);
+
+
         // Checks if player is muted, if so, cancel message
-        if (MutePlayers.Contains(player.playerData.username))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
-            return true;
-        }
+        /*        if (MutePlayers.Contains(player.playerData.username))
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
+                    return true;
+                }*/
         // Checks if the message is a command, if not, log it
-        if (message.StartsWith(cmdCommandCharacter))
-        {
-            command = message;
-            return false;
-        }
-        else
-        {
-            MessageLog(message, player);
-            return false;
-        }
+
+        //return false;
         // Checks if the message is a blocked one, if it is, block it.
-        if (ChatBlock)
-        {
-            if (ChatBlockWords.Any(message.ToLower().Contains))
-            {
-                bool blocked = BlockMessage(message, player);
-                if (blocked)
+        /*        if (ChatBlock)
                 {
-                    return true;
+                    if (ChatBlockWords.Any(message.ToLower().Contains))
+                    {
+                        bool blocked = BlockMessage(message, player);
+                        if (blocked)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
                 }
-                else
+                // Check if the message is English, if not, block it
+                if (LanguageBlock)
                 {
-                    return false;
-                }
-            }
-        }
-        // Check if the message is English, if not, block it
-        if (LanguageBlock)
-        {
-            if (LanguageBlockWords.Any(message.ToLower().Contains))
-            {
-                bool blocked = BlockMessage(message, player);
-                if (blocked)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+                    if (LanguageBlockWords.Any(message.ToLower().Contains))
+                    {
+                        bool blocked = BlockMessage(message, player);
+                        if (blocked)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }*/
+
+
         // Clear chat command, self and global
-        if (command == cmdClearChat || command == cmdClearChat2)
+        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat))
         {
-            if (command == cmdClearChat || command == cmdClearChat2)
+            if (message == cmdClearChat || message == cmdClearChat2)
             {
                 ClearChat(message, player, true);
                 return true;
@@ -240,7 +238,11 @@ public class EssentialsPlugin
         SvPlayer player = (SvPlayer)oPlayer;
         if (!message.StartsWith(cmdCommandCharacter))
         {
-            Debug.Log(SetTimeStamp() + "[MESSAGE]" + player.playerData.username + ": " + message);
+            Debug.Log(SetTimeStamp() + "[MESSAGE] " + player.playerData.username + ": " + message);
+        }
+        else if (message.StartsWith(cmdCommandCharacter))
+        {
+            Debug.Log(SetTimeStamp() + "[COMMAND] " + player.playerData.username + ": " + message);
         }
     }
 
@@ -396,7 +398,7 @@ public class EssentialsPlugin
     public static void Reload(string message, object oPlayer)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-        if (System.IO.File.ReadAllText(adminlist).Contains(player.playerData.username))
+        if (admins.Contains(player.playerData.username))
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
             ReadFile(SettingsFile);
@@ -482,9 +484,9 @@ public class EssentialsPlugin
         Debug.Log(SetTimeStamp() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
         try
         {
-            if (!File.ReadAllText(iplist).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
+            if (!File.ReadAllText(IPListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
             {
-                File.AppendAllText(iplist, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+                File.AppendAllText(IPListFile, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
             }
         }
         catch (Exception ex)
@@ -492,29 +494,6 @@ public class EssentialsPlugin
             LogExpection(ex, "WriteIPToFile");
         }
 
-    }
-    [Hook("SvPlayer.Damage")]
-    public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
-    {
-        try
-        {
-            if (Splayer.IsRealPlayer())
-            {
-                if (GodListPlayers.Contains(player.playerData.username))
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG blocked from " + attacker + "!");
-                    return true;
-                }
-                return false;
-            }
-            return false;
-
-        }
-        catch (Exception ex)
-        {
-            LogExpection(ex, "Damage");
-            return false;
-        }
     }
     public static void RemoveStringFromFile(string FileName, string RemoveString)
     {
@@ -659,9 +638,19 @@ public class EssentialsPlugin
         {
             announcements = File.ReadAllLines(AnnouncementsFile);
         }
-        else if (FileName == adminlist)
+        else if (FileName == AdminListFile)
         {
-            admins = File.ReadAllLines(adminlist);
+            foreach (var line in File.ReadAllLines(AdminListFile))
+            {
+                if (line.StartsWith("#") || line.Contains("#"))
+                {
+                    continue;
+                }
+                else
+                {
+                    admins.Add(line);
+                }
+            }
         }
         else if (FileName == GodListFile)
         {
