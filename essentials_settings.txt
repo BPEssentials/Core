@@ -60,6 +60,10 @@ enableChatBlock: true
 # Enable LanguageBlock
 enableLanguageBlock: true
 #
+# Rules command -- Rules default location - 'rules.txt'
+# Rules Command
+RulesCommand: rules
+#
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 TimeBetweenAnnounce: 360
 #
