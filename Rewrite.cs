@@ -85,10 +85,20 @@ public class EssentialsPlugin
 
         try
         {
+            Debug.Log("READING FILES");
+            Debug.Log("settingsfile");
             ReadFile(SettingsFile);
+            Debug.Log("languageblockfile");
+            ReadFile(LanguageBlockFile);
+            Debug.Log("chatblockfile");
+            ReadFile(ChatBlockFile);
+            Debug.Log("adminfile");
+            ReadFile(AdminListFile);
+            Debug.Log("godfile");
+            ReadFile(GodListFile);
+            Debug.Log("mutefile");
+            ReadFile(MuteListFile);
 
-
-            //  Debug.Log("Manually setting variables");
 
             Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
         }
@@ -179,18 +189,31 @@ public class EssentialsPlugin
 
         // Clear chat command, self and global
 		Debug.Log("clearchat");
-        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat))
+        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " ") || message.StartsWith(cmdClearChat + " "))
         {
+            string arg1ClearChat = null;
             if (message == cmdClearChat || message == cmdClearChat2)
             {
                 ClearChat(message, player, true);
                 return true;
             }
-            arg1ClearChat = message.Substring(11);
-            if (arg1ClearChat == "all" || arg1ClearChat == "everyone")
+            if (message != cmdClearChat || message != cmdClearChat2)
             {
-                ClearChat(message, player, false);
-                return true;
+                
+                if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " "))
+                {
+                    arg1ClearChat = message.Substring(cmdClearChat.Length);
+                }
+                else if (message.StartsWith(cmdClearChat2) || message.StartsWith(cmdClearChat2 + " "))
+                {
+                    arg1ClearChat = message.Substring(cmdClearChat2.Length);
+                }
+                Thread.Sleep(3);
+                if (arg1ClearChat.Contains("all") || arg1ClearChat.Contains("everyone"))
+                {
+                    ClearChat(message, player, false);
+                    return true;
+                }
             }
         }
 		Debug.Log("reload");
@@ -378,6 +401,9 @@ public class EssentialsPlugin
         try
         {
             SvPlayer player = (SvPlayer)oPlayer;
+            Debug.Log("Clearchat ----");
+            Debug.Log("Message: " + message);
+            Debug.Log("PlayerName: " + player.playerData.username);
             if (self)
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Clearing the chat for yourself...");
@@ -389,19 +415,23 @@ public class EssentialsPlugin
             }
             else if (!(self))
             {
+                Debug.Log("else !self");
                 if (admins.Contains(player.playerData.username))
                 {
-                    SvPlayer svPlayer = (SvPlayer)player;
+                    Debug.Log("player has admin rights");
+                    //SvPlayer svPlayer = (SvPlayer)player;
                     player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
                     Thread.Sleep(250);
+                    Debug.Log("annouce message send, clearing now");
                     for (int i = 0; i < 6; i++)
                     {
                         player.SendToAll(Channel.Unsequenced, (byte)10, " ");
                     }
-
+                    Debug.Log("done");
                 }
                 else
                 {
+                    Debug.Log("player does not have perm");
                     player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 }
             }
@@ -437,6 +467,12 @@ public class EssentialsPlugin
             Thread.Sleep(10);
             ReadFile(ChatBlockFile);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Language and chat block files reloaded");
+            Debug.Log("adminfile");
+            ReadFile(AdminListFile);
+            Debug.Log("godfile");
+            ReadFile(GodListFile);
+            Debug.Log("mutefile");
+            ReadFile(MuteListFile);
         }
         else
         {
@@ -585,7 +621,7 @@ public class EssentialsPlugin
     }
     static void ReadFile(string FileName)
     {
-        Debug.Log("ReadFileStarted");
+        #region SettingsFile
         if (FileName == SettingsFile)
         {
             foreach (var line in File.ReadAllLines(SettingsFile))
@@ -616,6 +652,7 @@ public class EssentialsPlugin
                     else if (line.Contains("ClearChatCommand: "))
                     {
                         cmdClearChat = cmdCommandCharacter + line.Substring(18);
+//                        Debug.Log("clearchat");
 //                        Debug.Log("ClearChat: " + cmdClearChat);
                     }
                     else if (line.Contains("ClearChatCommand2: "))
@@ -709,6 +746,7 @@ public class EssentialsPlugin
 
             }
         }
+        #endregion
         else if (FileName == LanguageBlockFile)
         {
             LanguageBlockWords = File.ReadAllLines(FileName);
@@ -723,17 +761,31 @@ public class EssentialsPlugin
         }
         else if (FileName == AdminListFile)
         {
-            foreach (var line in File.ReadAllLines(AdminListFile))
+            Debug.Log("1");
+            using (var sr = new StreamReader(FileName))
             {
-                if (line.StartsWith("#") || line.Contains("#"))
+                Debug.Log("2");
+                string line = null;
+                while (!sr.EndOfStream)
                 {
-                    continue;
-                }
-                else
-                {
-                    admins.Add(line);
+                    Debug.Log("3");
+                    if ((line = sr.ReadLine()) != null)
+                    {
+                        if (line.StartsWith("#"))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            Debug.Log("Adding line to admin list:" + line);
+                            admins.Add(line);
+
+                        }
+
+                    }
                 }
             }
+           //     admins = File.ReadAllLines(FileName);
         }
         else if (FileName == GodListFile)
         {
