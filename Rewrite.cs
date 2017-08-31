@@ -43,9 +43,9 @@ public class EssentialsPlugin
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
     private static string[] MutePlayers;
-    //private static string[] admins;
-    private static List<string> admins;
 
+
+    private static string admins;
 
     // Messages
     private static string msgNoPerm;
@@ -68,6 +68,9 @@ public class EssentialsPlugin
     private static string cmdReload;
     private static string cmdReload2;
 
+    private static string cmdAfk;
+    private static string cmdAfk2;
+
     private static string arg1ClearChat;
 
     private static int announceIndex = 0;
@@ -85,20 +88,7 @@ public class EssentialsPlugin
 
         try
         {
-            Debug.Log("READING FILES");
-            Debug.Log("settingsfile");
-            ReadFile(SettingsFile);
-            Debug.Log("languageblockfile");
-            ReadFile(LanguageBlockFile);
-            Debug.Log("chatblockfile");
-            ReadFile(ChatBlockFile);
-            Debug.Log("adminfile");
-            ReadFile(AdminListFile);
-            Debug.Log("godfile");
-            ReadFile(GodListFile);
-            Debug.Log("mutefile");
-            ReadFile(MuteListFile);
-
+            Reload(true);
 
             Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
         }
@@ -185,7 +175,13 @@ public class EssentialsPlugin
                         }
                     }
                 }*/
-
+        Debug.Log("afkPlayers");
+        if (AfkPlayers.Any(message.Contains))
+        //if (AfkPlayers.Contains(message))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "This user is currently AFK.");
+            return false;
+        }
 
         // Clear chat command, self and global
 		Debug.Log("clearchat");
@@ -216,11 +212,18 @@ public class EssentialsPlugin
                 }
             }
         }
-		Debug.Log("reload");
+        Debug.Log("afk");
+        // Afk command
+        /*if (message.StartsWith(cmdAfk) || message.StartsWith(cmdReload2))
+        {
+            afk(message, player);
+            return true;
+        }*/
+        Debug.Log("reload");
         // Reload command
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
         {
-            Reload(message, player);
+            Reload(false, message, player);
             return true;
         }
 		Debug.Log("mute");
@@ -401,13 +404,10 @@ public class EssentialsPlugin
         try
         {
             SvPlayer player = (SvPlayer)oPlayer;
-            Debug.Log("Clearchat ----");
-            Debug.Log("Message: " + message);
-            Debug.Log("PlayerName: " + player.playerData.username);
             if (self)
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Clearing the chat for yourself...");
-                Thread.Sleep(250);
+                Thread.Sleep(500);
                 for (int i = 0; i < 6; i++)
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, " ");
@@ -415,23 +415,18 @@ public class EssentialsPlugin
             }
             else if (!(self))
             {
-                Debug.Log("else !self");
                 if (admins.Contains(player.playerData.username))
                 {
-                    Debug.Log("player has admin rights");
                     //SvPlayer svPlayer = (SvPlayer)player;
                     player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
-                    Thread.Sleep(250);
-                    Debug.Log("annouce message send, clearing now");
+                    Thread.Sleep(500);
                     for (int i = 0; i < 6; i++)
                     {
                         player.SendToAll(Channel.Unsequenced, (byte)10, " ");
                     }
-                    Debug.Log("done");
                 }
                 else
                 {
-                    Debug.Log("player does not have perm");
                     player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 }
             }
@@ -453,37 +448,46 @@ public class EssentialsPlugin
         Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
         Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
     }
-    public static void Reload(string message, object oPlayer)
+    public static void Reload(bool silentExecution, string message = null, object oPlayer = null)
     {
-        SvPlayer player = (SvPlayer)oPlayer;
-        if (admins.Contains(player.playerData.username))
+        if (!silentExecution)
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
-            ReadFile(SettingsFile);
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
-            Thread.Sleep(50);
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading language and chat block files..");
-            ReadFile(LanguageBlockFile);
-            Thread.Sleep(10);
-            ReadFile(ChatBlockFile);
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Language and chat block files reloaded");
-            Debug.Log("adminfile");
-            ReadFile(AdminListFile);
-            Debug.Log("godfile");
-            ReadFile(GodListFile);
-            Debug.Log("mutefile");
-            ReadFile(MuteListFile);
+            SvPlayer player = (SvPlayer)oPlayer;
+            if (admins.Contains(player.playerData.username))
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
+                ReadFile(SettingsFile);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading critical .txt files...");
+                ReadFile(LanguageBlockFile);
+                ReadFile(ChatBlockFile);
+                ReadFile(AdminListFile);
+                ReadFile(GodListFile);
+                ReadFile(MuteListFile);
+                ReadFile(AfkListFile);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Critical .txt files reloaded");
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+            }
         }
-        else
+        else if (silentExecution)
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+            ReadFile(SettingsFile);
+            ReadFile(LanguageBlockFile);
+            ReadFile(ChatBlockFile);
+            ReadFile(AdminListFile);
+            ReadFile(GodListFile);
+            ReadFile(MuteListFile);
+            ReadFile(AfkListFile);
         }
     }
 
     public static void essentials(string message, object oPlayer)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-        player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T");
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea");
         player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + version);
 
         //TODO: Subcommands like /essentials reload : executes cmdReload
@@ -492,16 +496,13 @@ public class EssentialsPlugin
     public static bool say(string message, object oPlayer)
     {
 		SvPlayer player = (SvPlayer)oPlayer;
-		Debug.Log ("Set Player");
         try
         {
 
             if (admins.Contains(player.playerData.username))
             {
-				Debug.Log("Got Admin");
                 if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length))
                 {
-					Debug.Log("Checked message args");
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "An argument is required for this command.");
                     return true;
                 }
@@ -510,16 +511,13 @@ public class EssentialsPlugin
 					string arg1 = "blank";
                     if (message.StartsWith(cmdSay))
                     {
-						Debug.Log("checking arg1 length 1");
                         arg1 = message.Substring(cmdSay.Length);
                     }
                     else if (message.StartsWith(cmdSay2))
                     {
-						Debug.Log("checking arg1 length 2");
                         arg1 = message.Substring(cmdSay2.Length);
                     }
-					Debug.Log("Sending Message");
-                    player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + player.playerData.username + ": " + arg1);
+                    player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + " " + player.playerData.username + ": " + arg1);
                     return true;
                 }
             }
@@ -636,105 +634,89 @@ public class EssentialsPlugin
                     if (line.Contains("version: "))
                     {
                         version = line.Substring(9);
-//                        Debug.Log("Version: " + version);
                     }
                     else if (line.Contains("CommandCharacter: "))
                     {
                         cmdCommandCharacter = line.Substring(18);
-//                        Debug.Log("CmdChar: " + cmdCommandCharacter);
-
                     }
                     else if (line.Contains("noperm: "))
                     {
                         msgNoPerm = line.Substring(8);
-//                        Debug.Log("NoPerm: " + msgNoPerm);
                     }
                     else if (line.Contains("ClearChatCommand: "))
                     {
                         cmdClearChat = cmdCommandCharacter + line.Substring(18);
-//                        Debug.Log("clearchat");
-//                        Debug.Log("ClearChat: " + cmdClearChat);
                     }
                     else if (line.Contains("ClearChatCommand2: "))
                     {
                         cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
-//                       Debug.Log("ClearChat2: " + cmdClearChat2);
-
                     }
                     else if (line.Contains("SayCommand: "))
                     {
                         cmdSay = cmdCommandCharacter + line.Substring(12);
-//                        Debug.Log("CmdSay: " + cmdSay);
-
                     }
                     else if (line.Contains("SayCommand2:"))
                     {
                         cmdSay2 = cmdCommandCharacter + line.Substring(13);
-//                        Debug.Log("CmdSay2: " + cmdSay2);
                     }
                     else if (line.Contains("msgSayPrefix: "))
                     {
                         msgSayPrefix = line.Substring(14);
-//                        Debug.Log("MsgSayPrefix: " + msgSayPrefix);
                     }
                     else if (line.Contains("GodmodeCommand: "))
                     {
                         cmdGodmode = cmdCommandCharacter + line.Substring(16);
-//                        Debug.Log("GodmodeCommand: " + cmdGodmode);
                     }
                     else if (line.Contains("GodmodeCommand2: "))
                     {
                         cmdGodmode2 = cmdCommandCharacter + line.Substring(17);
-//                        Debug.Log("GodmodeCommand2: " + cmdGodmode2);
                     }
                     else if (line.StartsWith("MuteCommand: "))
                     {
                         cmdMute = cmdCommandCharacter + line.Substring(13);
-
-//                        Debug.Log("MuteCommand: " + cmdMute);
                     }
                     else if (line.StartsWith("UnMuteCommand: "))
                     {
                         cmdUnMute = cmdCommandCharacter + line.Substring(15);
-
-//                        Debug.Log("UnMuteCommand: " + cmdUnMute);
                     }
                     else if (line.Contains("UnknownCommand: "))
                     {
                         msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-//                        Debug.Log("Unknown: " + msgUnknownCommand);
                     }
                     else if (line.Contains("enableChatBlock: "))
                     {
                         ChatBlock = Convert.ToBoolean(line.Substring(17));
-//                        Debug.Log("ChatBlock?: " + ChatBlock);
                     }
                     else if (line.Contains("enableLanguageBlock: "))
                     {
                         LanguageBlock = Convert.ToBoolean(line.Substring(21));
-//                        Debug.Log("LangBlock?: " + LanguageBlock);
                     }
                     else if (line.Contains("ReloadCommand: "))
                     {
                         cmdReload = cmdCommandCharacter + line.Substring(15);
-//                        Debug.Log("Reload: " + cmdReload);
-
                     }
                     else if (line.Contains("ReloadCommand2: "))
                     {
                         cmdReload2 = cmdCommandCharacter + line.Substring(16);
-//                        Debug.Log("Reload2: " + cmdReload2);
                     }
                     else if (line.Contains("TimeBetweenAnnounce: "))
                     {
                         TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
-//                        Debug.Log("AnnounceTime: " + TimeBetweenAnnounce);
                     }
                     else if (line.Contains("TimestapFormat: "))
                     {
                         TimestampFormat = line.Substring(16);
-//                        Debug.Log("TimestampFormat: " + TimestampFormat);
                     }
+                    else if (line.Contains("SayCommand: "))
+                    {
+                        cmdAfk = cmdCommandCharacter + line.Substring(12);
+                    }
+                    else if (line.Contains("SayCommand2: "))
+                    {
+                        cmdAfk2 = cmdCommandCharacter + line.Substring(13);
+
+                    }
+
 
 
                 }
@@ -757,18 +739,15 @@ public class EssentialsPlugin
         }
         else if (FileName == AnnouncementsFile)
         {
-            announcements = File.ReadAllLines(AnnouncementsFile);
+            announcements = File.ReadAllLines(FileName);
         }
         else if (FileName == AdminListFile)
         {
-            Debug.Log("1");
-            using (var sr = new StreamReader(FileName))
+            using (var sr = new StreamReader(AdminListFile))
             {
-                Debug.Log("2");
                 string line = null;
                 while (!sr.EndOfStream)
                 {
-                    Debug.Log("3");
                     if ((line = sr.ReadLine()) != null)
                     {
                         if (line.StartsWith("#"))
@@ -777,15 +756,11 @@ public class EssentialsPlugin
                         }
                         else
                         {
-                            Debug.Log("Adding line to admin list:" + line);
-                            admins.Add(line);
-
+                            admins = admins + line + Environment.NewLine;
                         }
-
                     }
                 }
             }
-           //     admins = File.ReadAllLines(FileName);
         }
         else if (FileName == GodListFile)
         {
