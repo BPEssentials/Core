@@ -327,16 +327,15 @@ public class EssentialsPlugin
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
-            if (unmute){
-                if  (MutePlayers.Contains(muteuser)) {
-					ReadFile(MuteListFile);
-					RemoveStringFromFile(MutePlayers, player.playerData.username);
-					player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
-					return true;
-            }
+            if (unmute)
             {
-
-
+                if (MutePlayers.Contains(muteuser))
+                {
+                    ReadFile(MuteListFile);
+                    RemoveStringFromFile(MutePlayers, player.playerData.username);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
+                    return true;
+                }
             }
             else
             {
