@@ -484,7 +484,7 @@ public class EssentialsPlugin
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
                 ReadFileStream(AdminListFile, AdminsListPlayers);
 				LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-				AdminsListPlayers = AdminsListPlayers.ConvertAll(d => d.ToLower());
+				ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
 				ReadFile(AnnouncementsFile);
                 ReadFile(GodListFile);
                 ReadFile(MuteListFile);
@@ -506,7 +506,7 @@ public class EssentialsPlugin
             ReadFileStream(ChatBlockFile, ChatBlockWords);
             ReadFileStream(AdminListFile, AdminsListPlayers);
             LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-			AdminsListPlayers = AdminsListPlayers.ConvertAll(d => d.ToLower()); 
+			ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower()); 
 			ReadFile(AnnouncementsFile);
             ReadFile(GodListFile);
             ReadFile(MuteListFile);
