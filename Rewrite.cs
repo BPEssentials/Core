@@ -280,8 +280,17 @@ public class EssentialsPlugin
         }
 
     }
+	private static void AnnounceThread(object man)
+	{
+		SvNetMan netMan = (SvNetMan)man;
+		while (true)
+		{
+			foreach (var player in netMan.players)
+			{
+				player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
+			}
 
-    public static bool Mute(string message, object oPlayer, bool unmute)
+			public static bool Mute(string message, object oPlayer, bool unmute)
     {
         SvPlayer player = (SvPlayer)oPlayer;
 
@@ -570,8 +579,8 @@ public class EssentialsPlugin
             
         if (player.playerData.username != null)
         {
-            Thread thread = new Thread(new ParameterizedThreadStart(CheckBanned));
-            thread.Start(player);
+            Thread banned = new Thread(new ParameterizedThreadStart(CheckBanned));
+            banned.Start(player);
             Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
             thread.Start(player);
         }
