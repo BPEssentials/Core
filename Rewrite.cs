@@ -145,7 +145,7 @@ public class EssentialsPlugin
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
             if (message.StartsWith(cmdUnMute)){
-                 unmute = false;
+                 unmute = true;
             }
 
             Mute(message, player, unmute);
