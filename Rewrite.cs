@@ -483,8 +483,9 @@ public class EssentialsPlugin
                 ReadFileStream(LanguageBlockFile, LanguageBlockWords);
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
                 ReadFileStream(AdminListFile, AdminsListPlayers);
-
-                ReadFile(AnnouncementsFile);
+				LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
+				AdminsListPlayers = AdminsListPlayers.ConvertAll(d => d.ToLower());
+				ReadFile(AnnouncementsFile);
                 ReadFile(GodListFile);
                 ReadFile(MuteListFile);
                 ReadFile(AfkListFile);
