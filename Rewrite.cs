@@ -142,7 +142,7 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("mute");
-        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
+        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) 
         {
             if (message.StartsWith(cmdUnMute)){
                  unmute = false;
@@ -152,7 +152,7 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("say");
-        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
+        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) 
         {
             say(message, player);
             return true;
@@ -590,14 +590,14 @@ public class EssentialsPlugin
         Thread.Sleep(500);
         SvPlayer player = (SvPlayer)oPlayer;
         string[] BanList = System.IO.File.ReadAllLines("ban_list.txt");
-        if (BanList.Any(player.playerData.username.Contains))
+        if (BanList.Contains(player.playerData.username)
         {
             Debug.Log("[WARNING] " + player.playerData.username + " Joined while banned! IP:" + player.netMan.GetAddress(player.connection));
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are joining while banned.");
             float Time = 6f;
             player.SendToSelf(Channel.Reliable, (byte)45, Time);
-            this.netMan.AddBanned(shPlayer);
-            this.netMan.Disconnect(shPlayer.svPlayer.connection);
+            this.netMan.AddBanned(player);
+            this.netMan.Disconnect(Splayer.svPlayer.connection);
 
         }
     }
