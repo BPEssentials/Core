@@ -119,15 +119,6 @@ public class EssentialsPlugin
     {
         MessageLog(message, player);
 
-
-        Debug.Log("afkPlayers");
-        if (AfkPlayers.Any(message.Contains))
-        //if (AfkPlayers.Contains(message))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "This user is currently AFK.");
-            return false;
-        }
-
         // Clear chat command, self and global
         Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " ") || message.StartsWith(cmdClearChat + " "))
@@ -174,7 +165,11 @@ public class EssentialsPlugin
         Debug.Log("mute");
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
-            Mute(message, player);
+            if (message.StartsWith(cmdUnMute)){
+                bool unmute = false;
+            }
+
+            Mute(message, player, unmute);
             return true;
         }
         Debug.Log("say");
@@ -231,7 +226,7 @@ public class EssentialsPlugin
         //Checks if player is muted, if so, cancel message
         if (MutePlayers.Contains(player.playerData.username))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
             return true;
         }
 
@@ -254,6 +249,7 @@ public class EssentialsPlugin
         }
         if (message.Contains(AfkPlayers.Any())){
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+            return true;
 
         }
         return false;
@@ -322,7 +318,7 @@ public class EssentialsPlugin
 
     }
 
-    public static bool Mute(string message, object oPlayer)
+    public static bool Mute(string message, object oPlayer, bool unmute)
     {
         SvPlayer player = (SvPlayer)oPlayer;
 
@@ -331,12 +327,15 @@ public class EssentialsPlugin
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
-            if (MutePlayers.Contains(muteuser))
+            if (unmute){
+                if  (MutePlayers.Contains(muteuser)) {
+					ReadFile(MuteListFile);
+					RemoveStringFromFile(MutePlayers, player.playerData.username);
+					player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
+					return true;
+            }
             {
-                ReadFile(MuteListFile);
-                RemoveStringFromFile(MutePlayers, player.playerData.username);
-                player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
-                return true;
+
 
             }
             else
