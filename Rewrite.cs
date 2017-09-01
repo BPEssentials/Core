@@ -587,7 +587,7 @@ public class EssentialsPlugin
     }
     private static void CheckBanned(object oPlayer)
     {
-        Thread.Sleep(500);
+        Thread.Sleep(5000);
         SvPlayer player = (SvPlayer)oPlayer;
         string[] BanList = System.IO.File.ReadAllLines("ban_list.txt");
         if (BanList.Contains(player.playerData.username)
