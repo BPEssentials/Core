@@ -109,14 +109,14 @@ public class EssentialsPlugin
             Debug.Log(ex); //remove when debugging is done
         }
 
-        if (!File.Exists(AnnouncementsFile))
-        {
-            Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
-        }
-        Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
-        thread.Start(netMan);
+        //if (!File.Exists(AnnouncementsFile))
+        //{
+        //    Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
+        //}
+        //Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
+        //thread.Start(netMan);
 
-        Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
+        //Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
     }
 
     //Chat Events
@@ -142,7 +142,7 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("mute");
-        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) 
+        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
             if (message.StartsWith(cmdUnMute)){
                  unmute = false;
@@ -152,7 +152,7 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("say");
-        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) 
+        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
         {
             say(message, player);
             return true;
@@ -225,6 +225,7 @@ public class EssentialsPlugin
 
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2)){
             afk(message, player);
+            return true;
         }
 
         if (AfkPlayers.Contains(message)){
@@ -232,7 +233,7 @@ public class EssentialsPlugin
             return true;
 
         }
-
+        return false;
 
     }
 
@@ -280,18 +281,9 @@ public class EssentialsPlugin
         }
 
     }
-    private static void AnnounceThread(object man)
+
+    public static bool Mute(string message, object oPlayer, bool unmute)
     {
-        SvNetMan netMan = (SvNetMan)man;
-        while (true)
-        {
-            foreach (var player in netMan.players)
-            {
-                player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
-            }
-        }
-    }
-		public static bool Mute(string message, object oPlayer, bool unmute){
         SvPlayer player = (SvPlayer)oPlayer;
 
         string muteuser = message.Split(' ').Last();
@@ -343,14 +335,14 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
         }
     }
-    public static void getUsers(){
-        Users = new List<string>();
-            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>()){
-              Users.Add(shPlayer);  
-            }
-
-
-		}
+    //public static void getUsers()
+    //{
+    //    Users = new List<string>();
+    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+    //    {
+    //        Users.Add(shPlayer);
+    //    }
+    //}
     public static bool BlockMessage(string message, object oPlayer)
     {
         message = message.ToLower();
@@ -579,26 +571,39 @@ public class EssentialsPlugin
             
         if (player.playerData.username != null)
         {
-            Thread banned = new Thread(new ParameterizedThreadStart(CheckBanned));
-            banned.Start(player);
+            Thread thread2 = new Thread(new ParameterizedThreadStart(CheckBanned));
+            thread2.Start(player);
             Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
             thread.Start(player);
         }
     }
     private static void CheckBanned(object oPlayer)
     {
-        Thread.Sleep(5000);
-        SvPlayer player = (SvPlayer)oPlayer;
-        string[] BanList = System.IO.File.ReadAllLines("ban_list.txt");
-        if (BanList.Contains(player.playerData.username)
+        Thread.Sleep(3000);
+        try
         {
-            Debug.Log("[WARNING] " + player.playerData.username + " Joined while banned! IP:" + player.netMan.GetAddress(player.connection));
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are joining while banned.");
-            float Time = 6f;
-            player.SendToSelf(Channel.Reliable, (byte)45, Time);
-            this.netMan.AddBanned(player);
-            this.netMan.Disconnect(Splayer.svPlayer.connection);
+            SvPlayer player = (SvPlayer)oPlayer;
+            if (File.ReadAllText("ban_list.txt").Contains(player.playerData.username))
+            {
+                Debug.Log("[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.netMan.GetAddress(player.connection));
+                foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                {
+                    if (shPlayer.svPlayer == player)
+                    {
+                        if (shPlayer.IsRealPlayer())
+                        {
+                            player.netMan.AddBanned(shPlayer);
+                            player.netMan.Disconnect(player.connection);
+                        }
+                    }
+                }
 
+
+            }
+        }
+        catch (Exception ex)
+        {
+            LogExpection(ex, "CheckBanned");
         }
     }
     private static void WriteIPToFile(object oPlayer)
