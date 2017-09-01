@@ -121,7 +121,7 @@ public class EssentialsPlugin
 
         // Clear chat command, self and global
         Debug.Log("clearchat");
-        if (message.StartsWith(cmdClearChat) || message.StartsWith((cmdClearChat2)){
+        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2)){
             if (message.Contains("all") || message.Contains("everyone")){
                 bool all = true;
             }
@@ -308,6 +308,12 @@ public class EssentialsPlugin
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
                 }
+                else if(!MutePlayers.Contains(muteuser)){
+					player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
+                    return true;
+
+				}
+				
             }
             else
             {
@@ -328,16 +334,14 @@ public class EssentialsPlugin
 
 		if (AfkPlayers.Contains(player.playerData.username))
 		{
-			ReadFile(AfkPlayers);
+			ReadFile(AfkListFile);
 			RemoveStringFromFile(MutePlayers, player.playerData.username);
 			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
-			return true;
 		}
         else
 		{
 			MutePlayers.Add(player.playerData.username);
 			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
-			return true;
 		}
 	}
 	
