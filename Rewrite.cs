@@ -82,12 +82,15 @@ public class EssentialsPlugin
     private static string[] announcements;
     private static int TimeBetweenAnnounce;
     private static string TimestampFormat;
-    #endregion
+    private static bool all;
+    private static bool unmute; 
 
-    //Code below here, Don't edit unless you know what you're doing.
-    //Information about the api @ https://github.com/deathbykorea/universalunityhooks
+	#endregion
 
-    [Hook("SvNetMan.StartServerNetwork")]
+	//Code below here, Don't edit unless you know what you're doing.
+	//Information about the api @ https://github.com/deathbykorea/universalunityhooks
+
+	[Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan)
     {
 
@@ -122,8 +125,9 @@ public class EssentialsPlugin
         // Clear chat command, self and global
         Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2)){
-            if (message.Contains("all") || message.Contains("everyone")){
-                bool all = true;
+            if (message.Contains("all") || message.Contains("everyone"))
+            {
+                all = true;
             }
             ClearChat(message, player, all);
         }
@@ -138,7 +142,7 @@ public class EssentialsPlugin
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
             if (message.StartsWith(cmdUnMute)){
-                bool unmute = false;
+                 unmute = false;
             }
 
             Mute(message, player, unmute);
@@ -217,9 +221,10 @@ public class EssentialsPlugin
         }
 
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2)){
-            afk(message,player);
+            afk(message, player);
         }
-        if (message.Contains(AfkPlayers.Any())){
+
+        if (AfkPlayers.Contains(message)){
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
             return true;
 
@@ -315,15 +320,13 @@ public class EssentialsPlugin
 				}
 				
             }
-            else
-            {
+            else if  (!unmute) {
                 MutePlayers.Add(muteuser);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
                 return true;
             }
         }
-        else
-        {
+        else {
             player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
             return false;
         }
