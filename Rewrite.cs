@@ -79,6 +79,9 @@ public class EssentialsPlugin
 
     private static string cmdRules;
 
+    private static string cmdCheckIP;
+    private static string cmdCheckPlayer;
+
     private static string arg1ClearChat;
 
     private static int announceIndex = 0;
@@ -187,7 +190,48 @@ public class EssentialsPlugin
                 return true;
             }
         }
-
+        if (message.StartsWith("/info"))
+        {
+            if (message != "/info")
+            {
+                string arg1 = message.Substring("/info".Count() + 1);
+                CheckInfo(message, player, arg1);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+        }
+        if (message.StartsWith(cmdCheckIP))
+        {
+            if (message != cmdCheckIP)
+            {
+                string arg1 = message.Substring(cmdCheckIP.Count() + 1);
+                CheckIP(message, player, arg1);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+        }
+        if (message.StartsWith(cmdCheckPlayer))
+        {
+            if (message != cmdCheckPlayer)
+            {
+                string arg1 = message.Substring(cmdCheckPlayer.Count() + 1);
+                CheckPlayer(message, player, arg1);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+        }
 
         Debug.Log("msgunknown");
         if (message.StartsWith(cmdCommandCharacter))
@@ -237,8 +281,56 @@ public class EssentialsPlugin
 
     }
 
-            // These are the various functions for the commands.
-
+    // These are the various functions for the commands.
+    public static void CheckInfo(string message, object oPlayer, string arg1)
+    {
+        SvPlayer player = (SvPlayer)oPlayer;
+        int found = 0;
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+        {
+            if (shPlayer.svPlayer == arg1)
+            {
+                if (shPlayer.IsRealPlayer())
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
+                }
+            }
+        }
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+    }
+    public static void CheckIP(string message, object oPlayer, string arg1)
+    {
+        SvPlayer player = (SvPlayer)oPlayer;
+        int found = 0;
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
+        foreach (var line in File.ReadAllLines("ip_list.txt"))
+        {
+            if (line.Contains(arg1) || line.Contains(arg1 + ":"))
+            {
+                ++found;
+                player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
+            }
+        }
+        player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
+    }
+    public static void CheckPlayer(string message, object oPlayer, string arg1)
+    {
+        SvPlayer player = (SvPlayer)oPlayer;
+        int found = 0;
+        string arg1temp = null;
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Accounts for IP: " + arg1);
+        foreach (var line in File.ReadAllLines("ip_list.txt"))
+        {
+            if (line.Contains(arg1) || line.Contains(" " + arg1))
+            {
+                ++found;
+                arg1temp = line.Replace(": " + arg1, " ");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, arg1temp);
+            }
+        }
+        player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
+    }
 
     public static void MessageLog(string message, object oPlayer)
     {
@@ -799,7 +891,15 @@ public class EssentialsPlugin
                         cmdKick = cmdCommandCharacter + line.Substring(13);
                     }
 
+                    else if (line.Contains("CheckIPCommand: "))
+                    {
+                        cmdCheckIP = cmdCommandCharacter + line.Substring(16);
+                    }
 
+                    else if (line.Contains("CheckPlayerCommand: "))
+                    {
+                        cmdCheckPlayer = cmdCommandCharacter + line.Substring(20);
+                    }
 
                 }
 
