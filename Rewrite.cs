@@ -22,7 +22,7 @@ public class EssentialsPlugin
     private static string GodListFile = "godlist.txt";
     private static string AfkListFile = "afklist.txt";
     private static string MuteListFile = "mutelist.txt";
-	private static string RulesFile = "rules.txt";
+    private static string RulesFile = "rules.txt";
     #endregion
 
     #region predefining variables
@@ -46,9 +46,9 @@ public class EssentialsPlugin
     private static List<string> GodListPlayers = new List<string>();
     private static List<string> AfkPlayers = new List<string>();
     private static List<string> MutePlayers = new List<string>();
-	private static string[] rules;
+    private static string[] rules;
     private static string[] rules2;
-    
+
 
     // Messages
     private static string msgNoPerm;
@@ -74,7 +74,10 @@ public class EssentialsPlugin
     private static string cmdAfk;
     private static string cmdAfk2;
 
-	private static string cmdRules;
+    private static string cmdBan;
+    private static string cmdKick;
+
+    private static string cmdRules;
 
     private static string arg1ClearChat;
 
@@ -85,12 +88,12 @@ public class EssentialsPlugin
     private static bool all;
     private static bool unmute; 
 
-	#endregion
+    #endregion
 
-	//Code below here, Don't edit unless you know what you're doing.
-	//Information about the api @ https://github.com/deathbykorea/universalunityhooks
+    //Code below here, Don't edit unless you know what you're doing.
+    //Information about the api @ https://github.com/deathbykorea/universalunityhooks
 
-	[Hook("SvNetMan.StartServerNetwork")]
+    [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan)
     {
 
@@ -229,29 +232,12 @@ public class EssentialsPlugin
             return true;
 
         }
-        return false;
+
+
     }
 
-    // These are the various functions for the commands.
+            // These are the various functions for the commands.
 
-    private static void AnnounceThread(object man)
-    {
-        SvNetMan netMan = (SvNetMan)man;
-        while (true)
-        {
-            foreach (var player in netMan.players)
-            {
-                player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
-            }
-
-            Debug.Log(SetTimeStamp() + "[INFO] Announcement made...");
-
-            announceIndex += 1;
-            if (announceIndex > announcements.Length - 1)
-                announceIndex = 0;
-            Thread.Sleep(TimeBetweenAnnounce * 1000);
-        }
-    }
 
     public static void MessageLog(string message, object oPlayer)
     {
@@ -314,11 +300,11 @@ public class EssentialsPlugin
                     return true;
                 }
                 else if(!MutePlayers.Contains(muteuser)){
-					player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
                     return true;
 
-				}
-				
+                }
+                
             }
             else if  (!unmute) {
                 MutePlayers.Add(muteuser);
@@ -330,26 +316,32 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
             return false;
         }
+        return false;
     }
 
     public static void afk(string message, object oPlayer){
-		SvPlayer player = (SvPlayer)oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
 
-		if (AfkPlayers.Contains(player.playerData.username))
-		{
-			ReadFile(AfkListFile);
-			RemoveStringFromFile(MutePlayers, player.playerData.username);
-			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
-		}
+        if (AfkPlayers.Contains(player.playerData.username))
+        {
+            ReadFile(AfkListFile);
+            RemoveStringFromFile(MutePlayers, player.playerData.username);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
+        }
         else
-		{
-			MutePlayers.Add(player.playerData.username);
-			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
+        {
+            MutePlayers.Add(player.playerData.username);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
+        }
+    }
+    public static void getUsers(){
+        Users = new List<string>();
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>()){
+              Users.Add(shPlayer);  
+            }
+
+
 		}
-	}
-	
-
-
     public static bool BlockMessage(string message, object oPlayer)
     {
         message = message.ToLower();
@@ -488,13 +480,13 @@ public class EssentialsPlugin
                 ReadFileStream(LanguageBlockFile, LanguageBlockWords);
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
                 ReadFileStream(AdminListFile, AdminsListPlayers);
-				LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-				ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
-				ReadFile(AnnouncementsFile);
+                LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
+                ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
+                ReadFile(AnnouncementsFile);
                 ReadFile(GodListFile);
                 ReadFile(MuteListFile);
                 ReadFile(AfkListFile);
-				ReadFile(RulesFile);
+                ReadFile(RulesFile);
 
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Critical .txt files reloaded");
             }
@@ -511,12 +503,12 @@ public class EssentialsPlugin
             ReadFileStream(ChatBlockFile, ChatBlockWords);
             ReadFileStream(AdminListFile, AdminsListPlayers);
             LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-			ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower()); 
-			ReadFile(AnnouncementsFile);
+            ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower()); 
+            ReadFile(AnnouncementsFile);
             ReadFile(GodListFile);
             ReadFile(MuteListFile);
             ReadFile(AfkListFile);
-			ReadFile(RulesFile);
+            ReadFile(RulesFile);
         }
     }
 
@@ -531,7 +523,7 @@ public class EssentialsPlugin
     }
     public static bool say(string message, object oPlayer)
     {
-		SvPlayer player = (SvPlayer)oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         try
         {
 
@@ -544,7 +536,7 @@ public class EssentialsPlugin
                 }
                 else
                 {
-					string arg1 = "blank";
+                    string arg1 = "blank";
                     if (message.StartsWith(cmdSay))
                     {
                         arg1 = message.Substring(cmdSay.Length);
@@ -575,10 +567,29 @@ public class EssentialsPlugin
     [Hook("SvPlayer.Initialize")]
     public static void Initialize(SvPlayer player)
     {
+            
         if (player.playerData.username != null)
         {
+            Thread thread = new Thread(new ParameterizedThreadStart(CheckBanned));
+            thread.Start(player);
             Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
             thread.Start(player);
+        }
+    }
+    private static void CheckBanned(object oPlayer)
+    {
+        Thread.Sleep(500);
+        SvPlayer player = (SvPlayer)oPlayer;
+        string[] BanList = System.IO.File.ReadAllLines("ban_list.txt");
+        if (BanList.Any(player.playerData.username.Contains))
+        {
+            Debug.Log("[WARNING] " + player.playerData.username + " Joined while banned! IP:" + player.netMan.GetAddress(player.connection));
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are joining while banned.");
+            float Time = 6f;
+            player.SendToSelf(Channel.Reliable, (byte)45, Time);
+            this.netMan.AddBanned(shPlayer);
+            this.netMan.Disconnect(shPlayer.svPlayer.connection);
+
         }
     }
     private static void WriteIPToFile(object oPlayer)
@@ -675,72 +686,72 @@ public class EssentialsPlugin
                 }
                 else
                 {
-					// TODO: make this better/compacter
-					if (line.Contains("version: "))
-					{
-						version = line.Substring(9);
-					}
-					else if (line.Contains("CommandCharacter: "))
-					{
-						cmdCommandCharacter = line.Substring(18);
-					}
-					else if (line.Contains("noperm: "))
-					{
-						msgNoPerm = line.Substring(8);
-					}
-					else if (line.Contains("ClearChatCommand: "))
-					{
-						cmdClearChat = cmdCommandCharacter + line.Substring(18);
-					}
-					else if (line.Contains("ClearChatCommand2: "))
-					{
-						cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
-					}
-					else if (line.Contains("SayCommand: "))
-					{
-						cmdSay = cmdCommandCharacter + line.Substring(12);
-					}
-					else if (line.Contains("SayCommand2:"))
-					{
-						cmdSay2 = cmdCommandCharacter + line.Substring(13);
-					}
-					else if (line.Contains("msgSayPrefix: "))
-					{
-						msgSayPrefix = line.Substring(14);
-					}
-					else if (line.Contains("GodmodeCommand: "))
-					{
-						cmdGodmode = cmdCommandCharacter + line.Substring(16);
-					}
-					else if (line.Contains("GodmodeCommand2: "))
-					{
-						cmdGodmode2 = cmdCommandCharacter + line.Substring(17);
-					}
-					else if (line.StartsWith("MuteCommand: "))
-					{
-						cmdMute = cmdCommandCharacter + line.Substring(13);
-					}
-					else if (line.StartsWith("UnMuteCommand: "))
-					{
-						cmdUnMute = cmdCommandCharacter + line.Substring(15);
-					}
-					else if (line.Contains("UnknownCommand: "))
-					{
-						msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-					}
-					else if (line.Contains("enableChatBlock: "))
-					{
-						ChatBlock = Convert.ToBoolean(line.Substring(17));
-					}
-					else if (line.Contains("enableLanguageBlock: "))
-					{
-						LanguageBlock = Convert.ToBoolean(line.Substring(21));
-					}
-					else if (line.Contains("RulesCommand: "))
-					{
-							cmdRules = cmdCommandCharacter + line.Substring(14);
-					}
-					else if (line.Contains("ReloadCommand: "))
+                    // TODO: make this better/compacter
+                    if (line.Contains("version: "))
+                    {
+                        version = line.Substring(9);
+                    }
+                    else if (line.Contains("CommandCharacter: "))
+                    {
+                        cmdCommandCharacter = line.Substring(18);
+                    }
+                    else if (line.Contains("noperm: "))
+                    {
+                        msgNoPerm = line.Substring(8);
+                    }
+                    else if (line.Contains("ClearChatCommand: "))
+                    {
+                        cmdClearChat = cmdCommandCharacter + line.Substring(18);
+                    }
+                    else if (line.Contains("ClearChatCommand2: "))
+                    {
+                        cmdClearChat2 = cmdCommandCharacter + line.Substring(19);
+                    }
+                    else if (line.Contains("SayCommand: "))
+                    {
+                        cmdSay = cmdCommandCharacter + line.Substring(12);
+                    }
+                    else if (line.Contains("SayCommand2:"))
+                    {
+                        cmdSay2 = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.Contains("msgSayPrefix: "))
+                    {
+                        msgSayPrefix = line.Substring(14);
+                    }
+                    else if (line.Contains("GodmodeCommand: "))
+                    {
+                        cmdGodmode = cmdCommandCharacter + line.Substring(16);
+                    }
+                    else if (line.Contains("GodmodeCommand2: "))
+                    {
+                        cmdGodmode2 = cmdCommandCharacter + line.Substring(17);
+                    }
+                    else if (line.StartsWith("MuteCommand: "))
+                    {
+                        cmdMute = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("UnMuteCommand: "))
+                    {
+                        cmdUnMute = cmdCommandCharacter + line.Substring(15);
+                    }
+                    else if (line.Contains("UnknownCommand: "))
+                    {
+                        msgUnknownCommand = Convert.ToBoolean(line.Substring(16));
+                    }
+                    else if (line.Contains("enableChatBlock: "))
+                    {
+                        ChatBlock = Convert.ToBoolean(line.Substring(17));
+                    }
+                    else if (line.Contains("enableLanguageBlock: "))
+                    {
+                        LanguageBlock = Convert.ToBoolean(line.Substring(21));
+                    }
+                    else if (line.Contains("RulesCommand: "))
+                    {
+                        cmdRules = cmdCommandCharacter + line.Substring(14);
+                    }
+                    else if (line.Contains("ReloadCommand: "))
                     {
                         cmdReload = cmdCommandCharacter + line.Substring(15);
                     }
@@ -765,6 +776,14 @@ public class EssentialsPlugin
                         cmdAfk2 = cmdCommandCharacter + line.Substring(13);
 
                     }
+                    else if (line.Contains("BanCommand: "))
+                    {
+                        cmdBan = cmdCommandCharacter + line.Substring(12);
+                    }
+                    else if (line.Contains("KickCommand: "))
+                    {
+                        cmdKick = cmdCommandCharacter + line.Substring(13);
+                    }
 
 
 
@@ -782,8 +801,8 @@ public class EssentialsPlugin
         {
             announcements = File.ReadAllLines(FileName);
         }
-		else if (FileName == RulesFile)
-		{
+        else if (FileName == RulesFile)
+        {
             rules = File.ReadAllLines(FileName);
         }
         else if (FileName == GodListFile)
