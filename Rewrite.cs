@@ -39,9 +39,9 @@ public class EssentialsPlugin
 
 
     // Arrays
-    private static string[] ChatBlockWords;
-    private static string[] LanguageBlockWords;
-    private static string[] AdminsListPlayers;
+    private static List<string> ChatBlockWords = new List<string>();
+    private static List<string> LanguageBlockWords = new List<string>();
+    private static List<string> AdminsListPlayers = new List<string>();
 
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
@@ -659,7 +659,7 @@ public class EssentialsPlugin
             return "[Failed] ";
         }
     }
-    public static void ReadFileStream(string FileName, string[] output)
+    public static void ReadFileStream(string FileName, List<string> output)
     {
         foreach (var line in File.ReadAllLines(FileName))
         {
@@ -669,7 +669,7 @@ public class EssentialsPlugin
             }
             else
             {
-                output = output + line + Environment.NewLine.ToArray();
+                output.Add(line);
             }
         }
     }
