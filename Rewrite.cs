@@ -38,16 +38,17 @@ public class EssentialsPlugin
     private static ShPlayer Splayer;
 
 
-    // Block arrays
+    // Arrays
     private static string[] ChatBlockWords;
     private static string[] LanguageBlockWords;
+    private static string[] AdminsListPlayers;
+
     private static string[] GodListPlayers;
     private static string[] AfkPlayers;
     private static string[] MutePlayers;
 	private static string[] rules;
     private static string[] rules2;
-
-    private static string admins;
+    
 
     // Messages
     private static string msgNoPerm;
@@ -319,7 +320,7 @@ public class EssentialsPlugin
 
         string muteuser = message.Split(' ').Last();
 
-        if (admins.Contains(player.playerData.username))
+        if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
             if (MutePlayers.Contains(muteuser))
@@ -360,7 +361,7 @@ public class EssentialsPlugin
         {
             if (LanguageBlockWords.Any(message.ToLower().Contains))
             {
-                if (admins.Contains(player.playerData.username))
+                if (AdminsListPlayers.Contains(player.playerData.username))
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
                     return false;
@@ -384,7 +385,7 @@ public class EssentialsPlugin
         {
         SvPlayer player = (SvPlayer)oPlayer;
 
-            if (admins.Contains(player.playerData.username))
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
@@ -433,7 +434,7 @@ public class EssentialsPlugin
             }
             else if (!(self))
             {
-                if (admins.Contains(player.playerData.username))
+                if (AdminsListPlayers.Contains(player.playerData.username))
                 {
                     //SvPlayer svPlayer = (SvPlayer)player;
                     player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
@@ -471,7 +472,7 @@ public class EssentialsPlugin
         if (!silentExecution)
         {
             SvPlayer player = (SvPlayer)oPlayer;
-            if (admins.Contains(player.playerData.username))
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
                 ReadFile(SettingsFile);
@@ -480,7 +481,7 @@ public class EssentialsPlugin
 
                 ReadFileStream(LanguageBlockFile, LanguageBlockWords);
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
-                ReadFileStream(AdminListFile, admins);
+                ReadFileStream(AdminListFile, AdminsListPlayers);
 
                 ReadFile(AnnouncementsFile);
                 ReadFile(GodListFile);
@@ -501,7 +502,7 @@ public class EssentialsPlugin
 
             ReadFileStream(LanguageBlockFile, LanguageBlockWords);
             ReadFileStream(ChatBlockFile, ChatBlockWords);
-            ReadFileStream(AdminListFile, admins);
+            ReadFileStream(AdminListFile, AdminsListPlayers);
 
             ReadFile(AnnouncementsFile);
             ReadFile(GodListFile);
@@ -526,7 +527,7 @@ public class EssentialsPlugin
         try
         {
 
-            if (admins.Contains(player.playerData.username))
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
                 if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length))
                 {
@@ -662,13 +663,13 @@ public class EssentialsPlugin
     {
         foreach (var line in File.ReadAllLines(FileName))
         {
-            if (line.StartsWith("#") || line.Contains("#"))
+            if (line.StartsWith("#"))
             {
                 continue;
             }
             else
             {
-                output = output + line + Environment.NewLine;
+                output = output + line + Environment.NewLine.ToArray();
             }
         }
     }
@@ -679,7 +680,7 @@ public class EssentialsPlugin
         {
             foreach (var line in File.ReadAllLines(SettingsFile))
             {
-                if (line.StartsWith("#") || line.Contains("#"))
+                if (line.StartsWith("#"))
                 {
                     continue;
                 }
