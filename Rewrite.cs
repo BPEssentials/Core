@@ -347,19 +347,20 @@ public class EssentialsPlugin
 
     public static bool BlockMessage(string message, object oPlayer)
     {
+        message = message.ToLower();
         SvPlayer player = (SvPlayer)oPlayer;
         if (ChatBlock == true)
         {
-            if (ChatBlockWords.Contains(message.ToLower()))
+            if (ChatBlockWords.Contains(message);
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blacklisted word, the message has been blocked.");
                 Debug.Log(SetTimeStamp() + player.playerData.username + " Said a word that is blocked.");
                 return true;
             }
         }
         if (LanguageBlock == true)
         {
-            if (LanguageBlockWords.Contains(message.ToLower()))
+            if (LanguageBlockWords.Contains(message);
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
