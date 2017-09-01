@@ -248,6 +248,14 @@ public class EssentialsPlugin
                 return false;
             }
         }
+
+        if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2)){
+            afk(message,player);
+        }
+        if (message.Contains(AfkPlayers.Any())){
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+
+        }
         return false;
     }
 
@@ -344,6 +352,26 @@ public class EssentialsPlugin
             return false;
         }
     }
+
+    public static void afk(string message, object oPlayer){
+		SvPlayer player = (SvPlayer)oPlayer;
+
+		if (AfkPlayers.Contains(player.playerData.username))
+		{
+			ReadFile(AfkPlayers);
+			RemoveStringFromFile(MutePlayers, player.playerData.username);
+			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
+			return true;
+		}
+        else
+		{
+			MutePlayers.Add(player.playerData.username);
+			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
+			return true;
+		}
+	}
+	
+
 
     public static bool BlockMessage(string message, object oPlayer)
     {
