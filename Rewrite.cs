@@ -280,18 +280,18 @@ public class EssentialsPlugin
         }
 
     }
-	private static void AnnounceThread(object man)
-	{
-		SvNetMan netMan = (SvNetMan)man;
-		while (true)
-		{
-			foreach (var player in netMan.players)
-			{
-				player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
-			}
-
-			public static bool Mute(string message, object oPlayer, bool unmute)
+    private static void AnnounceThread(object man)
     {
+        SvNetMan netMan = (SvNetMan)man;
+        while (true)
+        {
+            foreach (var player in netMan.players)
+            {
+                player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
+            }
+        }
+    }
+		public static bool Mute(string message, object oPlayer, bool unmute){
         SvPlayer player = (SvPlayer)oPlayer;
 
         string muteuser = message.Split(' ').Last();
