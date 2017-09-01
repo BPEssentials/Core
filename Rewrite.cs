@@ -121,40 +121,12 @@ public class EssentialsPlugin
 
         // Clear chat command, self and global
         Debug.Log("clearchat");
-        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " ") || message.StartsWith(cmdClearChat + " "))
-        {
-            string arg1ClearChat = null;
-            if (message == cmdClearChat || message == cmdClearChat2)
-            {
-                ClearChat(message, player, true);
-                return true;
+        if (message.StartsWith(cmdClearChat) || message.StartsWith((cmdClearChat2)){
+            if (message.Contains("all") || message.Contains("everyone")){
+                bool all = true;
             }
-            if (message != cmdClearChat || message != cmdClearChat2)
-            {
-
-                if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " "))
-                {
-                    arg1ClearChat = message.Substring(cmdClearChat.Length);
-                }
-                else if (message.StartsWith(cmdClearChat2) || message.StartsWith(cmdClearChat2 + " "))
-                {
-                    arg1ClearChat = message.Substring(cmdClearChat2.Length);
-                }
-                Thread.Sleep(3);
-                if (arg1ClearChat.Contains("all") || arg1ClearChat.Contains("everyone"))
-                {
-                    ClearChat(message, player, false);
-                    return true;
-                }
-            }
+            ClearChat(message, player, all);
         }
-        Debug.Log("afk");
-        // Afk command
-        /*if (message.StartsWith(cmdAfk) || message.StartsWith(cmdReload2))
-        {
-            afk(message, player);
-            return true;
-        }*/
         Debug.Log("reload");
         // Reload command
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
@@ -444,13 +416,13 @@ public class EssentialsPlugin
         }
 
     }
-    public static void ClearChat(string message, object oPlayer, bool self)
+    public static void ClearChat(string message, object oPlayer, bool all)
     {
         
         try
         {
             SvPlayer player = (SvPlayer)oPlayer;
-            if (self)
+            if (!all)
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Clearing the chat for yourself...");
                 Thread.Sleep(500);
@@ -459,7 +431,7 @@ public class EssentialsPlugin
                     player.SendToSelf(Channel.Unsequenced, (byte)10, " ");
                 }
             }
-            else if (!(self))
+            else if (all)
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
