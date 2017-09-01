@@ -350,7 +350,7 @@ public class EssentialsPlugin
         SvPlayer player = (SvPlayer)oPlayer;
         if (ChatBlock == true)
         {
-            if (ChatBlockWords.Any(message.ToLower().Contains))
+            if (ChatBlockWords.Contains(message.ToLower());
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
                 Debug.Log(SetTimeStamp() + player.playerData.username + " Said a word that is blocked.");
@@ -359,7 +359,7 @@ public class EssentialsPlugin
         }
         if (LanguageBlock == true)
         {
-            if (LanguageBlockWords.Any(message.ToLower().Contains))
+            if (LanguageBlockWords.Contains(message.ToLower());
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
