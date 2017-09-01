@@ -788,7 +788,7 @@ public class EssentialsPlugin
         }
         else if (FileName == MuteListFile)
         {
-            MutePlayers = File.ReadAllines(FileName).ToList();
+            MutePlayers = File.ReadAllLines(FileName).ToList();
         }
 
     }
