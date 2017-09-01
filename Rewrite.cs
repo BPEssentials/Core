@@ -326,14 +326,14 @@ public class EssentialsPlugin
             if (MutePlayers.Contains(muteuser))
             {
                 ReadFile(MuteListFile);
-                RemoveStringFromFile(MuteListFile, player.playerData.username);
+                RemoveStringFromFile(MutePlayers, player.playerData.username);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                 return true;
 
             }
             else
             {
-                File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
+                MutePlayers.Add(muteuser);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
                 return true;
             }
@@ -389,14 +389,14 @@ public class EssentialsPlugin
             {
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
-                    ReadFile(GodListFile);
-                    RemoveStringFromFile(GodListFile, player.playerData.username);
+                    ReadFile(GodListPlayers);
+                    RemoveStringFromFile(GodListPlayers, player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
                     return true;
                 }
                 else
                 {
-                    File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+                    GodListPlayers.Add(player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode enabled.");
                     return true;
                 }
@@ -780,15 +780,15 @@ public class EssentialsPlugin
         }
         else if (FileName == GodListFile)
         {
-            GodListPlayers = File.ReadLines(FileName);
+            GodListPlayers = File.ReadAllLines(FileName).ToList();
         }
         else if (FileName == AfkListFile)
         {
-            AfkPlayers = File.ReadLines(FileName);
+            AfkPlayers = File.ReadAllLines(FileName).ToList();
         }
         else if (FileName == MuteListFile)
         {
-            MutePlayers = File.ReadLines(FileName);
+            MutePlayers = File.ReadAllines(FileName).ToList();
         }
 
     }
