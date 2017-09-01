@@ -45,6 +45,7 @@ public class EssentialsPlugin
     private static string[] AfkPlayers;
     private static string[] MutePlayers;
 	private static string[] rules;
+    private static string[] rules2;
 
     private static string admins;
 
@@ -115,69 +116,9 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
-	/*	Debug.Log ("Version: " + version);
-		Debug.Log ("CmdChar: " + cmdCommandCharacter);
-		Debug.Log ("NoPerm: " + msgNoPerm);
-		Debug.Log ("ClearChat: " + cmdClearChat);
-		Debug.Log ("ClearChat2: " + cmdClearChat2);
-		Debug.Log ("CmdSay: " + cmdSay);
-		Debug.Log ("CmdSay2: " + cmdSay2);
-		Debug.Log ("MsgSayPrefix: " + msgSayPrefix);
-		Debug.Log ("GodmodeCommand: " + cmdGodmode); 
-		Debug.Log ("GodmodeCommand2: " + cmdGodmode2);
-		Debug.Log ("MuteCommand: " + cmdMute);
-		Debug.Log ("UnMuteCommand: " + cmdUnMute);
-		Debug.Log ("Unknown: " + msgUnknownCommand);
-		Debug.Log ("ChatBlock?: " + ChatBlock);
-		Debug.Log ("LangBlock?: " + LanguageBlock);
-		Debug.Log ("Reload: " + cmdReload);
-		Debug.Log ("Reload2: " + cmdReload2);
-		Debug.Log ("AnnounceTime: " + TimeBetweenAnnounce);
-		Debug.Log ("TimestampFormat: " + TimestampFormat); */
         MessageLog(message, player);
 
 
-        // Checks if player is muted, if so, cancel message
-        /*       if (MutePlayers.Contains(player.playerData.username))
-               {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
-                    return true;
-                } */
-        // Checks if the message is a command, if not, log it
-
-        //return false;
-        // Checks if the message is a blocked one, if it is, block it.
-        /*        if (ChatBlock)
-                {
-                    if (ChatBlockWords.Any(message.ToLower().Contains))
-                    {
-                        bool blocked = BlockMessage(message, player);
-                        if (blocked)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-                // Check if the message is English, if not, block it
-                if (LanguageBlock)
-                {
-                    if (LanguageBlockWords.Any(message.ToLower().Contains))
-                    {
-                        bool blocked = BlockMessage(message, player);
-                        if (blocked)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }*/
         Debug.Log("afkPlayers");
         if (AfkPlayers.Any(message.Contains))
         //if (AfkPlayers.Contains(message))
@@ -187,7 +128,7 @@ public class EssentialsPlugin
         }
 
         // Clear chat command, self and global
-		Debug.Log("clearchat");
+        Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " ") || message.StartsWith(cmdClearChat + " "))
         {
             string arg1ClearChat = null;
@@ -198,7 +139,7 @@ public class EssentialsPlugin
             }
             if (message != cmdClearChat || message != cmdClearChat2)
             {
-                
+
                 if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat + " "))
                 {
                     arg1ClearChat = message.Substring(cmdClearChat.Length);
@@ -229,48 +170,84 @@ public class EssentialsPlugin
             Reload(false, message, player);
             return true;
         }
-		Debug.Log("mute");
+        Debug.Log("mute");
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
         {
             Mute(message, player);
             return true;
         }
-		Debug.Log("say");
+        Debug.Log("say");
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
         {
             say(message, player);
             return true;
         }
-		Debug.Log("god");
+        Debug.Log("god");
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))// <broke
         {
             godMode(message, player);
             return true;
         }
-		Debug.Log("essentials");
+        Debug.Log("essentials");
         // Info command
         if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
         {
             essentials(message, player);
             return true;
         }
-		Debug.Log("Rules");
-		if (message.StartsWith(cmdRules)){
-			printRules(message, player);
-		}
-        return false;
-		Debug.Log("msgunknown");
-		if (msgUnknownCommand)
+        Debug.Log("Rules");
+        if (message.StartsWith(cmdRules))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
+            string arg1 = message.Substring(cmdRules.Length);
+            int arg1int;
+            bool isNumeric = int.TryParse(arg1, out arg1int);
+            if (isNumeric)
+            {
+                printRules(message, player, arg1int);
+                return true;
+            }
+            else if (!(isNumeric))
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument.");
+                return true;
+            }
+        }
+
+
+        Debug.Log("msgunknown");
+        if (message.StartsWith(cmdCommandCharacter))
+        {
+            if (msgUnknownCommand)
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Checks if player is muted, if so, cancel message
+        if (MutePlayers.Contains(player.playerData.username))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted now.");
             return true;
         }
 
-        else
+        //Checks if the message is a blocked one, if it is, block it.
+        if (ChatBlock || LanguageBlock)
         {
-			Debug.Log("else");
-            return false;
+            bool blocked = BlockMessage(message, player);
+            if (blocked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        return false;
     }
 
     // These are the various functions for the commands.
@@ -307,30 +284,34 @@ public class EssentialsPlugin
         }
     }
 
-	public static bool printRules(string message, int pagenumber, object oPlayer)
-	{
-		SvPlayer player = (SvPlayer)oPlayer;
-		rules = rules.Skip(5 * pagenumber).ToArray();
-		int linecnt = rules.Count();
-		if (linecnt > 5){
-			player.SendToSelf(Channel.Unsequenced, (byte)10, "Rules: Type " + cmdRules + " (pagenumber) for the next page");
+    public static void printRules(string message, object oPlayer, int pagenumber = 1)
+    {
+        SvPlayer player = (SvPlayer)oPlayer;
 
-		}
-		else if (linecnt < 5) {
-			player.SendToSelf(channel.Unsequenced, (byte)10, "Rules:");
-		}
-		int id = 0;
-		foreach (string rule in rules){
-			++id;
-			player.SendToSelf(Channel.Unsequenced, (byte)19, rule);
-			if (id == 5);
-			{
-				id = 0;
-				return true;
-			}
-		}
 
-	}
+        rules2 = rules.Skip(5 * pagenumber - 5).ToArray();
+        int linecnt = rules.Count();
+        if (linecnt > 5)
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Rules: Type " + cmdRules + " (pagenumber) for the next page");
+        }
+        else if (linecnt < 5)
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Rules:");
+        }
+        int id = 0;
+        foreach (string rule in rules2)
+        {
+            ++id;
+            player.SendToSelf(Channel.Unsequenced, (byte)10, rule);
+            if (id > 5)
+            {
+                id = 0;
+                break;
+            }
+        }
+
+    }
 
     public static bool Mute(string message, object oPlayer)
     {
@@ -352,7 +333,7 @@ public class EssentialsPlugin
             else
             {
                 File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
                 return true;
             }
         }
@@ -368,7 +349,6 @@ public class EssentialsPlugin
         SvPlayer player = (SvPlayer)oPlayer;
         if (ChatBlock == true)
         {
-
             if (ChatBlockWords.Any(message.ToLower().Contains))
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blocked word, the message has been blocked.");
@@ -376,20 +356,26 @@ public class EssentialsPlugin
                 return true;
             }
         }
-
-        if (admins.Contains(player.playerData.username))
+        if (LanguageBlock == true)
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
-            return false;
+            if (LanguageBlockWords.Any(message.ToLower().Contains))
+            {
+                if (admins.Contains(player.playerData.username))
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
+                    return false;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "             Only English! Your message has been blocked.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
+                    return true;
+                }
+            }
         }
-        else
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "             Only English! Your message has been blocked.");
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
-            return true;
-        }
+        return false;
     }
 
     public static bool godMode(string message, object oPlayer)
@@ -491,9 +477,12 @@ public class EssentialsPlugin
                 ReadFile(SettingsFile);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading critical .txt files...");
-                ReadFile(LanguageBlockFile);
-                ReadFile(ChatBlockFile);
-                ReadFile(AdminListFile);
+
+                ReadFileStream(LanguageBlockFile, LanguageBlockWords);
+                ReadFileStream(ChatBlockFile, ChatBlockWords);
+                ReadFileStream(AdminListFile, admins);
+
+                ReadFile(AnnouncementsFile);
                 ReadFile(GodListFile);
                 ReadFile(MuteListFile);
                 ReadFile(AfkListFile);
@@ -509,9 +498,12 @@ public class EssentialsPlugin
         else if (silentExecution)
         {
             ReadFile(SettingsFile);
-            ReadFile(LanguageBlockFile);
-            ReadFile(ChatBlockFile);
-            ReadFile(AdminListFile);
+
+            ReadFileStream(LanguageBlockFile, LanguageBlockWords);
+            ReadFileStream(ChatBlockFile, ChatBlockWords);
+            ReadFileStream(AdminListFile, admins);
+
+            ReadFile(AnnouncementsFile);
             ReadFile(GodListFile);
             ReadFile(MuteListFile);
             ReadFile(AfkListFile);
@@ -602,13 +594,27 @@ public class EssentialsPlugin
     {
         try
         {
-            var tempFile = Path.GetTempFileName();
-            var linesToKeep = File.ReadLines(FileName).Where(l => l != RemoveString);
-
-            File.WriteAllLines(tempFile, linesToKeep);
-
-            File.Delete(FileName);
-            File.Move(tempFile, FileName);
+            string content = null;
+            using (var sr = new StreamReader(FileName))
+            {
+                
+                string line = null;
+                while (!sr.EndOfStream)
+                {
+                    if ((line = sr.ReadLine()) != null)
+                    {
+                        if (line.Contains(RemoveString))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            content = content + line + Environment.NewLine;
+                        }
+                    }
+                }
+            }
+            File.WriteAllText(FileName, content);
         }
         catch (Exception ex)
         {
@@ -650,6 +656,20 @@ public class EssentialsPlugin
         catch (Exception)
         {
             return "[Failed] ";
+        }
+    }
+    public static void ReadFileStream(string FileName, string[] output)
+    {
+        foreach (var line in File.ReadAllLines(FileName))
+        {
+            if (line.StartsWith("#") || line.Contains("#"))
+            {
+                continue;
+            }
+            else
+            {
+                output = output + line + Environment.NewLine;
+            }
         }
     }
     static void ReadFile(string FileName)
@@ -768,61 +788,14 @@ public class EssentialsPlugin
             }
         }
         #endregion
-        else if (FileName == LanguageBlockFile)
-        {
-            LanguageBlockWords = File.ReadAllLines(FileName);
-        }
-        else if (FileName == ChatBlockFile)
-        {
-            ChatBlockWords = File.ReadAllLines(FileName);
-        }
         else if (FileName == AnnouncementsFile)
         {
             announcements = File.ReadAllLines(FileName);
         }
-        else if (FileName == AdminListFile)
-        {
-            using (var sr = new StreamReader(AdminListFile))
-            {
-                string line = null;
-                while (!sr.EndOfStream)
-                {
-                    if ((line = sr.ReadLine()) != null)
-                    {
-                        if (line.StartsWith("#"))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            admins = admins + line + Environment.NewLine;
-                        }
-                    }
-                }
-            }
-        }
-
 		else if (FileName == RulesFile)
 		{
-			using (var sr = new StreamReader(RulesFile))
-			{
-				string line = null;
-				while (!sr.EndOfStream)
-				{
-					if ((line = sr.ReadLine()) != null)
-					{
-						if (line.StartsWith("#"))
-						{
-							continue;
-						}
-						else
-						{
-							rules = rules + line + Environment.NewLine;
-						}
-					}
-				}
-			}
-		}
+            rules = File.ReadAllLines(FileName);
+        }
         else if (FileName == GodListFile)
         {
             GodListPlayers = File.ReadAllLines(FileName);
