@@ -389,7 +389,7 @@ public class EssentialsPlugin
             {
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
-                    ReadFile(GodListPlayers);
+                    ReadFile(GodListFile);
                     RemoveStringFromFile(GodListPlayers, player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
                     return true;
