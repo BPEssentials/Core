@@ -43,9 +43,9 @@ public class EssentialsPlugin
     private static List<string> LanguageBlockWords = new List<string>();
     private static List<string> AdminsListPlayers = new List<string>();
 
-    private static string[] GodListPlayers;
-    private static string[] AfkPlayers;
-    private static string[] MutePlayers;
+    private static List<string> GodListPlayers = new List<string>();
+    private static List<string> AfkPlayers = new List<string>();
+    private static List<string> MutePlayers = new List<string>();
 	private static string[] rules;
     private static string[] rules2;
     
@@ -591,31 +591,12 @@ public class EssentialsPlugin
         }
 
     }
-    public static void RemoveStringFromFile(string FileName, string RemoveString)
+    public static void RemoveStringFromFile(List<string> content, string RemoveString)
     {
         try
         {
-            string content = null;
-            using (var sr = new StreamReader(FileName))
-            {
-                
-                string line = null;
-                while (!sr.EndOfStream)
-                {
-                    if ((line = sr.ReadLine()) != null)
-                    {
-                        if (line.Contains(RemoveString))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            content = content + line + Environment.NewLine;
-                        }
-                    }
-                }
-            }
-            File.WriteAllText(FileName, content);
+
+            content.Remove(RemoveString);
         }
         catch (Exception ex)
         {
@@ -799,15 +780,15 @@ public class EssentialsPlugin
         }
         else if (FileName == GodListFile)
         {
-            GodListPlayers = File.ReadAllLines(FileName);
+            GodListPlayers = File.ReadLines(FileName);
         }
         else if (FileName == AfkListFile)
         {
-            AfkPlayers = File.ReadAllLines(FileName);
+            AfkPlayers = File.ReadLines(FileName);
         }
         else if (FileName == MuteListFile)
         {
-            MutePlayers = File.ReadAllLines(FileName);
+            MutePlayers = File.ReadLines(FileName);
         }
 
     }
