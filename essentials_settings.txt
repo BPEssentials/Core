@@ -61,6 +61,11 @@ SayCommand2: broadcast
 CheckIPCommand: checkip
 CheckPlayerCommand: checkplayer
 
+# Fake Join/Leave command
+#----------------------------------
+FakeLeaveCommand: fakeleave
+FakeJoinCommand: fakejoin
+
 # Rules command -- Rules default location - 'rules.txt'
 #----------------------------------
 RulesCommand: rules

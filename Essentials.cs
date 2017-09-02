@@ -142,9 +142,9 @@ public class EssentialsPlugin
 			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
 			return true;
 		}
-
-		// Clear chat command, self and global
-		Debug.Log("clearchat");
+        Debug.Log("COMMANDS -----");
+        // Clear chat command, self and global
+        Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2)){
             if (message.Contains("all") || message.Contains("everyone"))
             {
@@ -232,6 +232,7 @@ public class EssentialsPlugin
         //        return true;
         //    }
         //}
+        Debug.Log("checkIP");
         if (message.StartsWith(cmdCheckIP))
         {
             if (message != cmdCheckIP)
@@ -246,6 +247,7 @@ public class EssentialsPlugin
                 return true;
             }
         }
+        Debug.Log("CheckPlayer");
         if (message.StartsWith(cmdCheckPlayer))
         {
             if (message != cmdCheckPlayer)
@@ -260,6 +262,7 @@ public class EssentialsPlugin
                 return true;
             }
         }
+        Debug.Log("FakeJoin/Leave");
         if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
         {
             if (!(message == cmdFakeJoin || message == cmdFakeLeave))
@@ -926,11 +929,11 @@ public class EssentialsPlugin
                     {
                         msgSayPrefix = line.Substring(14);
                     }
-                    else if (line.Contains("GodmodeCommand: "))
+                    else if (line.StartsWith("GodmodeCommand: "))
                     {
                         cmdGodmode = cmdCommandCharacter + line.Substring(16);
                     }
-                    else if (line.Contains("GodmodeCommand2: "))
+                    else if (line.StartsWith("GodmodeCommand2: "))
                     {
                         cmdGodmode2 = cmdCommandCharacter + line.Substring(17);
                     }
