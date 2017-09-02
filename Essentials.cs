@@ -113,14 +113,14 @@ public class EssentialsPlugin
             Debug.Log(ex); //remove when debugging is done
         }
 
-        //if (!File.Exists(AnnouncementsFile))
-        //{
-        //    Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
-        //}
-        //Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
-        //thread.Start(netMan);
+        if (!File.Exists(AnnouncementsFile))
+        {
+            Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
+        }
+        Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
+        thread.Start(netMan);
 
-        //Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
+        Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
     }
 
     //Chat Events
@@ -289,26 +289,7 @@ public class EssentialsPlugin
 
     }
 
-<<<<<<< HEAD
-    // These are the various functions for the commands.
-    //public static void CheckInfo(string message, object oPlayer, string arg1)
-    //{
-    //    SvPlayer player = (SvPlayer)oPlayer;
-    //    int found = 0;
-    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-    //    {
-    //        if (shPlayer.svPlayer == arg1)
-    //        {
-    //            if (shPlayer.IsRealPlayer())
-    //            {
-    //                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
-    //            }
-    //        }
-    //    }
-    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-    //}
-=======
+
 	// These are the various functions for the commands.
 	//public static void CheckInfo(string message, object oPlayer, string arg1)
 	//{
@@ -347,7 +328,6 @@ public class EssentialsPlugin
 		Thread.Sleep(TimeBetweenAnnounce * 1000);
 	}
 
->>>>>>> origin/develop
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
