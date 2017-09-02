@@ -761,10 +761,25 @@ public class EssentialsPlugin
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
-		File.WriteAllLines(FileName
-            , File.ReadAllLines(FileName).Where(s => s != RemoveString).ToList()
-           );
-        
+		string[] lines = System.IO.File.ReadAllLines(FileName);
+		for (int i = 0; i < lines.Length; i++)
+		{
+			string line = lines[i];
+			if (line == RemoveString)
+				lines[i] = "";
+		}
+
+		string[] newLines = lines.Where(str => !string.IsNullOrEmpty(str)).ToArray();
+		using (Stream stream = File.OpenWrite(FileName))
+		{
+			using (StreamWriter sw = new StreamWriter(stream))
+			{
+				foreach (string line in newLines)
+				{
+					sw.WriteLine(line);
+				}
+			}
+		}
     }
     public static string SetTimeStamp()
     {
