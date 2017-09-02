@@ -205,7 +205,7 @@ public class EssentialsPlugin
         //    {
         //        string arg1 = message.Substring("/info".Count() + 1);
         //        CheckInfo(message, player, arg1);
-        //        return true;
+        //        return true;                                  //TODO: Make this work.
         //    }
         //    else
         //    {
@@ -297,7 +297,7 @@ public class EssentialsPlugin
 	//    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
 	//    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
 	//    {
-	//        if (shPlayer.svPlayer == arg1)
+	//        if (shPlayer.svPlayer == arg1)                    //TODO: Figure out how this works also
 	//        {
 	//            if (shPlayer.IsRealPlayer())
 	//            {
@@ -458,7 +458,7 @@ public class EssentialsPlugin
     //public static void getUsers()
     //{
     //    Users = new List<string>();
-    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>()) //TODO: This might be useful for the other things
     //    {
     //        Users.Add(shPlayer);
     //    }
@@ -811,7 +811,7 @@ public class EssentialsPlugin
         #region SettingsFile
         if (FileName == SettingsFile)
         {
-            foreach (var line in File.ReadAllLines(SettingsFile))
+            foreach (var line in File.ReadAllLines(SettingsFile)) //TODO: THIS METHOD IS A MESS, THERE IS PROBABLY A BETTER WAY.
             {
                 if (line.StartsWith("#"))
                 {
@@ -819,7 +819,6 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    // TODO: make this better/compacter
                     if (line.Contains("version: "))
                     {
                         version = line.Substring(9);
@@ -931,7 +930,7 @@ public class EssentialsPlugin
 
                 //else if (line.Contains(""))
                 //{
-                //    = line.Substring();
+                //    = line.Substring(); //Template
                 //}
 
             }
