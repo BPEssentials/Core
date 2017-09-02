@@ -746,7 +746,7 @@ public class EssentialsPlugin
         }
 
     }
-    public static string RemoveStringFromFile(List<string> content, string RemoveString)
+    public static List<string> RemoveStringFromFile(List<string> content, string RemoveString)
     {
            return content.Remove(RemoveString);
     }
