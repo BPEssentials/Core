@@ -113,14 +113,14 @@ public class EssentialsPlugin
             Debug.Log(ex); //remove when debugging is done
         }
 
-        if (!File.Exists(AnnouncementsFile))
-        {
-            Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
-        }
-        Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
-        thread.Start(netMan);
+        //if (!File.Exists(AnnouncementsFile))
+        //{
+        //    Debug.Log(SetTimeStamp() + "[WARNING] Annoucements file doesn't exist! Please create " + AnnouncementsFile + " in the game directory");
+        //}
+        //Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
+        //thread.Start(netMan);
 
-        Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
+        //Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
     }
 
     //Chat Events
@@ -164,12 +164,12 @@ public class EssentialsPlugin
             say(message, player);
             return true;
         }
-        Debug.Log("god");
-        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
-        {
-            godMode(message, player);
-            return true;
-        }
+        //Debug.Log("god");
+        //if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
+        //{
+        //    godMode(message, player);
+        //    return true;
+        //}
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
         {
             afk(message, player);
@@ -289,44 +289,24 @@ public class EssentialsPlugin
 
     }
 
-	// These are the various functions for the commands.
-	//public static void CheckInfo(string message, object oPlayer, string arg1)
-	//{
-	//    SvPlayer player = (SvPlayer)oPlayer;
-	//    int found = 0;
-	//    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-	//    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-	//    {
-	//        if (shPlayer.svPlayer == arg1)
-	//        {
-	//            if (shPlayer.IsRealPlayer())
-	//            {
-	//                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
-	//            }
-	//        }
-	//    }
-	//    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-	//}
-
-	private static void AnnounceThread(object man)
-	{
-		SvNetMan netMan = (SvNetMan)man;
-		while (true)
-		{
-			foreach (var player in netMan.players)
-			{
-				player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
-			}
-		}
-
-		Debug.Log(SetTimeStamp() + "[INFO] Announcement made...");
-
-		announceIndex += 1;
-		if (announceIndex > announcements.Length - 1)
-			announceIndex = 0;
-		Thread.Sleep(TimeBetweenAnnounce * 1000);
-	}
-
+    // These are the various functions for the commands.
+    //public static void CheckInfo(string message, object oPlayer, string arg1)
+    //{
+    //    SvPlayer player = (SvPlayer)oPlayer;
+    //    int found = 0;
+    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+    //    {
+    //        if (shPlayer.svPlayer == arg1)
+    //        {
+    //            if (shPlayer.IsRealPlayer())
+    //            {
+    //                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
+    //            }
+    //        }
+    //    }
+    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+    //}
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
@@ -904,7 +884,7 @@ public class EssentialsPlugin
                     {
                         cmdAfk = cmdCommandCharacter + line.Substring(12);
                     }
-                    else if (line.Contains("AFKCommand: "))
+                    else if (line.Contains("AFKCommand2: "))
                     {
                         cmdAfk2 = cmdCommandCharacter + line.Substring(13);
                     }
