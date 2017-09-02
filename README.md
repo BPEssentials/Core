@@ -46,6 +46,8 @@ UserR00T: [Website](https://UserR00T.com) | [GitHub](https://github.com/UserR00T
 
 DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/DeathByKorea)
 
+<sup>PyroLab for the pvpBlock idea</sup> 
+
 ## License
 
 This project is licenced under the GNU GPL v3.0 Licence, For [More Information]: https://choosealicense.com/licenses/gpl-3.0/
