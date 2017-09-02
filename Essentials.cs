@@ -440,6 +440,7 @@ public class EssentialsPlugin
             }
             else if  (!unmute) {
                 MutePlayers.Add(muteuser);
+                File.AppendAllText(MuteListFile, muteuser  + Environment.NewLine);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
                 return true;
             }
@@ -463,7 +464,8 @@ public class EssentialsPlugin
         }
         else
         {
-            AfkPlayers.Add(player.playerData.username);
+            File.AppendAllText(AfkListFile, player.playerData.username+ Environment.NewLine);
+			AfkPlayers.Add(player.playerData.username);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
         }
     }
@@ -528,7 +530,8 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    GodListPlayers.Add(player.playerData.username);
+					File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
+					GodListPlayers.Add(player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode enabled.");
                     return true;
                 }
