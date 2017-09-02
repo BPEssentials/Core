@@ -457,7 +457,6 @@ public class EssentialsPlugin
         ReadFile(AfkListFile);
         if (AfkPlayers.Contains(player.playerData.username))
         {
-            ReadFile(AfkListFile);
             RemoveStringFromFile(AfkListFile, player.playerData.username);
             ReadFile(AfkListFile);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
@@ -763,7 +762,7 @@ public class EssentialsPlugin
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
 		File.WriteAllLines(FileName
-            , File.ReadLines("myfile.txt").Where(s => s != RemoveString).ToList()
+            , File.ReadLines(FileName).Where(s => s != RemoveString).ToList()
            );
         
     }
