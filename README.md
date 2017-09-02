@@ -46,7 +46,9 @@ UserR00T: [Website](https://UserR00T.com) | [GitHub](https://github.com/UserR00T
 
 DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/DeathByKorea)
 
-<sup>PyroLab for the pvpBlock idea</sup> 
+## People that suggested idea's
+
+**PyroLab:** pvpBlock idea
 
 ## License
 
