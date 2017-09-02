@@ -183,12 +183,12 @@ public class EssentialsPlugin
             say(message, player);
             return true;
         }
-        //Debug.Log("god");
-        //if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
-        //{
-        //    godMode(message, player);
-        //    return true;
-        //}
+        Debug.Log("god");
+        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
+        {
+            godMode(message, player);
+            return true;
+        }
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
         {
             afk(message, player);
