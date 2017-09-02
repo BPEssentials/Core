@@ -158,18 +158,20 @@ public class EssentialsPlugin
         Debug.Log("mute");
         if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute))
         {
-            if (message.StartsWith(cmdUnMute))
-            {
-                unmute = true;
-            }
-            else
-            {
+            unmute = true;
+            Mute(message, player, unmute);
+            return true;
 
-                unmute = false;
-                Mute(message, player, unmute);
-                return true;
-            }
         }
+        else
+        {
+
+            unmute = false;
+            Mute(message, player, unmute);
+            return true;
+        }
+
+		
         Debug.Log("say");
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
         {
