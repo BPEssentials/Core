@@ -762,7 +762,7 @@ public class EssentialsPlugin
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
 		File.WriteAllLines(FileName
-            , File.ReadLines(FileName).Where(s => s != RemoveString).ToList()
+            , File.ReadAllLines(FileName).Where(s => s != RemoveString).ToList()
            );
         
     }
