@@ -761,12 +761,21 @@ public class EssentialsPlugin
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
-		string[] lines = System.IO.File.ReadAllLines(FileName);
-		for (int i = 0; i < lines.Length; i++)
+        string line = null;
+
+
+		using (StreamReader reader = new StreamReader(FileName))
 		{
-			string line = lines[i];
-			if (line == RemoveString)
-				lines[i] = "";
+            using (StreamWriter writer = new StreamWriter(FileName)) 
+			{
+				while ((line = reader.ReadLine()) != null)
+				{
+					if (String.Compare(line, RemoveString) == 0)
+						continue;
+
+					writer.WriteLine(line);
+				}
+			}
 		}
 
 		string[] newLines = lines.Where(str => !string.IsNullOrEmpty(str)).ToArray();
