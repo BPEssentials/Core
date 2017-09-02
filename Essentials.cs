@@ -19,7 +19,7 @@ public class EssentialsPlugin
     private static string ChatBlockFile = Directory + "chatblock.txt";
     private static string AnnouncementsFile = Directory + "announcements.txt";
     private static string IPListFile =  Directory + "ip_list.txt";
-    private static string AdminListFile = Directory + "admin_list.txt";
+    private static string AdminListFile = "admin_list.txt";
     private static string GodListFile = Directory + "godlist.txt";
     private static string AfkListFile = Directory + "afklist.txt";
     private static string MuteListFile = Directory + "mutelist.txt";
