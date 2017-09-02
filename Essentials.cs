@@ -261,28 +261,24 @@ public class EssentialsPlugin
         }
         if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
         {
-            if (message != cmdFakeJoin || message != cmdFakeLeave)
+            if (!(message == cmdFakeJoin || message == cmdFakeLeave))
             {
                 string arg1 = null;
-                if (!arg1 = null)
+                arg1 = message.Split(' ').Last();
+                if (message.StartsWith(cmdFakeJoin))
                 {
-                    if (message.StartsWith(cmdFakeJoin))
-                    {
-                        arg1 = message.Split(' ').Last();
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Connected");
-                    }
-                    else if (message.StartsWith(cmdFakeLeave))
-                    {
-                        arg1 = message.Split(' ').Last();
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Disconnected");
-                    }
+                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Connected");
                 }
-
-                else
+                else if (message.StartsWith(cmdFakeLeave))
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Disconnected");
                 }
             }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+            }
+            
             return true;
         }
 
