@@ -93,7 +93,8 @@ public class EssentialsPlugin
     private static int TimeBetweenAnnounce;
     private static string TimestampFormat;
     private static bool all;
-    private static bool unmute; 
+    private static bool unmute;
+    private static bool pvp;
 
     #endregion
 
@@ -690,6 +691,26 @@ public class EssentialsPlugin
         //TODO: Subcommands like /essentials reload : executes cmdReload
 
     }
+	[Hook("SvPlayer.Damage")]
+	public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
+	{
+        if (pvp)
+        {
+            bool found = false;
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            {
+                if (shPlayer.svPlayer == attacker)
+                {
+                    if (shPlayer.IsRealPlayer())
+                        found = true;
+                }
+            }
+            if (!found)
+                return true;
+        }
+		else
+			return false;
+	}
     public static bool say(string message, object oPlayer)
     {
         SvPlayer player = (SvPlayer)oPlayer;
@@ -982,6 +1003,9 @@ public class EssentialsPlugin
                     else if (line.Contains("FakeLeaveCommand: "))
                     {
                         cmdFakeLeave = cmdCommandCharacter + line.Substring(18);
+                    }
+                    else if (line.Contains("PvP:")){
+                        pvp = Convert.ToBoolean(line.Substring(5));
                     }
 
                 }
