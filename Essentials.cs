@@ -690,36 +690,67 @@ public class EssentialsPlugin
         //TODO: Subcommands like /essentials reload : executes cmdReload
 
     }
-	[Hook("SvPlayer.Damage")]
+
+    [Hook("SvPlayer.Damage")]
 	public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
 	{
-
-		if (pvp)
+        if (CheckGodmode(player, amount) == false)
         {
+            if (CheckPVP(player, attacker) == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+	}
+    private static bool CheckPVP(object oPlayer, ShPlayer oAttacker)
+    {
+        Debug.Log("CheckPVP called");
+        SvPlayer player = (SvPlayer)oPlayer;
+        ShPlayer attacker = (ShPlayer)oAttacker;
+        Debug.Log(" if pvp is not true ");
+        if (!(pvp))
+        {
+            Debug.Log("pvp isnt true");
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
             {
                 if (shPlayer.svPlayer == attacker)
                 {
+                    Debug.Log("if player is a real player");
                     if (shPlayer.IsRealPlayer())
+                    {
+                        Debug.Log("is a real player");
                         return true;
-                }
-                else
-                {
-                    return false;
+                    }
+
                 }
             }
 
         }
-        else{
+        else
+        {
             return false;
         }
+        return false;
+    }
+    private static bool CheckGodmode(object oPlayer, float amount)
+    {
+        Debug.Log("CheckGodMode called");
+        SvPlayer player = (SvPlayer)oPlayer;
         if (GodListPlayers.Contains(player.playerData.username))
         {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG blocked!");
             return true;
         }
         return false;
-
-	}
+    }
     public static bool say(string message, object oPlayer)
     {
         SvPlayer player = (SvPlayer)oPlayer;
