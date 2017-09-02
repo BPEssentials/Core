@@ -1,3 +1,4 @@
+hmm
 // Essentials created by UserR00T
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,18 @@ public class EssentialsPlugin
 {
 
     #region Folder Locations
-    //private static string DirectoryFolder = Directory.GetCurrentDirectory();
-    private static string SettingsFile = "essentials_settings.txt";
-    private static string LanguageBlockFile = "languageblock.txt";
-    private static string ChatBlockFile = "chatblock.txt";
-    private static string AnnouncementsFile = "announcements.txt";
-    private static string IPListFile = "ip_list.txt";
-    private static string AdminListFile = "admin_list.txt";
-    private static string GodListFile = "godlist.txt";
-    private static string AfkListFile = "afklist.txt";
-    private static string MuteListFile = "mutelist.txt";
-    private static string RulesFile = "rules.txt";
+    private static string Directory = "/essentials";
+
+    private static string SettingsFile = Directory + "essentials_settings.txt";
+    private static string LanguageBlockFile = Directory + "languageblock.txt";
+    private static string ChatBlockFile = Directory + "chatblock.txt";
+    private static string AnnouncementsFile = Directory + "announcements.txt";
+    private static string IPListFile =  "ip_list.txt";
+    private static string AdminListFile =  "admin_list.txt";
+    private static string GodListFile = Directory + "godlist.txt";
+    private static string AfkListFile = Directory + "afklist.txt";
+    private static string MuteListFile = Directory + "mutelist.txt";
+    private static string RulesFile = Directory + "rules.txt";
     #endregion
 
     #region predefining variables
