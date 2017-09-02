@@ -714,6 +714,7 @@ public class EssentialsPlugin
         {
             return true;
         }
+        return false;
 
 	}
     public static bool say(string message, object oPlayer)
