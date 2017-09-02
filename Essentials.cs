@@ -161,18 +161,14 @@ public class EssentialsPlugin
             if (message.StartsWith(cmdUnMute))
             {
                 unmute = true;
-				Mute(message, player, unmute);
-				return true;
-
-			}
+            }
             else
             {
 
                 unmute = false;
                 Mute(message, player, unmute);
-				return true;
-
-			}
+                return true;
+            }
         }
         Debug.Log("say");
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
@@ -765,19 +761,15 @@ public class EssentialsPlugin
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
-        string line = null;
-
-            using (StreamWriter writer = new StreamWriter(FileName))
+        string content = null;
+        foreach (var line in File.ReadAllLines(FileName))
+        {
+            if (!line.Contains(RemoveString))
             {
-                while ((line = writer.ReadLine()) != null)
-                {
-                    if (String.Compare(line, RemoveString) == 0)
-                        continue;
-
-                    writer.WriteLine(line);
-                }
+                content = content + line + Environment.NewLine;
             }
-
+        }
+        File.WriteAllText(FileName, content);
     }
     public static string SetTimeStamp()
     {
