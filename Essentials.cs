@@ -434,7 +434,7 @@ public class EssentialsPlugin
 				}
                 if (MutePlayers.Contains(muteuser))
                 {
-                    RemoveStringFromFile(MuteListFile, player.playerData.username);
+                    RemoveStringFromFile(MuteListFile, muteuser;
                     ReadFile(MuteListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
