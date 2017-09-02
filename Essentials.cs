@@ -419,7 +419,8 @@ public class EssentialsPlugin
                 if (MutePlayers.Contains(muteuser))
                 {
                     ReadFile(MuteListFile);
-                   MutePlayers = RemoveStringFromFile(MutePlayers, player.playerData.username);
+                    RemoveStringFromFile(MuteListFile, player.playerData.username);
+                    ReadFile(MuteListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
                 }
@@ -449,7 +450,8 @@ public class EssentialsPlugin
         if (AfkPlayers.Contains(player.playerData.username))
         {
             ReadFile(AfkListFile);
-            AfkPlayers = RemoveStringFromFile(AfkPlayers, player.playerData.username);
+            RemoveStringFromFile(AfkListFile, player.playerData.username);
+            ReadFile(AfkListFile);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
         }
         else
@@ -512,7 +514,8 @@ public class EssentialsPlugin
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
                     ReadFile(GodListFile);
-                 GodListPlayers = RemoveStringFromFile(GodListPlayers, player.playerData.username);
+                    RemoveStringFromFile(GodListFile, player.playerData.username);
+                    ReadFile(GodListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
                     return true;
                 }
@@ -747,9 +750,15 @@ public class EssentialsPlugin
         }
 
     }
-    public static List<string> RemoveStringFromFile(List<string> content, string RemoveString)
+    private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
-        return(content.Remove(RemoveString));
+        var oldLines = File.ReadAllLines(FileName);
+        var newLines = oldLines.Where(line => !line.Contains(RemoveString));
+        //File.WriteAllLines(FileName, newLines);
+        File.WriteAllText(FileName, newLines);
+        //content.Remove(RemoveString);
+        //return content.Remove(RemoveString);
+        //return;
     }
     public static string SetTimeStamp()
     {
