@@ -319,14 +319,15 @@ public class EssentialsPlugin
 			{
 				player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
 			}
+			Debug.Log(SetTimeStamp() + "[INFO] Announcement made...");
+
+			announceIndex += 1;
+			if (announceIndex > announcements.Length - 1)
+				announceIndex = 0;
+            Thread.Sleep(TimeBetweenAnnounce * 1000);
 		}
 
-		Debug.Log(SetTimeStamp() + "[INFO] Announcement made...");
 
-		announceIndex += 1;
-		if (announceIndex > announcements.Length - 1)
-			announceIndex = 0;
-		Thread.Sleep(TimeBetweenAnnounce * 1000);
 	}
 
     public static void CheckIP(string message, object oPlayer, string arg1)
@@ -748,7 +749,7 @@ public class EssentialsPlugin
     }
     public static List<string> RemoveStringFromFile(List<string> content, string RemoveString)
     {
-           return content.Remove(RemoveString);
+        return(content.Remove(RemoveString));
     }
     public static string SetTimeStamp()
     {
