@@ -764,31 +764,19 @@ public class EssentialsPlugin
         string line = null;
 
 
-		using (StreamReader reader = new StreamReader(FileName))
-		{
-            using (StreamWriter writer = new StreamWriter(FileName)) 
-			{
-				while ((line = reader.ReadLine()) != null)
-				{
-					if (String.Compare(line, RemoveString) == 0)
-						continue;
+        using (StreamReader reader = new StreamReader(FileName))
+        {
+            using (StreamWriter writer = new StreamWriter(FileName))
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (String.Compare(line, RemoveString) == 0)
+                        continue;
 
-					writer.WriteLine(line);
-				}
-			}
-		}
-
-		string[] newLines = lines.Where(str => !string.IsNullOrEmpty(str)).ToArray();
-		using (Stream stream = File.OpenWrite(FileName))
-		{
-			using (StreamWriter sw = new StreamWriter(stream))
-			{
-				foreach (string line in newLines)
-				{
-					sw.WriteLine(line);
-				}
-			}
-		}
+                    writer.WriteLine(line);
+                }
+            }
+        }
     }
     public static string SetTimeStamp()
     {
