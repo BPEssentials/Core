@@ -1,5 +1,4 @@
-hmm
-// Essentials created by UserR00T
+// Essentials created by UserR00T & DeathByKorea
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,14 +12,14 @@ public class EssentialsPlugin
 {
 
     #region Folder Locations
-    private static string Directory = "/essentials";
+    private static string Directory = "/Essentials/";
 
     private static string SettingsFile = Directory + "essentials_settings.txt";
     private static string LanguageBlockFile = Directory + "languageblock.txt";
     private static string ChatBlockFile = Directory + "chatblock.txt";
     private static string AnnouncementsFile = Directory + "announcements.txt";
-    private static string IPListFile =  "ip_list.txt";
-    private static string AdminListFile =  "admin_list.txt";
+    private static string IPListFile =  Directory + "ip_list.txt";
+    private static string AdminListFile = Directory + "admin_list.txt";
     private static string GodListFile = Directory + "godlist.txt";
     private static string AfkListFile = Directory + "afklist.txt";
     private static string MuteListFile = Directory + "mutelist.txt";
@@ -96,7 +95,7 @@ public class EssentialsPlugin
     #endregion
 
     //Code below here, Don't edit unless you know what you're doing.
-    //Information about the api @ https://github.com/deathbykorea/universalunityhooks
+    //Information about the api @ https://github.com/DeathByKorea/UniversalUnityhooks
 
     [Hook("SvNetMan.StartServerNetwork")]
     public static void StartServerNetwork(SvNetMan netMan)
@@ -110,7 +109,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory! pwd: " + Directory.GetCurrentDirectory() + "settings: " + SettingsFile);
+            Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
             Debug.Log(ex); //remove when debugging is done
         }
 
@@ -192,20 +191,20 @@ public class EssentialsPlugin
                 return true;
             }
         }
-        if (message.StartsWith("/info"))
-        {
-            if (message != "/info")
-            {
-                string arg1 = message.Substring("/info".Count() + 1);
-                CheckInfo(message, player, arg1);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-                return true;
-            }
-        }
+        //if (message.StartsWith("/info"))
+        //{
+        //    if (message != "/info")
+        //    {
+        //        string arg1 = message.Substring("/info".Count() + 1);
+        //        CheckInfo(message, player, arg1);
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+        //        return true;
+        //    }
+        //}
         if (message.StartsWith(cmdCheckIP))
         {
             if (message != cmdCheckIP)
@@ -284,29 +283,29 @@ public class EssentialsPlugin
     }
 
     // These are the various functions for the commands.
-    public static void CheckInfo(string message, object oPlayer, string arg1)
-    {
-        SvPlayer player = (SvPlayer)oPlayer;
-        int found = 0;
-        player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-        {
-            if (shPlayer.svPlayer == arg1)
-            {
-                if (shPlayer.IsRealPlayer())
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
-                }
-            }
-        }
-        player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-    }
+    //public static void CheckInfo(string message, object oPlayer, string arg1)
+    //{
+    //    SvPlayer player = (SvPlayer)oPlayer;
+    //    int found = 0;
+    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+    //    {
+    //        if (shPlayer.svPlayer == arg1)
+    //        {
+    //            if (shPlayer.IsRealPlayer())
+    //            {
+    //                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
+    //            }
+    //        }
+    //    }
+    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+    //}
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
         player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
-        foreach (var line in File.ReadAllLines("ip_list.txt"))
+        foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(arg1 + ":"))
             {
@@ -322,7 +321,7 @@ public class EssentialsPlugin
         int found = 0;
         string arg1temp = null;
         player.SendToSelf(Channel.Unsequenced, (byte)10, "Accounts for IP: " + arg1);
-        foreach (var line in File.ReadAllLines("ip_list.txt"))
+        foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(" " + arg1))
             {
