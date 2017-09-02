@@ -694,14 +694,19 @@ public class EssentialsPlugin
 
 		if (pvp)
         {
-           if (attacker.IsRealPlayer())
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            {
+                if (shPlayer.svPlayer == attacker)
                 {
-                if (player.IsRealPlayer())
-                    return true;
+                    if (shPlayer.IsRealPlayer())
+                        return true;
                 }
-            else {
-                return false;
+                else
+                {
+                    return false;
+                }
             }
+
         }
         else if (GodListPlayers.Contains(player.playerData.username)){
             return true;
