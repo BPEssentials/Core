@@ -696,17 +696,14 @@ public class EssentialsPlugin
 	{
         if (pvp)
         {
-            bool found = false;
-            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-            {
-                if (shPlayer.svPlayer == attacker)
+           if (attacker.IsRealPlayer())
                 {
-                    if (shPlayer.IsRealPlayer())
-                        found = true;
+                if (shPlayer.IsRealPlayer())
+                    return true;
                 }
+            else {
+                return false;
             }
-            if (!found)
-                return true;
         }
 		else
 			return false;
