@@ -132,8 +132,15 @@ public class EssentialsPlugin
         {
             afk(message, player);
         }
-        // Clear chat command, self and global
-        Debug.Log("clearchat");
+		//Checks if player is muted, if so, cancel message
+		if (MutePlayers.Contains(player.playerData.username))
+		{
+			player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
+			return true;
+		}
+
+		// Clear chat command, self and global
+		Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2)){
             if (message.Contains("all") || message.Contains("everyone"))
             {
@@ -254,12 +261,6 @@ public class EssentialsPlugin
             {
                 return false;
             }
-        }
-        //Checks if player is muted, if so, cancel message
-        if (MutePlayers.Contains(player.playerData.username))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
-            return true;
         }
 
         //Checks if the message is a blocked one, if it is, block it.
