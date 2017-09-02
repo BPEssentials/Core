@@ -762,13 +762,10 @@ public class EssentialsPlugin
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
     {
-        var oldLines = File.ReadAllLines(FileName);
-        var newLines = oldLines.Where(line => !line.Contains(RemoveString));
-        File.WriteAllLines(FileName, newLines);
-        //File.WriteAllText(FileName, newLines);
-        //content.Remove(RemoveString);
-        //return content.Remove(RemoveString);
-        //return;
+		File.WriteAllLines(FileName
+            , File.ReadLines("myfile.txt").Where(s => s != RemoveString).ToList()
+           );
+        
     }
     public static string SetTimeStamp()
     {
