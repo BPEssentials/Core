@@ -693,6 +693,7 @@ public class EssentialsPlugin
 	[Hook("SvPlayer.Damage")]
 	public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
 	{
+        Debug.Log("Damage Started");
 
 		if (pvp)
         {
@@ -713,10 +714,14 @@ public class EssentialsPlugin
         else{
             return false;
         }
+        Debug.Log("Starting GodMode Check");
         if (GodListPlayers.Contains(player.playerData.username))
         {
+            Debug.Log("Checked GodMode.");
             return true;
-        }
+			Debug.Log("Damage Blocked.");
+
+		}
         return false;
 
 	}
