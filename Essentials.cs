@@ -147,6 +147,7 @@ public class EssentialsPlugin
                 all = true;
             }
             ClearChat(message, player, all);
+            return true;
         }
         Debug.Log("reload");
         // Reload command
@@ -421,7 +422,9 @@ public class EssentialsPlugin
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
-            if (unmute)
+		ReadFile(MuteListFile);
+
+			if (unmute)
             {
 				if (!MutePlayers.Contains(muteuser))
 				{
@@ -431,7 +434,6 @@ public class EssentialsPlugin
 				}
                 if (MutePlayers.Contains(muteuser))
                 {
-                    ReadFile(MuteListFile);
                     RemoveStringFromFile(MuteListFile, player.playerData.username);
                     ReadFile(MuteListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
