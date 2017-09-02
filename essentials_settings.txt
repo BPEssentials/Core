@@ -70,10 +70,10 @@ RulesCommand: rules
 GodmodeCommand: god
 GodmodeCommand2: godmode
 
-# Godmode command --- Godmode default saving location - 'afkplayers.txt'
+# AFK command --- AFK default saving location - 'afkplayers.txt'
 #----------------------------------
-GodmodeCommand: god
-GodmodeCommand2: godmode
+AFKCommand: afk
+AFKCommand2: brb
 
 # Mute command --- Mute default saving location - 'muteplayers.txt'
 #----------------------------------
