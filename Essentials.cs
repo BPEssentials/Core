@@ -763,12 +763,9 @@ public class EssentialsPlugin
     {
         string line = null;
 
-
-        using (StreamReader reader = new StreamReader(FileName))
-        {
             using (StreamWriter writer = new StreamWriter(FileName))
             {
-                while ((line = reader.ReadLine()) != null)
+                while ((line = writer.ReadLine()) != null)
                 {
                     if (String.Compare(line, RemoveString) == 0)
                         continue;
@@ -776,7 +773,7 @@ public class EssentialsPlugin
                     writer.WriteLine(line);
                 }
             }
-        }
+
     }
     public static string SetTimeStamp()
     {
