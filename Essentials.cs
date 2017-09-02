@@ -690,7 +690,6 @@ public class EssentialsPlugin
 	[Hook("SvPlayer.Damage")]
 	public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
 	{
-		SvPlayer player = (SvPlayer)oPlayer;
 
 		if (pvp)
         {
