@@ -754,8 +754,8 @@ public class EssentialsPlugin
     {
         var oldLines = File.ReadAllLines(FileName);
         var newLines = oldLines.Where(line => !line.Contains(RemoveString));
-        //File.WriteAllLines(FileName, newLines);
-        File.WriteAllText(FileName, newLines);
+        File.WriteAllLines(FileName, newLines);
+        //File.WriteAllText(FileName, newLines);
         //content.Remove(RemoveString);
         //return content.Remove(RemoveString);
         //return;
