@@ -421,6 +421,12 @@ public class EssentialsPlugin
 
             if (unmute)
             {
+				if (!MutePlayers.Contains(muteuser))
+				{
+					player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
+					return true;
+
+				}
                 if (MutePlayers.Contains(muteuser))
                 {
                     ReadFile(MuteListFile);
@@ -429,11 +435,7 @@ public class EssentialsPlugin
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
                 }
-                else if(!MutePlayers.Contains(muteuser)){
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
-                    return true;
 
-                }
                 
             }
             else if  (!unmute) {
