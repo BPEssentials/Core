@@ -12,7 +12,7 @@ public class EssentialsPlugin
 {
 
     #region Folder Locations
-    private static string Directory = "/Essentials/";
+    private static string Directory = "Essentials/";
 
     private static string SettingsFile = Directory + "essentials_settings.txt";
     private static string LanguageBlockFile = Directory + "languageblock.txt";
