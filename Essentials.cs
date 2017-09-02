@@ -707,12 +707,13 @@ public class EssentialsPlugin
             }
 
         }
-        else if (GodListPlayers.Contains(player.playerData.username)){
+        else{
+            return false;
+        }
+        if (GodListPlayers.Contains(player.playerData.username))
+        {
             return true;
         }
-		else
-			return false;
-
 
 	}
     public static bool say(string message, object oPlayer)
