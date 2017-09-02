@@ -295,6 +295,7 @@ public class EssentialsPlugin
             {
                 return false;
             }
+<<<<<<< Updated upstream
         }
 
         //Checks if the message is a blocked one, if it is, block it.
@@ -316,6 +317,29 @@ public class EssentialsPlugin
             return true;
         }
 
+=======
+        }
+
+        //Checks if the message is a blocked one, if it is, block it.
+        if (ChatBlock || LanguageBlock)
+        {
+            bool blocked = BlockMessage(message, player);
+            if (blocked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2)){
+            afk(message, player);
+            return true;
+        }
+
+>>>>>>> Stashed changes
         if (AfkPlayers.Contains(message)){
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
             return true;
@@ -690,11 +714,21 @@ public class EssentialsPlugin
 	[Hook("SvPlayer.Damage")]
 	public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
 	{
+<<<<<<< Updated upstream
         if (pvp)
         {
            if (attacker.IsRealPlayer())
                 {
                 if (shPlayer.IsRealPlayer())
+=======
+		SvPlayer player = (SvPlayer)oPlayer;
+
+		if (pvp)
+        {
+           if (attacker.IsRealPlayer())
+                {
+                if (player.IsRealPlayer())
+>>>>>>> Stashed changes
                     return true;
                 }
             else {
