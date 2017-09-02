@@ -452,7 +452,7 @@ public class EssentialsPlugin
         }
         else
         {
-            MutePlayers.Add(player.playerData.username);
+            AfkPlayers.Add(player.playerData.username);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
         }
     }
