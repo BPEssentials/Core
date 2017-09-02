@@ -417,7 +417,7 @@ public class EssentialsPlugin
                 if (MutePlayers.Contains(muteuser))
                 {
                     ReadFile(MuteListFile);
-                    RemoveStringFromFile(MutePlayers, player.playerData.username);
+                   MutePlayers = RemoveStringFromFile(MutePlayers, player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
                 }
@@ -447,7 +447,7 @@ public class EssentialsPlugin
         if (AfkPlayers.Contains(player.playerData.username))
         {
             ReadFile(AfkListFile);
-            RemoveStringFromFile(AfkPlayers, player.playerData.username);
+            AfkPlayers = RemoveStringFromFile(AfkPlayers, player.playerData.username);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
         }
         else
@@ -510,7 +510,7 @@ public class EssentialsPlugin
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
                     ReadFile(GodListFile);
-                    RemoveStringFromFile(GodListPlayers, player.playerData.username);
+                 GodListPlayers = RemoveStringFromFile(GodListPlayers, player.playerData.username);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
                     return true;
                 }
@@ -745,17 +745,9 @@ public class EssentialsPlugin
         }
 
     }
-    public static void RemoveStringFromFile(List<string> content, string RemoveString)
+    public static string RemoveStringFromFile(List<string> content, string RemoveString)
     {
-        try
-        {
-            content.Remove(RemoveString);
-        }
-        catch (Exception ex)
-        {
-            LogExpection(ex, "RemoveStringFromFile");
-        }
-
+           return content.Remove(RemoveString);
     }
     public static string SetTimeStamp()
     {
