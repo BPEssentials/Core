@@ -128,7 +128,10 @@ public class EssentialsPlugin
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
         MessageLog(message, player);
-
+        if (AfkPlayers.Contains(player.playerData.username))
+        {
+            afk(message, player);
+        }
         // Clear chat command, self and global
         Debug.Log("clearchat");
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2)){
@@ -146,7 +149,7 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("mute");
-        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute)) // <broke
+        if (message.StartsWith(cmdMute) || message.StartsWith(cmdUnMute))
         {
             if (message.StartsWith(cmdUnMute)){
                  unmute = true;
@@ -156,15 +159,20 @@ public class EssentialsPlugin
             return true;
         }
         Debug.Log("say");
-        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2))) // <broke
+        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
         {
             say(message, player);
             return true;
         }
         Debug.Log("god");
-        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))// <broke
+        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
         {
             godMode(message, player);
+            return true;
+        }
+        if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
+        {
+            afk(message, player);
             return true;
         }
         Debug.Log("essentials");
@@ -276,7 +284,6 @@ public class EssentialsPlugin
         if (AfkPlayers.Contains(message)){
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
             return true;
-
         }
         return false;
 
@@ -435,11 +442,11 @@ public class EssentialsPlugin
 
     public static void afk(string message, object oPlayer){
         SvPlayer player = (SvPlayer)oPlayer;
-
+        ReadFile(AfkListFile);
         if (AfkPlayers.Contains(player.playerData.username))
         {
             ReadFile(AfkListFile);
-            RemoveStringFromFile(MutePlayers, player.playerData.username);
+            RemoveStringFromFile(AfkPlayers, player.playerData.username);
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
         }
         else
@@ -741,7 +748,6 @@ public class EssentialsPlugin
     {
         try
         {
-
             content.Remove(RemoveString);
         }
         catch (Exception ex)
@@ -894,14 +900,13 @@ public class EssentialsPlugin
                     {
                         TimestampFormat = line.Substring(16);
                     }
-                    else if (line.Contains("SayCommand: "))
+                    else if (line.Contains("AFKCommand: "))
                     {
                         cmdAfk = cmdCommandCharacter + line.Substring(12);
                     }
-                    else if (line.Contains("SayCommand2: "))
+                    else if (line.Contains("AFKCommand: "))
                     {
                         cmdAfk2 = cmdCommandCharacter + line.Substring(13);
-
                     }
                     else if (line.Contains("BanCommand: "))
                     {
