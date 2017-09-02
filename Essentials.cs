@@ -205,7 +205,7 @@ public class EssentialsPlugin
         //    {
         //        string arg1 = message.Substring("/info".Count() + 1);
         //        CheckInfo(message, player, arg1);
-        //        return true;
+        //        return true;                                  //TODO: Make this work.
         //    }
         //    else
         //    {
@@ -289,6 +289,7 @@ public class EssentialsPlugin
 
     }
 
+<<<<<<< HEAD
     // These are the various functions for the commands.
     //public static void CheckInfo(string message, object oPlayer, string arg1)
     //{
@@ -307,6 +308,46 @@ public class EssentialsPlugin
     //    }
     //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
     //}
+=======
+	// These are the various functions for the commands.
+	//public static void CheckInfo(string message, object oPlayer, string arg1)
+	//{
+	//    SvPlayer player = (SvPlayer)oPlayer;
+	//    int found = 0;
+	//    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+	//    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+	//    {
+	//        if (shPlayer.svPlayer == arg1)                    //TODO: Figure out how this works also
+	//        {
+	//            if (shPlayer.IsRealPlayer())
+	//            {
+	//                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
+	//            }
+	//        }
+	//    }
+	//    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
+	//}
+
+	private static void AnnounceThread(object man)
+	{
+		SvNetMan netMan = (SvNetMan)man;
+		while (true)
+		{
+			foreach (var player in netMan.players)
+			{
+				player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, announcements[announceIndex]);
+			}
+		}
+
+		Debug.Log(SetTimeStamp() + "[INFO] Announcement made...");
+
+		announceIndex += 1;
+		if (announceIndex > announcements.Length - 1)
+			announceIndex = 0;
+		Thread.Sleep(TimeBetweenAnnounce * 1000);
+	}
+
+>>>>>>> origin/develop
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
@@ -438,7 +479,7 @@ public class EssentialsPlugin
     //public static void getUsers()
     //{
     //    Users = new List<string>();
-    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>()) //TODO: This might be useful for the other things
     //    {
     //        Users.Add(shPlayer);
     //    }
@@ -791,7 +832,7 @@ public class EssentialsPlugin
         #region SettingsFile
         if (FileName == SettingsFile)
         {
-            foreach (var line in File.ReadAllLines(SettingsFile))
+            foreach (var line in File.ReadAllLines(SettingsFile)) //TODO: THIS METHOD IS A MESS, THERE IS PROBABLY A BETTER WAY.
             {
                 if (line.StartsWith("#"))
                 {
@@ -799,7 +840,6 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    // TODO: make this better/compacter
                     if (line.Contains("version: "))
                     {
                         version = line.Substring(9);
@@ -911,7 +951,7 @@ public class EssentialsPlugin
 
                 //else if (line.Contains(""))
                 //{
-                //    = line.Substring();
+                //    = line.Substring(); //Template
                 //}
 
             }
