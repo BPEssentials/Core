@@ -11,18 +11,18 @@ using UnityEngine;
 public class EssentialsPlugin
 {
     #region Folder Locations
-    private static string Directory = "Essentials/";
+    private static string FileDirectory = "Essentials/";
 
-    private static string SettingsFile = Directory + "essentials_settings.txt";
-    private static string LanguageBlockFile = Directory + "languageblock.txt";
-    private static string ChatBlockFile = Directory + "chatblock.txt";
-    private static string AnnouncementsFile = Directory + "announcements.txt";
-    private static string IPListFile = Directory + "ip_list.txt";
+    private static string SettingsFile = FileDirectory + "essentials_settings.txt";
+    private static string LanguageBlockFile = FileDirectory + "languageblock.txt";
+    private static string ChatBlockFile = FileDirectory + "chatblock.txt";
+    private static string AnnouncementsFile = FileDirectory + "announcements.txt";
+    private static string IPListFile = FileDirectory + "ip_list.txt";
     private static string AdminListFile = "admin_list.txt";
-    private static string GodListFile = Directory + "godlist.txt";
-    private static string AfkListFile = Directory + "afklist.txt";
-    private static string MuteListFile = Directory + "mutelist.txt";
-    private static string RulesFile = Directory + "rules.txt";
+    private static string GodListFile = FileDirectory + "godlist.txt";
+    private static string AfkListFile = FileDirectory + "afklist.txt";
+    private static string MuteListFile = FileDirectory + "mutelist.txt";
+    private static string RulesFile = FileDirectory + "rules.txt";
     #endregion
 
     #region predefining variables
@@ -617,6 +617,132 @@ public class EssentialsPlugin
         Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
         Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
     }
+    public static void CheckFiles(string FileName)
+    {
+        if (FileName == "all")
+        {
+            if (!Directory.Exists(FileDirectory))
+            {
+                Directory.CreateDirectory(FileDirectory);
+                Debug.Log(FileDirectory + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(AfkListFile))
+            {
+                File.Create(AfkListFile).Close();
+                Debug.Log(AfkListFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(MuteListFile))
+            {
+                File.Create(MuteListFile).Close();
+                Debug.Log(MuteListFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(ChatBlockFile))
+            {
+                File.Create(ChatBlockFile).Close();
+                CreateFile(ChatBlockFile);
+                Debug.Log(ChatBlockFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(GodListFile))
+            {
+                File.Create(GodListFile).Close();
+                Debug.Log(GodListFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(IPListFile))
+            {
+                File.Create(IPListFile).Close();
+                Debug.Log(IPListFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(LanguageBlockFile))
+            {
+                File.Create(LanguageBlockFile).Close();
+                CreateFile(LanguageBlockFile);
+                Debug.Log(LanguageBlockFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(MuteListFile))
+            {
+                File.Create(MuteListFile).Close();
+                Debug.Log(MuteListFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(RulesFile))
+            {
+                File.Create(RulesFile).Close();
+                CreateFile(RulesFile);
+                Debug.Log(RulesFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(SettingsFile))
+            {
+                File.Create(SettingsFile).Close();
+                CreateFile(SettingsFile);
+                Debug.Log(RulesFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(AnnouncementsFile))
+            {
+                File.Create(AnnouncementsFile).Close();
+                CreateFile(AnnouncementsFile);
+                Debug.Log(AnnouncementsFile + " Does not exist! Creating one.");
+            }
+        }
+        else
+        {
+            if (!File.Exists(FileName))
+            {
+
+                if (FileName == SettingsFile)
+                {
+                    File.Create(FileName).Close();
+                    CreateFile(FileName);
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
+                if (FileName == ChatBlockFile)
+                {
+                    File.Create(FileName).Close();
+                    CreateFile(FileName);
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
+                if (FileName == LanguageBlockFile)
+                {
+                    File.Create(FileName).Close();
+                    CreateFile(FileName);
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
+                if (FileName == RulesFile)
+                {
+                    File.Create(FileName).Close();
+                    CreateFile(FileName);
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
+                else
+                {
+                    File.Create(FileName).Close();
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
+            }
+        }
+    }
+    public static void CreateFile(string FileName)
+    {
+        if (FileName == SettingsFile)
+        {
+            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.0", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "# This will lower any command ", "# so /DiScOrD will still be registed as /discord", "# This does not work on arguments.", "# Enable ToLowerCommands", "#----------------------------------", "ToLowerCommands: true", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
+            File.WriteAllLines(SettingsFile, content);
+        }
+        if (FileName == ChatBlockFile)
+        {
+            string[] content = { "nigger", "nigga", "nigg3r", "NIGGER", "NI99ER", "ni99er", "nigger.", "nigga.", "nigg3r.", "N199ER", "n1gger", "N1GGER", "NIGGA", "NIGGA." };
+            File.WriteAllLines(ChatBlockFile, content);
+        }
+        if (FileName == LanguageBlockFile)
+        {
+            string[] content = { "bombas","hola","alguien","habla","espanol","español","estoy","banco","voy","consegi","donde","quedamos","banko","afuera","estas","alguem","donde","nos","vemos","soy ","vueno","como","carro","cabros","miren","hacha","laar","corri","sacame","aqui","policia","trajo","encerro","bomba","beuno","pantalones","dinero","porque","tengo","escopetaa","escopeta" };
+            File.WriteAllLines(LanguageBlockFile, content);
+        }
+        if (FileName == RulesFile)
+        {
+            string[] content = {"Please tell the owner to edit the rules.txt file", "in the essentials folder!"};
+            File.WriteAllLines(RulesFile, content);
+        }
+
+    }
     public static void Reload(bool silentExecution, string message = null, object oPlayer = null)
     {
         if (!silentExecution)
@@ -624,6 +750,8 @@ public class EssentialsPlugin
             SvPlayer player = (SvPlayer) oPlayer;
             if (AdminsListPlayers.Contains(player.playerData.username))
             {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Checking if file's exist...");
+                CheckFiles("all");
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading config files...");
                 ReadFile(SettingsFile);
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Config file reloaded");
@@ -647,6 +775,7 @@ public class EssentialsPlugin
         }
         else if (silentExecution)
         {
+            CheckFiles("all");
             ReadFile(SettingsFile);
             ReadFileStream(LanguageBlockFile, LanguageBlockWords);
             ReadFileStream(ChatBlockFile, ChatBlockWords);
