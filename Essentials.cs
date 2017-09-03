@@ -135,10 +135,13 @@ public class EssentialsPlugin
     {
         // Log message
         MessageLog(message, player);
-        if (message.StartsWith(cmdCommandCharacter))
-        {
-            message = message.ToLower()
-        }
+
+        string tempstring = message.Substring(message.IndexOf(" ") + 1).Trim();
+        string msgarg = message.Substring(0, message.LastIndexOf(" ") + 1);
+        tempstring = tempstring.ToLower();
+        message = tempstring + msgarg;
+
+
         // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
@@ -162,7 +165,7 @@ public class EssentialsPlugin
             }
             else
             {
-                all = false
+                all = false;
                 ClearChat(message, player, all);
                 return true;
 
@@ -311,7 +314,7 @@ public class EssentialsPlugin
             }
         }
         // Check if message contains a player that is AFK
-        if (AfkPlayers.Any(message.Contains)
+        if (AfkPlayers.Any(message.Contains))
         {
             player.SendToSelf(Channel.Unsequenced, (byte) 10, "That player is AFK.");
             return true;
