@@ -1,6 +1,4 @@
 // Essentials created by UserR00T & DeathByKorea
-
-// Unstable release, DO NOT USE IN NORMAL CONDITIONS.
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -94,7 +92,6 @@ public class EssentialsPlugin
     private static string TimestampFormat;
     private static bool all;
     private static bool unmute;
-    private static bool pvp;
 
     #endregion
 
@@ -110,13 +107,19 @@ public class EssentialsPlugin
         try
         {
             Reload(true);
-
+            Debug.Log("-------------------------------------------------------------------------------");
+            Debug.Log(" ");
             Debug.Log("[INFO] Essentials - version: " + version + " Loaded in successfully!");
+            Debug.Log(" ");
+            Debug.Log("-------------------------------------------------------------------------------");
         }
         catch (Exception ex)
         {
+            Debug.Log("-------------------------------------------------------------------------------");
+            Debug.Log(" ");
             Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
-            Debug.Log(ex); //remove when debugging is done
+            Debug.Log(" ");
+            Debug.Log("-------------------------------------------------------------------------------");
         }
 
         if (!File.Exists(AnnouncementsFile))
@@ -125,7 +128,6 @@ public class EssentialsPlugin
         }
         Thread thread = new Thread(new ParameterizedThreadStart(AnnounceThread));
         thread.Start(netMan);
-
         Debug.Log(SetTimeStamp() + "[INFO] Announcer started successfully!");
     }
 
@@ -133,7 +135,9 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
+        // Log message
         MessageLog(message, player);
+        // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
             afk(message, player);
@@ -144,9 +148,7 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
             return true;
         }
-        Debug.Log("COMMANDS -----");
-        // Clear chat command, self and global
-        Debug.Log("clearchat");
+        // Command: ClearChat
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
         {
             if (message.Contains("all") || message.Contains("everyone"))
@@ -156,14 +158,13 @@ public class EssentialsPlugin
             ClearChat(message, player, all);
             return true;
         }
-        Debug.Log("reload");
-        // Reload command
+        // Command: Reload
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
         {
             Reload(false, message, player);
             return true;
         }
-        Debug.Log("mute");
+        // Command: Mute
         if (message.StartsWith(cmdUnMute))
         {
             unmute = true;
@@ -173,37 +174,35 @@ public class EssentialsPlugin
         }
         else if (message.StartsWith(cmdMute))
         {
-
             unmute = false;
             Mute(message, player, unmute);
             return true;
         }
-
-        Debug.Log("say");
+        // Command: Say
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
         {
             say(message, player);
             return true;
         }
-        Debug.Log("god");
+        // Command: GodMode
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
         {
             godMode(message, player);
             return true;
         }
+        // Command: AFK
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
         {
             afk(message, player);
             return true;
         }
-        Debug.Log("essentials");
-        // Info command
+        // Command: Main/essentials
         if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
         {
             essentials(message, player);
             return true;
         }
-        Debug.Log("Rules");
+        // Command: Rules
         if (message.StartsWith(cmdRules))
         {
             string arg1 = message.Substring(cmdRules.Length);
@@ -220,21 +219,7 @@ public class EssentialsPlugin
                 return true;
             }
         }
-        //if (message.StartsWith("/info"))
-        //{
-        //    if (message != "/info")
-        //    {
-        //        string arg1 = message.Substring("/info".Count() + 1);
-        //        CheckInfo(message, player, arg1);
-        //        return true;                                  //TODO: Make this work.
-        //    }
-        //    else
-        //    {
-        //        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-        //        return true;
-        //    }
-        //}
-        Debug.Log("checkIP");
+        // Command: CheckIP
         if (message.StartsWith(cmdCheckIP))
         {
             if (message != cmdCheckIP)
@@ -249,7 +234,7 @@ public class EssentialsPlugin
                 return true;
             }
         }
-        Debug.Log("CheckPlayer");
+        // Command: CheckPlayer
         if (message.StartsWith(cmdCheckPlayer))
         {
             if (message != cmdCheckPlayer)
@@ -264,7 +249,7 @@ public class EssentialsPlugin
                 return true;
             }
         }
-        Debug.Log("FakeJoin/Leave");
+        // Command: Fake Join/Leave
         if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
         {
             if (!(message == cmdFakeJoin || message == cmdFakeLeave))
@@ -287,8 +272,7 @@ public class EssentialsPlugin
 
             return true;
         }
-
-        Debug.Log("msgunknown");
+        // Message: Unkonwn command
         if (message.StartsWith(cmdCommandCharacter))
         {
             if (msgUnknownCommand)
@@ -315,13 +299,7 @@ public class EssentialsPlugin
                 return false;
             }
         }
-
-        if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
-        {
-            afk(message, player);
-            return true;
-        }
-
+        // Check if message contains a player that is AFK
         if (AfkPlayers.Contains(message))
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
@@ -330,26 +308,6 @@ public class EssentialsPlugin
         return false;
 
     }
-
-    // These are the various functions for the commands.
-    //public static void CheckInfo(string message, object oPlayer, string arg1)
-    //{
-    //    SvPlayer player = (SvPlayer)oPlayer;
-    //    int found = 0;
-    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-    //    {
-    //        if (shPlayer.svPlayer == arg1)                    //TODO: Figure out how this works also
-    //        {
-    //            if (shPlayer.IsRealPlayer())
-    //            {
-    //                player.SendToSelf(Channel.Unsequenced, (byte)10, "Username: " + shPlayer.SvPlayer.username);
-    //            }
-    //        }
-    //    }
-    //    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about player: " + arg1);
-    //}
-
     private static void AnnounceThread(object man)
     {
         SvNetMan netMan = (SvNetMan)man;
@@ -366,9 +324,7 @@ public class EssentialsPlugin
                 announceIndex = 0;
             Thread.Sleep(TimeBetweenAnnounce * 1000);
         }
-
     }
-
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
@@ -401,7 +357,6 @@ public class EssentialsPlugin
         }
         player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
     }
-
     public static void MessageLog(string message, object oPlayer)
     {
         SvPlayer player = (SvPlayer)oPlayer;
@@ -418,7 +373,6 @@ public class EssentialsPlugin
     public static void printRules(string message, object oPlayer, int pagenumber = 1)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-
         rules2 = rules.Skip(5 * pagenumber - 5).ToArray();
         int linecnt = rules.Count();
         if (linecnt > 5)
@@ -446,9 +400,7 @@ public class EssentialsPlugin
     public static bool Mute(string message, object oPlayer, bool unmute)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-
         string muteuser = message.Split(' ').Last();
-
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
@@ -504,14 +456,6 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
         }
     }
-    //public static void getUsers()
-    //{
-    //    Users = new List<string>();
-    //    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>()) //TODO: This might be useful for the other things
-    //    {
-    //        Users.Add(shPlayer);
-    //    }
-    //}
     public static bool BlockMessage(string message, object oPlayer)
     {
         message = message.ToLower();
@@ -606,7 +550,6 @@ public class EssentialsPlugin
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
-                    //SvPlayer svPlayer = (SvPlayer)player;
                     player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
                     Thread.Sleep(500);
                     for (int i = 0; i < 6; i++)
@@ -648,7 +591,6 @@ public class EssentialsPlugin
                 ReadFile(SettingsFile);
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading critical .txt files...");
-
                 ReadFileStream(LanguageBlockFile, LanguageBlockWords);
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
                 ReadFileStream(AdminListFile, AdminsListPlayers);
@@ -659,7 +601,6 @@ public class EssentialsPlugin
                 ReadFile(MuteListFile);
                 ReadFile(AfkListFile);
                 ReadFile(RulesFile);
-
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Critical .txt files reloaded");
             }
             else
@@ -670,7 +611,6 @@ public class EssentialsPlugin
         else if (silentExecution)
         {
             ReadFile(SettingsFile);
-
             ReadFileStream(LanguageBlockFile, LanguageBlockWords);
             ReadFileStream(ChatBlockFile, ChatBlockWords);
             ReadFileStream(AdminListFile, AdminsListPlayers);
@@ -689,9 +629,6 @@ public class EssentialsPlugin
         SvPlayer player = (SvPlayer)oPlayer;
         player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea");
         player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + version);
-
-        //TODO: Subcommands like /essentials reload : executes cmdReload
-
     }
 
     [Hook("SvPlayer.Damage")]
@@ -700,14 +637,7 @@ public class EssentialsPlugin
         Debug.Log("Damage Started");
         if (CheckGodmode(player, amount) == false)
         {
-            if (CheckPVP(player, attacker) == false)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return false;
         }
         else
         {
@@ -717,72 +647,12 @@ public class EssentialsPlugin
     private static bool CheckGodmode(object oPlayer, float amount)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+        if (GodListPlayers.Contains(player.playerData.username))
         {
-            if (shPlayer.svPlayer == player)
-            {
-                if (GodListPlayers.Contains(player.playerData.username))
-                {
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG Blocked!");
-                    return true;
-                }
-            }
-            return false;
+            player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG Blocked!");
+            return true;
         }
         return false;
-    }
-    private static bool CheckPVP(object oPlayer, object oAttacker)
-    {
-        Debug.Log("CheckPVP called");
-        SvPlayer player = (SvPlayer)oPlayer;
-        ShPlayer attacker = (ShPlayer)oAttacker;
-        bool AttackerIsPlayer = false;
-        bool VictimIsPlayer = false;
-        Debug.Log(" if pvp is not true ");
-        if (!(pvp))
-        {
-            foreach (var shPlayerVictim in GameObject.FindObjectsOfType<ShPlayer>())
-            {
-                if (shPlayerVictim.svPlayer == player)
-                {
-                    Debug.Log("pvp isnt true");
-                    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                    {
-                        if (shPlayer.svPlayer == attacker.svPlayer)
-                        {
-                            Debug.Log("if player is a real player");
-                            if (shPlayer.IsRealPlayer())
-                            {
-                                Debug.Log("is a real player");
-                                AttackerIsPlayer = true;
-                            }
-                        }
-                    }
-                    if (shPlayerVictim.svPlayer == player)
-                    {
-                        Debug.Log("if player is a real player | VICTIM");
-                        if (shPlayerVictim.IsRealPlayer())
-                        {
-                            Debug.Log("is a real player | VICTIM");
-                            VictimIsPlayer = true;
-                        }
-                    }
-                    if (AttackerIsPlayer)
-                    {
-                        if (VictimIsPlayer)
-                        {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            }
-            return false;
-        }
-        else
-        {
-            return false;
-        }
     }
     public static bool say(string message, object oPlayer)
     {
@@ -924,7 +794,10 @@ public class EssentialsPlugin
             {
                 PlaceHolderText = PlaceHolderText.Replace("{S}", Seconds.ToString());
             }
-
+            if (TimestampFormat.Contains("{T}"))
+            {
+                PlaceHolderText = PlaceHolderText.Replace("{T}", hm.ToString("tt"));
+            }
             PlaceHolderText = PlaceHolderText + " ";
             return PlaceHolderText;
         }
@@ -1048,46 +921,23 @@ public class EssentialsPlugin
                     {
                         cmdAfk2 = cmdCommandCharacter + line.Substring(13);
                     }
-                    else if (line.Contains("BanCommand: "))
-                    {
-                        cmdBan = cmdCommandCharacter + line.Substring(12);
-                    }
-                    else if (line.Contains("KickCommand: "))
-                    {
-                        cmdKick = cmdCommandCharacter + line.Substring(13);
-                    }
-
                     else if (line.Contains("CheckIPCommand: "))
                     {
                         cmdCheckIP = cmdCommandCharacter + line.Substring(16);
                     }
-
                     else if (line.Contains("CheckPlayerCommand: "))
                     {
                         cmdCheckPlayer = cmdCommandCharacter + line.Substring(20);
                     }
-
                     else if (line.Contains("FakeJoinCommand: "))
                     {
                         cmdFakeJoin = cmdCommandCharacter + line.Substring(17);
                     }
-
                     else if (line.Contains("FakeLeaveCommand: "))
                     {
                         cmdFakeLeave = cmdCommandCharacter + line.Substring(18);
                     }
-                    else if (line.Contains("PvP:"))
-                    {
-                        pvp = Convert.ToBoolean(line.Substring(5));
-                    }
-
                 }
-
-                //else if (line.Contains(""))
-                //{
-                //    = line.Substring(); //Template
-                //}
-
             }
         }
         #endregion

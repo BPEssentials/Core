@@ -138,5 +138,6 @@ TimeBetweenAnnounce: 360
 # {h} Hours (12 hour clock)
 # {M} Minutes
 # {S} Seconds
+# {T} AM/PM (used in {h} 12 hour clock)
 #----------------------------------
 TimestapFormat: [{H}:{M}:{S}]
