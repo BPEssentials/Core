@@ -33,6 +33,7 @@ public class EssentialsPlugin
     private static bool msgUnknownCommand;
     private static bool ChatBlock;
     private static bool LanguageBlock;
+    private static bool CheckAlt;
     private static string command;
     private static SvPlayer player;
     private static string msgSayPrefix;
@@ -111,7 +112,7 @@ public class EssentialsPlugin
             Debug.Log(" ");
             Debug.Log("-------------------------------------------------------------------------------");
         }
-        catch (Exception ex)
+        catch()
         {
             Debug.Log("-------------------------------------------------------------------------------");
             Debug.Log(" ");
@@ -168,9 +169,7 @@ public class EssentialsPlugin
                 all = false;
                 ClearChat(message, player, all);
                 return true;
-
             }
-            return true;
         }
         // Command: Reload
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
@@ -717,10 +716,12 @@ public class EssentialsPlugin
 
         if (player.playerData.username != null)
         {
-            Thread thread2 = new Thread(new ParameterizedThreadStart(CheckBanned));
+            Thread thread1 = new Thread(new ParameterizedThreadStart(CheckBanned));
+            thread1.Start(player);
+            Thread thread2 = new Thread(new ParameterizedThreadStart(WriteIPToFile));
             thread2.Start(player);
-            Thread thread = new Thread(new ParameterizedThreadStart(WriteIPToFile));
-            thread.Start(player);
+            Thread thread3 = new Thread(new ParameterizedThreadStart(CheckAltAcc));
+            thread3.Start(player);
         }
     }
     private static void CheckBanned(object oPlayer)
@@ -749,6 +750,37 @@ public class EssentialsPlugin
         catch (Exception ex)
         {
             LogExpection(ex, "CheckBanned");
+        }
+    }
+    private static void CheckAltAcc(object oPlayer)
+    {
+        if (CheckAlt)
+        {
+            Thread.Sleep(3000);
+            try
+            {
+                SvPlayer player = (SvPlayer)oPlayer;
+                if (File.ReadAllText("ban_list.txt").Contains(player.netMan.GetAddress(player.connection)))
+                {
+                    Debug.Log("[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.netMan.GetAddress(player.connection));
+                    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                    {
+                        if (shPlayer.svPlayer == player)
+                        {
+                            if (shPlayer.IsRealPlayer())
+                            {
+                                player.netMan.AddBanned(shPlayer);
+                                player.netMan.Disconnect(player.connection);
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExpection(ex, "CheckAlt");
+            }
         }
     }
     private static void WriteIPToFile(object oPlayer)
@@ -951,8 +983,13 @@ public class EssentialsPlugin
                     {
                         cmdFakeLeave = cmdCommandCharacter + line.Substring(18);
                     }
+                    else if (line.Contains("CheckForAlts: "))
+                    {
+                        CheckAlt = Convert.ToBoolean(line.Substring(14));
+                    }
                 }
             }
+
         }
         #endregion
         else if (FileName == AnnouncementsFile)
