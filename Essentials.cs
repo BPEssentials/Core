@@ -1,4 +1,6 @@
 // Essentials created by UserR00T & DeathByKorea
+
+// Unstable release, DO NOT USE IN NORMAL CONDITIONS.
 using System;
 using System.Collections.Generic;
 using System.IO;
