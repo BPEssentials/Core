@@ -29,7 +29,7 @@ CommandCharacter: /
 
 # Will display "unknown command" if the command is not found in this plugin
 #----------------------------------
-UnknownCommand: false
+UnknownCommand: true
 
 noperm: No permission.
 
@@ -70,6 +70,10 @@ FakeJoinCommand: fakejoin
 #----------------------------------
 RulesCommand: rules
 
+# Discord command
+#----------------------------------
+DiscordCommand: discord
+
 # Godmode command --- Godmode default saving location - 'godmode.txt'
 #----------------------------------
 GodmodeCommand: god
@@ -99,7 +103,9 @@ UnMuteCommand: unmute
 #----------------------------------
 msgSayPrefix: [!!!]
 
-
+# Discord invite link
+#----------------------------------
+DiscordLink: https://discord.gg/Test
 
 
 
@@ -126,6 +132,12 @@ enableLanguageBlock: true
 #----------------------------------
 CheckForAlts: true
 
+# This will lower any command 
+# so /DiScOrD will still be registed as /discord
+# This does not work on arguments.
+# Enable ToLowerCommands
+#----------------------------------
+ToLowerCommands: true
 
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 #----------------------------------
