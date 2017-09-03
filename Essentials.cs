@@ -28,71 +28,66 @@ public class EssentialsPlugin
     #region predefining variables
 
     // General
-
     private static string version;
+    private static string command;
+    private static SvPlayer player;
+    private static ShPlayer Splayer;
+    private static string TimestampFormat;
+
+    // Booleans
     private static bool msgUnknownCommand;
     private static bool ChatBlock;
     private static bool LanguageBlock;
     private static bool CheckAlt;
-    private static string command;
-    private static SvPlayer player;
-    private static string msgSayPrefix;
-    private static ShPlayer Splayer;
+    private static bool all;
+    private static bool unmute;
+    private static bool MessageToLower;
 
-    // Arrays
+    // Lists
     private static List<string> ChatBlockWords = new List<string>();
     private static List<string> LanguageBlockWords = new List<string>();
     private static List<string> AdminsListPlayers = new List<string>();
-
     private static List<string> GodListPlayers = new List<string>();
     private static List<string> AfkPlayers = new List<string>();
     private static List<string> MutePlayers = new List<string>();
+
+    // Arrays
     private static string[] rules;
     private static string[] rules2;
+    private static string[] announcements;
 
     // Messages
+    private static string msgSayPrefix;
     private static string msgNoPerm;
+    private static string msgDiscord;
 
     // Commands
     private static string cmdCommandCharacter;
-
     private static string cmdClearChat;
     private static string cmdClearChat2;
-
     private static string cmdSay;
     private static string cmdSay2;
-
     private static string cmdGodmode;
     private static string cmdGodmode2;
-
     private static string cmdMute;
     private static string cmdUnMute;
-
     private static string cmdReload;
     private static string cmdReload2;
-
     private static string cmdAfk;
     private static string cmdAfk2;
-
     private static string cmdBan;
     private static string cmdKick;
-
     private static string cmdRules;
-
     private static string cmdCheckIP;
     private static string cmdCheckPlayer;
-
     private static string cmdFakeJoin;
     private static string cmdFakeLeave;
-
+    private static string cmdDiscord;
     private static string arg1ClearChat;
 
+    // Ints
     private static int announceIndex = 0;
-    private static string[] announcements;
     private static int TimeBetweenAnnounce;
-    private static string TimestampFormat;
-    private static bool all;
-    private static bool unmute;
 
     #endregion
 
@@ -112,13 +107,14 @@ public class EssentialsPlugin
             Debug.Log(" ");
             Debug.Log("-------------------------------------------------------------------------------");
         }
-        catch()
+        catch(Exception ex)
         {
             Debug.Log("-------------------------------------------------------------------------------");
             Debug.Log(" ");
             Debug.Log("[WARNING] Essentials - Settings file does not exist! Make sure to place settings.txt in the game directory!");
             Debug.Log(" ");
             Debug.Log("-------------------------------------------------------------------------------");
+            Debug.Log(ex);
         }
 
         if (!File.Exists(AnnouncementsFile))
@@ -136,11 +132,33 @@ public class EssentialsPlugin
     {
         // Log message
         MessageLog(message, player);
+        // If MessageToLower is enabled and its a command, lower the command but not the argument
+        if (MessageToLower)
+        {
+            if (message.StartsWith(cmdCommandCharacter))
+            {
+                if (message.Contains(" "))
+                {
+                    string TempArg = null;
+                    string TempMessage = null;
 
-        string tempstring = message.Substring(message.IndexOf(" ") + 1).Trim();
-        string msgarg = message.Substring(0, message.LastIndexOf(" ") + 1);
-        tempstring = tempstring.ToLower();
-        message = tempstring + msgarg;
+                    TempMessage = message.Substring(0, message.LastIndexOf(" ") + 1);
+                    if (message.EndsWith(" "))
+                    {
+                        message = TempMessage.ToLower().Trim();
+                    }
+                    else
+                    {
+                        TempArg = message.Substring(message.IndexOf(" ") + 1);
+                        message = TempMessage.ToLower() + TempArg.Trim();
+                    }
+                }
+                else
+                {
+                    message = message.ToLower();
+                }
+            }
+        }
 
 
         // If player is afk, unafk him
@@ -151,7 +169,7 @@ public class EssentialsPlugin
         //Checks if player is muted, if so, cancel message
         if (MutePlayers.Contains(player.playerData.username))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "You are muted.");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
             return true;
         }
         // Command: ClearChat
@@ -228,7 +246,7 @@ public class EssentialsPlugin
             }
             else if (!(isNumeric))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "That is not a valid argument.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument.");
                 return true;
             }
         }
@@ -243,7 +261,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
                 return true;
             }
         }
@@ -258,7 +276,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
                 return true;
             }
         }
@@ -271,18 +289,24 @@ public class EssentialsPlugin
                 arg1 = message.Split(' ').Last();
                 if (message.StartsWith(cmdFakeJoin))
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, arg1 + " Connected");
+                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Connected");
                 }
                 else if (message.StartsWith(cmdFakeLeave))
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, arg1 + " Disconnected");
+                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Disconnected");
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
             }
 
+            return true;
+        }
+        // Command: Discord
+        if (message.StartsWith(cmdDiscord))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
             return true;
         }
         // Message: Unkonwn command
@@ -290,7 +314,7 @@ public class EssentialsPlugin
         {
             if (msgUnknownCommand)
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
                 return true;
             }
             else
@@ -315,7 +339,7 @@ public class EssentialsPlugin
         // Check if message contains a player that is AFK
         if (AfkPlayers.Any(message.Contains))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "That player is AFK.");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
             return true;
         }
         return false;
@@ -647,7 +671,6 @@ public class EssentialsPlugin
     [Hook("SvPlayer.Damage")]
     public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
     {
-        Debug.Log("Damage Started");
         if (CheckGodmode(player, amount) == false)
         {
             return false;
@@ -986,6 +1009,18 @@ public class EssentialsPlugin
                     else if (line.Contains("CheckForAlts: "))
                     {
                         CheckAlt = Convert.ToBoolean(line.Substring(14));
+                    }
+                    else if (line.Contains("DiscordCommand: "))
+                    {
+                        cmdDiscord = cmdCommandCharacter + line.Substring(16);
+                    }
+                    else if (line.Contains("DiscordLink: "))
+                    {
+                        msgDiscord =  line.Substring(13);
+                    }
+                    else if (line.Contains("ToLowerCommands: "))
+                    {
+                        MessageToLower = Convert.ToBoolean(line.Substring(17));
                     }
                 }
             }
