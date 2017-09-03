@@ -120,10 +120,11 @@ enableChatBlock: true
 enableLanguageBlock: true
 
 
-# PvP --- Setting this to false block player to player damage.
-# Enable PVP
+# This will check for alt accounts with the same IP.
+# NOTE: If someone in the same home connects with the same IP it will be detected as alt.
+# Enable CheckForAlts
 #----------------------------------
-PvP: true
+CheckForAlts: true
 
 
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
