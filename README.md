@@ -19,24 +19,7 @@ BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Pro
 
 ## Installation
 
-
-
-
-### Installing UniversalUnityHooks
-* Assuming you have a server already;
-* Download UniversalUnityHooks from this link: https://github.com/DeathByKorea/UniversalUnityHooks/releases
-* Extract the zip somewhere
-* Place the `HookAttribute.dll` in `$Gamedir/Game_Data/Managed`
-* Place `HooksInjector.exe` along with the Mono.Cecil dll's (Mono.Cecil, Mono.Cecil.Inject, Mono.Cecil.Mdb, Mono.Cecil.Pdb, Mono.Cecil.Rocks) in `$Gamedir`
-
-
-### Installing the plugin
-* Assuming you have a server already and UniversalUnityHooks installed;
-* Download the plugin from this link: LINK COMING
-* put the `Essentials.cs` file in the scripts folder
-* Done! Run it once and start configuring the `Essentials/settings.txt` file
-* Reload with the /reload command
-
+Check https://userr00t.github.io/BP-Essentials/index.html#Installation
 
 
 
@@ -45,6 +28,10 @@ BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Pro
 UserR00T: [Website](https://UserR00T.com) | [GitHub](https://github.com/UserR00T)
 
 DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/DeathByKorea)
+
+## People that suggested idea's
+
+**PyroLab:** pvpBlock idea
 
 ## License
 
