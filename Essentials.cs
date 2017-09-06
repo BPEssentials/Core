@@ -23,6 +23,7 @@ public class EssentialsPlugin
     private static string AfkListFile = FileDirectory + "afklist.txt";
     private static string MuteListFile = FileDirectory + "mutelist.txt";
     private static string RulesFile = FileDirectory + "rules.txt";
+    private static string ExeptionFile = FileDirectory + "exceptions.txt"
     #endregion
 
     #region predefining variables
@@ -562,8 +563,8 @@ public class EssentialsPlugin
         catch (Exception ex)
         {
 
-            LogExpection(ex, "godMode");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
+            ErrorLogging(ex);
+            ReadError();
             return true;
         }
 
@@ -606,17 +607,12 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "ClearChat");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
+            ErrorLogging(ex);
+            ReadError();
         }
 
     }
-    public static void LogExpection(Exception ex, string Sender)
-    {
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] An unknown error occured. Expection: " + ex.ToString());
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
-    }
+
     public static void CheckFiles(string FileName)
     {
         if (FileName == "all")
@@ -856,8 +852,8 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "Say");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
+            ErrorLogging(ex);
+            ReadError();
             return true;
         }
     }
@@ -901,8 +897,9 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "CheckBanned");
-        }
+            ErrorLogging(ex);
+            ReadError();
+                    }
     }
     private static void CheckAltAcc(object oPlayer)
     {
@@ -931,8 +928,9 @@ public class EssentialsPlugin
             }
             catch (Exception ex)
             {
-                LogExpection(ex, "CheckAlt");
-            }
+            ErrorLogging(ex);
+            ReadError();
+                        }
         }
     }
     private static void WriteIPToFile(object oPlayer)
@@ -949,8 +947,9 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "WriteIPToFile");
-        }
+            ErrorLogging(ex);
+            ReadError();
+                    }
 
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
@@ -1001,6 +1000,8 @@ public class EssentialsPlugin
         }
         catch (Exception)
         {
+            ErrorLogging(ex);
+            ReadError();
             return "[Failed] ";
         }
     }
@@ -1178,5 +1179,36 @@ public class EssentialsPlugin
         }
 
     }
+     public static void ErrorLogging(Exception ex)
+    {
+        string strPath = ExeptionFile;
+        if (!File.Exists(strPath))
+        {
+            File.Create(strPath).Dispose();
+        }
+        using (StreamWriter sw = File.AppendText(strPath))
+        {
+            sw.WriteLine("=============Error Logging ===========");
+            sw.WriteLine("===========Start============= " +       DateTime.Now);
+            sw.WriteLine("Error Message: " + ex.Message);
+            sw.WriteLine("Stack Trace: " + ex.StackTrace);
+            sw.WriteLine("===========End============= " + DateTime.Now);
+
+        }
+    }
+
+    public static void ReadError()
+    {
+        string strPath = ExeptionFile;
+        using (StreamReader sr = new StreamReader(strPath))
+        {
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                Console.WriteLine(line);
+            }
+        }
+      }
+   }
 
 }
