@@ -23,7 +23,7 @@ public class EssentialsPlugin
     private static string AfkListFile = FileDirectory + "afklist.txt";
     private static string MuteListFile = FileDirectory + "mutelist.txt";
     private static string RulesFile = FileDirectory + "rules.txt";
-    private static string ExeptionFile = FileDirectory + "exceptions.txt"
+    private static string ExeptionFile = FileDirectory + "exceptions.txt";
     #endregion
 
     #region predefining variables
@@ -998,7 +998,7 @@ public class EssentialsPlugin
             PlaceHolderText = PlaceHolderText + " ";
             return PlaceHolderText;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             ErrorLogging(ex);
             ReadError();
@@ -1211,4 +1211,3 @@ public class EssentialsPlugin
       }
    }
 
-}
