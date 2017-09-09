@@ -379,6 +379,13 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
             return true;
         }
+
+        // Command: Help
+        if (message.StartsWith("/help")){
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
+
+        }
+
         // Message: Unkonwn command
         if (message.StartsWith(cmdCommandCharacter))
         {
@@ -392,6 +399,8 @@ public class EssentialsPlugin
                 return false;
             }
         }
+
+        
 
         //Checks if the message is a blocked one, if it is, block it.
         if (ChatBlock || LanguageBlock)
