@@ -23,6 +23,9 @@ public class EssentialsPlugin
     private static string AfkListFile = FileDirectory + "afklist.txt";
     private static string MuteListFile = FileDirectory + "mutelist.txt";
     private static string RulesFile = FileDirectory + "rules.txt";
+    private static string ExeptionFile = FileDirectory + "exceptions.txt";
+    private static string CustomCommandsFile = FileDirectory + "CustomCommands.txt";
+
     #endregion
 
     #region predefining variables
@@ -44,6 +47,8 @@ public class EssentialsPlugin
     private static bool MessageToLower;
 
     // Lists
+    private static List<string> Commands = new List<string>();
+    private static List<string> Responses = new List<string>();
     private static List<string> ChatBlockWords = new List<string>();
     private static List<string> LanguageBlockWords = new List<string>();
     private static List<string> AdminsListPlayers = new List<string>();
@@ -84,6 +89,8 @@ public class EssentialsPlugin
     private static string cmdFakeLeave;
     private static string cmdDiscord;
     private static string arg1ClearChat;
+    private static string cmdPlayers;
+    private static string cmdPlayers2;
 
     // Ints
     private static int announceIndex = 0;
@@ -107,7 +114,7 @@ public class EssentialsPlugin
             Debug.Log(" ");
             Debug.Log("-------------------------------------------------------------------------------");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.Log("-------------------------------------------------------------------------------");
             Debug.Log(" ");
@@ -146,6 +153,21 @@ public class EssentialsPlugin
             // Log message, but ONLY if the player is unmuted
             MessageLog(message, player);
         }
+        // Command: players
+        if (message.StartsWith(cmdPlayers) || message.StartsWith(cmdPlayers2))
+        {
+            int RealPlayers = 0;
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            {
+                if (shPlayer.IsRealPlayer())
+                {
+                    ++RealPlayers;
+                }
+            }
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " player(s) online");
+            return true;
+        }
+
         // Command: ClearChat
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
         {
@@ -199,7 +221,6 @@ public class EssentialsPlugin
                 player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
-
 
         }
         else if (message.StartsWith(cmdMute))
@@ -353,12 +374,33 @@ public class EssentialsPlugin
                 player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
-            
+
         }
         // Command: Discord
         if (message.StartsWith(cmdDiscord))
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
+            return true;
+        }
+
+        // Command: Help
+        if (message.StartsWith("/help"))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
+
+        }
+        // CustomCommands
+        int i = 0;
+        if (Commands.Any(message.Contains))
+        {
+            foreach (var command in Commands)
+            {
+                if (message.StartsWith(command))
+                {
+                    i = Commands.IndexOf(command);
+                }
+            }
+            player.SendToSelf(Channel.Unsequenced, (byte)10, GetPlaceHolders(i, player));
             return true;
         }
         // Message: Unkonwn command
@@ -374,6 +416,8 @@ public class EssentialsPlugin
                 return false;
             }
         }
+
+
 
         //Checks if the message is a blocked one, if it is, block it.
         if (ChatBlock || LanguageBlock)
@@ -397,9 +441,45 @@ public class EssentialsPlugin
         return false;
 
     }
+    static string GetPlaceHolders(int i, object oPlayer)
+    {
+        SvPlayer player = (SvPlayer)oPlayer;
+        var src = DateTime.Now;
+        var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second);
+        string PlaceHolderText = Responses[i];
+        string Hours = hm.ToString("HH");
+        string Minutes = hm.ToString("mm");
+        string Seconds = hm.ToString("ss");
+
+        if (Responses[i].Contains("{H}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{H}", hm.ToString("HH"));
+        }
+        if (Responses[i].Contains("{h}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{h}", hm.ToString("hh"));
+        }
+        if (Responses[i].Contains("{M}") || Responses[i].Contains("{m}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{M}", Minutes);
+        }
+        if (Responses[i].Contains("{S}") || Responses[i].Contains("{s}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{S}", Seconds.ToString());
+        }
+        if (Responses[i].Contains("{T}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{T}", hm.ToString("tt"));
+        }
+        if (Responses[i].ToLower().Contains("{username}"))
+        {
+            PlaceHolderText = PlaceHolderText.Replace("{username}", player.playerData.username);
+        }
+        return PlaceHolderText;
+    }
     private static void AnnounceThread(object man)
     {
-        SvNetMan netMan = (SvNetMan) man;
+        SvNetMan netMan = (SvNetMan)man;
         while (true)
         {
             foreach (var player in netMan.players)
@@ -416,39 +496,39 @@ public class EssentialsPlugin
     }
     public static void CheckIP(string message, object oPlayer, string arg1)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "IP for player: " + arg1);
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
         foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(arg1 + ":"))
             {
                 ++found;
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, line.Substring(arg1.Length + 1));
+                player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
             }
         }
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, arg1 + " occurred " + found + " times in the iplog file.");
+        player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
     }
     public static void CheckPlayer(string message, object oPlayer, string arg1)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
         string arg1temp = null;
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Accounts for IP: " + arg1);
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Accounts for IP: " + arg1);
         foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(" " + arg1))
             {
                 ++found;
                 arg1temp = line.Replace(": " + arg1, " ");
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, arg1temp);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, arg1temp);
             }
         }
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, arg1 + " occurred " + found + " times in the iplog file.");
+        player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
     }
     public static void MessageLog(string message, object oPlayer)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         if (!message.StartsWith(cmdCommandCharacter))
         {
             Debug.Log(SetTimeStamp() + "[MESSAGE] " + player.playerData.username + ": " + message);
@@ -461,22 +541,22 @@ public class EssentialsPlugin
 
     public static void printRules(string message, object oPlayer, int pagenumber = 1)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         rules2 = rules.Skip(5 * pagenumber - 5).ToArray();
         int linecnt = rules.Count();
         if (linecnt > 5)
         {
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Rules: Type " + cmdRules + " (pagenumber) for the next page");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Rules: Type " + cmdRules + " (pagenumber) for the next page");
         }
         else if (linecnt < 5)
         {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Rules:");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Rules:");
         }
         int id = 0;
         foreach (string rule in rules2)
         {
             ++id;
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, rule);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, rule);
             if (id > 5)
             {
                 id = 0;
@@ -488,7 +568,7 @@ public class EssentialsPlugin
 
     public static bool Mute(string message, object oPlayer, bool unmute)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         string muteuser = message.Split(' ').Last();
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
@@ -499,7 +579,7 @@ public class EssentialsPlugin
             {
                 if (!MutePlayers.Contains(muteuser))
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, muteuser + " is not muted!");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not muted!");
                     return true;
 
                 }
@@ -507,7 +587,7 @@ public class EssentialsPlugin
                 {
                     RemoveStringFromFile(MuteListFile, muteuser);
                     ReadFile(MuteListFile);
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, muteuser + " Unmuted");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                     return true;
                 }
 
@@ -516,13 +596,13 @@ public class EssentialsPlugin
             {
                 MutePlayers.Add(muteuser);
                 File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, muteuser + " Muted");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
                 return true;
             }
         }
         else
         {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
             return false;
         }
         return false;
@@ -530,30 +610,30 @@ public class EssentialsPlugin
 
     public static void afk(string message, object oPlayer)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         ReadFile(AfkListFile);
         if (AfkPlayers.Contains(player.playerData.username))
         {
             RemoveStringFromFile(AfkListFile, player.playerData.username);
             ReadFile(AfkListFile);
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "You are no longer AFK");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
         }
         else
         {
             File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
             AfkPlayers.Add(player.playerData.username);
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "You are now AFK");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
         }
     }
     public static bool BlockMessage(string message, object oPlayer)
     {
         message = message.ToLower();
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         if (ChatBlock == true)
         {
             if (ChatBlockWords.Contains(message))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Please don't say a blacklisted word, the message has been blocked.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blacklisted word, the message has been blocked.");
                 Debug.Log(SetTimeStamp() + player.playerData.username + " Said a word that is blocked.");
                 return true;
             }
@@ -564,15 +644,15 @@ public class EssentialsPlugin
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Because you are staff, your message has NOT been blocked.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Because you are staff, your message has NOT been blocked.");
                     return false;
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "             Only English! Your message has been blocked.");
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "--------------------------------------------------------------------------------------------");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "             ?olo ingl�s! Tu mensaje ha sido bloqueado.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "             Only English! Your message has been blocked.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "--------------------------------------------------------------------------------------------");
                     return true;
                 }
             }
@@ -584,7 +664,7 @@ public class EssentialsPlugin
     {
         try
         {
-            SvPlayer player = (SvPlayer) oPlayer;
+            SvPlayer player = (SvPlayer)oPlayer;
             ReadFile(GodListFile);
 
             if (AdminsListPlayers.Contains(player.playerData.username))
@@ -593,20 +673,20 @@ public class EssentialsPlugin
                 {
                     RemoveStringFromFile(GodListFile, player.playerData.username);
                     ReadFile(GodListFile);
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode disabled.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode disabled.");
                     return true;
                 }
                 else
                 {
                     File.AppendAllText(GodListFile, player.playerData.username + Environment.NewLine);
                     GodListPlayers.Add(player.playerData.username);
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "Godmode enabled.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Godmode enabled.");
                     return true;
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return false;
             }
 
@@ -614,8 +694,8 @@ public class EssentialsPlugin
         catch (Exception ex)
         {
 
-            LogExpection(ex, "godMode");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
+            ErrorLogging(ex);
+
             return true;
         }
 
@@ -625,50 +705,45 @@ public class EssentialsPlugin
 
         try
         {
-            SvPlayer player = (SvPlayer) oPlayer;
+            SvPlayer player = (SvPlayer)oPlayer;
             if (!all)
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Clearing the chat for yourself...");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Clearing the chat for yourself...");
                 Thread.Sleep(500);
                 for (int i = 0; i < 6; i++)
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, " ");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, " ");
                 }
             }
             else if (all)
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, "Clearing chat for everyone...");
+                    player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
                     Thread.Sleep(500);
                     for (int i = 0; i < 6; i++)
                     {
-                        player.SendToAll(Channel.Unsequenced, (byte) 10, " ");
+                        player.SendToAll(Channel.Unsequenced, (byte)10, " ");
                     }
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, @"'" + arg1ClearChat + @"'" + " Is not a valid argument.");
             }
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "ClearChat");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
+            ErrorLogging(ex);
+
         }
 
     }
-    public static void LogExpection(Exception ex, string Sender)
-    {
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] An unknown error occured. Expection: " + ex.ToString());
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
-    }
+
     public static void CheckFiles(string FileName)
     {
         if (FileName == "all")
@@ -725,7 +800,13 @@ public class EssentialsPlugin
             {
                 File.Create(SettingsFile).Close();
                 CreateFile(SettingsFile);
-                Debug.Log(RulesFile + " Does not exist! Creating one.");
+                Debug.Log(SettingsFile + " Does not exist! Creating one.");
+            }
+            if (!File.Exists(CustomCommandsFile))
+            {
+                File.Create(CustomCommandsFile).Close();
+                CreateFile(CustomCommandsFile);
+                Debug.Log(CustomCommandsFile + " Does not exist! Creating one.");
             }
             if (!File.Exists(AnnouncementsFile))
             {
@@ -763,6 +844,12 @@ public class EssentialsPlugin
                     CreateFile(FileName);
                     Debug.Log(FileName + " Does not exist! Creating one.");
                 }
+                if (FileName == CustomCommandsFile)
+                {
+                    File.Create(FileName).Close();
+                    CreateFile(FileName);
+                    Debug.Log(FileName + " Does not exist! Creating one.");
+                }
                 else
                 {
                     File.Create(FileName).Close();
@@ -775,7 +862,7 @@ public class EssentialsPlugin
     {
         if (FileName == SettingsFile)
         {
-            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.1", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
+            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.2", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Online Players command", "#----------------------------------", "PlayersOnlineCommand: players", "PlayersOnlineCommand2: online", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
             File.WriteAllLines(SettingsFile, content);
         }
         if (FileName == ChatBlockFile)
@@ -785,13 +872,18 @@ public class EssentialsPlugin
         }
         if (FileName == LanguageBlockFile)
         {
-            string[] content = { "bombas","hola","alguien","habla","espanol","español","estoy","banco","voy","consegi","donde","quedamos","banko","afuera","estas","alguem","donde","nos","vemos","soy ","vueno","como","carro","cabros","miren","hacha","laar","corri","sacame","aqui","policia","trajo","encerro","bomba","beuno","pantalones","dinero","porque","tengo","escopetaa","escopeta" };
+            string[] content = { "bombas", "hola", "alguien", "habla", "espanol", "español", "estoy", "banco", "voy", "consegi", "donde", "quedamos", "banko", "afuera", "estas", "alguem", "donde", "nos", "vemos", "soy ", "vueno", "como", "carro", "cabros", "miren", "hacha", "laar", "corri", "sacame", "aqui", "policia", "trajo", "encerro", "bomba", "beuno", "pantalones", "dinero", "porque", "tengo", "escopetaa", "escopeta" };
             File.WriteAllLines(LanguageBlockFile, content);
         }
         if (FileName == RulesFile)
         {
-            string[] content = {"Please tell the owner to edit the rules.txt file", "in the essentials folder!"};
+            string[] content = { "Please tell the owner to edit the rules.txt file", "in the essentials folder!" };
             File.WriteAllLines(RulesFile, content);
+        }
+        if (FileName == CustomCommandsFile)
+        {
+            string[] content = { "# Custom commands file", "# Place your custom commands here", "#", "# Format:", "# Command: example", "# Respone: The time is {H}:{M}:{S}. ", "#", "# ", "# Placeholders:", "# ", "# Current time:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#", "# Player placeholders:", "# {username} Players username", "# ----------------------------------------------", "", "Command: example", "Response: Your username is {username}!" };
+            File.WriteAllLines(CustomCommandsFile, content);
         }
 
     }
@@ -799,15 +891,16 @@ public class EssentialsPlugin
     {
         if (!silentExecution)
         {
-            SvPlayer player = (SvPlayer) oPlayer;
+            SvPlayer player = (SvPlayer)oPlayer;
             if (AdminsListPlayers.Contains(player.playerData.username))
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Checking if file's exist...");
                 CheckFiles("all");
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading config files...");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
                 ReadFile(SettingsFile);
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Config file reloaded");
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading critical .txt files...");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading critical .txt files...");
+                ReadCustomCommands();
                 ReadFileStream(LanguageBlockFile, LanguageBlockWords);
                 ReadFileStream(ChatBlockFile, ChatBlockWords);
                 ReadFileStream(AdminListFile, AdminsListPlayers);
@@ -818,11 +911,11 @@ public class EssentialsPlugin
                 ReadFile(MuteListFile);
                 ReadFile(AfkListFile);
                 ReadFile(RulesFile);
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, "[OK] Critical .txt files reloaded");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Critical .txt files reloaded");
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
             }
         }
         else if (silentExecution)
@@ -832,6 +925,7 @@ public class EssentialsPlugin
             ReadFileStream(LanguageBlockFile, LanguageBlockWords);
             ReadFileStream(ChatBlockFile, ChatBlockWords);
             ReadFileStream(AdminListFile, AdminsListPlayers);
+            ReadCustomCommands();
             LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
             ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
             ReadFile(AnnouncementsFile);
@@ -844,9 +938,9 @@ public class EssentialsPlugin
 
     public static void essentials(string message, object oPlayer)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Essentials Created by UserR00T & DeathByKorea");
-        player.SendToSelf(Channel.Unsequenced, (byte) 10, "Version " + version);
+        SvPlayer player = (SvPlayer)oPlayer;
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea");
+        player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + version);
     }
 
     [Hook("SvPlayer.Damage")]
@@ -863,17 +957,17 @@ public class EssentialsPlugin
     }
     private static bool CheckGodmode(object oPlayer, float amount)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         if (GodListPlayers.Contains(player.playerData.username))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, amount + " DMG Blocked!");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG Blocked!");
             return true;
         }
         return false;
     }
     public static bool say(string message, object oPlayer)
     {
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         try
         {
 
@@ -881,7 +975,7 @@ public class EssentialsPlugin
             {
                 if ((message.Length == cmdSay.Length) || (message.Length == cmdSay2.Length))
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "An argument is required for this command.");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "An argument is required for this command.");
                     return true;
                 }
                 else
@@ -895,21 +989,21 @@ public class EssentialsPlugin
                     {
                         arg1 = message.Substring(cmdSay2.Length);
                     }
-                    player.SendToAll(Channel.Unsequenced, (byte) 10, msgSayPrefix + " " + player.playerData.username + ": " + arg1);
+                    player.SendToAll(Channel.Unsequenced, (byte)10, msgSayPrefix + " " + player.playerData.username + ": " + arg1);
                     return true;
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return false;
             }
 
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "Say");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
+            ErrorLogging(ex);
+
             return true;
         }
     }
@@ -933,7 +1027,7 @@ public class EssentialsPlugin
         Thread.Sleep(3000);
         try
         {
-            SvPlayer player = (SvPlayer) oPlayer;
+            SvPlayer player = (SvPlayer)oPlayer;
             if (File.ReadAllText("ban_list.txt").Contains(player.playerData.username))
             {
                 Debug.Log("[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.netMan.GetAddress(player.connection));
@@ -953,7 +1047,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "CheckBanned");
+            ErrorLogging(ex);
         }
     }
     private static void CheckAltAcc(object oPlayer)
@@ -983,14 +1077,14 @@ public class EssentialsPlugin
             }
             catch (Exception ex)
             {
-                LogExpection(ex, "CheckAlt");
+                ErrorLogging(ex);
             }
         }
     }
     private static void WriteIPToFile(object oPlayer)
     {
         Thread.Sleep(500);
-        SvPlayer player = (SvPlayer) oPlayer;
+        SvPlayer player = (SvPlayer)oPlayer;
         Debug.Log(SetTimeStamp() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
         try
         {
@@ -1001,7 +1095,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "WriteIPToFile");
+            ErrorLogging(ex);
         }
 
     }
@@ -1051,10 +1145,37 @@ public class EssentialsPlugin
             PlaceHolderText = PlaceHolderText + " ";
             return PlaceHolderText;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            ErrorLogging(ex);
+
             return "[Failed] ";
         }
+    }
+    public static void ReadCustomCommands()
+    {
+        string line;
+        StreamReader file = new StreamReader(CustomCommandsFile);
+        while ((line = file.ReadLine()) != null)
+        {
+            if (line.ToLower().StartsWith("#") || line == null || string.IsNullOrEmpty(line))
+            {
+                continue;
+            }
+            else
+            {
+                if (line.ToLower().StartsWith("command: "))
+                {
+                    Commands.Add(cmdCommandCharacter + line.Substring(9));
+                    line = file.ReadLine();
+                    if (line.ToLower().StartsWith("response: "))
+                    {
+                        Responses.Add(line.Substring(10));
+                    }
+                }
+            }
+        }
+        file.Close();
     }
     public static void ReadFileStream(string FileName, List<string> output)
     {
@@ -1179,6 +1300,7 @@ public class EssentialsPlugin
                     {
                         cmdCheckPlayer = cmdCommandCharacter + line.Substring(20);
                     }
+
                     else if (line.Contains("FakeJoinCommand: "))
                     {
                         cmdFakeJoin = cmdCommandCharacter + line.Substring(17);
@@ -1195,9 +1317,17 @@ public class EssentialsPlugin
                     {
                         cmdDiscord = cmdCommandCharacter + line.Substring(16);
                     }
+                    else if (line.Contains("PlayersOnlineCommand: "))
+                    {
+                        cmdPlayers = cmdCommandCharacter + line.Substring(22);
+                    }
+                    else if (line.Contains("PlayersOnlineCommand2: "))
+                    {
+                        cmdPlayers2 = cmdCommandCharacter + line.Substring(23);
+                    }
                     else if (line.Contains("DiscordLink: "))
                     {
-                        msgDiscord =  line.Substring(13);
+                        msgDiscord = line.Substring(13);
                     }
                 }
             }
@@ -1226,5 +1356,22 @@ public class EssentialsPlugin
         }
 
     }
+    public static void ErrorLogging(Exception ex)
+    {
+        if (!File.Exists(ExeptionFile))
+        {
+            File.Create(ExeptionFile).Dispose();
+        }
+        using (StreamWriter sw = File.AppendText(ExeptionFile))
+        {
+            sw.WriteLine("=============Error Logging ===========");
+            sw.WriteLine("===========Start============= " + DateTime.Now);
+            sw.WriteLine("Error Message: " + ex.Message);
+            sw.WriteLine("Stack Trace: " + ex.StackTrace);
+            sw.WriteLine("===========End============= " + DateTime.Now);
 
+        }
+        Debug.Log("An exception occured, Check the Exceptions file for more info.");
+    }
 }
+
