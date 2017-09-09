@@ -23,6 +23,8 @@ public class EssentialsPlugin
     private static string AfkListFile = FileDirectory + "afklist.txt";
     private static string MuteListFile = FileDirectory + "mutelist.txt";
     private static string RulesFile = FileDirectory + "rules.txt";
+    private static string ExeptionFile = FileDirectory + "exceptions.txt";
+
     #endregion
 
     #region predefining variables
@@ -108,7 +110,7 @@ public class EssentialsPlugin
             Debug.Log(" ");
             Debug.Log("-------------------------------------------------------------------------------");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.Log("-------------------------------------------------------------------------------");
             Debug.Log(" ");
@@ -139,7 +141,7 @@ public class EssentialsPlugin
         //Checks if player is muted, if so, cancel message
         if (MutePlayers.Contains(player.playerData.username))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "You are muted.");
             return true;
         }
         else
@@ -158,7 +160,7 @@ public class EssentialsPlugin
                     ++RealPlayers;
                 }
             }
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " player(s) online");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "There are " + RealPlayers + " player(s) online");
             return true;
         }
 
@@ -175,7 +177,7 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                     return true;
                 }
 
@@ -197,7 +199,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
         }
@@ -212,10 +214,9 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
-
 
         }
         else if (message.StartsWith(cmdMute))
@@ -228,7 +229,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
 
@@ -243,7 +244,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
 
@@ -258,7 +259,7 @@ public class EssentialsPlugin
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
 
@@ -288,7 +289,7 @@ public class EssentialsPlugin
             }
             else if (!(isNumeric))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument. ({0} (number))", cmdRules);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "That is not a valid argument. ({0} (number))", cmdRules);
                 return true;
             }
         }
@@ -305,13 +306,13 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
                     return true;
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
         }
@@ -328,13 +329,13 @@ public class EssentialsPlugin
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
                     return true;
                 }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
 
@@ -350,31 +351,31 @@ public class EssentialsPlugin
                     arg1 = message.Split(' ').Last();
                     if (message.StartsWith(cmdFakeJoin))
                     {
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " connected");
+                        player.SendToAll(Channel.Unsequenced, (byte) 10, arg1 + " connected");
                     }
                     else if (message.StartsWith(cmdFakeLeave))
                     {
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " disconnected");
+                        player.SendToAll(Channel.Unsequenced, (byte) 10, arg1 + " disconnected");
                     }
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    player.SendToSelf(Channel.Unsequenced, (byte) 10, "A argument is needed for this command.");
                 }
 
                 return true;
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, msgNoPerm);
                 return true;
             }
-            
+
         }
         // Command: Discord
         if (message.StartsWith(cmdDiscord))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Discord: " + msgDiscord);
             return true;
         }
         // Message: Unkonwn command
@@ -382,7 +383,7 @@ public class EssentialsPlugin
         {
             if (msgUnknownCommand)
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown command");
                 return true;
             }
             else
@@ -407,7 +408,7 @@ public class EssentialsPlugin
         // Check if message contains a player that is AFK
         if (AfkPlayers.Any(message.Contains))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "That player is AFK.");
             return true;
         }
         return false;
@@ -630,8 +631,7 @@ public class EssentialsPlugin
         catch (Exception ex)
         {
 
-            LogExpection(ex, "godMode");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
+            ErrorLogging(ex);
             return true;
         }
 
@@ -674,17 +674,11 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "ClearChat");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
+            ErrorLogging(ex);
         }
 
     }
-    public static void LogExpection(Exception ex, string Sender)
-    {
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] An unknown error occured. Expection: " + ex.ToString());
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
-        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
-    }
+
     public static void CheckFiles(string FileName)
     {
         if (FileName == "all")
@@ -801,12 +795,12 @@ public class EssentialsPlugin
         }
         if (FileName == LanguageBlockFile)
         {
-            string[] content = { "bombas","hola","alguien","habla","espanol","español","estoy","banco","voy","consegi","donde","quedamos","banko","afuera","estas","alguem","donde","nos","vemos","soy ","vueno","como","carro","cabros","miren","hacha","laar","corri","sacame","aqui","policia","trajo","encerro","bomba","beuno","pantalones","dinero","porque","tengo","escopetaa","escopeta" };
+            string[] content = { "bombas", "hola", "alguien", "habla", "espanol", "español", "estoy", "banco", "voy", "consegi", "donde", "quedamos", "banko", "afuera", "estas", "alguem", "donde", "nos", "vemos", "soy ", "vueno", "como", "carro", "cabros", "miren", "hacha", "laar", "corri", "sacame", "aqui", "policia", "trajo", "encerro", "bomba", "beuno", "pantalones", "dinero", "porque", "tengo", "escopetaa", "escopeta" };
             File.WriteAllLines(LanguageBlockFile, content);
         }
         if (FileName == RulesFile)
         {
-            string[] content = {"Please tell the owner to edit the rules.txt file", "in the essentials folder!"};
+            string[] content = { "Please tell the owner to edit the rules.txt file", "in the essentials folder!" };
             File.WriteAllLines(RulesFile, content);
         }
 
@@ -818,7 +812,7 @@ public class EssentialsPlugin
             SvPlayer player = (SvPlayer) oPlayer;
             if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Checking if file's exist...");
+                player.SendToSelf(Channel.Unsequenced, (byte) 10, "Checking if file's exist...");
                 CheckFiles("all");
                 player.SendToSelf(Channel.Unsequenced, (byte) 10, "Reloading config files...");
                 ReadFile(SettingsFile);
@@ -924,8 +918,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "Say");
-            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
+            ErrorLogging(ex);
             return true;
         }
     }
@@ -969,7 +962,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "CheckBanned");
+            ErrorLogging(ex);
         }
     }
     private static void CheckAltAcc(object oPlayer)
@@ -979,7 +972,7 @@ public class EssentialsPlugin
             Thread.Sleep(3000);
             try
             {
-                SvPlayer player = (SvPlayer)oPlayer;
+                SvPlayer player = (SvPlayer) oPlayer;
                 if (File.ReadAllText("ban_list.txt").Contains(player.netMan.GetAddress(player.connection)))
                 {
                     Debug.Log("[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.netMan.GetAddress(player.connection));
@@ -999,7 +992,7 @@ public class EssentialsPlugin
             }
             catch (Exception ex)
             {
-                LogExpection(ex, "CheckAlt");
+                ErrorLogging(ex);
             }
         }
     }
@@ -1017,7 +1010,7 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            LogExpection(ex, "WriteIPToFile");
+            ErrorLogging(ex);
         }
 
     }
@@ -1067,8 +1060,9 @@ public class EssentialsPlugin
             PlaceHolderText = PlaceHolderText + " ";
             return PlaceHolderText;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            ErrorLogging(ex);
             return "[Failed] ";
         }
     }
@@ -1217,7 +1211,7 @@ public class EssentialsPlugin
                     }
                     else if (line.Contains("DiscordLink: "))
                     {
-                        msgDiscord =  line.Substring(13);
+                        msgDiscord = line.Substring(13);
                     }
                 }
             }
@@ -1246,5 +1240,22 @@ public class EssentialsPlugin
         }
 
     }
+    public static void ErrorLogging(Exception ex)
+    {
+        
+        if (!File.Exists(ExeptionFile))
+        {
+            File.Create(ExeptionFile).Dispose();
+        }
+        using(StreamWriter sw = File.AppendText(ExeptionFile))
+        {
+            sw.WriteLine("=============Error Logging ===========");
+            sw.WriteLine("===========Start============= " + DateTime.Now);
+            sw.WriteLine("Error Message: " + ex.Message);
+            sw.WriteLine("Stack Trace: " + ex.StackTrace);
+            sw.WriteLine("===========End============= " + DateTime.Now);
 
+        }
+
+    }
 }
