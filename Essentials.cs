@@ -130,9 +130,6 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
-        // Log message
-        MessageLog(message, player);
-
         // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
@@ -144,14 +141,27 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
             return true;
         }
+        else
+        {
+            // Log message, but ONLY if the player is unmuted
+            MessageLog(message, player);
+        }
         // Command: ClearChat
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
         {
             if (message.Contains("all") || message.Contains("everyone"))
             {
-                all = true;
-                ClearChat(message, player, all);
-                return true;
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    all = true;
+                    ClearChat(message, player, all);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
 
             }
             else
@@ -164,34 +174,78 @@ public class EssentialsPlugin
         // Command: Reload
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
         {
-            Reload(false, message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                Reload(false, message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
         }
         // Command: Mute
         if (message.StartsWith(cmdUnMute))
         {
-            unmute = true;
-            Mute(message, player, unmute);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                unmute = true;
+                Mute(message, player, unmute);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
 
         }
         else if (message.StartsWith(cmdMute))
         {
-            unmute = false;
-            Mute(message, player, unmute);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                unmute = false;
+                Mute(message, player, unmute);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: Say
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
         {
-            say(message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                say(message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: GodMode
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
         {
-            godMode(message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                godMode(message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: AFK
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
@@ -218,62 +272,88 @@ public class EssentialsPlugin
             }
             else if (!(isNumeric))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument. ({0} (number))", cmdRules);
                 return true;
             }
         }
         // Command: CheckIP
         if (message.StartsWith(cmdCheckIP))
         {
-            if (message != cmdCheckIP)
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = message.Substring(cmdCheckIP.Count() + 1);
-                CheckIP(message, player, arg1);
-                return true;
+                if (message != cmdCheckIP)
+                {
+                    string arg1 = message.Substring(cmdCheckIP.Count() + 1);
+                    CheckIP(message, player, arg1);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    return true;
+                }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
         }
         // Command: CheckPlayer
         if (message.StartsWith(cmdCheckPlayer))
         {
-            if (message != cmdCheckPlayer)
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = message.Substring(cmdCheckPlayer.Count() + 1);
-                CheckPlayer(message, player, arg1);
-                return true;
+                if (message != cmdCheckPlayer)
+                {
+                    string arg1 = message.Substring(cmdCheckPlayer.Count() + 1);
+                    CheckPlayer(message, player, arg1);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    return true;
+                }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
+
         }
         // Command: Fake Join/Leave
         if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
         {
-            if (!(message == cmdFakeJoin || message == cmdFakeLeave))
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = null;
-                arg1 = message.Split(' ').Last();
-                if (message.StartsWith(cmdFakeJoin))
+                if (!(message == cmdFakeJoin || message == cmdFakeLeave))
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Connected");
+                    string arg1 = null;
+                    arg1 = message.Split(' ').Last();
+                    if (message.StartsWith(cmdFakeJoin))
+                    {
+                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " connected");
+                    }
+                    else if (message.StartsWith(cmdFakeLeave))
+                    {
+                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " disconnected");
+                    }
                 }
-                else if (message.StartsWith(cmdFakeLeave))
+                else
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Disconnected");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
                 }
+
+                return true;
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
             }
-
-            return true;
+            
         }
         // Command: Discord
         if (message.StartsWith(cmdDiscord))
