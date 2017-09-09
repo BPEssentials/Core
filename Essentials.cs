@@ -23,7 +23,6 @@ public class EssentialsPlugin
     private static string AfkListFile = FileDirectory + "afklist.txt";
     private static string MuteListFile = FileDirectory + "mutelist.txt";
     private static string RulesFile = FileDirectory + "rules.txt";
-    private static string ExeptionFile = FileDirectory + "exceptions.txt";
     #endregion
 
     #region predefining variables
@@ -85,6 +84,7 @@ public class EssentialsPlugin
     private static string cmdFakeLeave;
     private static string cmdDiscord;
     private static string arg1ClearChat;
+    private static string cmdPlayers;
 
     // Ints
     private static int announceIndex = 0;
@@ -147,6 +147,21 @@ public class EssentialsPlugin
             // Log message, but ONLY if the player is unmuted
             MessageLog(message, player);
         }
+        // Command: players
+        if (message.StartsWith(cmdPlayers))
+        {
+            int RealPlayers = 0;
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            {
+                if (shPlayer.IsRealPlayer())
+                {
+                    ++RealPlayers;
+                }
+            }
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " player(s) online");
+            return true;
+        }
+
         // Command: ClearChat
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
         {
@@ -490,7 +505,7 @@ public class EssentialsPlugin
     public static bool Mute(string message, object oPlayer, bool unmute)
     {
         SvPlayer player = (SvPlayer) oPlayer;
-        string muteuser = message.Remove(0, message.IndexOf(' ') + 1 );
+        string muteuser = message.Split(' ').Last();
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
@@ -615,8 +630,8 @@ public class EssentialsPlugin
         catch (Exception ex)
         {
 
-            ErrorLogging(ex);
-            ReadError();
+            LogExpection(ex, "godMode");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check console for more info");
             return true;
         }
 
@@ -659,12 +674,17 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            ErrorLogging(ex);
-            ReadError();
+            LogExpection(ex, "ClearChat");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error occured. Please check output_log.txt for more info.");
         }
 
     }
-
+    public static void LogExpection(Exception ex, string Sender)
+    {
+        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] An unknown error occured. Expection: " + ex.ToString());
+        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Please post the error on GitHub please!");
+        Debug.Log(SetTimeStamp() + "[ERROR] [" + Sender + "] Try reinstalling the newest version.");
+    }
     public static void CheckFiles(string FileName)
     {
         if (FileName == "all")
@@ -771,7 +791,7 @@ public class EssentialsPlugin
     {
         if (FileName == SettingsFile)
         {
-            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.1", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
+            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.2", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Online Players command", "#----------------------------------", "PlayersOnlineCommand: players", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
             File.WriteAllLines(SettingsFile, content);
         }
         if (FileName == ChatBlockFile)
@@ -904,8 +924,8 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            ErrorLogging(ex);
-            ReadError();
+            LogExpection(ex, "Say");
+            player.SendToSelf(Channel.Unsequenced, (byte) 10, "Unknown error. Check the log for more info");
             return true;
         }
     }
@@ -949,9 +969,8 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            ErrorLogging(ex);
-            ReadError();
-                    }
+            LogExpection(ex, "CheckBanned");
+        }
     }
     private static void CheckAltAcc(object oPlayer)
     {
@@ -980,9 +999,8 @@ public class EssentialsPlugin
             }
             catch (Exception ex)
             {
-            ErrorLogging(ex);
-            ReadError();
-                        }
+                LogExpection(ex, "CheckAlt");
+            }
         }
     }
     private static void WriteIPToFile(object oPlayer)
@@ -999,9 +1017,8 @@ public class EssentialsPlugin
         }
         catch (Exception ex)
         {
-            ErrorLogging(ex);
-            ReadError();
-                    }
+            LogExpection(ex, "WriteIPToFile");
+        }
 
     }
     private static void RemoveStringFromFile(string FileName, string RemoveString)
@@ -1050,10 +1067,8 @@ public class EssentialsPlugin
             PlaceHolderText = PlaceHolderText + " ";
             return PlaceHolderText;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            ErrorLogging(ex);
-            ReadError();
             return "[Failed] ";
         }
     }
@@ -1196,6 +1211,10 @@ public class EssentialsPlugin
                     {
                         cmdDiscord = cmdCommandCharacter + line.Substring(16);
                     }
+                    else if (line.Contains("PlayersOnlineCommand: "))
+                    {
+                        cmdPlayers = cmdCommandCharacter + line.Substring(22);
+                    }
                     else if (line.Contains("DiscordLink: "))
                     {
                         msgDiscord =  line.Substring(13);
@@ -1227,19 +1246,5 @@ public class EssentialsPlugin
         }
 
     }
-     public static void ErrorLogging(Exception ex)
-    {
-        string strPath = ExeptionFile;
-        if (!File.Exists(strPath))
-        {
-            File.Create(strPath).Dispose();
-        }
-        using (StreamWriter sw = File.AppendText(strPath))
-        {
-            sw.WriteLine("=============Error Logging ===========");
-            sw.WriteLine("===========Start============= " +       DateTime.Now);
-            sw.WriteLine("Error Message: " + ex.Message);
-            sw.WriteLine("Stack Trace: " + ex.StackTrace);
-            sw.WriteLine("===========End============= " + DateTime.Now);
 
 }
