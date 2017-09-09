@@ -131,37 +131,6 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
-        // Log message
-        MessageLog(message, player);
-        // If MessageToLower is enabled and its a command, lower the command but not the argument
-        if (MessageToLower)
-        {
-            if (message.StartsWith(cmdCommandCharacter))
-            {
-                if (message.Contains(" "))
-                {
-                    string TempArg = null;
-                    string TempMessage = null;
-
-                    TempMessage = message.Substring(0, message.LastIndexOf(" ") + 1);
-                    if (message.EndsWith(" "))
-                    {
-                        message = TempMessage.ToLower().Trim();
-                    }
-                    else
-                    {
-                        TempArg = message.Substring(message.IndexOf(" ") + 1);
-                        message = TempMessage.ToLower() + TempArg.Trim();
-                    }
-                }
-                else
-                {
-                    message = message.ToLower();
-                }
-            }
-        }
-
-
         // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
@@ -173,14 +142,27 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
             return true;
         }
+        else
+        {
+            // Log message, but ONLY if the player is unmuted
+            MessageLog(message, player);
+        }
         // Command: ClearChat
         if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
         {
             if (message.Contains("all") || message.Contains("everyone"))
             {
-                all = true;
-                ClearChat(message, player, all);
-                return true;
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    all = true;
+                    ClearChat(message, player, all);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
 
             }
             else
@@ -193,34 +175,78 @@ public class EssentialsPlugin
         // Command: Reload
         if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
         {
-            Reload(false, message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                Reload(false, message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
         }
         // Command: Mute
         if (message.StartsWith(cmdUnMute))
         {
-            unmute = true;
-            Mute(message, player, unmute);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                unmute = true;
+                Mute(message, player, unmute);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
 
         }
         else if (message.StartsWith(cmdMute))
         {
-            unmute = false;
-            Mute(message, player, unmute);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                unmute = false;
+                Mute(message, player, unmute);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: Say
         if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
         {
-            say(message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                say(message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: GodMode
         if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
         {
-            godMode(message, player);
-            return true;
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                godMode(message, player);
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+
         }
         // Command: AFK
         if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
@@ -247,62 +273,88 @@ public class EssentialsPlugin
             }
             else if (!(isNumeric))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "That is not a valid argument. ({0} (number))", cmdRules);
                 return true;
             }
         }
         // Command: CheckIP
         if (message.StartsWith(cmdCheckIP))
         {
-            if (message != cmdCheckIP)
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = message.Substring(cmdCheckIP.Count() + 1);
-                CheckIP(message, player, arg1);
-                return true;
+                if (message != cmdCheckIP)
+                {
+                    string arg1 = message.Substring(cmdCheckIP.Count() + 1);
+                    CheckIP(message, player, arg1);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    return true;
+                }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
         }
         // Command: CheckPlayer
         if (message.StartsWith(cmdCheckPlayer))
         {
-            if (message != cmdCheckPlayer)
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = message.Substring(cmdCheckPlayer.Count() + 1);
-                CheckPlayer(message, player, arg1);
-                return true;
+                if (message != cmdCheckPlayer)
+                {
+                    string arg1 = message.Substring(cmdCheckPlayer.Count() + 1);
+                    CheckPlayer(message, player, arg1);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    return true;
+                }
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
+
         }
         // Command: Fake Join/Leave
         if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
         {
-            if (!(message == cmdFakeJoin || message == cmdFakeLeave))
+            if (AdminsListPlayers.Contains(player.playerData.username))
             {
-                string arg1 = null;
-                arg1 = message.Split(' ').Last();
-                if (message.StartsWith(cmdFakeJoin))
+                if (!(message == cmdFakeJoin || message == cmdFakeLeave))
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Connected");
+                    string arg1 = null;
+                    arg1 = message.Split(' ').Last();
+                    if (message.StartsWith(cmdFakeJoin))
+                    {
+                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " connected");
+                    }
+                    else if (message.StartsWith(cmdFakeLeave))
+                    {
+                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " disconnected");
+                    }
                 }
-                else if (message.StartsWith(cmdFakeLeave))
+                else
                 {
-                    player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " Disconnected");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
                 }
+
+                return true;
             }
             else
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
             }
-
-            return true;
+            
         }
         // Command: Discord
         if (message.StartsWith(cmdDiscord))
@@ -719,7 +771,7 @@ public class EssentialsPlugin
     {
         if (FileName == SettingsFile)
         {
-            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.1", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "# This will lower any command ", "# so /DiScOrD will still be registed as /discord", "# This does not work on arguments.", "# Enable ToLowerCommands", "#----------------------------------", "ToLowerCommands: true", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
+            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.0.1", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
             File.WriteAllLines(SettingsFile, content);
         }
         if (FileName == ChatBlockFile)
@@ -1148,10 +1200,6 @@ public class EssentialsPlugin
                     {
                         msgDiscord =  line.Substring(13);
                     }
-                    else if (line.Contains("ToLowerCommands: "))
-                    {
-                        MessageToLower = Convert.ToBoolean(line.Substring(17));
-                    }
                 }
             }
 
@@ -1194,20 +1242,4 @@ public class EssentialsPlugin
             sw.WriteLine("Stack Trace: " + ex.StackTrace);
             sw.WriteLine("===========End============= " + DateTime.Now);
 
-        }
-    }
-
-    public static void ReadError()
-    {
-        string strPath = ExeptionFile;
-        using (StreamReader sr = new StreamReader(strPath))
-        {
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
-            }
-        }
-      }
-   }
-
+}
