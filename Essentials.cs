@@ -31,6 +31,8 @@ public class EssentialsPlugin
     #region predefining variables
 
     // General
+    private static string ver = "1.1.0";
+
     private static string version;
     private static string command;
     private static SvPlayer player;
@@ -60,6 +62,7 @@ public class EssentialsPlugin
     private static string[] rules;
     private static string[] rules2;
     private static string[] announcements;
+    public static string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue" };
 
     // Messages
     private static string msgSayPrefix;
@@ -91,6 +94,8 @@ public class EssentialsPlugin
     private static string arg1ClearChat;
     private static string cmdPlayers;
     private static string cmdPlayers2;
+    private static string cmdInfo;
+    private static string cmdInfo2;
 
     // Ints
     private static int announceIndex = 0;
@@ -403,6 +408,43 @@ public class EssentialsPlugin
             player.SendToSelf(Channel.Unsequenced, (byte)10, GetPlaceHolders(i, player));
             return true;
         }
+        if (message.StartsWith(cmdInfo) || message.StartsWith(cmdInfo2))
+        {
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                try
+                {
+                    string arg1 = "null";
+                    if (message.StartsWith(cmdInfo))
+                    {
+                        arg1 = message.Substring(cmdInfo.Length + 1).Trim();
+                    }
+                    else if (message.StartsWith(cmdInfo2))
+                    {
+                        arg1 = message.Substring(cmdInfo2.Length + 1).Trim();
+                    }
+
+                    if (!(String.IsNullOrEmpty(arg1)))
+                    {
+                        new Thread(delegate () { GetPlayerInfo(player, arg1); }).Start();
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "/info [Username]");
+                    }
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/info [Username]");
+                }
+                return true;
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
+        }
         // Message: Unkonwn command
         if (message.StartsWith(cmdCommandCharacter))
         {
@@ -440,6 +482,34 @@ public class EssentialsPlugin
         }
         return false;
 
+    }
+    public static void GetPlayerInfo(object oPlayer, string arg1)
+    {
+        bool found = false;
+        SvPlayer player = (SvPlayer)oPlayer;
+        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+        {
+            if (shPlayer.svPlayer.playerData.username == arg1)
+            {
+                if (shPlayer.IsRealPlayer())
+                {
+                    player.Save();
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about:                                        " + shPlayer.svPlayer.playerData.username);
+                    Thread.Sleep(500);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Job:                         " + Jobs[shPlayer.svPlayer.playerData.jobIndex]);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Health:                    " + shPlayer.svPlayer.playerData.health);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "OwnsApartment:   " + shPlayer.svPlayer.playerData.ownedApartment);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "bankBalance:         " + shPlayer.svPlayer.playerData.bankBalance);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Position:                 " + shPlayer.svPlayer.playerData.position);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "WantedLevel:         " + shPlayer.wantedLevel);
+                    found = true;
+                }
+            }
+        }
+        if (!(found))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " Not found/online.");
+        }
     }
     static string GetPlaceHolders(int i, object oPlayer)
     {
@@ -862,7 +932,7 @@ public class EssentialsPlugin
     {
         if (FileName == SettingsFile)
         {
-            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: 1.1.0", "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Online Players command", "#----------------------------------", "PlayersOnlineCommand: players", "PlayersOnlineCommand2: online", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
+            string[] content = { "# ---------------------------------------------------------------------------------------- #", "#                             Broke Protocol: Essentials                                   #", "#                        Created by UserR00T and DeathByKorea                              #", "# ---------------------------------------------------------------------------------------- #", "#                                                                                          #", "#                                                                                          #", "#                                                                                          #", "# NOTE:                                                                                    #", "# CommandCharacter will be automatically added to the commands! No need to do that!        #", "# Example:                                                                                 #", "# INCORRECT: ClearChatCommand: /clearchat                                                  #", "# CORRECT: ClearChatCommand: clearchat                                                     #", "# if CommandCharacter is / it will automatically add a /                                   #", "#                                                                                          #", "# ---------------------------------------------------------------------------------------- #", "", "", "", "", "", "#----------------------------------------------------------#", "#                           General                        #", "#----------------------------------------------------------#", "version: " + ver, "", "# Character used for commands", "#----------------------------------", "CommandCharacter: /", "", @"# Will display ""unknown command"" if the command is not found in this plugin", "#----------------------------------", "UnknownCommand: true", "", "noperm: No permission.", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Commands                        #", "#----------------------------------------------------------#", "", "# Reload command", "#----------------------------------", "ReloadCommand: reload", "ReloadCommand2: rl", "", "# Clearchat command", "#----------------------------------", "ClearChatCommand: clearchat", "ClearChatCommand2: cc", "", "# Say command", "#----------------------------------", "SayCommand: say", "SayCommand2: broadcast", "", "# CheckIP/Player command", "#----------------------------------", "CheckIPCommand: checkip", "CheckPlayerCommand: checkplayer", "", "# Fake Join/Leave command", "#----------------------------------", "FakeLeaveCommand: fakeleave", "FakeJoinCommand: fakejoin", "", "# Player info command", "#----------------------------------", "InfoPlayerCommand: info", "InfoPlayerCommand2: stats", "", "# Rules command -- Rules default location - 'rules.txt'", "#----------------------------------", "RulesCommand: rules", "", "# Discord command", "#----------------------------------", "DiscordCommand: discord", "", "# Online Players command", "#----------------------------------", "PlayersOnlineCommand: players", "PlayersOnlineCommand2: online", "", "# Godmode command --- Godmode default saving location - 'godmode.txt'", "#----------------------------------", "GodmodeCommand: god", "GodmodeCommand2: godmode", "", "# AFK command --- AFK default saving location - 'afkplayers.txt'", "#----------------------------------", "AFKCommand: afk", "AFKCommand2: brb", "", "# Mute command --- Mute default saving location - 'muteplayers.txt'", "#----------------------------------", "MuteCommand: mute", "# UnMute Command", "UnMuteCommand: unmute", "", "", "", "", "", "#----------------------------------------------------------#", "#                          Messages                        #", "#----------------------------------------------------------#", "# Say prefix: Will show the string infront of the message", "# Example: [!!!] UserR00T: This is a message!", "# A space is not required at the end.", "#----------------------------------", "msgSayPrefix: [!!!]", "", "# Discord invite link", "#----------------------------------", "DiscordLink: https://discord.gg/Test", "", "", "", "#----------------------------------------------------------#", "#                    Additional Settings                   #", "#----------------------------------------------------------#", "", "", "# ChatBlock --- Words default location - 'chatblock.txt'", "# Enable chatblock", "#----------------------------------", "enableChatBlock: true", "", "", "# LanguageBlock --- Words default location - 'languageblock.txt'", "# Enable LanguageBlock", "#----------------------------------", "enableLanguageBlock: true", "", "", "# This will check for alt accounts with the same IP.", "# NOTE: If someone in the same home connects with the same IP it will be detected as alt.", "# Enable CheckForAlts", "#----------------------------------", "CheckForAlts: true", "", "", "# Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'", "#----------------------------------", "TimeBetweenAnnounce: 360", "", "", "# TimestampFormat; This means what you will see infront of a message: ", "# E.g: [{H}:{M}:{S}] and your time is 12:5:59 it will show [12:05:59]", "# Placeholders:", "# {H} Hours (24 hour clock)", "# {h} Hours (12 hour clock)", "# {M} Minutes", "# {S} Seconds", "# {T} AM/PM (used in {h} 12 hour clock)", "#----------------------------------", "TimestapFormat: [{H}:{M}:{S}]" };
             File.WriteAllLines(SettingsFile, content);
         }
         if (FileName == ChatBlockFile)
@@ -1324,6 +1394,14 @@ public class EssentialsPlugin
                     else if (line.Contains("PlayersOnlineCommand2: "))
                     {
                         cmdPlayers2 = cmdCommandCharacter + line.Substring(23);
+                    }
+                    else if (line.Contains("InfoPlayerCommand: "))
+                    {
+                        cmdInfo = cmdCommandCharacter + line.Substring(19);
+                    }
+                    else if (line.Contains("InfoPlayerCommand2: "))
+                    {
+                        cmdInfo2 = cmdCommandCharacter + line.Substring(20);
                     }
                     else if (line.Contains("DiscordLink: "))
                     {
