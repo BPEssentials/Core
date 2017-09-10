@@ -147,6 +147,7 @@ public class EssentialsPlugin
         {
             afk(message, player);
         }
+
         //Checks if player is muted, if so, cancel message
         if (MutePlayers.Contains(player.playerData.username))
         {
@@ -157,6 +158,12 @@ public class EssentialsPlugin
         {
             // Log message, but ONLY if the player is unmuted
             MessageLog(message, player);
+        }
+        // Check if message contains a player that is AFK
+        if (AfkPlayers.Any(message.Contains))
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+            return true;
         }
         // Command: players
         if (message.StartsWith(cmdPlayers) || message.StartsWith(cmdPlayers2))
@@ -392,7 +399,7 @@ public class EssentialsPlugin
         if (message.StartsWith("/help"))
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
-
+            return true;
         }
         // CustomCommands
         int i = 0;
@@ -473,12 +480,6 @@ public class EssentialsPlugin
             {
                 return false;
             }
-        }
-        // Check if message contains a player that is AFK
-        if (AfkPlayers.Any(message.Contains))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
-            return true;
         }
         return false;
 
