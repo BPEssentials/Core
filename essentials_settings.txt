@@ -21,7 +21,7 @@
 #----------------------------------------------------------#
 #                           General                        #
 #----------------------------------------------------------#
-version: 1.0.0
+version: 1.1.0
 
 # Character used for commands
 #----------------------------------
@@ -66,6 +66,11 @@ CheckPlayerCommand: checkplayer
 FakeLeaveCommand: fakeleave
 FakeJoinCommand: fakejoin
 
+# Player info command
+#----------------------------------
+InfoPlayerCommand: info
+InfoPlayerCommand2: stats
+
 # Rules command -- Rules default location - 'rules.txt'
 #----------------------------------
 RulesCommand: rules
@@ -73,6 +78,11 @@ RulesCommand: rules
 # Discord command
 #----------------------------------
 DiscordCommand: discord
+
+# Online Players command
+#----------------------------------
+PlayersOnlineCommand: players
+PlayersOnlineCommand2: online
 
 # Godmode command --- Godmode default saving location - 'godmode.txt'
 #----------------------------------
@@ -132,12 +142,6 @@ enableLanguageBlock: true
 #----------------------------------
 CheckForAlts: true
 
-# This will lower any command 
-# so /DiScOrD will still be registed as /discord
-# This does not work on arguments.
-# Enable ToLowerCommands
-#----------------------------------
-ToLowerCommands: true
 
 # Seconds between annoucements in seconds -- Announcements in 'Annoucements.txt'
 #----------------------------------
