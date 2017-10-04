@@ -1109,7 +1109,11 @@ public class EssentialsPlugin
     public static bool Mute(string message, object oPlayer, bool unmute)
     {
         SvPlayer player = (SvPlayer)oPlayer;
-        string muteuser = message.Split(' ').Last();
+        string muteuser = null;
+		if (message.StartsWith(cmdMute)
+			muteuser = message.Substring(cmdMute.Count() + 1);
+		else if (message.StartsWith(cmdUnMute)
+			muteuser = message.Substring(cmdUnMute.Count() + 1);
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
