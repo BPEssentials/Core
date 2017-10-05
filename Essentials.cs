@@ -111,7 +111,7 @@ public class EssentialsPlugin
     private static string cmdATM;
 
     // Ints
-    private static int SaveTime = 60 * 3;
+    private static int SaveTime = 60 * 5;
     private static int announceIndex = 0;
     private static int TimeBetweenAnnounce;
     private static int[] BlockedSpawnIDS;
@@ -839,7 +839,25 @@ public class EssentialsPlugin
         return false;
     }
     #endregion
-
+    #region Event: HitEffect
+    [Hook("ShRetainer.HitEffect")] // Blocks handcuff
+    public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
+    {
+        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            if (shPlayer.IsRealPlayer())
+            {
+                if (shPlayer == hitTarget)
+                {
+                    if (GodListPlayers.Contains(shPlayer.svPlayer.playerData.username))
+                    {
+                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Being handcuffed Blocked!");
+                        return true;
+                    }
+                }
+            }
+        return false;
+    }
+    #endregion
     #region Methods
     private static void SavePeriodically()
     {
@@ -849,8 +867,11 @@ public class EssentialsPlugin
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer())
                 {
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
-                    shPlayer.svPlayer.Save();
+                    if (shPlayer.GetSpaceIndex() != 13)
+                    {
+                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
+                        shPlayer.svPlayer.Save();
+                    }
                 }
             Thread.Sleep(SaveTime * 1000);
         }
@@ -861,8 +882,11 @@ public class EssentialsPlugin
         foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
             if (shPlayer.IsRealPlayer())
             {
-                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
-                shPlayer.svPlayer.Save();
+                if (shPlayer.GetSpaceIndex() != 13)
+                {
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
+                    shPlayer.svPlayer.Save();
+                }
             }
     }
     private static void ExecuteOnPlayer(object oPlayer, string message, string arg1)
@@ -965,7 +989,7 @@ public class EssentialsPlugin
                     "Position:                 " + shPlayer.svPlayer.playerData.position,
                     "WantedLevel:         " + shPlayer.wantedLevel,
                     "IsAdmin:                 " + shPlayer.admin,
-                    "IP:                            " + shPlayer.svPlayer.netMan.GetAddress(player.connection)
+                    "IP:                            " + shPlayer.svPlayer.netMan.GetAddress(shPlayer.svPlayer.connection)
                     };
 
 
@@ -1060,16 +1084,22 @@ public class EssentialsPlugin
     {
         SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
-        player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
+      //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
+        string content = String.Empty;
+        
         foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(arg1 + ":"))
             {
                 ++found;
-                player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
+               // player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
+                content = line.Substring(arg1.Length +1) + "\r\n" + content;
             }
         }
-        player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
+
+        content = content + "\r\n\r\n" + arg1 + " occurred " + found + " times in the iplog file." + "\r\n";
+        player.SendToSelf(Channel.Reliable, (byte)50, content);
+        //player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " occurred " + found + " times in the iplog file.");
     }
     public static void CheckPlayer(string message, object oPlayer, string arg1)
     {
@@ -1110,10 +1140,10 @@ public class EssentialsPlugin
     {
         SvPlayer player = (SvPlayer)oPlayer;
         string muteuser = null;
-		if (message.StartsWith(cmdMute)
-			muteuser = message.Substring(cmdMute.Count() + 1);
-		else if (message.StartsWith(cmdUnMute)
-			muteuser = message.Substring(cmdUnMute.Count() + 1);
+        if (message.StartsWith(cmdMute))
+            muteuser = message.Substring(cmdMute.Count() + 1);
+        else if (message.StartsWith(cmdUnMute))
+            muteuser = message.Substring(cmdUnMute.Count() + 1);
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
