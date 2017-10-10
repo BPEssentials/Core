@@ -28,9 +28,9 @@ public class EssentialsPlugin
     private static string AdminListFile = "admin_list.txt";
     private static string RulesFile = "server_info.txt";
 
-    private static string LogFile =  LogDirectory + "all.txt";
-    private static string ChatLogFile =  LogDirectory + "chat.txt";
-    private static string CommandLogFile =  LogDirectory + "commands.txt";
+    private static string LogFile = LogDirectory + "all.txt";
+    private static string ChatLogFile = LogDirectory + "chat.txt";
+    private static string CommandLogFile = LogDirectory + "commands.txt";
 
     #endregion
 
@@ -166,7 +166,7 @@ public class EssentialsPlugin
             Debug.Log(ex);
             Debug.Log(ex.ToString());
             Debug.Log("-------------------------------------------------------------------------------");
-            
+
         }
 
         if (announcements.Length != 0)
@@ -185,6 +185,8 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
+
+
         // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
@@ -207,6 +209,166 @@ public class EssentialsPlugin
         {
             player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
             return true;
+        }
+        if (message.StartsWith("/pay") || (message.StartsWith("/send")))
+        {
+            string arg1 = null;
+            string arg2 = null;
+            try
+            {
+                if (message.StartsWith("/pay"))
+                {
+                    arg1 = message.Substring("/pay".Length + 1).Trim();
+                }
+                else if (message.StartsWith("/send"))
+                {
+                    arg1 = message.Substring("/send".Length + 1).Trim();
+                }
+                arg2 = message.Split(' ').Last().Trim();
+                arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
+                if (String.IsNullOrEmpty(arg1))
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
+                    return true;
+                }
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
+                return true;
+            }
+            if (!(String.IsNullOrEmpty(arg2)))
+            {
+                int arg2int;
+                bool isNumeric = int.TryParse(arg2, out arg2int);
+
+                if (isNumeric)
+                {
+                    bool error = false;
+                    bool found = false;
+                    if (arg2int == 0)
+                    {
+                        error = true;
+                    }
+                    if (!(error))
+                    {
+                        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                        {
+                            if (shPlayer.svPlayer.playerData.username == arg1)
+                            {
+                                if (shPlayer.IsRealPlayer())
+                                {
+                                    foreach (var _shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                                    {
+                                        if (_shPlayer.svPlayer == player)
+                                        {
+                                            if (_shPlayer.IsRealPlayer())
+                                            {
+                                                Debug.Log(_shPlayer.playerInventory.MyMoneyCount());
+                                                if (_shPlayer.playerInventory.MyMoneyCount() >= arg2int)
+                                                {
+                                                    _shPlayer.playerInventory.TransferMoney(2, arg2int, true);
+                                                }
+                                                else
+                                                {
+                                                    error = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (!(error))
+                                    {
+                                        shPlayer.playerInventory.TransferMoney(1, arg2int, true);
+                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully transfered " + arg1 + " " + arg2int + "$");
+                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
+                                        found = true;
+                                    }
+                                    else
+                                    {
+                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
+                                        found = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (!(found))
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
+                        }
+                    }
+                    else
+                    {
+                        if (arg2int == 0)
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer 0$.");
+                        else
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
+
+                    }
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount] (incorrect argument!)");
+                }
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
+            }
+            return true;
+        }
+
+        if (message.StartsWith("/location") || (message.StartsWith("/loc")))
+        {
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                player.Save();
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + player.playerData.position);
+            }
+            else
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+            return true;
+        }
+        if (message.StartsWith("/getplayerhash") || (message.StartsWith("/gethash")))
+        {
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/getplayerhash" || TempMSG != "/gethash")
+                {
+                    string arg1 = player.playerData.username;
+                    if (TempMSG.StartsWith("/gethash"))
+                        arg1 = TempMSG.Substring(8 + 1);
+                    if (TempMSG.StartsWith("/getplayerhash"))
+                        arg1 = TempMSG.Substring(14 + 1);
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "StringToHash: " + Animator.StringToHash(arg1).ToString());
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+            }
+            else
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+            return true;
+        }
+        // Command: SpaceIndex
+        if (message.StartsWith("/spaceindex"))
+        {
+            if (AdminsListPlayers.Contains(player.playerData.username))
+            {
+                foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.svPlayer == player)
+                        if (shPlayer.IsRealPlayer())
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "SpaceIndex: " + shPlayer.GetSpaceIndex());
+                        }
+                return true;
+
+            }
+            else
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                return true;
+            }
         }
         // Command: Save
         if (message.StartsWith("/save"))
@@ -703,7 +865,7 @@ public class EssentialsPlugin
                 {
                     int arg2int;
                     bool isNumeric = int.TryParse(arg2, out arg2int);
-                    
+
                     if (isNumeric)
                     {
                         bool found = false;
@@ -714,8 +876,8 @@ public class EssentialsPlugin
                                 if (shPlayer.IsRealPlayer())
                                 {
                                     shPlayer.playerInventory.TransferMoney(1, arg2int, true);
-                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully gave " + arg1 + " " + arg2int +"$");
-                                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int +"$!");
+                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully gave " + arg1 + " " + arg2int + "$");
+                                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
                                     found = true;
                                 }
                             }
@@ -724,7 +886,7 @@ public class EssentialsPlugin
                         {
                             player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
                         }
-                        
+
                     }
                     else
                     {
@@ -867,7 +1029,7 @@ public class EssentialsPlugin
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer())
                 {
-                    if (shPlayer.GetSpaceIndex() != 13)
+                    if (shPlayer.GetSpaceIndex() >= 13)
                     {
                         shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
                         shPlayer.svPlayer.Save();
@@ -882,7 +1044,7 @@ public class EssentialsPlugin
         foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
             if (shPlayer.IsRealPlayer())
             {
-                if (shPlayer.GetSpaceIndex() != 13)
+                if (shPlayer.GetSpaceIndex() >= 13)
                 {
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
                     shPlayer.svPlayer.Save();
@@ -1084,16 +1246,16 @@ public class EssentialsPlugin
     {
         SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
-      //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
+        //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
         string content = String.Empty;
-        
+
         foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(arg1 + ":"))
             {
                 ++found;
-               // player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
-                content = line.Substring(arg1.Length +1) + "\r\n" + content;
+                // player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
+                content = line.Substring(arg1.Length + 1) + "\r\n" + content;
             }
         }
 
