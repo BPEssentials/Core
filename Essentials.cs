@@ -216,7 +216,7 @@ namespace BP_Essentials {
                 if (message.StartsWith("/arg")) // TODO
                 {
                     try {
-                        GetArgument(1, message);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(1, message));
                        // GetArgument(Convert.ToByte(GetArgument(1, message)), message);
                     }
                     catch (Exception ex)
