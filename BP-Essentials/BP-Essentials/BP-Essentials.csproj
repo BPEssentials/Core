@@ -33,7 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="EssentialsPlugin.cs" />
+    <Compile Include="EssentialsChat.cs" />
+    <Compile Include="EssentialsCmd.cs" />
+    <Compile Include="EssentialsConfig.cs" />
+    <Compile Include="EssentialsCore.cs" />
+    <Compile Include="EssentialsMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -42,6 +46,7 @@
     <Reference Include="HookAttribute, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\game\bpgameserver_Data\Managed\HookAttribute.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\game\bpgameserver_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
