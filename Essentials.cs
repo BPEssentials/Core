@@ -215,9 +215,9 @@ namespace BP_Essentials {
             {
                 if (message.StartsWith("/arg")) // TODO
                 {
-                    try
-                    {
-                        GetArgument(Convert.ToByte(GetArgument(1, message)), message);
+                    try {
+                        GetArgument(1, message);
+                       // GetArgument(Convert.ToByte(GetArgument(1, message)), message);
                     }
                     catch (Exception ex)
                     {
@@ -2313,7 +2313,7 @@ namespace BP_Essentials {
         }
 
         // TODO ---------------------------------------------------------------------------------
-        private static string GetArgument(byte nr, string message) {
+        private static string GetArgument(int nr, string message) {
             var list = Regex.Matches(message, @"[\""].+?[\""]|[^ ]+")
                 .Cast<Match>()
                 .Select(m => m.Value)
