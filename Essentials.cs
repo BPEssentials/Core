@@ -28,9 +28,9 @@ public class EssentialsPlugin
     private static string AdminListFile = "admin_list.txt";
     private static string RulesFile = "server_info.txt";
 
-    private static string LogFile = LogDirectory + "all.txt";
-    private static string ChatLogFile = LogDirectory + "chat.txt";
-    private static string CommandLogFile = LogDirectory + "commands.txt";
+    private static string LogFile =  LogDirectory + "all.txt";
+    private static string ChatLogFile =  LogDirectory + "chat.txt";
+    private static string CommandLogFile =  LogDirectory + "commands.txt";
 
     #endregion
 
@@ -110,6 +110,21 @@ public class EssentialsPlugin
     private static string cmdMoney2;
     private static string cmdATM;
 
+    private static string cmdSave;
+    private static string cmdPay;
+    private static string cmdPay2;
+    private static string cmdHelp;
+    private static string cmdConfirm;
+    private static string cmdLogs;
+
+    private static string cmdTp;
+    private static string cmdTpHere;
+    private static string cmdTpHere2;
+    private static string cmdKill;
+    private static string cmdArrest;
+    private static string cmdRestrain;
+    private static string cmdFree;
+    private static string cmdDbug;
     // Ints
     private static int SaveTime = 60 * 5;
     private static int announceIndex = 0;
@@ -166,7 +181,7 @@ public class EssentialsPlugin
             Debug.Log(ex);
             Debug.Log(ex.ToString());
             Debug.Log("-------------------------------------------------------------------------------");
-
+            
         }
 
         if (announcements.Length != 0)
@@ -185,680 +200,59 @@ public class EssentialsPlugin
     [Hook("SvPlayer.SvGlobalChatMessage")]
     public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
     {
-
-
+        // TODO: Improve ;)
+        if (!(MutePlayers.Contains(player.playerData.username)))
+        {
+            MessageLog(message, player);
+        }
         // If player is afk, unafk him
         if (AfkPlayers.Contains(player.playerData.username))
         {
             afk(message, player);
         }
-
-        //Checks if player is muted, if so, cancel message
-        if (MutePlayers.Contains(player.playerData.username))
+        if (message.Trim().StartsWith(cmdCommandCharacter))
         {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
-            return true;
-        }
-        else
-        {
-            // Log message, but ONLY if the player is unmuted
-            MessageLog(message, player);
-        }
-        // Check if message contains a player that is AFK
-        if (AfkPlayers.Any(message.Contains))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
-            return true;
-        }
-        if (message.StartsWith("/pay") || (message.StartsWith("/send")))
-        {
-            string arg1 = null;
-            string arg2 = null;
-            try
-            {
-                if (message.StartsWith("/pay"))
-                {
-                    arg1 = message.Substring("/pay".Length + 1).Trim();
-                }
-                else if (message.StartsWith("/send"))
-                {
-                    arg1 = message.Substring("/send".Length + 1).Trim();
-                }
-                arg2 = message.Split(' ').Last().Trim();
-                arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
-                if (String.IsNullOrEmpty(arg1))
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
-                    return true;
-                }
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
-                return true;
-            }
-            if (!(String.IsNullOrEmpty(arg2)))
-            {
-                int arg2int;
-                bool isNumeric = int.TryParse(arg2, out arg2int);
-
-                if (isNumeric)
-                {
-                    bool error = false;
-                    bool found = false;
-                    if (arg2int == 0)
-                    {
-                        error = true;
-                    }
-                    if (!(error))
-                    {
-                        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                        {
-                            if (shPlayer.svPlayer.playerData.username == arg1)
-                            {
-                                if (shPlayer.IsRealPlayer())
-                                {
-                                    foreach (var _shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                                    {
-                                        if (_shPlayer.svPlayer == player)
-                                        {
-                                            if (_shPlayer.IsRealPlayer())
-                                            {
-                                                Debug.Log(_shPlayer.playerInventory.MyMoneyCount());
-                                                if (_shPlayer.playerInventory.MyMoneyCount() >= arg2int)
-                                                {
-                                                    _shPlayer.playerInventory.TransferMoney(2, arg2int, true);
-                                                }
-                                                else
-                                                {
-                                                    error = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (!(error))
-                                    {
-                                        shPlayer.playerInventory.TransferMoney(1, arg2int, true);
-                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully transfered " + arg1 + " " + arg2int + "$");
-                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
-                                        found = true;
-                                    }
-                                    else
-                                    {
-                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
-                                        found = true;
-                                    }
-                                }
-                            }
-                        }
-                        if (!(found))
-                        {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
-                        }
-                    }
-                    else
-                    {
-                        if (arg2int == 0)
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer 0$.");
-                        else
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
-
-                    }
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount] (incorrect argument!)");
-                }
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "/pay [Player] [Amount]");
-            }
-            return true;
-        }
-
-        if (message.StartsWith("/location") || (message.StartsWith("/loc")))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                player.Save();
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + player.playerData.position);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-            return true;
-        }
-        if (message.StartsWith("/getplayerhash") || (message.StartsWith("/gethash")))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                string TempMSG = message.Trim();
-                if (TempMSG != "/getplayerhash" || TempMSG != "/gethash")
-                {
-                    string arg1 = player.playerData.username;
-                    if (TempMSG.StartsWith("/gethash"))
-                        arg1 = TempMSG.Substring(8 + 1);
-                    if (TempMSG.StartsWith("/getplayerhash"))
-                        arg1 = TempMSG.Substring(14 + 1);
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "StringToHash: " + Animator.StringToHash(arg1).ToString());
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-            return true;
-        }
-        // Command: SpaceIndex
-        if (message.StartsWith("/spaceindex"))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.svPlayer == player)
-                        if (shPlayer.IsRealPlayer())
-                        {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "SpaceIndex: " + shPlayer.GetSpaceIndex());
-                        }
-                return true;
-
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Command: Save
-        if (message.StartsWith("/save"))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                Thread thread = new Thread(SaveNow);
-                thread.Start();
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Tp
-        if (message.StartsWith("/tp"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/tp")
-            {
-                string arg1 = TempMSG.Substring(3 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-            return true;
-        }
-        // Ban
-        if (message.StartsWith("/ban"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/ban")
-            {
-                string arg1 = TempMSG.Substring(4 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-            return true;
-        }
-
-        // Kick
-        if (message.StartsWith("/kick"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/kick")
-            {
-                string arg1 = TempMSG.Substring(5 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-            return true;
-        }
-        // Arrest
-        if (message.StartsWith("/arrest"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/arrest")
-            {
-                string arg1 = TempMSG.Substring(7 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-
-            return true;
-        }
-        // Restrain
-        if (message.StartsWith("/restrain"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/restrain")
-            {
-                string arg1 = TempMSG.Substring(9 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-
-            return true;
-        }
-        // Kill
-        if (message.StartsWith("/kill"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/kill")
-            {
-                string arg1 = TempMSG.Substring(5 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-
-            return true;
-        }
-        // Free
-        if (message.StartsWith("/free"))
-        {
-            string TempMSG = message.Trim();
-            if (TempMSG != "/free")
-            {
-                string arg1 = TempMSG.Substring(5 + 1);
-                ExecuteOnPlayer(player, message, arg1);
-            }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-
-            return true;
-        }
-
-        // Command: Confirm
-        if (message.ToLower().StartsWith("/confirm"))
-        {
-            player.Save();
-            if (player.playerData.ownedApartment)
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Selling apartment...");
-                Confirmed = true;
-                player.SvSellApartment();
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "You don't have a apartment to sell!");
-            }
-            return true;
-        }
-
-        // Command: Logs
-        if (message.StartsWith("/logs"))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                GetLogs(player, ChatLogFile);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Command: ATM
-        if (message.ToLower().StartsWith(cmdATM))
-        {
-            if (enableATMCommand)
-            {
-                player.Save();
-                foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                {
-                    if (shPlayer.svPlayer == player)
-                    {
-                        if (shPlayer.IsRealPlayer())
-                        {
-                            if (shPlayer.wantedLevel == 0)
-                            {
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Opening ATM menu..");
-                                player.SendToSelf(Channel.Reliable, (byte)40, player.playerData.bankBalance);
-                                return true;
-                            }
-                            else if (shPlayer.wantedLevel != 0)
-                            {
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Criminal Activity: Account Locked");
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, DisabledCommand);
-            }
-            return true;
-        }
-        // Command: players
-        if (message.StartsWith(cmdPlayers) || message.StartsWith(cmdPlayers2))
-        {
-            int RealPlayers = 0;
-            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-            {
-                if (shPlayer.IsRealPlayer())
-                {
-                    ++RealPlayers;
-                }
-            }
-            if (RealPlayers == 1)
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "There is " + RealPlayers + " player online");
-            else if (RealPlayers < 1)
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " play- wait, how is that possible");
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " player(s) online");
-            return true;
-        }
-
-        // Command: ClearChat
-        if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
-        {
-            if (message.Contains("all") || message.Contains("everyone"))
-            {
-                if (AdminsListPlayers.Contains(player.playerData.username))
-                {
-                    all = true;
-                    ClearChat(message, player, all);
-                    return true;
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                    return true;
-                }
-
-            }
-            else
-            {
-                all = false;
-                ClearChat(message, player, all);
-                return true;
-            }
-        }
-        // Command: Reload
-        if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                Reload(false, message, player);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Command: Mute
-        if (message.StartsWith(cmdUnMute))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                unmute = true;
-                Mute(message, player, unmute);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-
-        }
-        else if (message.StartsWith(cmdMute))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                unmute = false;
-                Mute(message, player, unmute);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-
-        }
-        // Command: Say
-        if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                say(message, player);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-
-        }
-        // Command: GodMode
-        if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                godMode(message, player);
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Command: AFK
-        if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
-        {
-            afk(message, player);
-            return true;
-        }
-        // Command: Main/essentials
-        if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
-        {
-            essentials(message, player);
-            return true;
-        }
-        // Command: Rules
-        if (message.StartsWith(cmdRules))
-        {
-            player.SendToSelf(Channel.Reliable, (byte)50, rules);
-            return true;
-        }
-        // Command: CheckIP
-        if (message.StartsWith(cmdCheckIP))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                string TempMSG = message.Trim();
-                if (TempMSG != cmdCheckIP)
-                {
-                    string arg1 = TempMSG.Substring(cmdCheckIP.Count() + 1);
-                    CheckIP(TempMSG, player, arg1);
-                    return true;
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-                    return true;
-                }
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        // Command: CheckPlayer
-        if (message.StartsWith(cmdCheckPlayer))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                string TempMSG = message.Trim();
-                if (TempMSG != cmdCheckPlayer)
-                {
-                    string arg1 = TempMSG.Substring(cmdCheckPlayer.Count() + 1);
-                    CheckPlayer(TempMSG, player, arg1);
-                    return true;
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-                    return true;
-                }
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-
-        }
-        // Command: Fake Join/Leave
-        if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-            {
-                string TempMSG = message.Trim();
-                if (!(TempMSG == cmdFakeJoin || TempMSG == cmdFakeLeave))
-                {
-                    string arg1 = null;
-                    if (TempMSG.StartsWith(cmdFakeJoin))
-                    {
-                        arg1 = TempMSG.Substring(cmdFakeJoin.Length + 1);
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " connected");
-                    }
-                    else if (TempMSG.StartsWith(cmdFakeLeave))
-                    {
-                        arg1 = TempMSG.Substring(cmdFakeLeave.Length + 1);
-                        player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " disconnected");
-                    }
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-                }
-
-                return true;
-            }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-
-        }
-        // Command: Discord
-        if (message.StartsWith(cmdDiscord))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
-            return true;
-        }
-
-        // Command: Help
-        if (message.StartsWith("/help"))
-        {
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
-            return true;
-        }
-
-        // CustomCommands
-        if (Commands.Any(message.Contains))
-        {
-            int i = 0;
-            foreach (var command in Commands)
-            {
-                if (message.StartsWith(command))
-                {
-                    i = Commands.IndexOf(command);
-                }
-            }
-            player.SendToSelf(Channel.Unsequenced, (byte)10, GetPlaceHolders(i, player));
-            return true;
-        }
-        if (message.StartsWith(cmdInfo) || message.StartsWith(cmdInfo2))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
+            if (message.StartsWith("/arg")) // TODO
             {
                 try
                 {
-                    string arg1 = "null";
-                    if (message.StartsWith(cmdInfo))
-                    {
-                        arg1 = message.Substring(cmdInfo.Length + 1).Trim();
-                    }
-                    else if (message.StartsWith(cmdInfo2))
-                    {
-                        arg1 = message.Substring(cmdInfo2.Length + 1).Trim();
-                    }
-
-                    if (!(String.IsNullOrEmpty(arg1)))
-                    {
-                        new Thread(delegate () { GetPlayerInfo(player, arg1); }).Start();
-                    }
-                    else
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "/info [Username]");
-                    }
+                    GetArgument(Convert.ToByte(GetArgument(1, message)), message);
                 }
-                catch (ArgumentOutOfRangeException)
+                catch (Exception ex)
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/info [Username]");
+                    if (ex is FormatException || ex is OverflowException)
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
+                    }
                 }
+               
                 return true;
             }
-            else
-            {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
-                return true;
-            }
-        }
-        if (message.StartsWith(cmdMoney) || message.StartsWith(cmdMoney2))
-        {
-            if (AdminsListPlayers.Contains(player.playerData.username))
+            if (message.StartsWith(cmdPay) || (message.StartsWith(cmdPay2)))
             {
                 string arg1 = null;
                 string arg2 = null;
                 try
                 {
-                    if (message.StartsWith(cmdMoney))
+                    if (message.StartsWith(cmdPay))
                     {
-                        arg1 = message.Substring(cmdMoney.Length + 1).Trim();
+                        arg1 = message.Substring(cmdPay.Length + 1).Trim();
                     }
-                    else if (message.StartsWith(cmdMoney2))
+                    else if (message.StartsWith(cmdPay2))
                     {
-                        arg1 = message.Substring(cmdMoney2.Length + 1).Trim();
+                        arg1 = message.Substring(cmdPay2.Length + 1).Trim();
                     }
                     arg2 = message.Split(' ').Last().Trim();
                     arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
                     if (String.IsNullOrEmpty(arg1))
                     {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "/money [Player] [Amount]");
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, cmdPay + " / " + cmdPay2 + " [Player] [Amount]");
                         return true;
                     }
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/money [Player] [Amount]");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, cmdPay + " / " + cmdPay2 + " [Player] [Amount]");
                     return true;
                 }
                 if (!(String.IsNullOrEmpty(arg2)))
@@ -868,47 +262,692 @@ public class EssentialsPlugin
 
                     if (isNumeric)
                     {
+                        bool error = false;
                         bool found = false;
-                        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                        if (arg2int == 0)
                         {
-                            if (shPlayer.svPlayer.playerData.username == arg1)
+                            error = true;
+                        }
+                        if (!(error))
+                        {
+                            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
                             {
-                                if (shPlayer.IsRealPlayer())
+                                if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 {
-                                    shPlayer.playerInventory.TransferMoney(1, arg2int, true);
-                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully gave " + arg1 + " " + arg2int + "$");
-                                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
-                                    found = true;
+                                    if (shPlayer.IsRealPlayer())
+                                    {
+                                        foreach (var _shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                                        {
+                                            if (_shPlayer.svPlayer == player)
+                                            {
+                                                if (_shPlayer.IsRealPlayer())
+                                                {
+                                                    Debug.Log(_shPlayer.playerInventory.MyMoneyCount());
+                                                    if (_shPlayer.playerInventory.MyMoneyCount() >= arg2int)
+                                                    {
+                                                        _shPlayer.playerInventory.TransferMoney(2, arg2int, true);
+                                                    }
+                                                    else
+                                                    {
+                                                        error = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (!(error))
+                                        {
+                                            shPlayer.playerInventory.TransferMoney(1, arg2int, true);
+                                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully transfered " + arg2int + "$ to " + shPlayer.svPlayer.playerData.username + "!");
+                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
+                                            found = true;
+                                        }
+                                        else
+                                        {
+                                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
+                                            found = true;
+                                        }
+                                    }
                                 }
                             }
+                            if (!(found))
+                            {
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
+                            }
                         }
-                        if (!(found))
+                        else
                         {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
-                        }
+                            if (arg2int == 0)
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer 0$.");
+                            else
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Cannot transfer money, do you have " + arg2int + "$ in your inventory?");
 
+                        }
                     }
                     else
                     {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "/money [Player] [Amount] (incorrect argument!)");
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, cmdPay + " / " + cmdPay2 + " [Player] [Amount] (incorrect argument!)");
                     }
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "/money [Player] [Amount]");
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, cmdPay + " / " + cmdPay2 + " [Player] [Amount]");
                 }
                 return true;
             }
-            else
+            // TODO ------------------------------------------------------------------------------------------
+            if (message.StartsWith("/location") || (message.StartsWith("/loc")))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                if (message.StartsWith("/location") || (message.StartsWith("/loc")))
+                {
+                    if (AdminsListPlayers.Contains(player.playerData.username))
+                    {
+                        player.Save();
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + player.playerData.position);
+                    }
+                    else
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            if (message.StartsWith("/getplayerhash") || (message.StartsWith("/gethash")))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    string TempMSG = message.Trim();
+                    if (TempMSG != "/getplayerhash" || TempMSG != "/gethash")
+                    {
+                        string arg1 = player.playerData.username;
+                        if (TempMSG.StartsWith("/gethash"))
+                            arg1 = TempMSG.Substring(8 + 1);
+                        if (TempMSG.StartsWith("/getplayerhash"))
+                            arg1 = TempMSG.Substring(14 + 1);
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "StringToHash: " + Animator.StringToHash(arg1).ToString());
+                    }
+                    else
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
                 return true;
             }
-        }
+            // Command: SpaceIndex
+            if (message.StartsWith("/spaceindex"))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                        if (shPlayer.svPlayer == player)
+                            if (shPlayer.IsRealPlayer())
+                            {
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "SpaceIndex: " + shPlayer.GetSpaceIndex());
+                            }
+                    return true;
 
-        // Message: Unkonwn command
-        if (message.StartsWith(cmdCommandCharacter))
-        {
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // TODO ------------------------------------------------------------------------------------------
+            // Command: Save
+            if (message.StartsWith(cmdSave))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    Thread thread = new Thread(SaveNow);
+                    thread.Start();
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // Tp
+            if (message.StartsWith(cmdTpHere) || message.StartsWith(cmdTpHere2))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != cmdTpHere || TempMSG != cmdTpHere2)
+                {
+                    string arg1 = String.Empty;
+                    if (TempMSG.StartsWith(cmdTpHere + " "))
+                    {
+                        arg1 = TempMSG.Substring(cmdTpHere.Length + 1);
+                    }
+                    else if (TempMSG.StartsWith(cmdTpHere2 + " "))
+                    {
+                        arg1 = TempMSG.Substring(cmdTpHere2.Length + 1);
+                    }
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+            else if (message.StartsWith("/tp"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/tp")
+                {
+                    string arg1 = TempMSG.Substring(3 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+            // Ban
+            if (message.StartsWith("/ban"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/ban")
+                {
+                    string arg1 = TempMSG.Substring(4 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+
+            // Kick
+            if (message.StartsWith("/kick"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/kick")
+                {
+                    string arg1 = TempMSG.Substring(5 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                return true;
+            }
+            // Arrest
+            if (message.StartsWith("/arrest"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/arrest")
+                {
+                    string arg1 = TempMSG.Substring(7 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+
+                return true;
+            }
+            // Restrain
+            if (message.StartsWith("/restrain"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/restrain")
+                {
+                    string arg1 = TempMSG.Substring(9 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+
+                return true;
+            }
+            // Kill
+            if (message.StartsWith("/kill"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/kill")
+                {
+                    string arg1 = TempMSG.Substring(5 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+
+                return true;
+            }
+            // Free
+            if (message.StartsWith("/free"))
+            {
+                string TempMSG = message.Trim();
+                if (TempMSG != "/free")
+                {
+                    string arg1 = TempMSG.Substring(5 + 1);
+                    ExecuteOnPlayer(player, message, arg1);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+
+                return true;
+            }
+
+            // Command: Confirm
+            if (message.ToLower().StartsWith("/confirm"))
+            {
+                player.Save();
+                if (player.playerData.ownedApartment)
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Selling apartment...");
+                    Confirmed = true;
+                    player.SvSellApartment();
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "You don't have a apartment to sell!");
+                }
+                return true;
+            }
+
+            // Command: Logs
+            if (message.StartsWith("/logs"))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    GetLogs(player, ChatLogFile);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // Command: ATM
+            if (message.ToLower().StartsWith(cmdATM))
+            {
+                if (enableATMCommand)
+                {
+                    player.Save();
+                    foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                    {
+                        if (shPlayer.svPlayer == player)
+                        {
+                            if (shPlayer.IsRealPlayer())
+                            {
+                                if (shPlayer.wantedLevel == 0)
+                                {
+                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Opening ATM menu..");
+                                    player.SendToSelf(Channel.Reliable, (byte)40, player.playerData.bankBalance);
+                                    return true;
+                                }
+                                else if (shPlayer.wantedLevel != 0)
+                                {
+                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Criminal Activity: Account Locked");
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, DisabledCommand);
+                }
+                return true;
+            }
+            // Command: players
+            if (message.StartsWith(cmdPlayers) || message.StartsWith(cmdPlayers2))
+            {
+                int RealPlayers = 0;
+                foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                {
+                    if (shPlayer.IsRealPlayer())
+                    {
+                        ++RealPlayers;
+                    }
+                }
+                if (RealPlayers == 1)
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "There is " + RealPlayers + " player online");
+                else if (RealPlayers < 1)
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " play- wait, how is that possible");
+                else
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + RealPlayers + " player(s) online");
+                return true;
+            }
+
+            // Command: ClearChat
+            if (message.StartsWith(cmdClearChat) || message.StartsWith(cmdClearChat2))
+            {
+                if (message.Contains("all") || message.Contains("everyone"))
+                {
+                    if (AdminsListPlayers.Contains(player.playerData.username))
+                    {
+                        all = true;
+                        ClearChat(message, player, all);
+                        return true;
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                        return true;
+                    }
+
+                }
+                else
+                {
+                    all = false;
+                    ClearChat(message, player, all);
+                    return true;
+                }
+            }
+            // Command: Reload
+            if (message.StartsWith(cmdReload) || message.StartsWith(cmdReload2))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    Reload(false, message, player);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // Command: Mute
+            if (message.StartsWith(cmdUnMute))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    unmute = true;
+                    Mute(message, player, unmute);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+
+            }
+            else if (message.StartsWith(cmdMute))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    unmute = false;
+                    Mute(message, player, unmute);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+
+            }
+            // Command: Say
+            if (message.StartsWith(cmdSay) || (message.StartsWith(cmdSay2)))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    say(message, player);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+
+            }
+            // Command: GodMode
+            if (message.StartsWith(cmdGodmode) || message.StartsWith(cmdGodmode2))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    godMode(message, player);
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // Command: AFK
+            if (message.StartsWith(cmdAfk) || message.StartsWith(cmdAfk2))
+            {
+                afk(message, player);
+                return true;
+            }
+            // Command: Main/essentials
+            if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
+            {
+                essentials(message, player);
+                return true;
+            }
+            // Command: Rules
+            if (message.StartsWith(cmdRules))
+            {
+                player.SendToSelf(Channel.Reliable, (byte)50, rules);
+                return true;
+            }
+            // Command: CheckIP
+            if (message.StartsWith(cmdCheckIP))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    string TempMSG = message.Trim();
+                    if (TempMSG != cmdCheckIP)
+                    {
+                        string arg1 = TempMSG.Substring(cmdCheckIP.Count() + 1);
+                        CheckIP(TempMSG, player, arg1);
+                        return true;
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                        return true;
+                    }
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            // Command: CheckPlayer
+            if (message.StartsWith(cmdCheckPlayer))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    string TempMSG = message.Trim();
+                    if (TempMSG != cmdCheckPlayer)
+                    {
+                        string arg1 = TempMSG.Substring(cmdCheckPlayer.Count() + 1);
+                        CheckPlayer(TempMSG, player, arg1);
+                        return true;
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                        return true;
+                    }
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+
+            }
+            // Command: Fake Join/Leave
+            if (message.StartsWith(cmdFakeJoin) || (message.StartsWith(cmdFakeLeave)))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    string TempMSG = message.Trim();
+                    if (!(TempMSG == cmdFakeJoin || TempMSG == cmdFakeLeave))
+                    {
+                        string arg1 = null;
+                        if (TempMSG.StartsWith(cmdFakeJoin))
+                        {
+                            arg1 = TempMSG.Substring(cmdFakeJoin.Length + 1);
+                            player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " connected");
+                        }
+                        else if (TempMSG.StartsWith(cmdFakeLeave))
+                        {
+                            arg1 = TempMSG.Substring(cmdFakeLeave.Length + 1);
+                            player.SendToAll(Channel.Unsequenced, (byte)10, arg1 + " disconnected");
+                        }
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+
+            }
+            // Command: Discord
+            if (message.StartsWith(cmdDiscord))
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + msgDiscord);
+                return true;
+            }
+
+            // Command: Help
+            if (message.StartsWith("/help"))
+            {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
+                return true;
+            }
+
+            // CustomCommands
+            if (Commands.Any(message.Contains))
+            {
+                int i = 0;
+                foreach (var command in Commands)
+                {
+                    if (message.StartsWith(command))
+                    {
+                        i = Commands.IndexOf(command);
+                    }
+                }
+                player.SendToSelf(Channel.Unsequenced, (byte)10, GetPlaceHolders(i, player));
+                return true;
+            }
+            if (message.StartsWith(cmdInfo) || message.StartsWith(cmdInfo2))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    try
+                    {
+                        string arg1 = "null";
+                        if (message.StartsWith(cmdInfo))
+                        {
+                            arg1 = message.Substring(cmdInfo.Length + 1).Trim();
+                        }
+                        else if (message.StartsWith(cmdInfo2))
+                        {
+                            arg1 = message.Substring(cmdInfo2.Length + 1).Trim();
+                        }
+
+                        if (!(String.IsNullOrEmpty(arg1)))
+                        {
+                            new Thread(delegate () { GetPlayerInfo(player, arg1); }).Start();
+                        }
+                        else
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, cmdInfo + " / " + cmdInfo2 +" [Username]");
+                        }
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, cmdInfo + " / " + cmdInfo2 + " [Username]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+            if (message.StartsWith(cmdMoney) || message.StartsWith(cmdMoney2))
+            {
+                if (AdminsListPlayers.Contains(player.playerData.username))
+                {
+                    string arg1 = null;
+                    string arg2 = null;
+                    try
+                    {
+                        if (message.StartsWith(cmdMoney))
+                        {
+                            arg1 = message.Substring(cmdMoney.Length + 1).Trim();
+                        }
+                        else if (message.StartsWith(cmdMoney2))
+                        {
+                            arg1 = message.Substring(cmdMoney2.Length + 1).Trim();
+                        }
+                        arg2 = message.Split(' ').Last().Trim();
+                        arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
+                        if (String.IsNullOrEmpty(arg1))
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, cmdMoney + "/ " + cmdMoney2 + " [Player] [Amount]");
+                            return true;
+                        }
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, cmdMoney + "/ " + cmdMoney2 + " [Player] [Amount]");
+                        return true;
+                    }
+                    if (!(String.IsNullOrEmpty(arg2)))
+                    {
+                        int arg2int;
+                        bool isNumeric = int.TryParse(arg2, out arg2int);
+
+                        if (isNumeric)
+                        {
+                            bool found = false;
+                            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                            {
+                                if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                                {
+                                    if (shPlayer.IsRealPlayer())
+                                    {
+                                        shPlayer.playerInventory.TransferMoney(1, arg2int, true);
+                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully gave " + shPlayer.svPlayer.playerData.username + " " + arg2int + "$");
+                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
+                                        found = true;
+                                    }
+                                }
+                            }
+                            if (!(found))
+                            {
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
+                            }
+
+                        }
+                        else
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, cmdMoney + "/ " + cmdMoney2 + " [Player] [Amount] (incorrect argument!)");
+                        }
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, cmdMoney + "/ " + cmdMoney2 + " [Player] [Amount]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    player.SendToSelf(Channel.Unsequenced, (byte)10, msgNoPerm);
+                    return true;
+                }
+            }
+
             if (msgUnknownCommand)
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Unknown command");
@@ -919,21 +958,32 @@ public class EssentialsPlugin
                 return false;
             }
         }
-
-
-
-        //Checks if the message is a blocked one, if it is, block it.
-        if (ChatBlock || LanguageBlock)
+        else
         {
-            bool blocked = BlockMessage(message, player);
-            if (blocked)
+            if (MutePlayers.Contains(player.playerData.username))
             {
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
                 return true;
             }
-            else
+            // Check if message contains a player that is AFK
+            if (AfkPlayers.Any(message.Contains))
             {
-                return false;
+                player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+                return true;
             }
+            //Checks if the message is a blocked one, if it is, block it.
+            if (ChatBlock || LanguageBlock)
+            {
+                if (BlockMessage(message, player))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            
         }
         return false;
 
@@ -977,7 +1027,7 @@ public class EssentialsPlugin
     [Hook("SvPlayer.Damage")]
     public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
     {
-        if (CheckGodmode(player, amount) == false)
+        if (!(CheckGodmode(player, amount)))
         {
             return false;
         }
@@ -1020,6 +1070,21 @@ public class EssentialsPlugin
         return false;
     }
     #endregion
+    #region Event: SvBan
+    [Hook("SvPlayer.SvBan")]
+    public static void SvBan(SvPlayer player, ref int otherID)
+    {
+        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            if (shPlayer.ID == otherID)
+                if (shPlayer.IsRealPlayer())
+                {
+                    if (!shPlayer.svPlayer.IsServerside())
+                    {
+                        player.SendToAll(Channel.Unsequenced, (byte)10, shPlayer.svPlayer.playerData.username + " Just got banned by " + player.playerData.username);
+                    }
+                }
+    }
+    #endregion
     #region Methods
     private static void SavePeriodically()
     {
@@ -1029,7 +1094,7 @@ public class EssentialsPlugin
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer())
                 {
-                    if (shPlayer.GetSpaceIndex() >= 13)
+                    if (shPlayer.GetSpaceIndex() < 13)
                     {
                         shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
                         shPlayer.svPlayer.Save();
@@ -1044,7 +1109,7 @@ public class EssentialsPlugin
         foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
             if (shPlayer.IsRealPlayer())
             {
-                if (shPlayer.GetSpaceIndex() >= 13)
+                if (shPlayer.GetSpaceIndex() < 13)
                 {
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
                     shPlayer.svPlayer.Save();
@@ -1058,44 +1123,67 @@ public class EssentialsPlugin
         {
             bool found = false;
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.svPlayer.playerData.username == arg1)
+                if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                     if (shPlayer.IsRealPlayer())
                     {
                         shPlayer.svPlayer.Save();
-                        if (message.Contains("/tp")) // CHANGE THIS TO SOFTCODED ONE
+                        if (message.StartsWith("/tp")) // CHANGE THIS TO SOFTCODED ONE
                         {
-                            player.SvTeleport(shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Teleported to " + arg1 + ".");
+                            // TODO: 
+                            // - Rotation doesn't work all the time
+                            // - Doesn't always TP
+                            if (message.StartsWith("/tph") || message.StartsWith("/tphere")) // CHANGE THIS TO SOFTCODED ONE
+                            {
+                                player.Save();
+                                Debug.Log("1 " +shPlayer.svPlayer.playerData.rotation);
+                                Debug.Log("2 " + player.playerData.rotation);
+                                shPlayer.SetPosition(player.playerData.position);
+                                shPlayer.SetRotation(player.playerData.rotation);
+                                Debug.Log("3 " + shPlayer.svPlayer.playerData.rotation);
+                                Debug.Log("4 " + player.playerData.rotation);
+                              //  shPlayer.svPlayer.playerData.position = player.playerData.position;
+                               // shPlayer.svPlayer.playerData.rotation = player.playerData.rotation;
+                               // Debug.Log("5 " + shPlayer.svPlayer.playerData.rotation);
+                               // Debug.Log("6 " + player.playerData.rotation);
+                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " Teleported you to him.");
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Teleported " + shPlayer.svPlayer.playerData.username + " to you.");
+                            }
+                            else if (message.StartsWith("/tp")) // CHANGE THIS TO SOFTCODED ONE
+                            {
+                                player.SvTeleport(shPlayer.ID);
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Teleported to " + shPlayer.svPlayer.playerData.username + ".");
+                            }
                         }
                         else if (message.Contains("/ban")) // CHANGE THIS TO SOFTCODED ONE
                         {
                             player.SvBan(shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Banned " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Banned " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         else if (message.Contains("/kick")) // CHANGE THIS TO SOFTCODED ONE
                         {
                             player.SvKick(shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Kicked " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Kicked " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         else if (message.Contains("/arrest")) // CHANGE THIS TO SOFTCODED ONE
                         {
                             player.SvArrest(shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Arrested " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Arrested " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         else if (message.Contains("/restrain")) // CHANGE THIS TO SOFTCODED ONE
                         {
+                            player.SvArrest(shPlayer.ID);
                             player.SvRestrain(shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Restrained " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Restrained " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         else if (message.Contains("/kill")) // CHANGE THIS TO SOFTCODED ONE
                         {
                             shPlayer.svPlayer.SvSuicide();
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Killed " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Killed " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         else if (message.Contains("/free")) // CHANGE THIS TO SOFTCODED ONE
                         {
                             shPlayer.svPlayer.Unhandcuff();
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Freed " + arg1 + ".");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Freed " + shPlayer.svPlayer.playerData.username + ".");
                         }
                         found = true;
                     }
@@ -1135,7 +1223,7 @@ public class EssentialsPlugin
         SvPlayer player = (SvPlayer)oPlayer;
         foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
         {
-            if (shPlayer.svPlayer.playerData.username == arg1)
+            if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
             {
                 if (shPlayer.IsRealPlayer())
                 {
@@ -1246,16 +1334,16 @@ public class EssentialsPlugin
     {
         SvPlayer player = (SvPlayer)oPlayer;
         int found = 0;
-        //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
+      //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
         string content = String.Empty;
-
+        
         foreach (var line in File.ReadAllLines(IPListFile))
         {
             if (line.Contains(arg1) || line.Contains(arg1 + ":"))
             {
                 ++found;
-                // player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
-                content = line.Substring(arg1.Length + 1) + "\r\n" + content;
+               // player.SendToSelf(Channel.Unsequenced, (byte)10, line.Substring(arg1.Length + 1));
+                content = line.Substring(arg1.Length +1) + "\r\n" + content;
             }
         }
 
@@ -1302,10 +1390,28 @@ public class EssentialsPlugin
     {
         SvPlayer player = (SvPlayer)oPlayer;
         string muteuser = null;
+        bool found = false;
         if (message.StartsWith(cmdMute))
             muteuser = message.Substring(cmdMute.Count() + 1);
         else if (message.StartsWith(cmdUnMute))
             muteuser = message.Substring(cmdUnMute.Count() + 1);
+
+        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+        {
+            if (shPlayer.svPlayer.playerData.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
+            {
+                if (shPlayer.IsRealPlayer())
+                {
+                    muteuser = shPlayer.svPlayer.playerData.username;
+                    found = true;
+                }
+            }
+        }
+        if (!found)
+        {
+            player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " is not found, this means that if it is a -");
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "ID it can't convert it to a username.");
+        }
         if (AdminsListPlayers.Contains(player.playerData.username))
         {
 
@@ -2125,7 +2231,72 @@ public class EssentialsPlugin
                             }
                         }
                     }
+                    else if (line.Contains("HelpCommand: "))
+                    {
+                        cmdHelp = line.Substring(13);
+                    }
+                    else if (line.StartsWith("SaveCommand: "))
+                    {
+                        cmdSave = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("FreeCommand: "))
+                    {
+                        cmdFree = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("KillCommand: "))
+                    {
+                        cmdKick = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("KickCommand: "))
+                    {
+                        cmdKick = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("LogsCommand: "))
+                    {
+                        cmdLogs = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("TpCommand: "))
+                    {
+                        cmdTp = cmdCommandCharacter + line.Substring(11);
+                    }
+                    else if (line.StartsWith("TpHereCommand: "))
+                    {
+                        cmdTpHere = cmdCommandCharacter + line.Substring(15);
+                    }
+                    else if (line.StartsWith("TpHereCommand2: "))
+                    {
+                        cmdTpHere2 = cmdCommandCharacter + line.Substring(16);
+                    }
+                    else if (line.StartsWith("SaveCommand: "))
+                    {
+                        cmdSave = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("PayCommand: "))
+                    {
+                        cmdPay = cmdCommandCharacter + line.Substring(12);
+                    }
+                    else if (line.StartsWith("PayCommand2: "))
+                    {
+                        cmdPay2 = cmdCommandCharacter + line.Substring(13);
+                    }
+                    else if (line.StartsWith("BanCommand: "))
+                    {
+                        cmdBan = cmdCommandCharacter + line.Substring(12);
+                    }
+                    else if (line.StartsWith("ConfirmCommand: "))
+                    {
+                        cmdConfirm = cmdCommandCharacter + line.Substring(16);
+                    }
+                    else if (line.StartsWith("ArrestCommand: "))
+                    {
+                        cmdArrest = cmdCommandCharacter + line.Substring(15);
+                    }
+                    else if (line.StartsWith("RestrainCommand: "))
+                    {
+                        cmdRestrain = cmdCommandCharacter + line.Substring(17);
+                    }
                 }
+
             }
 
         }
@@ -2172,9 +2343,36 @@ public class EssentialsPlugin
         };
         File.AppendAllLines(ExeptionFile, content);
         Debug.Log(ex);
-        Debug.Log("[WARNING]   Essentials - An exception occured, Check the Exceptions file for more info.");
-        Debug.Log("[WARNING]   Essentials - Or check the error above for more info,");
-        Debug.Log("[WARNING]   Essentials - And it would be highly if you would send the error to the developers of this plugin!");
+        Debug.Log("[ERROR]   Essentials - An exception occured, Check the Exceptions file for more info.");
+        Debug.Log("[ERROR]   Essentials - Or check the error above for more info,");
+        Debug.Log("[ERROR]   Essentials - And it would be highly if you would send the error to the developers of this plugin!");
+    }
+
+    // TODO ---------------------------------------------------------------------------------
+    public static string GetArgument(byte nr, string message)
+    {
+        switch (nr)
+        {
+            case 1:
+                string cmd = message.Substring(0, message.Split(' ')[0].Length);
+                string arg1 = message.Split(' ')[1];
+                Debug.Log("ArgNumber: " + nr);
+                Debug.Log("Message: " + message);
+                Debug.Log("Command: " + cmd);
+                Debug.Log("Arg1: " + arg1);
+                return arg1;
+            case 2:
+                string cmd = message.Substring(0, message.Split(' ')[0].Length);
+                string arg2 = message.Split(' ').Last().Trim(); // TODO
+                Debug.Log("ArgNumber: " + nr);
+                Debug.Log("Message: " + message);
+                Debug.Log("Command: " + cmd);
+                Debug.Log("Arg2: " + arg2);
+                return arg2;
+            case 3:
+                break;
+           
+        } return null;
     }
     #endregion
 }
