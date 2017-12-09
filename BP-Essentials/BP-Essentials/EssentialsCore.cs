@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfig;
-using static BP_Essentials.EssentialsCore;
-using static BP_Essentials.EssentialsChat;
-using static BP_Essentials.EssentialsCmd;
-using static BP_Essentials.EssentialsMethods;
+using static BP_Essentials.EssentialsConfigPlugin;
+using static BP_Essentials.EssentialsCorePlugin;
+using static BP_Essentials.EssentialsChatPlugin;
+using static BP_Essentials.EssentialsCmdPlugin;
+using static BP_Essentials.EssentialsMethodsPlugin;
 namespace BP_Essentials {
-    public static class EssentialsCore {
+    public static class EssentialsCorePlugin {
         
         //Initalization
         [Hook("SvNetMan.StartServerNetwork")]
@@ -21,10 +21,10 @@ namespace BP_Essentials {
             {
                 Reload(true);
 
-                if (EssentialsConfig.Version != LocalVersion)
+                if (EssentialsConfigPlugin.Version != LocalVersion)
                 {
                     Debug.Log("[ERROR] Essentials - Versions do not match!");
-                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsConfig.Version);
+                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsConfigPlugin.Version);
                     Debug.Log("[ERROR] Essentials - Settings file version" + LocalVersion);
                     Debug.Log("");
                     Debug.Log("");
