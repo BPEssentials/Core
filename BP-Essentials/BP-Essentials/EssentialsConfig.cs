@@ -4,14 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfig;
-using static BP_Essentials.EssentialsCore;
-using static BP_Essentials.EssentialsChat;
-using static BP_Essentials.EssentialsCmd;
-using static BP_Essentials.EssentialsMethods;
+using static BP_Essentials.EssentialsConfigPlugin;
+using static BP_Essentials.EssentialsCorePlugin;
+using static BP_Essentials.EssentialsChatPlugin;
+using static BP_Essentials.EssentialsCmdPlugin;
+using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials {
-    public class EssentialsConfig {
+    public static class EssentialsConfigPlugin {
         // Generic Constants
         public const string FileDirectory = "Essentials/";
         public const string LogDirectory = FileDirectory + "logs/";

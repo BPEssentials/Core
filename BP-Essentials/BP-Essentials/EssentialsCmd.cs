@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfig;
-using static BP_Essentials.EssentialsCore;
-using static BP_Essentials.EssentialsChat;
-using static BP_Essentials.EssentialsCmd;
-using static BP_Essentials.EssentialsMethods;
+using static BP_Essentials.EssentialsConfigPlugin;
+using static BP_Essentials.EssentialsCorePlugin;
+using static BP_Essentials.EssentialsChatPlugin;
+using static BP_Essentials.EssentialsCmdPlugin;
+using static BP_Essentials.EssentialsMethodsPlugin;
 namespace BP_Essentials {
-    public static class EssentialsCmd {
+    public static class EssentialsCmdPlugin {
         public static void Afk(string message, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
@@ -234,7 +234,7 @@ namespace BP_Essentials {
         {
             var player = (SvPlayer)oPlayer;
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea & BP");
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + EssentialsConfig.Version);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + EssentialsConfigPlugin.Version);
         }
         
         //Player Checking

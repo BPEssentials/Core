@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfig;
-using static BP_Essentials.EssentialsCore;
+using static BP_Essentials.EssentialsConfigPlugin;
+using static BP_Essentials.EssentialsCorePlugin;
 //using static BP_Essentials.EssentialsChat;
-using static BP_Essentials.EssentialsCmd;
+using static BP_Essentials.EssentialsCmdPlugin;
 using System.Text.RegularExpressions;
 namespace BP_Essentials {
-    public class EssentialsMethods {
+    public static class EssentialsMethodsPlugin {
         
         
         [Hook("SvPlayer.SvSellApartment")]
