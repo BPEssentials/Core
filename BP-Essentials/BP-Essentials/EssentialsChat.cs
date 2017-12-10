@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
-using static BP_Essentials.EssentialsCorePlugin;
-using static BP_Essentials.EssentialsChatPlugin;
 using static BP_Essentials.EssentialsCmdPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
-namespace BP_Essentials {
-    public static class EssentialsChatPlugin {
+namespace BP_Essentials
+{
+    public class EssentialsChatPlugin : EssentialsCorePlugin{
         #region Event: ChatMessage
         //Chat Events
         [Hook("SvPlayer.SvGlobalChatMessage")]
@@ -28,11 +25,24 @@ namespace BP_Essentials {
             }
             if (message.Trim().StartsWith(CmdCommandCharacter))
             {
+                // Command: Main/essentials
+                if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
+                {
+                    Essentials(message, player);
+                    return true;
+                }
+                // Command: Main/essentials
+                if (message.StartsWith("/debug") || message.StartsWith("/dbug"))
+                {
+                    DebugCommands(message, player);
+                    return true;
+                }
                 if (message.StartsWith("/arg")) // TODO
                 {
-                    try {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(1, message));
-                       // GetArgument(Convert.ToByte(GetArgument(1, message)), message);
+                    try
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(Convert.ToByte(GetArgument(1, true, false, message)), true, false, message));
+                        // GetArgument(Convert.ToByte(GetArgument(1, message)), message);
                     }
                     catch (Exception ex)
                     {
@@ -41,8 +51,122 @@ namespace BP_Essentials {
                             player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
                         }
                     }
-               
+
                     return true;
+                }
+                if (message.StartsWith("/a2")) // TODO
+                {
+                    try
+                    {
+                        string arg = GetArgument(Convert.ToByte(GetArgument(1, false, false, message)), false, false, message);
+                        Debug.Log("String: '" + arg + "'");
+                        if (arg != "")
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "'" + arg + "'");
+                        else
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: That argument seems empty.");
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is FormatException || ex is OverflowException)
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
+                        }
+                    }
+
+                    return true;
+                }
+                if (message.StartsWith("/a3")) // TODO
+                {
+                    try
+                    {
+                        string arg = GetArgument(1, false, false, message);
+                        Debug.Log("String: '" + arg + "'");
+                        if (arg != String.Empty)
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "'" + arg + "'");
+                        else
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: That argument seems empty.");
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is FormatException || ex is OverflowException)
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
+                        }
+                    }
+
+                    return true;
+                }
+                if (message.StartsWith("/a4")) // TODO
+                {
+                    try
+                    {
+                        string arg = GetArgument(2, false, true, message);
+                        Debug.Log("String: '" + arg + "'");
+                        if (arg != String.Empty)
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "'" + arg + "'");
+                        else
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: That argument seems empty.");
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is FormatException || ex is OverflowException)
+                        {
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
+                        }
+                        else
+                        {
+                            Debug.Log("Unknown error: " + ex);
+                        }
+                    }
+
+                    return true;
+                }
+                //if (message.StartsWith("/a5")) // TODO
+                //{
+                //    try
+                //    {
+                //        string arg = GetArgument(1, false, true, message).Trim();
+                //        Debug.Log("Argument1: '" + arg + "'");
+                //        if (arg != String.Empty)
+                //        {
+                //            Debug.Log("1  - T");
+                //            ShPlayer _ShPlayer = (ShPlayer)GetShPlayer(arg);
+                //            Debug.Log("2  - T");
+                //            player.SendToSelf(Channel.Unsequenced, (byte)10, "Argument 1: '" + arg + "'");
+                //            Debug.Log("3  - T");
+                //            player.SendToSelf(Channel.Unsequenced, (byte)10, "ID: '" + _ShPlayer + "'");
+                //            Debug.Log("4  - T");
+                //        }
+                //        else
+                //            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: That argument seems empty.");
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        if (ex is FormatException || ex is OverflowException)
+                //        {
+                //            player.SendToSelf(Channel.Unsequenced, (byte)10, "ERROR: " + ex.Message);
+                //        }
+                //        else
+                //        {
+                //            Debug.Log("Unknown error: " + ex);
+                //        }
+                //    }
+
+                //    return true;
+                //}
+                // Command: GodMode
+                if (message.StartsWith(CmdGodmode) || message.StartsWith(CmdGodmode2))
+                {
+                    if (AdminsListPlayers.Contains(player.playerData.username))
+                    {
+                        GodMode(message, player);
+                        return true;
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
+                        return true;
+                    }
                 }
                 if (message.StartsWith(CmdPay) || (message.StartsWith(CmdPay2)))
                 {
@@ -152,61 +276,6 @@ namespace BP_Essentials {
                     return true;
                 }
                 // TODO ------------------------------------------------------------------------------------------
-                if (message.StartsWith("/location") || (message.StartsWith("/loc")))
-                {
-                    if (message.StartsWith("/location") || (message.StartsWith("/loc")))
-                    {
-                        if (AdminsListPlayers.Contains(player.playerData.username))
-                        {
-                            player.Save();
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + player.playerData.position);
-                        }
-                        else
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-                        return true;
-                    }
-                }
-                if (message.StartsWith("/getplayerhash") || (message.StartsWith("/gethash")))
-                {
-                    if (AdminsListPlayers.Contains(player.playerData.username))
-                    {
-                        var TempMSG = message.Trim();
-                        if (TempMSG != "/getplayerhash" || TempMSG != "/gethash")
-                        {
-                            var arg1 = player.playerData.username;
-                            if (TempMSG.StartsWith("/gethash"))
-                                arg1 = TempMSG.Substring(8 + 1);
-                            if (TempMSG.StartsWith("/getplayerhash"))
-                                arg1 = TempMSG.Substring(14 + 1);
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "StringToHash: " + Animator.StringToHash(arg1).ToString());
-                        }
-                        else
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
-                    }
-                    else
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-                    return true;
-                }
-                // Command: SpaceIndex
-                if (message.StartsWith("/spaceindex"))
-                {
-                    if (AdminsListPlayers.Contains(player.playerData.username))
-                    {
-                        foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer == player)
-                                if (shPlayer.IsRealPlayer())
-                                {
-                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "SpaceIndex: " + shPlayer.GetSpaceIndex());
-                                }
-                        return true;
-
-                    }
-                    else
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-                        return true;
-                    }
-                }
                 // TODO ------------------------------------------------------------------------------------------
                 // Command: Save
                 if (message.StartsWith(CmdSave))
@@ -223,8 +292,8 @@ namespace BP_Essentials {
                 // Tp
                 if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= CmdTpHere || tempMsg!= CmdTpHere2)
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdTpHere || tempMsg != CmdTpHere2)
                     {
                         var arg1 = String.Empty;
                         if (tempMsg.StartsWith(CmdTpHere + " "))
@@ -241,12 +310,12 @@ namespace BP_Essentials {
                         player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
                     return true;
                 }
-                else if (message.StartsWith("/tp"))
+                else if (message.StartsWith(CmdTp))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/tp")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdTp)
                     {
-                        var arg1 = tempMsg.Substring(3 + 1);
+                        var arg1 = tempMsg.Substring(CmdTp.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -254,12 +323,12 @@ namespace BP_Essentials {
                     return true;
                 }
                 // Ban
-                if (message.StartsWith("/ban"))
+                if (message.StartsWith(CmdBan))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/ban")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdBan)
                     {
-                        var arg1 = tempMsg.Substring(4 + 1);
+                        var arg1 = tempMsg.Substring(CmdBan.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -268,12 +337,12 @@ namespace BP_Essentials {
                 }
 
                 // Kick
-                if (message.StartsWith("/kick"))
+                if (message.StartsWith(CmdKick))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/kick")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdKick)
                     {
-                        var arg1 = tempMsg.Substring(5 + 1);
+                        var arg1 = tempMsg.Substring(CmdKick.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -281,12 +350,12 @@ namespace BP_Essentials {
                     return true;
                 }
                 // Arrest
-                if (message.StartsWith("/arrest"))
+                if (message.StartsWith(CmdArrest))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/arrest")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdArrest)
                     {
-                        var arg1 = tempMsg.Substring(7 + 1);
+                        var arg1 = tempMsg.Substring(CmdArrest.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -295,12 +364,12 @@ namespace BP_Essentials {
                     return true;
                 }
                 // Restrain
-                if (message.StartsWith("/restrain"))
+                if (message.StartsWith(CmdRestrain))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/restrain")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdRestrain)
                     {
-                        var arg1 = tempMsg.Substring(9 + 1);
+                        var arg1 = tempMsg.Substring(CmdRestrain.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
 
                     }
@@ -310,12 +379,12 @@ namespace BP_Essentials {
                     return true;
                 }
                 // Kill
-                if (message.StartsWith("/kill"))
+                if (message.StartsWith(CmdKill))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/kill")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdKill)
                     {
-                        var arg1 = tempMsg.Substring(5 + 1);
+                        var arg1 = tempMsg.Substring(CmdKill.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -324,12 +393,12 @@ namespace BP_Essentials {
                     return true;
                 }
                 // Free
-                if (message.StartsWith("/free"))
+                if (message.StartsWith(CmdFree))
                 {
-                    var tempMsg= message.Trim();
-                    if (tempMsg!= "/free")
+                    var tempMsg = message.Trim();
+                    if (tempMsg != CmdFree)
                     {
-                        var arg1 = tempMsg.Substring(5 + 1);
+                        var arg1 = tempMsg.Substring(CmdFree.Length + 1);
                         ExecuteOnPlayer(player, message, arg1);
                     }
                     else
@@ -339,7 +408,7 @@ namespace BP_Essentials {
                 }
 
                 // Command: Confirm
-                if (message.ToLower().StartsWith("/confirm"))
+                if (message.ToLower().StartsWith(CmdConfirm))
                 {
                     player.Save();
                     if (player.playerData.ownedApartment)
@@ -356,7 +425,7 @@ namespace BP_Essentials {
                 }
 
                 // Command: Logs
-                if (message.StartsWith("/logs"))
+                if (message.StartsWith(CmdLogs))
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
@@ -406,7 +475,8 @@ namespace BP_Essentials {
                 if (message.StartsWith(CmdPlayers) || message.StartsWith(CmdPlayers2))
                 {
                     var realPlayers = GameObject.FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
-                    switch (realPlayers) {
+                    switch (realPlayers)
+                    {
                         case 1:
                             player.SendToSelf(Channel.Unsequenced, (byte)10, "There is " + realPlayers + " player online");
                             break;
@@ -505,30 +575,10 @@ namespace BP_Essentials {
                     }
 
                 }
-                // Command: GodMode
-                if (message.StartsWith(CmdGodmode) || message.StartsWith(CmdGodmode2))
-                {
-                    if (AdminsListPlayers.Contains(player.playerData.username))
-                    {
-                        GodMode(message, player);
-                        return true;
-                    }
-                    else
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-                        return true;
-                    }
-                }
                 // Command: AFK
                 if (message.StartsWith(CmdAfk) || message.StartsWith(CmdAfk2))
                 {
                     Afk(message, player);
-                    return true;
-                }
-                // Command: Main/essentials
-                if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
-                {
-                    Essentials(message, player);
                     return true;
                 }
                 // Command: Rules
@@ -542,8 +592,8 @@ namespace BP_Essentials {
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        var tempMsg= message.Trim();
-                        if (tempMsg!= CmdCheckIp)
+                        var tempMsg = message.Trim();
+                        if (tempMsg != CmdCheckIp)
                         {
                             var arg1 = tempMsg.Substring(CmdCheckIp.Count() + 1);
                             CheckIp(tempMsg, player, arg1);
@@ -566,8 +616,8 @@ namespace BP_Essentials {
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        var tempMsg= message.Trim();
-                        if (tempMsg!= CmdCheckPlayer)
+                        var tempMsg = message.Trim();
+                        if (tempMsg != CmdCheckPlayer)
                         {
                             var arg1 = tempMsg.Substring(CmdCheckPlayer.Count() + 1);
                             CheckPlayer(tempMsg, player, arg1);
@@ -591,8 +641,8 @@ namespace BP_Essentials {
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        var tempMsg= message.Trim();
-                        if (!(tempMsg== CmdFakeJoin || tempMsg== CmdFakeLeave))
+                        var tempMsg = message.Trim();
+                        if (!(tempMsg == CmdFakeJoin || tempMsg == CmdFakeLeave))
                         {
                             string arg1 = null;
                             if (tempMsg.StartsWith(CmdFakeJoin))
@@ -626,12 +676,7 @@ namespace BP_Essentials {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord: " + MsgDiscord);
                     return true;
                 }
-                // Command: Help
-                if (message.StartsWith("/help"))
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Up to date help can be found at http://bit.do/BPEssentials");
-                    return true;
-                }
+
                 // CustomCommands
                 if (Commands.Any(message.Contains))
                 {
@@ -662,18 +707,18 @@ namespace BP_Essentials {
                                 arg1 = message.Substring(CmdInfo2.Length + 1).Trim();
                             }
 
-                            if (!(string.IsNullOrEmpty(arg1)))
+                            if (!(String.IsNullOrEmpty(arg1)))
                             {
                                 new Thread(delegate () { GetPlayerInfo(player, arg1); }).Start();
                             }
                             else
                             {
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, CmdInfo + " / " + CmdInfo2 +" [Username]");
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Username]");
                             }
                         }
                         catch (ArgumentOutOfRangeException)
                         {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, CmdInfo + " / " + CmdInfo2 + " [Username]");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Username]");
                         }
                         return true;
                     }
@@ -703,13 +748,13 @@ namespace BP_Essentials {
                             arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
                             if (string.IsNullOrEmpty(arg1))
                             {
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, CmdMoney + "/ " + CmdMoney2 + " [Player] [Amount]");
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Player] [Amount]");
                                 return true;
                             }
                         }
                         catch (ArgumentOutOfRangeException)
                         {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, CmdMoney + "/ " + CmdMoney2 + " [Player] [Amount]");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Player] [Amount]");
                             return true;
                         }
                         if (!(string.IsNullOrEmpty(arg2)))
@@ -741,12 +786,12 @@ namespace BP_Essentials {
                             }
                             else
                             {
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, CmdMoney + "/ " + CmdMoney2 + " [Player] [Amount] (incorrect argument!)");
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Player] [Amount] (incorrect argument!)");
                             }
                         }
                         else
                         {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, CmdMoney + "/ " + CmdMoney2 + " [Player] [Amount]");
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument(0, false, false, message) + " [Player] [Amount]");
                         }
                         return true;
                     }
@@ -784,9 +829,9 @@ namespace BP_Essentials {
                 if (!ChatBlock && !LanguageBlock) return false;
                 return BlockMessage(message, player);
             }
-            return false;
 
         }
+
         #endregion
     }
 }
