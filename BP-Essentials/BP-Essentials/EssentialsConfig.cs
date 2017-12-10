@@ -4,14 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfigPlugin;
-using static BP_Essentials.EssentialsCorePlugin;
-using static BP_Essentials.EssentialsChatPlugin;
-using static BP_Essentials.EssentialsCmdPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials {
-    public static class EssentialsConfigPlugin {
+    public class EssentialsConfigPlugin : EssentialsCorePlugin{
         // Generic Constants
         public const string FileDirectory = "Essentials/";
         public const string LogDirectory = FileDirectory + "logs/";
@@ -46,9 +41,9 @@ namespace BP_Essentials {
         public static bool Unmute;
         public static bool MessageToLower;
         public static bool EnableAtmCommand;
-        public static bool Confirmed = false;
-        public static bool? EnableBlockSpawnBot = null;
-        
+        public static bool Confirmed;
+        public static bool? EnableBlockSpawnBot;
+
         // Lists
 
         public static List<string> Commands = new List<string>();
@@ -59,7 +54,7 @@ namespace BP_Essentials {
         public static List<string> GodListPlayers = new List<string>();
         public static List<string> AfkPlayers = new List<string>();
         public static List<string> MutePlayers = new List<string>();
-        
+
         // Arrays
         public static string[] Announcements;
 
@@ -70,7 +65,7 @@ namespace BP_Essentials {
         public static string MsgNoPerm;
         public static string MsgDiscord;
         public const string DisabledCommand = "The server owner disabled this command.";
-        
+
         // Strings
         public static string Rules;
         public static string DisabledSpawnBots;
@@ -125,316 +120,309 @@ namespace BP_Essentials {
         public static string CmdTp;
 
         #endregion
-        
+
         // Ints
         public const int SaveTime = 60 * 5;
 
-        public static int AnnounceIndex = 0;
+        public static int AnnounceIndex;
         public static int TimeBetweenAnnounce;
         public static int[] BlockedSpawnIds;
-        
+
         // Misc.
         public static string TimestampFormat;
 
-        
-        
+
+
+
         public static void ReadFile(string fileName)
         {
-            if (fileName == SettingsFile)
+            switch (fileName)
             {
-                foreach (var line in File.ReadAllLines(SettingsFile)) //TODO: THIS METHOD IS A MESS, THERE IS PROBABLY A BETTER WAY.
-                {
-                    if (line.StartsWith("#"))
+                case SettingsFile:
+                    foreach (var line in File.ReadAllLines(SettingsFile)) //TODO: THIS METHOD IS A MESS, THERE IS PROBABLY A BETTER WAY.
                     {
-                        
-                    }
-                    else
-                    {
-                        if (line.Contains("version: "))
+                        if (line.StartsWith("#"))
                         {
-                            LocalVersion = line.Substring(9);
+
                         }
-                        else if (line.Contains("CommandCharacter: "))
+                        else
                         {
-                            CmdCommandCharacter = line.Substring(18);
-                        }
-                        else if (line.Contains("noperm: "))
-                        {
-                            MsgNoPerm = line.Substring(8);
-                        }
-                        else if (line.Contains("ClearChatCommand: "))
-                        {
-                            CmdClearChat = CmdCommandCharacter + line.Substring(18);
-                        }
-                        else if (line.Contains("ClearChatCommand2: "))
-                        {
-                            CmdClearChat2 = CmdCommandCharacter + line.Substring(19);
-                        }
-                        else if (line.Contains("SayCommand: "))
-                        {
-                            CmdSay = CmdCommandCharacter + line.Substring(12);
-                        }
-                        else if (line.Contains("SayCommand2:"))
-                        {
-                            CmdSay2 = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.Contains("msgSayPrefix: "))
-                        {
-                            MsgSayPrefix = line.Substring(14);
-                        }
-                        else if (line.StartsWith("GodmodeCommand: "))
-                        {
-                            CmdGodmode = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.StartsWith("GodmodeCommand2: "))
-                        {
-                            CmdGodmode2 = CmdCommandCharacter + line.Substring(17);
-                        }
-                        else if (line.StartsWith("MuteCommand: "))
-                        {
-                            CmdMute = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("UnMuteCommand: "))
-                        {
-                            CmdUnMute = CmdCommandCharacter + line.Substring(15);
-                        }
-                        else if (line.Contains("UnknownCommand: "))
-                        {
-                            MsgUnknownCommand = Convert.ToBoolean(line.Substring(16));
-                        }
-                        else if (line.Contains("enableChatBlock: "))
-                        {
-                            ChatBlock = Convert.ToBoolean(line.Substring(17));
-                        }
-                        else if (line.Contains("enableLanguageBlock: "))
-                        {
-                            LanguageBlock = Convert.ToBoolean(line.Substring(21));
-                        }
-                        else if (line.Contains("RulesCommand: "))
-                        {
-                            CmdRules = CmdCommandCharacter + line.Substring(14);
-                        }
-                        else if (line.Contains("ReloadCommand: "))
-                        {
-                            CmdReload = CmdCommandCharacter + line.Substring(15);
-                        }
-                        else if (line.Contains("ReloadCommand2: "))
-                        {
-                            CmdReload2 = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.Contains("TimeBetweenAnnounce: "))
-                        {
-                            TimeBetweenAnnounce = int.Parse(line.Substring(21));
-                        }
-                        else if (line.Contains("TimestapFormat: "))
-                        {
-                            TimestampFormat = line.Substring(16);
-                        }
-                        else if (line.Contains("AFKCommand: "))
-                        {
-                            CmdAfk = CmdCommandCharacter + line.Substring(12);
-                        }
-                        else if (line.Contains("AFKCommand2: "))
-                        {
-                            CmdAfk2 = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.Contains("CheckIPCommand: "))
-                        {
-                            CmdCheckIp = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.Contains("CheckPlayerCommand: "))
-                        {
-                            CmdCheckPlayer = CmdCommandCharacter + line.Substring(20);
-                        }
-                        else if (line.Contains("FakeJoinCommand: "))
-                        {
-                            CmdFakeJoin = CmdCommandCharacter + line.Substring(17);
-                        }
-                        else if (line.Contains("FakeLeaveCommand: "))
-                        {
-                            CmdFakeLeave = CmdCommandCharacter + line.Substring(18);
-                        }
-                        else if (line.Contains("CheckForAlts: "))
-                        {
-                            CheckAlt = Convert.ToBoolean(line.Substring(14));
-                        }
-                        else if (line.Contains("DiscordCommand: "))
-                        {
-                            CmdDiscord = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.Contains("PlayersOnlineCommand: "))
-                        {
-                            CmdPlayers = CmdCommandCharacter + line.Substring(22);
-                        }
-                        else if (line.Contains("PlayersOnlineCommand2: "))
-                        {
-                            CmdPlayers2 = CmdCommandCharacter + line.Substring(23);
-                        }
-                        else if (line.Contains("InfoPlayerCommand: "))
-                        {
-                            CmdInfo = CmdCommandCharacter + line.Substring(19);
-                        }
-                        else if (line.Contains("InfoPlayerCommand2: "))
-                        {
-                            CmdInfo2 = CmdCommandCharacter + line.Substring(20);
-                        }
-                        else if (line.Contains("MoneyCommand: "))
-                        {
-                            CmdMoney = CmdCommandCharacter + line.Substring(14);
-                        }
-                        else if (line.Contains("MoneyCommand2: "))
-                        {
-                            CmdMoney2 = CmdCommandCharacter + line.Substring(15);
-                        }
-                        else if (line.Contains("DiscordLink: "))
-                        {
-                            MsgDiscord = line.Substring(13);
-                        }
-                        else if (line.StartsWith("ATMCommand: "))
-                        {
-                            CmdAtm = CmdCommandCharacter + line.Substring(12);
-                        }
-                        else if (line.StartsWith("EnableATMCommand: "))
-                        {
-                            EnableAtmCommand = Convert.ToBoolean(line.Substring(18));
-                        }
-                        else if (line.StartsWith("EnableBlockSpawnBot: "))
-                        {
-                            EnableBlockSpawnBot = Convert.ToBoolean(line.Substring(21));
-                        }
-                        else if (line.StartsWith("BlockSpawnBot: "))
-                        {
-                            if (EnableBlockSpawnBot == null)
+                            if (line.Contains("version: "))
                             {
-                                foreach (var line2 in File.ReadAllLines(SettingsFile)) //TODO: Bad way of doing it, but it works i guess
+                                LocalVersion = line.Substring(9);
+                            }
+                            else if (line.Contains("CommandCharacter: "))
+                            {
+                                CmdCommandCharacter = line.Substring(18);
+                            }
+                            else if (line.Contains("noperm: "))
+                            {
+                                MsgNoPerm = line.Substring(8);
+                            }
+                            else if (line.Contains("ClearChatCommand: "))
+                            {
+                                CmdClearChat = CmdCommandCharacter + line.Substring(18);
+                            }
+                            else if (line.Contains("ClearChatCommand2: "))
+                            {
+                                CmdClearChat2 = CmdCommandCharacter + line.Substring(19);
+                            }
+                            else if (line.Contains("SayCommand: "))
+                            {
+                                CmdSay = CmdCommandCharacter + line.Substring(12);
+                            }
+                            else if (line.Contains("SayCommand2:"))
+                            {
+                                CmdSay2 = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.Contains("msgSayPrefix: "))
+                            {
+                                MsgSayPrefix = line.Substring(14);
+                            }
+                            else if (line.StartsWith("GodmodeCommand: "))
+                            {
+                                CmdGodmode = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.StartsWith("GodmodeCommand2: "))
+                            {
+                                CmdGodmode2 = CmdCommandCharacter + line.Substring(17);
+                            }
+                            else if (line.StartsWith("MuteCommand: "))
+                            {
+                                CmdMute = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("UnMuteCommand: "))
+                            {
+                                CmdUnMute = CmdCommandCharacter + line.Substring(15);
+                            }
+                            else if (line.Contains("UnknownCommand: "))
+                            {
+                                MsgUnknownCommand = Convert.ToBoolean(line.Substring(16));
+                            }
+                            else if (line.Contains("enableChatBlock: "))
+                            {
+                                ChatBlock = Convert.ToBoolean(line.Substring(17));
+                            }
+                            else if (line.Contains("enableLanguageBlock: "))
+                            {
+                                LanguageBlock = Convert.ToBoolean(line.Substring(21));
+                            }
+                            else if (line.Contains("RulesCommand: "))
+                            {
+                                CmdRules = CmdCommandCharacter + line.Substring(14);
+                            }
+                            else if (line.Contains("ReloadCommand: "))
+                            {
+                                CmdReload = CmdCommandCharacter + line.Substring(15);
+                            }
+                            else if (line.Contains("ReloadCommand2: "))
+                            {
+                                CmdReload2 = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.Contains("TimeBetweenAnnounce: "))
+                            {
+                                TimeBetweenAnnounce = Int32.Parse(line.Substring(21));
+                            }
+                            else if (line.Contains("TimestapFormat: "))
+                            {
+                                TimestampFormat = line.Substring(16);
+                            }
+                            else if (line.Contains("AFKCommand: "))
+                            {
+                                CmdAfk = CmdCommandCharacter + line.Substring(12);
+                            }
+                            else if (line.Contains("AFKCommand2: "))
+                            {
+                                CmdAfk2 = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.Contains("CheckIPCommand: "))
+                            {
+                                CmdCheckIp = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.Contains("CheckPlayerCommand: "))
+                            {
+                                CmdCheckPlayer = CmdCommandCharacter + line.Substring(20);
+                            }
+                            else if (line.Contains("FakeJoinCommand: "))
+                            {
+                                CmdFakeJoin = CmdCommandCharacter + line.Substring(17);
+                            }
+                            else if (line.Contains("FakeLeaveCommand: "))
+                            {
+                                CmdFakeLeave = CmdCommandCharacter + line.Substring(18);
+                            }
+                            else if (line.Contains("CheckForAlts: "))
+                            {
+                                CheckAlt = Convert.ToBoolean(line.Substring(14));
+                            }
+                            else if (line.Contains("DiscordCommand: "))
+                            {
+                                CmdDiscord = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.Contains("PlayersOnlineCommand: "))
+                            {
+                                CmdPlayers = CmdCommandCharacter + line.Substring(22);
+                            }
+                            else if (line.Contains("PlayersOnlineCommand2: "))
+                            {
+                                CmdPlayers2 = CmdCommandCharacter + line.Substring(23);
+                            }
+                            else if (line.Contains("InfoPlayerCommand: "))
+                            {
+                                CmdInfo = CmdCommandCharacter + line.Substring(19);
+                            }
+                            else if (line.Contains("InfoPlayerCommand2: "))
+                            {
+                                CmdInfo2 = CmdCommandCharacter + line.Substring(20);
+                            }
+                            else if (line.Contains("MoneyCommand: "))
+                            {
+                                CmdMoney = CmdCommandCharacter + line.Substring(14);
+                            }
+                            else if (line.Contains("MoneyCommand2: "))
+                            {
+                                CmdMoney2 = CmdCommandCharacter + line.Substring(15);
+                            }
+                            else if (line.Contains("DiscordLink: "))
+                            {
+                                MsgDiscord = line.Substring(13);
+                            }
+                            else if (line.StartsWith("ATMCommand: "))
+                            {
+                                CmdAtm = CmdCommandCharacter + line.Substring(12);
+                            }
+                            else if (line.StartsWith("EnableATMCommand: "))
+                            {
+                                EnableAtmCommand = Convert.ToBoolean(line.Substring(18));
+                            }
+                            else if (line.StartsWith("EnableBlockSpawnBot: "))
+                            {
+                                EnableBlockSpawnBot = Convert.ToBoolean(line.Substring(21));
+                            }
+                            else if (line.StartsWith("BlockSpawnBot: "))
+                            {
+                                if (EnableBlockSpawnBot == null)
                                 {
-                                    if (line2.StartsWith("#"))
-                                    { }
+                                    foreach (var line2 in File.ReadAllLines(SettingsFile)) //TODO: Bad way of doing it, but it works i guess
+                                    {
+                                        if (line2.StartsWith("#"))
+                                        { }
+                                        else
+                                        {
+                                            if (line2.StartsWith("EnableBlockSpawnBot: "))
+                                            {
+                                                EnableBlockSpawnBot = Convert.ToBoolean(line2.Substring(21));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (EnableBlockSpawnBot == true)
+                                {
+                                    DisabledSpawnBots = line.Substring(15);
+                                    DisabledSpawnBots = DisabledSpawnBots.Replace(" ", String.Empty);
+                                    if (DisabledSpawnBots.EndsWith(","))
+                                    {
+                                        EnableBlockSpawnBot = false;
+                                        Debug.Log("[ERROR] BlockSpawnBot Cannot end with a comma!");
+                                    }
                                     else
                                     {
-                                        if (line2.StartsWith("EnableBlockSpawnBot: "))
+                                        try
                                         {
-                                            EnableBlockSpawnBot = Convert.ToBoolean(line2.Substring(21));
-                                            break;
+                                            BlockedSpawnIds = DisabledSpawnBots.Split(',').Select(int.Parse).ToArray();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            EnableBlockSpawnBot = false;
+                                            ErrorLogging(ex);
                                         }
                                     }
                                 }
                             }
-                            if (EnableBlockSpawnBot == true)
+                            else if (line.Contains("HelpCommand: "))
                             {
-                                DisabledSpawnBots = line.Substring(15);
-                                DisabledSpawnBots = DisabledSpawnBots.Replace(" ", String.Empty);
-                                if (DisabledSpawnBots.EndsWith(","))
-                                {
-                                    EnableBlockSpawnBot = false;
-                                    Debug.Log("[ERROR] BlockSpawnBot Cannot end with a comma!");
-                                }
-                                else
-                                {
-                                    try
-                                    {
-                                        BlockedSpawnIds = DisabledSpawnBots.Split(',').Select(int.Parse).ToArray();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        EnableBlockSpawnBot = false;
-                                        ErrorLogging(ex);
-                                    }
-                                }
+                                CmdHelp = line.Substring(13);
+                            }
+                            else if (line.StartsWith("SaveCommand: "))
+                            {
+                                CmdSave = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("FreeCommand: "))
+                            {
+                                CmdFree = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("KillCommand: "))
+                            {
+                                CmdKill = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("KickCommand: "))
+                            {
+                                CmdKick = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("LogsCommand: "))
+                            {
+                                CmdLogs = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("TpCommand: "))
+                            {
+                                CmdTp = CmdCommandCharacter + line.Substring(11);
+                            }
+                            else if (line.StartsWith("TpHereCommand: "))
+                            {
+                                CmdTpHere = CmdCommandCharacter + line.Substring(15);
+                            }
+                            else if (line.StartsWith("TpHereCommand2: "))
+                            {
+                                CmdTpHere2 = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.StartsWith("PayCommand: "))
+                            {
+                                CmdPay = CmdCommandCharacter + line.Substring(12);
+                            }
+                            else if (line.StartsWith("PayCommand2: "))
+                            {
+                                CmdPay2 = CmdCommandCharacter + line.Substring(13);
+                            }
+                            else if (line.StartsWith("BanCommand: "))
+                            {
+                                CmdBan = CmdCommandCharacter + line.Substring(12);
+                            }
+                            else if (line.StartsWith("ConfirmCommand: "))
+                            {
+                                CmdConfirm = CmdCommandCharacter + line.Substring(16);
+                            }
+                            else if (line.StartsWith("ArrestCommand: "))
+                            {
+                                CmdArrest = CmdCommandCharacter + line.Substring(15);
+                            }
+                            else if (line.StartsWith("RestrainCommand: "))
+                            {
+                                CmdRestrain = CmdCommandCharacter + line.Substring(17);
                             }
                         }
-                        else if (line.Contains("HelpCommand: "))
-                        {
-                            CmdHelp = line.Substring(13);
-                        }
-                        else if (line.StartsWith("SaveCommand: "))
-                        {
-                            CmdSave = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("FreeCommand: "))
-                        {
-                            CmdFree = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("KillCommand: "))
-                        {
-                            CmdKick = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("KickCommand: "))
-                        {
-                            CmdKick = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("LogsCommand: "))
-                        {
-                            CmdLogs = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("TpCommand: "))
-                        {
-                            CmdTp = CmdCommandCharacter + line.Substring(11);
-                        }
-                        else if (line.StartsWith("TpHereCommand: "))
-                        {
-                            CmdTpHere = CmdCommandCharacter + line.Substring(15);
-                        }
-                        else if (line.StartsWith("TpHereCommand2: "))
-                        {
-                            CmdTpHere2 = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.StartsWith("SaveCommand: "))
-                        {
-                            CmdSave = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("PayCommand: "))
-                        {
-                            CmdPay = CmdCommandCharacter + line.Substring(12);
-                        }
-                        else if (line.StartsWith("PayCommand2: "))
-                        {
-                            CmdPay2 = CmdCommandCharacter + line.Substring(13);
-                        }
-                        else if (line.StartsWith("BanCommand: "))
-                        {
-                            CmdBan = CmdCommandCharacter + line.Substring(12);
-                        }
-                        else if (line.StartsWith("ConfirmCommand: "))
-                        {
-                            CmdConfirm = CmdCommandCharacter + line.Substring(16);
-                        }
-                        else if (line.StartsWith("ArrestCommand: "))
-                        {
-                            CmdArrest = CmdCommandCharacter + line.Substring(15);
-                        }
-                        else if (line.StartsWith("RestrainCommand: "))
-                        {
-                            CmdRestrain = CmdCommandCharacter + line.Substring(17);
-                        }
+
                     }
 
-                }
-
+                    break;
+                case AnnouncementsFile:
+                    Announcements = File.ReadAllLines(fileName);
+                    break;
+                case RulesFile:
+                    Rules = File.ReadAllText(fileName);
+                    break;
+                case GodListFile:
+                    GodListPlayers = File.ReadAllLines(fileName).ToList();
+                    break;
+                case AfkListFile:
+                    AfkPlayers = File.ReadAllLines(fileName).ToList();
+                    break;
+                case MuteListFile:
+                    MutePlayers = File.ReadAllLines(fileName).ToList();
+                    break;
             }
-            else if (fileName == AnnouncementsFile)
-            {
-                Announcements = File.ReadAllLines(fileName);
-            }
-            else if (fileName == RulesFile)
-            {
-                Rules = File.ReadAllText(fileName);
-            }
-            else if (fileName == GodListFile)
-            {
-                GodListPlayers = File.ReadAllLines(fileName).ToList();
-            }
-            else if (fileName == AfkListFile)
-            {
-                AfkPlayers = File.ReadAllLines(fileName).ToList();
-            }
-            else if (fileName == MuteListFile)
-            {
-                MutePlayers = File.ReadAllLines(fileName).ToList();
-            }
-
         }
-        
+
         public static void ReadFileStream(string fileName, List<string> output)
         {
             foreach (var line in File.ReadAllLines(fileName))
@@ -449,7 +437,7 @@ namespace BP_Essentials {
                 }
             }
         }
-        
+
         public static void CheckFiles(string fileName)
         {
             if (fileName == "all")
@@ -597,33 +585,35 @@ namespace BP_Essentials {
                 }
             }
         }
-        
+
         public static void ReadCustomCommands()
         {
             string line;
-            var file = new StreamReader(CustomCommandsFile);
-            while ((line = file.ReadLine()) != null)
+            using (var file = new StreamReader(CustomCommandsFile))
             {
-                if (line.ToLower().StartsWith("#") || string.IsNullOrEmpty(line))
+                while ((line = file.ReadLine()) != null)
                 {
-                    continue;
-                }
-                else
-                {
-                    if (line.ToLower().StartsWith("command: "))
+                    if (line.ToLower().StartsWith("#") || string.IsNullOrEmpty(line))
                     {
-                        Commands.Add(CmdCommandCharacter + line.Substring(9));
-                        line = file.ReadLine();
-                        if (line.ToLower().StartsWith("response: "))
+                        continue;
+                    }
+                    else
+                    {
+                        if (line.ToLower().StartsWith("command: "))
                         {
-                            Responses.Add(line.Substring(10));
+                            Commands.Add(CmdCommandCharacter + line.Substring(9));
+                            line = file.ReadLine();
+                            if (line.ToLower().StartsWith("response: "))
+                            {
+                                Responses.Add(line.Substring(10));
+                            }
                         }
                     }
                 }
+                file.Close();
             }
-            file.Close();
         }
-        
-        
+
+
     }
 }

@@ -1,16 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
-using static BP_Essentials.EssentialsCorePlugin;
-using static BP_Essentials.EssentialsChatPlugin;
-using static BP_Essentials.EssentialsCmdPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
-namespace BP_Essentials {
-    public static class EssentialsCmdPlugin {
+namespace BP_Essentials
+{
+    public class EssentialsCmdPlugin : EssentialsCorePlugin{
+        public static void DebugCommands(string message, object oPlayer)
+        {
+            // TODO: Add Commands like
+            // - Ram usage and CPU usage on PC as well as date and other useful information about it
+            var player = (SvPlayer)oPlayer;
+            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+                if (shPlayer.svPlayer == player)
+                    if (shPlayer.IsRealPlayer())
+                    {
+                        string arg = GetArgument(1, false, false, message).Trim().ToLower();
+                        if (arg == "location" || arg == "getlocation")
+                            player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + shPlayer.GetPosition());
+                        else if (arg == "getplayerhash" || arg == "gethash")
+                        {
+                            string TempMSG = GetArgument(0, false, false, message).Trim().ToLower() + arg;
+                            string arg2 = TempMSG.Substring(TempMSG.Length + 1);
+                            if (!String.IsNullOrWhiteSpace(arg2))
+                            {
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Hash of " + arg2 + " :" + Animator.StringToHash(arg2).ToString());
+                            }
+                            else
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Invalid arguments. /debug get(player)hash [username]");
+                        }
+                        else if (arg == "spaceindex" || arg == "getspaceindex")
+                        {
+                            string TempMSG = GetArgument(0, false, false, message).Trim().ToLower() + arg;
+                            string arg2 = TempMSG.Substring(TempMSG.Length + 1);
+                            if (!String.IsNullOrWhiteSpace(arg2))
+                            {
+                                bool found = false;
+                                foreach (var shPlayer2 in GameObject.FindObjectsOfType<ShPlayer>())
+                                    if (shPlayer2.svPlayer.playerData.username == arg2 || shPlayer2.ID.ToString() == arg2)
+                                        if (shPlayer2.IsRealPlayer())
+                                        {
+                                            found = true;
+                                            player.SendToSelf(Channel.Unsequenced, (byte)10, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetSpaceIndex());
+                                        }
+                                if (!found)
+                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
+                            }
+                            else
+                                player.SendToSelf(Channel.Unsequenced, (byte)10, "Your SpaceIndex: " + shPlayer.GetSpaceIndex());
+                        }
+                    }
+        }
+
         public static void Afk(string message, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
@@ -28,10 +71,10 @@ namespace BP_Essentials {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
             }
         }
-        
-        
-       
-        
+
+
+
+
         public static void ClearChat(string message, object oPlayer, bool all)
         {
 
@@ -70,7 +113,7 @@ namespace BP_Essentials {
             }
 
         }
-        
+
         public static bool Mute(string message, object oPlayer, bool unmute)
         {
             var player = (SvPlayer)oPlayer;
@@ -133,7 +176,7 @@ namespace BP_Essentials {
             }
             return false;
         }
-        
+
         public static bool Say(string message, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
@@ -176,7 +219,7 @@ namespace BP_Essentials {
                 return true;
             }
         }
-        
+
         //GodMode
         public static bool GodMode(string message, object oPlayer)
         {
@@ -228,15 +271,15 @@ namespace BP_Essentials {
             }
             return false;
         }
-        
-        
+
+
         public static void Essentials(string message, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea & BP");
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + EssentialsConfigPlugin.Version);
         }
-        
+
         //Player Checking
         public static void CheckIp(string message, object oPlayer, string arg1)
         {
@@ -244,7 +287,7 @@ namespace BP_Essentials {
             var found = 0;
             //  player.SendToSelf(Channel.Unsequenced, (byte)10, "IP for player: " + arg1);
             var content = string.Empty;
-        
+
             foreach (var line in File.ReadAllLines(IpListFile))
             {
                 if (line.Contains(arg1) || line.Contains(arg1 + ":"))
@@ -311,7 +354,7 @@ namespace BP_Essentials {
             }
         }
 
-        
+
         public static string GetPlaceHolders(int i, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
@@ -368,12 +411,12 @@ namespace BP_Essentials {
             }
             return placeHolderText;
         }
-        
+
         public static bool BlockMessage(string message, object oPlayer)
         {
             message = message.ToLower();
             var player = (SvPlayer)oPlayer;
-            if (ChatBlock == true)
+            if (ChatBlock)
             {
                 if (ChatBlockWords.Contains(message))
                 {
@@ -382,7 +425,7 @@ namespace BP_Essentials {
                     return true;
                 }
             }
-            if (LanguageBlock == true)
+            if (LanguageBlock)
             {
                 if (LanguageBlockWords.Contains(message))
                 {

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
-using static BP_Essentials.EssentialsCorePlugin;
-using static BP_Essentials.EssentialsChatPlugin;
-using static BP_Essentials.EssentialsCmdPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
-namespace BP_Essentials {
-    public static class EssentialsCorePlugin {
-        
-        //Initalization
+namespace BP_Essentials
+{
+    public class EssentialsCorePlugin {
+
+        //Initialization
         [Hook("SvNetMan.StartServerNetwork")]
         public static void StartServerNetwork(SvNetMan netMan)
         {
@@ -50,12 +46,12 @@ namespace BP_Essentials {
                 Debug.Log("    ");
                 Debug.Log("[ERROR]   Essentials - A file cannot be loaded in!");
                 Debug.Log("[ERROR]   Essentials - Please check the error below for more info,");
-                Debug.Log("[ERROR]   Essentials - And it would be highly if you would send the error to the developers of this plugin!");
+                Debug.Log("[ERROR]   Essentials - And it would be highly appreciated if you would send the error to the developers of this plugin!");
                 Debug.Log("    ");
                 Debug.Log(ex);
                 Debug.Log(ex.ToString());
                 Debug.Log("-------------------------------------------------------------------------------");
-            
+
             }
 
             if (Announcements.Length != 0)
@@ -117,9 +113,9 @@ namespace BP_Essentials {
                 ReadFile(RulesFile);
             }
         }
-        
-        
-        
+
+
+
         //Saving
         public static void SavePeriodically()
         {
@@ -147,7 +143,7 @@ namespace BP_Essentials {
                     shPlayer.svPlayer.Save();
                 }
         }
-        
+
         //Logging
         public static void GetLogs(object oPlayer, string logFile)
         {
@@ -188,9 +184,9 @@ namespace BP_Essentials {
             Debug.Log(ex);
             Debug.Log("[ERROR]   Essentials - An exception occured, Check the Exceptions file for more info.");
             Debug.Log("[ERROR]   Essentials - Or check the error above for more info,");
-            Debug.Log("[ERROR]   Essentials - And it would be highly if you would send the error to the developers of this plugin!");
+            Debug.Log("[ERROR]   Essentials - And it would be highly appreciated if you would send the error to the developers of this plugin!");
         }
-        
+
         //Files
         public static void RemoveStringFromFile(string FileName, string RemoveString)
         {
@@ -204,7 +200,7 @@ namespace BP_Essentials {
             }
             File.WriteAllText(FileName, content);
         }
-        
+
         //Timestamps
         public static string SetTimeStamp()
         {

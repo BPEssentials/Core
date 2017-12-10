@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
-using static BP_Essentials.EssentialsCorePlugin;
-//using static BP_Essentials.EssentialsChat;
 using static BP_Essentials.EssentialsCmdPlugin;
 using System.Text.RegularExpressions;
-namespace BP_Essentials {
-    public static class EssentialsMethodsPlugin {
-        
-        
+namespace BP_Essentials
+{
+    public class EssentialsMethodsPlugin : EssentialsCorePlugin{
+
+
         [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
@@ -29,7 +27,7 @@ namespace BP_Essentials {
             }
             return false;
         }
-        
+
         [Hook("SvPlayer.Initialize")]
         public static void Initialize(SvPlayer player)
         {
@@ -41,17 +39,17 @@ namespace BP_Essentials {
             var thread3 = new Thread(new ParameterizedThreadStart(CheckAltAcc));
             thread3.Start(player);
         }
-        
+
         [Hook("SvPlayer.Damage")]
         public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider) {
             return CheckGodmode(player, amount);
         }
-        
+
         [Hook("SvPlayer.SpawnBot")]
         public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref WaypointNode node, ref ShTransport vehicle, ref byte spawnJobIndex) {
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(spawnJobIndex);
         }
-        
+
         [Hook("ShRetainer.HitEffect")] // Blocks handcuff
         public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
@@ -64,7 +62,7 @@ namespace BP_Essentials {
                 }
             return false;
         }
-        
+
         [Hook("SvPlayer.SvBan")]
         public static void SvBan(SvPlayer player, ref int otherID)
         {
@@ -78,9 +76,9 @@ namespace BP_Essentials {
                         }
                     }
         }
-        
-        
-        
+
+
+
         public static void ExecuteOnPlayer(object oPlayer, string message, string arg1)
         {
             var player = (SvPlayer)oPlayer;
@@ -94,7 +92,7 @@ namespace BP_Essentials {
                             shPlayer.svPlayer.Save();
                             if (message.StartsWith("/tp")) // CHANGE THIS TO SOFTCODED ONE
                             {
-                                // TODO: 
+                                // TODO:
                                 // - Rotation doesn't work all the time
                                 // - Doesn't always TP
                                 if (message.StartsWith("/tph") || message.StartsWith("/tphere")) // CHANGE THIS TO SOFTCODED ONE
@@ -161,8 +159,8 @@ namespace BP_Essentials {
             {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
             }
-        } 
-        
+        }
+
         public static void MessageLog(string message, object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
@@ -181,7 +179,7 @@ namespace BP_Essentials {
                 File.AppendAllText(LogFile, mssge + Environment.NewLine);
             }
         }
-        
+
         private static void CheckBanned(object oPlayer)
         {
             Thread.Sleep(3000);
@@ -210,7 +208,7 @@ namespace BP_Essentials {
                 ErrorLogging(ex);
             }
         }
-        
+
         private static void WriteIpToFile(object oPlayer)
         {
             Thread.Sleep(500);
@@ -229,7 +227,7 @@ namespace BP_Essentials {
             }
 
         }
-        
+
         private static void CheckAltAcc(object oPlayer)
         {
             if (CheckAlt)
@@ -261,7 +259,7 @@ namespace BP_Essentials {
                 }
             }
         }
-        
+
         public static void AnnounceThread(object man)
         {
             var netMan = (SvNetMan)man;
@@ -279,14 +277,33 @@ namespace BP_Essentials {
                 Thread.Sleep(TimeBetweenAnnounce * 1000);
             }
         }
-        
-        public static string GetArgument(int nr, string message) {
-            var list = Regex.Matches(message, @"[\""].+?[\""]|[^ ]+")
-                .Cast<Match>()
-                .Select(m => m.Value)
-                .ToList();
 
-            return list[nr];
+        public static string GetArgument(int nr, bool UseRegex, bool IncludeSpaces, string message)
+        {
+            if (UseRegex)
+            {
+                var args = Regex.Matches(message, @"[\""].+?[\""]|[^ ]+")
+                    .Cast<Match>()
+                    .Select(m => m.Value)
+                    .ToList();
+
+                return args[nr];
+            }
+            else
+            {
+                if (IncludeSpaces)
+                {
+                    string tmessage = message + " ";
+                    string[] args = tmessage.Split(' ');
+                    return tmessage.Substring(tmessage.IndexOf(args[nr]));
+                }
+                else
+                {
+                    string tmessage = message + " ";
+                    string[] args = tmessage.Split(' ');
+                    return args[nr];
+                }
+            }
         }
     }
 }
