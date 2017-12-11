@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Commands\Afk.cs" />
     <Compile Include="Commands\ClearChat.cs" />
+    <Compile Include="Commands\ExecuteOnPlayer.cs" />
     <Compile Include="Commands\Pay.cs" />
     <Compile Include="Commands\DebugCommands.cs" />
     <Compile Include="Commands\Essentials.cs" />

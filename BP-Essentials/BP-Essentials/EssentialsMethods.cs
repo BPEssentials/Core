@@ -96,7 +96,7 @@ namespace BP_Essentials
                                 // TODO:
                                 // - Rotation doesn't work all the time
                                 // - Doesn't always TP
-                                if (message.StartsWith("/tph") || message.StartsWith("/tphere")) // CHANGE THIS TO SOFTCODED ONE
+                                if (message.StartsWith(CmdTpHere) || message.StartsWith("/tphere")) // CHANGE THIS TO SOFTCODED ONE
                                 {
                                     player.Save();
                                     Debug.Log("1 " +shPlayer.svPlayer.playerData.rotation);
