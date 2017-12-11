@@ -478,7 +478,7 @@ namespace BP_Essentials {
                     {
                         if (line.ToLower().StartsWith("command: "))
                         {
-                            EssentialsVariablesPlugin.Commands.Add(CmdCommandCharacter + line.Substring(9));
+                            EssentialsVariablesPlugin.CustomCommands.Add(CmdCommandCharacter + line.Substring(9));
                             line = file.ReadLine();
                             if (line.ToLower().StartsWith("response: "))
                             {
