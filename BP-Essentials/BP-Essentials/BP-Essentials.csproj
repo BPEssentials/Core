@@ -35,11 +35,13 @@
     <CodeAnalysisRuleSet>BP-Essentials.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\ClearChat.cs" />
     <Compile Include="EssentialsChat.cs" />
     <Compile Include="EssentialsCmd.cs" />
     <Compile Include="EssentialsConfig.cs" />
     <Compile Include="EssentialsCore.cs" />
     <Compile Include="EssentialsMethods.cs" />
+    <Compile Include="EssentialsVariables.cs" />
     <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>

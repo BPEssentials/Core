@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
 using static BP_Essentials.EssentialsCmdPlugin;
+using static BP_Essentials.EssentialsVariablesPlugin;
 using System.Text.RegularExpressions;
 namespace BP_Essentials
 {

@@ -4,6 +4,7 @@ using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
     public class EssentialsCorePlugin {
@@ -17,10 +18,10 @@ namespace BP_Essentials
             {
                 Reload(true);
 
-                if (EssentialsConfigPlugin.Version != LocalVersion)
+                if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
                     Debug.Log("[ERROR] Essentials - Versions do not match!");
-                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsConfigPlugin.Version);
+                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsVariablesPlugin.Version);
                     Debug.Log("[ERROR] Essentials - Settings file version" + LocalVersion);
                     Debug.Log("");
                     Debug.Log("");
