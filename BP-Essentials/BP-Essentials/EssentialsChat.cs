@@ -50,6 +50,7 @@ namespace BP_Essentials
             else if (message.StartsWith(CmdTp))
                 return Commands.Tp.Run(player, message);
             else if (message.StartsWith(CmdBan))
+                return Commands.Ban.Run(player, message);
                 
             return false;
         }
