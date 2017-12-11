@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands {
                 {
                     arg1 = tempMsg.Substring(CmdTpHere2.Length + 1);
                 }
-                ExecuteOnPlayer(player, message, arg1);
+                Commands.ExecuteOnPlayer.Run(player, message, arg1);
             }
             else
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
@@ -31,7 +31,7 @@ namespace BP_Essentials.Commands {
             if (tempMsg != CmdTp)
             {
                 var arg1 = tempMsg.Substring(CmdTp.Length + 1);
-                ExecuteOnPlayer(player, message, arg1);
+                Commands.ExecuteOnPlayer.Run(player, message, arg1);
             }
             else
                 player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");

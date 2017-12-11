@@ -46,9 +46,11 @@ namespace BP_Essentials
             else if (message.StartsWith(CmdSave))
                 return Commands.Save.Run(player, message);
             else if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
-                Commands.Tp.TpHere(player, message);
+                return Commands.Tp.TpHere(player, message);
             else if (message.StartsWith(CmdTp))
-                Commands.Tp.Run(player, message);
+                return Commands.Tp.Run(player, message);
+            else if (message.StartsWith(CmdBan))
+                
             return false;
         }
 
