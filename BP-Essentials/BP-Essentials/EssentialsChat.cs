@@ -36,6 +36,14 @@ namespace BP_Essentials
                 return Commands.Afk.Run(player, message);
             else if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
                 return Commands.Essentials.Run(player, message);
+            else if (message.StartsWith("/debug") || message.StartsWith("/dbug"))
+                return Commands.DebugCommands.Run(player, message);
+            else if (message.StartsWith(CmdGodmode) || message.StartsWith(CmdGodmode2))
+                return Commands.GodMode.Run(player, message);
+            else if (message.StartsWith(CmdPay) || message.StartsWith(CmdPay2))
+                return Commands.Pay.Run(player, message);
+            else if (message.StartsWith(CmdSave))
+                return Commands.Save.Run(player, message);
             return false;
         }
 
