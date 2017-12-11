@@ -42,6 +42,7 @@
     <Compile Include="Commands\Essentials.cs" />
     <Compile Include="Commands\GodMode.cs" />
     <Compile Include="Commands\Save.cs" />
+    <Compile Include="Commands\Tp.cs" />
     <Compile Include="EssentialsChat.cs" />
     <Compile Include="EssentialsCmd.cs" />
     <Compile Include="EssentialsConfig.cs" />

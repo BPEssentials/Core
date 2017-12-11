@@ -3,7 +3,7 @@ using static BP_Essentials.EssentialsVariablesPlugin;
 using System;
 using System.IO;
 namespace BP_Essentials.Commands {
-    public class GodMode : EssentialsCorePlugin{
+    public class GodMode : EssentialsChatPlugin{
         public static bool Run(object oPlayer, string mesage) {
             {
                 try

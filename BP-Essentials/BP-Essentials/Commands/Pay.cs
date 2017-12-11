@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 namespace BP_Essentials.Commands {
-    public class Pay : EssentialsCorePlugin {
+    public class Pay : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message) {
             string arg1 = null;
             string arg2 = null;

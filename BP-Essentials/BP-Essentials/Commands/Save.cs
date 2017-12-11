@@ -4,7 +4,7 @@ using System.Threading;
 using static BP_Essentials.EssentialsCorePlugin;
 
 namespace BP_Essentials.Commands {
-    public class Save : EssentialsCorePlugin {
+    public class Save : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message) {
             var player = (SvPlayer)oPlayer;
 

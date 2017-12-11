@@ -2,7 +2,7 @@
 using static BP_Essentials.EssentialsMethodsPlugin;
 using System;
 namespace BP_Essentials.Commands {
-    public class DebugCommands {
+    public class DebugCommands : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message)
         {
             // TODO: Add Commands like
