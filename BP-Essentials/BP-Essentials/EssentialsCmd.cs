@@ -60,44 +60,6 @@ namespace BP_Essentials
 
 
 
-        public static void ClearChat(string message, object oPlayer, bool all)
-        {
-
-            try
-            {
-                var player = (SvPlayer)oPlayer;
-                if (!all)
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Clearing the chat for yourself...");
-                    Thread.Sleep(500);
-                    for (var i = 0; i < 6; i++)
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, " ");
-                    }
-                }
-                else {
-                    if (AdminsListPlayers.Contains(player.playerData.username))
-                    {
-                        player.SendToAll(Channel.Unsequenced, (byte)10, "Clearing chat for everyone...");
-                        Thread.Sleep(500);
-                        for (var i = 0; i < 6; i++)
-                        {
-                            player.SendToAll(Channel.Unsequenced, (byte)10, " ");
-                        }
-                    }
-                    else
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging(ex);
-
-            }
-
-        }
 
         public static bool Mute(string message, object oPlayer, bool unmute)
         {

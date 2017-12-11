@@ -46,7 +46,7 @@ namespace BP_Essentials
 
         // Lists
 
-        public static List<string> Commands = new List<string>();
+        public static List<string> CustomCommands = new List<string>();
         public static List<string> Responses = new List<string>();
         public static List<string> ChatBlockWords = new List<string>();
         public static List<string> LanguageBlockWords = new List<string>();
