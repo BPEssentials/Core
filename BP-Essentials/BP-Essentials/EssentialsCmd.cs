@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsConfigPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
     public class EssentialsCmdPlugin : EssentialsCorePlugin{
@@ -277,7 +278,7 @@ namespace BP_Essentials
         {
             var player = (SvPlayer)oPlayer;
             player.SendToSelf(Channel.Unsequenced, (byte)10, "Essentials Created by UserR00T & DeathByKorea & BP");
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + EssentialsConfigPlugin.Version);
+            player.SendToSelf(Channel.Unsequenced, (byte)10, "Version " + EssentialsVariablesPlugin.Version);
         }
 
         //Player Checking
