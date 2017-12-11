@@ -35,7 +35,8 @@ namespace BP_Essentials.Commands {
                     }
                     if (!(String.IsNullOrEmpty(arg2)))
                     {
-                        var isNumeric = int.TryParse(arg2, out var arg2Int);
+                        int arg2Int;
+                        var isNumeric = int.TryParse(arg2, out arg2Int);
 
                         if (isNumeric)
                         {
