@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace BP_Essentials
                 return Commands.Afk.Run(player, message);
             else if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
                 return Commands.Essentials.Run(player, message);
-            else if (message.StartsWith("/debug") || message.StartsWith("/dbug"))
+            else if (message.StartsWith(CmdDbug))
                 return Commands.DebugCommands.Run(player, message);
             else if (message.StartsWith(CmdGodmode) || message.StartsWith(CmdGodmode2))
                 return Commands.GodMode.Run(player, message);
@@ -44,6 +45,10 @@ namespace BP_Essentials
                 return Commands.Pay.Run(player, message);
             else if (message.StartsWith(CmdSave))
                 return Commands.Save.Run(player, message);
+            else if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
+                Commands.Tp.TpHere(player, message);
+            else if (message.StartsWith(CmdTp))
+                Commands.Tp.Run(player, message);
             return false;
         }
 

@@ -3,7 +3,7 @@ using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsConfigPlugin;
 using System.IO;
 namespace BP_Essentials.Commands {
-    public class Afk : EssentialsCorePlugin {
+    public class Afk : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message) {
             
                 var player = (SvPlayer)oPlayer;
