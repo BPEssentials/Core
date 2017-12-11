@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\Afk.cs" />
+    <Compile Include="Commands\Ban.cs" />
     <Compile Include="Commands\ClearChat.cs" />
     <Compile Include="Commands\ExecuteOnPlayer.cs" />
     <Compile Include="Commands\Pay.cs" />
