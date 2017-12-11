@@ -5,7 +5,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    public class ClearChat : EssentialsChatPlugin
+    public  class ClearChat : EssentialsChatPlugin
     {
         public static bool Run(object oPlayer, string message)
         {

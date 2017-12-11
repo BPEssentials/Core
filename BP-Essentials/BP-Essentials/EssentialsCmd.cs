@@ -55,23 +55,7 @@ namespace BP_Essentials
                     }
         }
 
-        public static void Afk(string message, object oPlayer)
-        {
-            var player = (SvPlayer)oPlayer;
-            ReadFile(AfkListFile);
-            if (AfkPlayers.Contains(player.playerData.username))
-            {
-                RemoveStringFromFile(AfkListFile, player.playerData.username);
-                ReadFile(AfkListFile);
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
-            }
-            else
-            {
-                File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
-                AfkPlayers.Add(player.playerData.username);
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "You are now AFK");
-            }
-        }
+       
 
 
 
