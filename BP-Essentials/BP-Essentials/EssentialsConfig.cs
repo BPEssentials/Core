@@ -212,7 +212,7 @@ namespace BP_Essentials {
                                         catch (Exception ex)
                                         {
                                             EnableBlockSpawnBot = false;
-                                            ErrorLogging(ex);
+                                            ErrorLogging.Run(ex);
                                         }
                                     }
                                 }
@@ -404,25 +404,7 @@ namespace BP_Essentials {
                 if (!File.Exists(fileName))
                 {
 
-                    if (fileName == SettingsFile)
-                    {
-                        File.Create(fileName).Close();
-                        CreateFile(fileName);
-                        Debug.Log(fileName + " Does not exist! Creating one.");
-                    }
-                    if (fileName == ChatBlockFile)
-                    {
-                        File.Create(fileName).Close();
-                        CreateFile(fileName);
-                        Debug.Log(fileName + " Does not exist! Creating one.");
-                    }
-                    if (fileName == LanguageBlockFile)
-                    {
-                        File.Create(fileName).Close();
-                        CreateFile(fileName);
-                        Debug.Log(fileName + " Does not exist! Creating one.");
-                    }
-                    if (fileName == CustomCommandsFile)
+                    if (fileName == SettingsFile || fileName == ChatBlockFile || fileName == LanguageBlockFile || fileName == CustomCommandsFile)
                     {
                         File.Create(fileName).Close();
                         CreateFile(fileName);
@@ -437,7 +419,7 @@ namespace BP_Essentials {
             }
         }
 
-        private static void CreateFile(string fileName)
+        static void CreateFile(string fileName)
         {
             switch (fileName) {
                 case SettingsFile: {

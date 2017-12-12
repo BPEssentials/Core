@@ -24,6 +24,7 @@ namespace BP_Essentials
 
         public const string AdminListFile = "admin_list.txt";
         public const string RulesFile = "server_info.txt";
+        public const string BansFile = "ban_list.txt";
 
         public const string LogFile = LogDirectory + "all.txt";
         public const string ChatLogFile = LogDirectory + "chat.txt";
