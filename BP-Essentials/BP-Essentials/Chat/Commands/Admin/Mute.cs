@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
-using static BP_Essentials.EssentialsConfigPlugin;
 using System.IO;
 
 namespace BP_Essentials.Commands
@@ -32,7 +31,7 @@ namespace BP_Essentials.Commands
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "User or ID '" + muteuser + "' is not found.");
                     return true;
                 }
-                ReadFile(MuteListFile);
+                ReadFile.Run(MuteListFile);
                 if (!MutePlayers.Contains(muteuser))
                 {
                     MutePlayers.Add(muteuser);
@@ -42,8 +41,8 @@ namespace BP_Essentials.Commands
                 }
                 else
                 {
-                    RemoveStringFromFile(MuteListFile, muteuser);
-                    ReadFile(MuteListFile);
+                    RemoveStringFromFile.Run(MuteListFile, muteuser);
+                    ReadFile.Run(MuteListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
                 }
             }

@@ -15,7 +15,7 @@ namespace BP_Essentials
         {
             while (true)
             {
-                Debug.Log(SetTimeStamp() + "[INFO] Saving game..");
+                Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.IsRealPlayer())
                     {

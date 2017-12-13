@@ -16,14 +16,14 @@ namespace BP_Essentials
             var player = (SvPlayer)oPlayer;
             if (!message.StartsWith(CmdCommandCharacter))
             {
-                var mssge = SetTimeStamp() + "[MESSAGE] " + player.playerData.username + ": " + message;
+                var mssge = SetTimeStamp.Run() + "[MESSAGE] " + player.playerData.username + ": " + message;
                 Debug.Log(mssge);
                 File.AppendAllText(ChatLogFile, mssge + Environment.NewLine);
                 File.AppendAllText(LogFile, mssge + Environment.NewLine);
             }
             else if (message.StartsWith(CmdCommandCharacter))
             {
-                var mssge = (SetTimeStamp() + "[COMMAND] " + player.playerData.username + ": " + message);
+                var mssge = (SetTimeStamp.Run() + "[COMMAND] " + player.playerData.username + ": " + message);
                 Debug.Log(mssge);
                 File.AppendAllText(CommandLogFile, mssge + Environment.NewLine);
                 File.AppendAllText(LogFile, mssge + Environment.NewLine);

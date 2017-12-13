@@ -35,24 +35,48 @@
     <CodeAnalysisRuleSet>BP-Essentials.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\Afk.cs" />
-    <Compile Include="Commands\Ban.cs" />
-    <Compile Include="Commands\ClearChat.cs" />
-    <Compile Include="Commands\DebugCommands.cs" />
-    <Compile Include="Commands\Essentials.cs" />
-    <Compile Include="Commands\example.cs" />
-    <Compile Include="Commands\ExecuteOnPlayer.cs" />
-    <Compile Include="Commands\GodMode.cs" />
-    <Compile Include="Commands\Pay.cs" />
-    <Compile Include="Commands\Save.cs" />
-    <Compile Include="Commands\Tp.cs" />
+    <Compile Include="Chat\Commands\Admin\CheckIp.cs" />
+    <Compile Include="Chat\Commands\Admin\CheckPlayer.cs" />
+    <Compile Include="Chat\Commands\Admin\Info.cs" />
+    <Compile Include="Chat\Commands\Admin\Say.cs" />
+    <Compile Include="Chat\Commands\Everyone\Afk.cs" />
+    <Compile Include="Chat\Commands\Admin\Ban.cs" />
+    <Compile Include="Chat\Commands\Everyone\ClearChat.cs" />
+    <Compile Include="Chat\Commands\Admin\DebugCommands.cs" />
+    <Compile Include="Chat\Commands\Everyone\Essentials.cs" />
+    <Compile Include="Chat\Commands\Admin\ExecuteOnPlayer.cs" />
+    <Compile Include="Chat\Commands\Admin\GodMode.cs" />
+    <Compile Include="Chat\Commands\Admin\Mute.cs" />
+    <Compile Include="Chat\Commands\Everyone\Pay.cs" />
+    <Compile Include="Chat\Commands\Admin\Reload.cs" />
+    <Compile Include="Chat\Commands\Admin\Save.cs" />
+    <Compile Include="Chat\Commands\Admin\Tp.cs" />
+    <Compile Include="Chat\LangAndChatBlock.cs" />
     <Compile Include="EssentialsChat.cs" />
-    <Compile Include="EssentialsCmd.cs" />
-    <Compile Include="EssentialsConfig.cs" />
     <Compile Include="EssentialsCore.cs" />
     <Compile Include="EssentialsMethods.cs" />
     <Compile Include="EssentialsVariables.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Chat\Announce.cs" />
+    <Compile Include="Methods\Check\CheckAltAcc.cs" />
+    <Compile Include="Methods\Check\CheckBanned.cs" />
+    <Compile Include="Methods\FileHandler\CheckFiles.cs" />
+    <Compile Include="Methods\Check\CheckGodMode.cs" />
+    <Compile Include="Methods\FileHandler\CreateFile.cs" />
+    <Compile Include="Methods\misc\ErrorLogging.cs" />
+    <Compile Include="Methods\API\GetArgument.cs" />
+    <Compile Include="Chat\Commands\Admin\GetLogs.cs" />
+    <Compile Include="Methods\API\GetPlaceHolders.cs" />
+    <Compile Include="Methods\misc\LogMessage.cs" />
+    <Compile Include="Methods\FileHandler\ReadCustomCommands.cs" />
+    <Compile Include="Methods\FileHandler\ReadFile.cs" />
+    <Compile Include="Methods\FileHandler\ReadFileStream.cs" />
+    <Compile Include="Methods\misc\Reload.cs" />
+    <Compile Include="Methods\FileHandler\RemoveStringFromFile.cs" />
+    <Compile Include="Methods\misc\SaveNow.cs" />
+    <Compile Include="Methods\misc\SavePeriodically.cs" />
+    <Compile Include="Methods\misc\SetTimeStamp.cs" />
+    <Compile Include="Methods\FileHandler\WriteIpToFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -210,6 +234,7 @@
   <ItemGroup>
     <None Include="BP-Essentials.ruleset" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

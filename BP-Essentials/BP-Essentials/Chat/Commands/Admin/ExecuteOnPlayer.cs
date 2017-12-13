@@ -68,9 +68,7 @@ namespace BP_Essentials.Commands {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " Is not online.");
             }
             else
-            {
                 player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
-            }
             return true;
         }
 

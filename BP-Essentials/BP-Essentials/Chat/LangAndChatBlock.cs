@@ -19,7 +19,7 @@ namespace BP_Essentials.Chat
                 if (ChatBlockWords.Any(s => message.Contains(s)))
                 {
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "Please don't say a blacklisted word, the message has been blocked.");
-                    Debug.Log(SetTimeStamp() + "[INFO] "+ player.playerData.username + " Said a word that is blocked.");
+                    Debug.Log(SetTimeStamp.Run() + "[INFO] "+ player.playerData.username + " Said a word that is blocked.");
                     return true;
                 }
             }

@@ -4,7 +4,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfigPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
@@ -68,8 +67,16 @@ namespace BP_Essentials
                 return Commands.CheckPlayer.Run(player, message);
             else if (message.StartsWith(CmdLogs))
                 return Commands.GetLogs.Run(player, ChatLogFile);
-
-
+            else if (message.StartsWith(CmdPlayers) || message.StartsWith(CmdPlayers2))
+                return Commands.OnlinePlayers.Run(player);
+            else if (message.StartsWith(CmdRules))
+                return Commands.Rules.Run(player);
+            else if (message.StartsWith(CmdDiscord))
+                return Commands.Discord.Run(player);
+            else if (message.StartsWith(CmdFakeJoin))
+                return Commands.FakeJoin.Run(player, message);
+            else if (message.StartsWith(CmdFakeLeave))
+                return Commands.FakeLeave.Run(player, message);
             //Checks if the player is muted.
             if (MutePlayers.Contains(player.playerData.username))
             {

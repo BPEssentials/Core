@@ -20,7 +20,7 @@ namespace BP_Essentials
                 var player = (SvPlayer)oPlayer;
                 if (File.ReadAllText(BansFile).Contains(player.playerData.username))
                 {
-                    Debug.Log(SetTimeStamp() + "[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.netMan.GetAddress(player.connection));
+                    Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.netMan.GetAddress(player.connection));
                     foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     {
                         if (shPlayer.svPlayer == player)
