@@ -28,7 +28,7 @@ namespace BP_Essentials.Commands
             }
             catch (Exception ex)
             {
-                ErrorLogging(ex);
+                ErrorLogging.Run(ex);
             }
             return true;
         }

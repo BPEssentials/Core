@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsConfigPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials

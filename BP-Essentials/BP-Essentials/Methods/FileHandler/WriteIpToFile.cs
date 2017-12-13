@@ -16,7 +16,7 @@ namespace BP_Essentials
         {
             Thread.Sleep(500);
             var player = (SvPlayer)oPlayer;
-            Debug.Log(SetTimeStamp() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+            Debug.Log(SetTimeStamp.Run() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
             try
             {
                 if (!File.ReadAllText(IpListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
@@ -24,7 +24,7 @@ namespace BP_Essentials
             }
             catch (Exception ex)
             {
-                ErrorLogging(ex);
+                ErrorLogging.Run(ex);
             }
         }
     }

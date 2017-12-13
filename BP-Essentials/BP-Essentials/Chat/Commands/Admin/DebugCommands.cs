@@ -16,12 +16,12 @@ namespace BP_Essentials.Commands {
                     if (shPlayer.svPlayer == player)
                         if (shPlayer.IsRealPlayer())
                         {
-                            string arg = GetArgument(1, false, false, message).Trim().ToLower();
+                            string arg = GetArgument.Run(1, false, false, message).Trim().ToLower();
                             if (arg == "location" || arg == "getlocation")
                                 player.SendToSelf(Channel.Unsequenced, (byte)10, "Your location: " + shPlayer.GetPosition());
                             else if (arg == "getplayerhash" || arg == "gethash")
                             {
-                                string TempMSG = GetArgument(0, false, false, message).Trim().ToLower() + arg;
+                                string TempMSG = GetArgument.Run(0, false, false, message).Trim().ToLower() + arg;
                                 string arg2 = TempMSG.Substring(TempMSG.Length + 1);
                                 if (!String.IsNullOrWhiteSpace(arg2))
                                 {
@@ -32,7 +32,7 @@ namespace BP_Essentials.Commands {
                             }
                             else if (arg == "spaceindex" || arg == "getspaceindex")
                             {
-                                string TempMSG = GetArgument(0, false, false, message).Trim().ToLower() + arg;
+                                string TempMSG = GetArgument.Run(0, false, false, message).Trim().ToLower() + arg;
                                 string arg2 = TempMSG.Substring(TempMSG.Length + 1);
                                 if (!String.IsNullOrWhiteSpace(arg2))
                                 {

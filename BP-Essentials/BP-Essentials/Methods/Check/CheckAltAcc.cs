@@ -22,7 +22,7 @@ namespace BP_Essentials
                     var player = (SvPlayer)oPlayer;
                     if (File.ReadAllText(BansFile).Contains(player.netMan.GetAddress(player.connection)))
                     {
-                        Debug.Log(SetTimeStamp() + "[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.netMan.GetAddress(player.connection));
+                        Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.netMan.GetAddress(player.connection));
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                             if (shPlayer.svPlayer == player)
                                 if (shPlayer.IsRealPlayer())
@@ -35,7 +35,7 @@ namespace BP_Essentials
                 }
                 catch (Exception ex)
                 {
-                    ErrorLogging(ex);
+                    ErrorLogging.Run(ex);
                 }
             }
         }

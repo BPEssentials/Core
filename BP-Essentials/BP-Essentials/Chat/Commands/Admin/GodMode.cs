@@ -1,4 +1,4 @@
-﻿using static BP_Essentials.EssentialsConfigPlugin;
+﻿
 using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using System;
@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands {
                         var player = (SvPlayer)oPlayer;
                         if (AdminsListPlayers.Contains(player.playerData.username))
                         {
-                            ReadFile(GodListFile);
+                            ReadFile.Run(GodListFile);
                             string name = GetArgument.Run(1, false, true, message);
                             string msg = "Godmode {0} for '" + name + "'.";
                             if (name == String.Empty)
@@ -23,7 +23,7 @@ namespace BP_Essentials.Commands {
                             if (GodListPlayers.Contains(name))
                             {
                                 RemoveStringFromFile.Run(GodListFile, name);
-                                ReadFile(GodListFile);
+                                ReadFile.Run(GodListFile);
                                 player.SendToSelf(Channel.Unsequenced, (byte)10, String.Format(msg, "disabled"));
                             }
                             else

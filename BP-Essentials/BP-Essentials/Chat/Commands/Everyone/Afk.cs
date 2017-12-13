@@ -1,16 +1,15 @@
 ﻿using System;
 using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsConfigPlugin;
 using System.IO;
 namespace BP_Essentials.Commands {
     public class Afk : EssentialsChatPlugin {
         public static bool Run(object oPlayer) {
                 var player = (SvPlayer)oPlayer;
-                ReadFile(AfkListFile);
+                ReadFile.Run(AfkListFile);
                 if (AfkPlayers.Contains(player.playerData.username))
                 {
                     RemoveStringFromFile.Run(AfkListFile, player.playerData.username);
-                    ReadFile(AfkListFile);
+                    ReadFile.Run(AfkListFile);
                     player.SendToSelf(Channel.Unsequenced, (byte)10, "You are no longer AFK");
                 }
                 else

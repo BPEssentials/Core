@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
         {
             try
             {
-                var arg1 = GetArgument(1, false, true, message);
+                var arg1 = GetArgument.Run(1, false, true, message);
                 var player = (SvPlayer)oPlayer;
                 var found = 0;
                 if (!String.IsNullOrWhiteSpace(arg1))
@@ -37,7 +37,7 @@ namespace BP_Essentials.Commands
             }
             catch (Exception ex)
             {
-                ErrorLogging(ex);
+                ErrorLogging.Run(ex);
             }
             return true;
         }
