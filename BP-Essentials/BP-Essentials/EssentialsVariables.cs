@@ -59,7 +59,7 @@ namespace BP_Essentials
         // Arrays
         public static string[] Announcements;
 
-        public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue" };
+        public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor" };
 
         // Messages
         public static string MsgSayPrefix;
