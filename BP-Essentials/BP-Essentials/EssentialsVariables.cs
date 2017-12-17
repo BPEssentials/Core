@@ -19,7 +19,7 @@ namespace BP_Essentials
         public const string GodListFile = FileDirectory + "godlist.txt";
         public const string AfkListFile = FileDirectory + "afklist.txt";
         public const string MuteListFile = FileDirectory + "mutelist.txt";
-        public const string ExeptionFile = FileDirectory + "exceptions.txt";
+        public const string ExceptionFile = FileDirectory + "exceptions.txt";
         public const string CustomCommandsFile = FileDirectory + "CustomCommands.txt";
 
         public const string AdminListFile = "admin_list.txt";

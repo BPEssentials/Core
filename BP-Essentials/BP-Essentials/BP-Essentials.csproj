@@ -37,20 +37,25 @@
   <ItemGroup>
     <Compile Include="Chat\Commands\Admin\CheckIp.cs" />
     <Compile Include="Chat\Commands\Admin\CheckPlayer.cs" />
+    <Compile Include="Chat\Commands\Admin\FakeJoin.cs" />
+    <Compile Include="Chat\Commands\Admin\FakeLeave.cs" />
     <Compile Include="Chat\Commands\Admin\Info.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
     <Compile Include="Chat\Commands\Everyone\Afk.cs" />
     <Compile Include="Chat\Commands\Admin\Ban.cs" />
     <Compile Include="Chat\Commands\Everyone\ClearChat.cs" />
     <Compile Include="Chat\Commands\Admin\DebugCommands.cs" />
+    <Compile Include="Chat\Commands\Everyone\Discord.cs" />
     <Compile Include="Chat\Commands\Everyone\Essentials.cs" />
     <Compile Include="Chat\Commands\Admin\ExecuteOnPlayer.cs" />
     <Compile Include="Chat\Commands\Admin\GodMode.cs" />
     <Compile Include="Chat\Commands\Admin\Mute.cs" />
+    <Compile Include="Chat\Commands\Everyone\OnlinePlayers.cs" />
     <Compile Include="Chat\Commands\Everyone\Pay.cs" />
     <Compile Include="Chat\Commands\Admin\Reload.cs" />
     <Compile Include="Chat\Commands\Admin\Save.cs" />
     <Compile Include="Chat\Commands\Admin\Tp.cs" />
+    <Compile Include="Chat\Commands\Everyone\Rules.cs" />
     <Compile Include="Chat\LangAndChatBlock.cs" />
     <Compile Include="EssentialsChat.cs" />
     <Compile Include="EssentialsCore.cs" />
