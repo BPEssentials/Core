@@ -14,23 +14,23 @@ namespace BP_Essentials
     {
         public static void Run(Exception ex)
         {
-            if (!File.Exists(ExeptionFile))
+            if (!File.Exists(ExceptionFile))
             {
-                File.Create(ExeptionFile).Close();
+                File.Create(ExceptionFile).Close();
             }
             Thread.Sleep(20);
             string[] content =
             {
                 Environment.NewLine,
-                "Expection START ---------------- Date: " + DateTime.Now,
+                "Exception START ---------------- Date: " + DateTime.Now,
                 Environment.NewLine,
                 "Error Message: " + ex.Message,
                 "Stack Trace: " + ex.StackTrace,
                 "Full error: " + ex,
                 Environment.NewLine,
-                "Expection STOP ---------------- Date: " + DateTime.Now
+                "Exception STOP ---------------- Date: " + DateTime.Now
             };
-            File.AppendAllLines(ExeptionFile, content);
+            File.AppendAllLines(ExceptionFile, content);
             Debug.Log(ex);
             Debug.Log("[ERROR]   Essentials - An exception occured, Check the Exceptions file for more info.");
             Debug.Log("[ERROR]   Essentials - Or check the error above for more info,");
