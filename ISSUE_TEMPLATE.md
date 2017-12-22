@@ -1,4 +1,4 @@
-*Please make sure that the command/feature hasn't been suggested before.*
+Please make sure that the command/feature hasn't been suggested before.
 
 **Command/feature name:**  
 
