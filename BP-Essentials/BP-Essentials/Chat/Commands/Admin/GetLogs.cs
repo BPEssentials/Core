@@ -13,27 +13,34 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(object oPlayer, string logFile)
         {
-            var player = (SvPlayer)oPlayer;
-            if (AdminsListPlayers.Contains(player.playerData.username))
+            try
             {
-                if (logFile != ChatLogFile) return true;
-                string content = null;
-                using (var reader = new StreamReader(logFile))
+                var player = (SvPlayer)oPlayer;
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLogsExecutableBy == "admin" || CmdLogsExecutableBy == "everyone")
                 {
-                    for (var i = 0; i < 31; i++)
+                    if (logFile != ChatLogFile) return true;
+                    string content = null;
+                    using (var reader = new StreamReader(logFile))
                     {
-                        string line = null;
-                        if ((line = reader.ReadLine()) != null)
-                            content = content + "\r\n" + line;
-                        else
-                            break;
+                        for (var i = 0; i < 31; i++)
+                        {
+                            string line = null;
+                            if ((line = reader.ReadLine()) != null)
+                                content = content + "\r\n" + line;
+                            else
+                                break;
+                        }
                     }
+                    player.SendToSelf(Channel.Unsequenced, 10, "WARNING: This is a very unstable command and doesn't work all of the times.");
+                    player.SendToSelf(Channel.Reliable, 50, content);
                 }
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "WARNING: This is a very unstable command and doesn't work all of the times.");
-                player.SendToSelf(Channel.Reliable, (byte)50, content);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

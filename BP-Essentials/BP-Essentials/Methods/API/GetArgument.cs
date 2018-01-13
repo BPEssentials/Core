@@ -13,29 +13,37 @@ namespace BP_Essentials
     {
         public static string Run(int nr, bool UseRegex, bool IncludeSpaces, string message)
         {
-            if (UseRegex)
+            try
             {
-                var args = Regex.Matches(message, @"[\""].+?[\""]|[^ ]+")
-                    .Cast<Match>()
-                    .Select(m => m.Value)
-                    .ToList();
-
-                return args[nr];
-            }
-            else
-            {
-                if (IncludeSpaces)
+                if (UseRegex)
                 {
-                    string tmessage = message + " ";
-                    string[] args = tmessage.Split(' ');
-                    return tmessage.Substring(tmessage.IndexOf(args[nr]));
+                    var args = Regex.Matches(message, @"[\""].+?[\""]|[^ ]+")
+                        .Cast<Match>()
+                        .Select(m => m.Value)
+                        .ToList();
+
+                    return args[nr];
                 }
                 else
                 {
-                    string tmessage = message + " ";
-                    string[] args = tmessage.Split(' ');
-                    return args[nr];
+                    if (IncludeSpaces)
+                    {
+                        string tmessage = message + " ";
+                        string[] args = tmessage.Split(' ');
+                        return tmessage.IndexOf(args[nr]) != 0 ? tmessage.Substring(tmessage.IndexOf(args[nr])).TrimEnd() : "";
+                    }
+                    else
+                    {
+                        string tmessage = message + " ";
+                        string[] args = tmessage.Split(' ');
+                        return args[nr];
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+                return null;
             }
         }
     }

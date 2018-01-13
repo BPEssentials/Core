@@ -13,41 +13,48 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(object oPlayer, string message)
         {
-            var player = (SvPlayer)oPlayer;
-            if (AdminsListPlayers.Contains(player.playerData.username))
+            try
             {
-                string muteuser = null;
-                var found = false;
-                muteuser = GetArgument.Run(1, false, true, message);
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.svPlayer.playerData.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
-                        if (shPlayer.IsRealPlayer())
-                        {
-                            muteuser = shPlayer.svPlayer.playerData.username;
-                            found = true;
-                        }
-                if (!found)
+                var player = (SvPlayer)oPlayer;
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMuteExecutableBy == "admin" || CmdMuteExecutableBy == "everyone")
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "User or ID '" + muteuser + "' is not found.");
-                    return true;
-                }
-                ReadFile.Run(MuteListFile);
-                if (!MutePlayers.Contains(muteuser))
-                {
-                    MutePlayers.Add(muteuser);
-                    File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Muted");
+                    string muteuser = null;
+                    var found = false;
+                    muteuser = GetArgument.Run(1, false, true, message);
+                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                        if (shPlayer.svPlayer.playerData.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
+                            if (shPlayer.IsRealPlayer())
+                            {
+                                muteuser = shPlayer.svPlayer.playerData.username;
+                                found = true;
+                            }
+                    if (!found)
+                    {
+                        player.SendToSelf(Channel.Unsequenced, 10, "User or ID '" + muteuser + "' is not found.");
+                        return true;
+                    }
+                    ReadFile.Run(MuteListFile);
+                    if (!MutePlayers.Contains(muteuser))
+                    {
+                        MutePlayers.Add(muteuser);
+                        File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
+                        player.SendToSelf(Channel.Unsequenced, 10, muteuser + " Muted");
 
+                    }
+                    else
+                    {
+                        RemoveStringFromFile.Run(MuteListFile, muteuser);
+                        ReadFile.Run(MuteListFile);
+                        player.SendToSelf(Channel.Unsequenced, 10, muteuser + " Unmuted");
+                    }
                 }
                 else
-                {
-                    RemoveStringFromFile.Run(MuteListFile, muteuser);
-                    ReadFile.Run(MuteListFile);
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, muteuser + " Unmuted");
-                }
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

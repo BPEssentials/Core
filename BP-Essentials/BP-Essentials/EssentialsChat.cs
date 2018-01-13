@@ -8,12 +8,19 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
-    public class EssentialsChatPlugin : EssentialsCorePlugin{
+    public class EssentialsChatPlugin : SvPlayer{
         #region Event: ChatMessage
         //Chat Events
         [Hook("SvPlayer.SvGlobalChatMessage")]
         public static bool SvGlobalChatMessage(SvPlayer player, ref string message)
         {
+            // ------------------------------------------------------
+            //test command, remove when done
+            Commands.TestCommand.Run(player, message);
+            //test command, remove when done
+            // ------------------------------------------------------
+
+
             //Message Logging
             if (!(MutePlayers.Contains(player.playerData.username)))
                 LogMessage.Run(player, message);
@@ -28,69 +35,128 @@ namespace BP_Essentials
                 foreach (var command in CustomCommands)
                     if (message.StartsWith(command))
                         i = CustomCommands.IndexOf(command);
-                player.SendToSelf(Channel.Unsequenced, (byte)10, GetPlaceHolders.Run(i, player));
+                string[] lines = Responses[i].Split(new[] { Environment.NewLine },StringSplitOptions.None);
+                foreach (string line in lines)
+                    player.SendToSelf(Channel.Unsequenced, 10, GetPlaceHolders.Run(line, player));
                 return true;
             }
+
             else if (message.StartsWith(CmdClearChat) || message.StartsWith(CmdClearChat2))
-                return Commands.ClearChat.Run(player, message);
+                if (!CmdClearChatDisabled)
+                    return Commands.ClearChat.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdAfk) || message.StartsWith(CmdAfk2))
-                return Commands.Afk.Run(player);
+                if (!CmdAfkDisabled)
+                    return Commands.Afk.Run(player);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
                 return Commands.Essentials.Run(player, message);
-            else if (message.StartsWith(CmdDbug))
+            else if (message.StartsWith(CmdDebug) || (message.StartsWith(CmdDebug2)))
                 return Commands.DebugCommands.Run(player, message);
             else if (message.StartsWith(CmdGodmode) || message.StartsWith(CmdGodmode2))
-                return Commands.GodMode.Run(player, message);
+                if (!CmdGodmodeDisabled)
+                    return Commands.GodMode.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdPay) || message.StartsWith(CmdPay2))
-                return Commands.Pay.Run(player, message);
+                if (!CmdPayDisabled)
+                    return Commands.Pay.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdSave))
                 return Commands.Save.Run(player);
             else if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
-                return Commands.Tp.TpHere(player, message);
+                if (!CmdTpHereDisabled)
+                    return Commands.Tp.TpHere(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdTp))
                 return Commands.Tp.Run(player, message);
             else if (message.StartsWith(CmdBan))
                 return Commands.Ban.Run(player, message);
             else if (message.StartsWith(CmdReload) || message.StartsWith(CmdReload2))
                 return Commands.Reload.Run(player);
-            else if (message.StartsWith(CmdMute) || message.StartsWith(CmdUnMute))
-                return Commands.Mute.Run(player, message);
+            else if (message.StartsWith(CmdMute) || message.StartsWith(CmdMute2))
+                if (!CmdMuteDisabled)
+                    return Commands.Mute.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdSay) || message.StartsWith(CmdSay2))
-                return Commands.Say.Run(player, message);
+                if (!CmdSayDisabled)
+                    return Commands.Say.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             else if (message.StartsWith(CmdInfo) || message.StartsWith(CmdInfo2))
-                return Commands.Info.Run(player, message);
-            else if (message.StartsWith(CmdBan))
-                return Commands.Ban.Run(player, message);
-            else if (message.StartsWith(CmdCheckIp))
-                return Commands.CheckIp.Run(player, message);
-            else if (message.StartsWith(CmdCheckPlayer))
-                return Commands.CheckPlayer.Run(player, message);
+                if (CmdInfoDisabled)
+                    return Commands.Info.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+
             else if (message.StartsWith(CmdLogs))
                 return Commands.GetLogs.Run(player, ChatLogFile);
             else if (message.StartsWith(CmdPlayers) || message.StartsWith(CmdPlayers2))
-                return Commands.OnlinePlayers.Run(player);
-            else if (message.StartsWith(CmdRules))
-                return Commands.Rules.Run(player);
-            else if (message.StartsWith(CmdDiscord))
-                return Commands.Discord.Run(player);
-            else if (message.StartsWith(CmdFakeJoin))
-                return Commands.FakeJoin.Run(player, message);
-            else if (message.StartsWith(CmdFakeLeave))
-                return Commands.FakeLeave.Run(player, message);
+                if (!CmdPlayersDisabled)
+                    return Commands.OnlinePlayers.Run(player);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdRules) || message.StartsWith(CmdRules2))
+                    return Commands.Rules.Run(player);
+            else if (message.StartsWith(CmdGive) || (message.StartsWith(CmdGive2)))
+                if (!CmdGiveDisabled)
+                    return Commands.Give.Run(player, message );
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdFakeJoin) || (message.StartsWith(CmdFakeJoin2)))
+                if (!CmdFakeJoinDisabled)
+                    return Commands.FakeJoin.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdFakeLeave) || (message.StartsWith(CmdFakeLeave2)))
+                if (!CmdFakeLeaveDisabled)
+                    return Commands.FakeLeave.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdAtm) || (message.StartsWith(CmdAtm2)))
+                if (!CmdAtmDisabled)
+                    return Commands.Atm.Run(player);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdCheckAlts) || (message.StartsWith(CmdCheckAlts2)))
+                if (!CmdCheckAltsDisabled)
+                    return Commands.CheckAlts.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdHeal) || message.StartsWith(CmdHeal2))
+                return Commands.Heal.Run(player, message);
+            else if (message.StartsWith(CmdFeed) || message.StartsWith(CmdFeed2))
+                return Commands.Feed.Run(player, message);
+            else if (message.StartsWith(CmdLatestVoteResults) || message.StartsWith(CmdLatestVoteResults2))
+                if (!CmdLatestVoteResultsDisabled)
+                    return Commands.LatestVoteResults.Run(player);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
+            else if (message.StartsWith(CmdMoney) || message.StartsWith(CmdMoney2))
+                if (!CmdMoneyDisabled)
+                    return Commands.Money.Run(player, message);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
             //Checks if the player is muted.
             if (MutePlayers.Contains(player.playerData.username))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "You are muted.");
+                player.SendToSelf(Channel.Unsequenced, 10, SelfIsMuted);
                 return true;
             }
             //Checks if the message contains a username that is AFK.
             if (AfkPlayers.Any(message.Contains))
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "That player is AFK.");
+                player.SendToSelf(Channel.Unsequenced, 10, PlayerIsAFK);
                 return true;
             }
             // Checks if Chatblock AND LanguageBlock are disabled, if so, return false.
-            if (!ChatBlock && !LanguageBlock) return false;
+            if (!ChatBlock && !LanguageBlock)
+                return false;
             //Checks if the message is a blocked one, if it is, block it.
             return Chat.LangAndChatBlock.Run(player, message);
         }

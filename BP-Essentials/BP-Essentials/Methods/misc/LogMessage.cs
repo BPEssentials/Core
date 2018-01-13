@@ -6,6 +6,7 @@ using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using System.IO;
+using System.Threading;
 
 namespace BP_Essentials
 {
@@ -13,20 +14,50 @@ namespace BP_Essentials
     {
         public static void Run(object oPlayer, string message)
         {
-            var player = (SvPlayer)oPlayer;
-            if (!message.StartsWith(CmdCommandCharacter))
+            try
             {
-                var mssge = SetTimeStamp.Run() + "[MESSAGE] " + player.playerData.username + ": " + message;
-                Debug.Log(mssge);
-                File.AppendAllText(ChatLogFile, mssge + Environment.NewLine);
-                File.AppendAllText(LogFile, mssge + Environment.NewLine);
+                var player = (SvPlayer)oPlayer;
+                if (!message.StartsWith(CmdCommandCharacter))
+                {
+                    var mssge = SetTimeStamp.Run() + "[MESSAGE] " + player.playerData.username + ": " + message;
+                    Debug.Log(mssge);
+                    int tries = 0;
+                    while (tries < 2)
+                        try
+                        {
+                            File.AppendAllText(ChatLogFile, mssge + Environment.NewLine);
+                            File.AppendAllText(LogFile, mssge + Environment.NewLine);
+                            break;
+                        }
+                        catch (IOException)
+                        {
+                            Thread.Sleep(50);
+                            ++tries;
+                        }
+                }
+                else if (message.StartsWith(CmdCommandCharacter))
+                {
+                    var mssge = (SetTimeStamp.Run() + "[COMMAND] " + player.playerData.username + ": " + message);
+                    Debug.Log(mssge);
+                    int tries = 0;
+                    while (tries < 2)
+                        try
+                        {
+                            File.AppendAllText(CommandLogFile, mssge + Environment.NewLine);
+                            File.AppendAllText(LogFile, mssge + Environment.NewLine);
+                            break;
+                        }
+                        catch (IOException)
+                        {
+                            Thread.Sleep(50);
+                            ++tries;
+                        }
+
+                }
             }
-            else if (message.StartsWith(CmdCommandCharacter))
+            catch (Exception ex)
             {
-                var mssge = (SetTimeStamp.Run() + "[COMMAND] " + player.playerData.username + ": " + message);
-                Debug.Log(mssge);
-                File.AppendAllText(CommandLogFile, mssge + Environment.NewLine);
-                File.AppendAllText(LogFile, mssge + Environment.NewLine);
+                ErrorLogging.Run(ex);
             }
         }
     }

@@ -11,21 +11,45 @@ namespace BP_Essentials
     {
         public static void Run(bool silentExecution, object oPlayer = null)
         {
-            if (!silentExecution)
+            try
             {
-                var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username))
+                if (!silentExecution)
                 {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Checking if file's exist...");
+                    var player = (SvPlayer)oPlayer;
+                    if (AdminsListPlayers.Contains(player.playerData.username))
+                    {
+                        player.SendToSelf(Channel.Unsequenced, 10, "Checking if file's exist...");
+                        CheckFiles.Run("all");
+                        player.SendToSelf(Channel.Unsequenced, 10, "Reloading config files...");
+                        ReadFile.Run(SettingsFile);
+                        player.SendToSelf(Channel.Unsequenced, 10, "[OK] Config file reloaded");
+                        player.SendToSelf(Channel.Unsequenced, 10, "Reloading critical .txt files...");
+                        ReadCustomCommands.Run();
+                        ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
+                        ReadStream.Run(ChatBlockFile, ChatBlockWords);
+                        ReadStream.Run(AdminListFile, AdminsListPlayers);
+                        LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
+                        ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
+                        ReadFile.Run(AnnouncementsFile);
+                        ReadFile.Run(GodListFile);
+                        ReadFile.Run(MuteListFile);
+                        ReadFile.Run(AfkListFile);
+                        ReadFile.Run(RulesFile);
+                        player.SendToSelf(Channel.Unsequenced, 10, "[OK] Critical .txt files reloaded");
+                    }
+                    else
+                    {
+                        player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    }
+                }
+                else
+                {
                     CheckFiles.Run("all");
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading config files...");
                     ReadFile.Run(SettingsFile);
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Config file reloaded");
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Reloading critical .txt files...");
-                    ReadCustomCommands.Run();
                     ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
                     ReadStream.Run(ChatBlockFile, ChatBlockWords);
                     ReadStream.Run(AdminListFile, AdminsListPlayers);
+                    ReadCustomCommands.Run();
                     LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                     ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
                     ReadFile.Run(AnnouncementsFile);
@@ -33,28 +57,11 @@ namespace BP_Essentials
                     ReadFile.Run(MuteListFile);
                     ReadFile.Run(AfkListFile);
                     ReadFile.Run(RulesFile);
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "[OK] Critical .txt files reloaded");
-                }
-                else
-                {
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                CheckFiles.Run("all");
-                ReadFile.Run(SettingsFile);
-                ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
-                ReadStream.Run(ChatBlockFile, ChatBlockWords);
-                ReadStream.Run(AdminListFile, AdminsListPlayers);
-                ReadCustomCommands.Run();
-                LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-                ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
-                ReadFile.Run(AnnouncementsFile);
-                ReadFile.Run(GodListFile);
-                ReadFile.Run(MuteListFile);
-                ReadFile.Run(AfkListFile);
-                ReadFile.Run(RulesFile);
+                ErrorLogging.Run(ex);
             }
         }
     }

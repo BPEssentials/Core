@@ -6,36 +6,37 @@ using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace BP_Essentials
 {
+    public class CustomCommand
+    {
+        public string command { get; set; }
+        public string response { get; set; }
+    }
+
+    public class _RootObject
+    {
+        public List<CustomCommand> CustomCommands { get; set; }
+    }
     class ReadCustomCommands : EssentialsChatPlugin
     {
+
         public static void Run()
         {
-            string line;
-            using (var file = new StreamReader(CustomCommandsFile))
+            try
             {
-                while ((line = file.ReadLine()) != null)
+                _RootObject m = JsonConvert.DeserializeObject<_RootObject>(File.ReadAllText(CustomCommandsFile));
+                foreach (var command in m.CustomCommands)
                 {
-                    if (line.ToLower().StartsWith("#") || string.IsNullOrEmpty(line))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (line.ToLower().StartsWith("command: "))
-                        {
-                            EssentialsVariablesPlugin.CustomCommands.Add(CmdCommandCharacter + line.Substring(9));
-                            line = file.ReadLine();
-                            if (line.ToLower().StartsWith("response: "))
-                            {
-                                Responses.Add(line.Substring(10));
-                            }
-                        }
-                    }
+                    CustomCommands.Add(CmdCommandCharacter + command.command);
+                    Responses.Add(command.response);
                 }
-                file.Close();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
             }
         }
     }

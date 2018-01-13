@@ -13,15 +13,22 @@ namespace BP_Essentials
     {
         public static void Run(string FileName, string RemoveString)
         {
-            string content = null;
-            foreach (var line in File.ReadAllLines(FileName))
+            try
             {
-                if (!line.Contains(RemoveString))
+                string content = null;
+                foreach (var line in File.ReadAllLines(FileName))
                 {
-                    content = content + line + Environment.NewLine;
+                    if (!line.Contains(RemoveString))
+                    {
+                        content = content + line + Environment.NewLine;
+                    }
                 }
+                File.WriteAllText(FileName, content);
             }
-            File.WriteAllText(FileName, content);
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
         }
     }
 }
