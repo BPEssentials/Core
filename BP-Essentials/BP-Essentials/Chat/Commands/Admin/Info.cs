@@ -15,18 +15,18 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username))
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdInfoExecutableBy == "admin" || CmdInfoExecutableBy == "everyone")
                 {
                     var arg1 = GetArgument.Run(1, false, true, message);
                     var found = false;
                     if (!String.IsNullOrWhiteSpace(arg1))
                     {
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer.playerData.username == arg1 && shPlayer.ID.ToString() == arg1.ToString())
+                            if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
                                     shPlayer.svPlayer.Save();
-                                    player.SendToSelf(Channel.Unsequenced, (byte)10, "Info about:                                        " + shPlayer.svPlayer.playerData.username);
+                                    player.SendToSelf(Channel.Unsequenced, 10, "Info about: '" + shPlayer.svPlayer.playerData.username + "'.");
                                     string[] contentarray = {
                                     "Username:              " +  shPlayer.svPlayer.playerData.username,
                                     "",
@@ -42,18 +42,18 @@ namespace BP_Essentials.Commands
 
                                     var content = string.Join("\r\n", contentarray);
 
-                                    player.SendToSelf(Channel.Reliable, (byte)50, content);
+                                    player.SendToSelf(Channel.Reliable, 50, content);
 
                                     found = true;
                                 }
                         if (!(found))
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + " Not found/online.");
+                            player.SendToSelf(Channel.Unsequenced, 10, "'" + arg1 + "' Not found/online.");
                     }
                     else
-                        player.SendToSelf(Channel.Reliable, (byte)50, "A argument is required for this command.");
+                        player.SendToSelf(Channel.Reliable, 10, ArgRequired);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
             catch (Exception ex)
             {

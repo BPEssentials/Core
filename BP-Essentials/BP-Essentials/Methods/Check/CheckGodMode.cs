@@ -12,11 +12,19 @@ namespace BP_Essentials
     {
         public static bool Run(object oPlayer, float amount)
         {
-            var player = (SvPlayer)oPlayer;
-            if (GodListPlayers.Contains(player.playerData.username))
+            try
             {
-                player.SendToSelf(Channel.Unsequenced, (byte)10, amount + " DMG Blocked!");
-                return true;
+                var player = (SvPlayer)oPlayer;
+                if (GodListPlayers.Contains(player.playerData.username))
+                {
+                    if (ShowDMGMessage)
+                        player.SendToSelf(Channel.Unsequenced, 10, amount + " DMG Blocked!");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
             }
             return false;
         }

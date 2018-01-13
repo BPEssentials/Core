@@ -12,19 +12,32 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(object oPlayer)
         {
-            var player = (SvPlayer)oPlayer;
-            var realPlayers = UnityEngine.Object.FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
-            switch (realPlayers)
+            try
             {
-                case 1:
-                    player.SendToSelf(Channel.Unsequenced, (byte)10, "There is " + realPlayers + " player online");
-                    break;
-                default:
-                    if (realPlayers < 1)
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + realPlayers + " play- wait, how is that possible");
-                    else
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, "There are " + realPlayers + " player(s) online");
-                    break;
+
+                var player = (SvPlayer)oPlayer;
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdPlayersExecutableBy == "admin" || CmdPlayersExecutableBy == "everyone")
+                {
+                    var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
+                    switch (realPlayers)
+                    {
+                        case 1:
+                            player.SendToSelf(Channel.Unsequenced, 10, "There is " + realPlayers + " player online");
+                            break;
+                        default:
+                            if (realPlayers < 1)
+                                player.SendToSelf(Channel.Unsequenced, 10, "There are " + realPlayers + " play- wait, how is that possible");
+                            else
+                                player.SendToSelf(Channel.Unsequenced, 10, "There are " + realPlayers + " player(s) online");
+                            break;
+                    }
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
             }
             return true;
         }

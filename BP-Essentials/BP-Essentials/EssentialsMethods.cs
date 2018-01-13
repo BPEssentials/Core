@@ -9,7 +9,6 @@ namespace BP_Essentials
 {
     public class EssentialsMethodsPlugin : EssentialsCorePlugin{
 
-
         [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
@@ -21,7 +20,7 @@ namespace BP_Essentials
             else if (!(Confirmed))
             {
                 Confirmed = false;
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "Are you sure you want to sell your apartment? Type '/confirm' to confirm.");
+                player.SendToSelf(Channel.Unsequenced, 10, "Are you sure you want to sell your apartment? Type '" + CmdConfirm +"' to confirm.");
             }
             return false;
         }
@@ -51,11 +50,12 @@ namespace BP_Essentials
         [Hook("ShRetainer.HitEffect")] // Blocks handcuff
         public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
+
             foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer()) {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.svPlayer.playerData.username)) continue;
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Being handcuffed Blocked!");
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "Being handcuffed Blocked!");
                     return true;
                 }
             return false;
@@ -68,12 +68,40 @@ namespace BP_Essentials
                 if (shPlayer.ID == otherID)
                     if (shPlayer.IsRealPlayer())
                         if (!shPlayer.svPlayer.IsServerside())
-                            player.SendToAll(Channel.Unsequenced, (byte)10, shPlayer.svPlayer.playerData.username + " Just got banned by " + player.playerData.username);
+                            player.SendToAll(Channel.Unsequenced, 10, shPlayer.svPlayer.playerData.username + " Just got banned by " + player.playerData.username);
         }
 
+        [Hook("SvPlayer.SvStartVote", true)]
+        public static bool SvStartVote(SvPlayer player, ref byte voteIndex, ref int ID)
+        {
+            if (voteIndex == 1)
+                if (!VoteKickDisabled)
+                {
+                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                        if (shPlayer.ID == ID)
+                            foreach (var shIssuer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                                if (shIssuer.svPlayer == player)
+                                {
+                                    // if (/*player.netMan.vote == null *//*&& voteIndex < shIssuer.gameMan.votes.Length*/  !player.netMan.startedVote.Contains(shIssuer))
+                                    //{
+                                    player.SendToAll(Channel.Unsequenced, 10, player.playerData.username + " Has issued a vote kick against " + shPlayer.svPlayer.playerData.username);
+                                    LatestVotePeople.Clear();
+                                }
+                    //}
+                }
+                else
+                {
+                    player.SendToAll(Channel.Unsequenced, 10, "Vote kicking has been disabled on this server.");
+                    return true;
+                }
+            return false;
+        }
 
-
-
+        [Hook("SvPlayer.SvVoteYes", true)]
+        public static void SvVoteYes(SvPlayer player)
+        {
+            LatestVotePeople.Add(player.playerData.username);
+        }
 
 
     }

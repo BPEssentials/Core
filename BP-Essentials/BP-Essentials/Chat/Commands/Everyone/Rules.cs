@@ -12,9 +12,16 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(object oPlayer)
         {
-            var player = (SvPlayer)oPlayer;
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Work in progress.");
-            //  player.SendToSelf(Channel.Reliable, (byte)50, );
+            try
+            {
+                var player = (SvPlayer)oPlayer;
+                player.SendToSelf(Channel.Unsequenced, 10, "Work in progress.");
+                //  player.SendToSelf(Channel.Reliable, 50, );
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

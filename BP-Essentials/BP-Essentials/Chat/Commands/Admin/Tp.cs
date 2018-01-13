@@ -4,37 +4,38 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands {
     public class Tp : EssentialsChatPlugin{
-        public static bool TpHere(object oPlayer, string message) {
-            var player = (SvPlayer)oPlayer;
-            var tempMsg = message.Trim();
-            if (tempMsg != CmdTpHere || tempMsg != CmdTpHere2)
+        public static bool TpHere(object oPlayer, string message)
+        {
+            try
             {
-                var arg1 = String.Empty;
-                if (tempMsg.StartsWith(CmdTpHere + " "))
-                {
-                    arg1 = tempMsg.Substring(CmdTpHere.Length + 1);
-                }
-                else if (tempMsg.StartsWith(CmdTpHere2 + " "))
-                {
-                    arg1 = tempMsg.Substring(CmdTpHere2.Length + 1);
-                }
-                Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                var player = (SvPlayer)oPlayer;
+                string arg1 = GetArgument.Run(1, false, true, message);
+                if (!string.IsNullOrWhiteSpace(arg1))
+                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
             }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is required for this command.");
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
 
         public static bool Run(object oPlayer, string message) {
-            var player = (SvPlayer)oPlayer;
-            var tempMsg = message.Trim();
-            if (tempMsg != CmdTp)
+            try
             {
-                var arg1 = tempMsg.Substring(CmdTp.Length + 1);
-                Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                var player = (SvPlayer)oPlayer;
+                string arg1 = GetArgument.Run(1, false, true, message);
+                if (!string.IsNullOrWhiteSpace(arg1))
+                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
             }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is required for this command.");
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

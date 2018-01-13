@@ -8,22 +8,22 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class FakeLeave : EssentialsChatPlugin
+    class LatestVoteResults : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static bool Run(object oPlayer)
         {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdFakeLeaveExecutableBy == "admin" || CmdFakeLeaveExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLatestVoteResultsExecutableBy == "admin" || CmdLatestVoteResultsExecutableBy == "everyone")
                 {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (!String.IsNullOrWhiteSpace(arg1))
-                    {
-                        player.SendToAll(Channel.Unsequenced, 10, arg1 + " disconncted");
-                    }
+                    if (!LatestVotePeople.Any())
+                        player.SendToSelf(Channel.Unsequenced, 10, "The list seems empty.");
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, "A argument is needed for this command.");
+                    {
+                        string content = string.Join("\r\n", LatestVotePeople);
+                        player.SendToSelf(Channel.Unsequenced, 50, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
+                    }
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);

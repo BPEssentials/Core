@@ -12,8 +12,15 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(object oPlayer)
         {
-            var player = (SvPlayer)oPlayer;
-            player.SendToSelf(Channel.Unsequenced, (byte)10, "Discord Link: " + MsgDiscord);
+            try
+            {
+                var player = (SvPlayer)oPlayer;
+                player.SendToSelf(Channel.Unsequenced, 10, "Discord Link: " + MsgDiscord);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

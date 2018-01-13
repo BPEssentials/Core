@@ -13,11 +13,18 @@ namespace BP_Essentials
     {
         public static void Run(string fileName, List<string> output)
         {
-            foreach (var line in File.ReadAllLines(fileName))
-                if (line.StartsWith("#"))
-                    continue;
-                else
-                    output.Add(line);
+            try
+            {
+                foreach (var line in File.ReadAllLines(fileName))
+                    if (line.StartsWith("#"))
+                        continue;
+                    else
+                        output.Add(line);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
         }
     }
 }

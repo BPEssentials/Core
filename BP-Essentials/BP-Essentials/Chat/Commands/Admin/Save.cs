@@ -5,16 +5,23 @@ using static BP_Essentials.EssentialsCorePlugin;
 
 namespace BP_Essentials.Commands {
     public class Save : EssentialsChatPlugin {
-        public static bool Run(object oPlayer) {
-            var player = (SvPlayer)oPlayer;
-
-            if (AdminsListPlayers.Contains(player.playerData.username))
+        public static bool Run(object oPlayer)
+        {
+            try
             {
-                var thread = new Thread(SaveNow.Run);
-                thread.Start();
-                return true;
+                var player = (SvPlayer)oPlayer;
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSaveExecutableBy == "admin" || CmdSaveExecutableBy == "everyone")
+                {
+                    var thread = new Thread(SaveNow.Run);
+                    thread.Start();
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
-            player.SendToSelf(Channel.Unsequenced, (byte)10, MsgNoPerm);
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }

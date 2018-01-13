@@ -14,13 +14,24 @@ namespace BP_Essentials
     {
         public static void Run(object oPlayer)
         {
-            Thread.Sleep(500);
-            var player = (SvPlayer)oPlayer;
-            Debug.Log(SetTimeStamp.Run() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
             try
             {
-                if (!File.ReadAllText(IpListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
-                    File.AppendAllText(IpListFile, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+                Thread.Sleep(500);
+                var player = (SvPlayer)oPlayer;
+                Debug.Log(SetTimeStamp.Run() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.netMan.GetAddress(player.connection));
+                int tries = 0;
+                while (tries < 2)
+                    try
+                    {
+                        if (!File.ReadAllText(IpListFile).Contains(player.playerData.username + ": " + player.netMan.GetAddress(player.connection)))
+                            File.AppendAllText(IpListFile, player.playerData.username + ": " + player.netMan.GetAddress(player.connection) + Environment.NewLine);
+                        break;
+                    }
+                    catch (IOException)
+                    {
+                        Thread.Sleep(50);
+                        ++tries;
+                    }
             }
             catch (Exception ex)
             {

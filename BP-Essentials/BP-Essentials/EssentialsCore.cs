@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsMethodsPlugin;
@@ -23,11 +24,9 @@ namespace BP_Essentials
                     Debug.Log("");
                     Debug.Log("");
                     Debug.Log("[ERROR] Essentials - Recreating settings file!");
-                    if (File.Exists(SettingsFile + ".OLD"))
-                    {
-                        File.Delete(SettingsFile + ".OLD");
-                    }
-                    File.Move(SettingsFile, SettingsFile + ".OLD");
+                    if (File.Exists(SettingsFile + "." + DateTime.Now +".OLD"))
+                        File.Delete(SettingsFile + "." + DateTime.Now +".OLD");
+                    File.Move(SettingsFile, SettingsFile + "." + DateTime.Now + ".OLD");
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);

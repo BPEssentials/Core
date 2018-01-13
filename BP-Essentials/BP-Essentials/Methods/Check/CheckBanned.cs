@@ -14,9 +14,9 @@ namespace BP_Essentials
     {
         public static void Run(object oPlayer)
         {
-            Thread.Sleep(3000);
             try
             {
+                Thread.Sleep(3000);
                 var player = (SvPlayer)oPlayer;
                 if (File.ReadAllText(BansFile).Contains(player.playerData.username))
                 {

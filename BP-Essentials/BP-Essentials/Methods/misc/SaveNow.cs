@@ -12,14 +12,21 @@ namespace BP_Essentials
     {
         public static void Run()
         {
-            Debug.Log(SetTimeStamp.Run() +"[INFO] Saving game..");
-            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.IsRealPlayer())
-                {
-                    if (shPlayer.GetSpaceIndex() >= 13) continue;
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, "Saving game.. This can take up to 5 seconds.");
-                    shPlayer.svPlayer.Save();
-                }
+            try
+            {
+                Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
+                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.IsRealPlayer())
+                    {
+                        if (shPlayer.GetSpaceIndex() >= 13) continue;
+                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "Saving game.. This can take up to 5 seconds.");
+                        shPlayer.svPlayer.Save();
+                    }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
         }
     }
 }

@@ -1,17 +1,21 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
+﻿using System;
+using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials.Commands {
     public class Ban : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message) {
-            var player = (SvPlayer)oPlayer;
-
-            var tempMsg = message.Trim();
-            if (tempMsg != CmdBan)
+            try
             {
-                var arg1 = tempMsg.Substring(CmdBan.Length + 1);
-                ExecuteOnPlayer.Run(player, message, arg1);
+                var player = (SvPlayer)oPlayer;
+                string arg1 = GetArgument.Run(1, false, true, message);
+                if (!string.IsNullOrWhiteSpace(arg1))
+                    ExecuteOnPlayer.Run(player, message, arg1);
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
             }
-            else
-                player.SendToSelf(Channel.Unsequenced, (byte)10, "A argument is needed for this command.");
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
             return true;
         }
     }
