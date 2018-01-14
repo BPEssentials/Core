@@ -5,12 +5,12 @@
         |                     Created by UserR00T, DBK, and BP                       |
         |                                                                            |
         |  Note:                                                                     |
-        |  -  'CommandCharacter' will automatically be added to all commands.        |
+        |  -  'CommandCharacter' will be automatically added to all commands.        |
         |       E.g:                                                                 |
         |         Wrong:   "Command": "/say"                                         |
         |         Correct: "Command": "say"                                          |
         |                                                                            |
-        |  -  Basic JSON rules are still required. C# alike comments are allowed.    |
+        |  -  Basic JSON rules are still required. C like comments are allowed.      |
         |                                                                            |
         |  -  You CANNOT change CommandName.                                         |
         |       It defines what the command is in the code.                          |
@@ -183,11 +183,6 @@
       "Command2": "setbal",
       "ExecutableBy": "admins",
       "Disabled": false
-    },
-    {
-      "CommandName": "Rules",
-      "Command": "rules",
-      "Command2": "rule"
     },
     {
       "CommandName": "Players",
