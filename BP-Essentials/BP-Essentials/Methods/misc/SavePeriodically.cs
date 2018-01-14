@@ -34,7 +34,7 @@ namespace BP_Essentials
             foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer())
                 {
-                    if (shPlayer.GetSpaceIndex() >= 13) continue;
+                    if (shPlayer.GetPlaceIndex() >= 13) continue;
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "Saving game.. This can take up to 5 seconds.");
                     shPlayer.svPlayer.Save();
                 }

@@ -26,9 +26,7 @@ namespace BP_Essentials.Commands {
                                     string TempMSG = GetArgument.Run(0, false, false, message).Trim().ToLower() + arg;
                                     string arg2 = TempMSG.Substring(TempMSG.Length + 1);
                                     if (!String.IsNullOrWhiteSpace(arg2))
-                                    {
-                                        player.SendToSelf(Channel.Unsequenced, 10, "Hash of " + arg2 + " :" + Animator.StringToHash(arg2).ToString());
-                                    }
+                                        player.SendToSelf(Channel.Unsequenced, 10, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2).ToString());
                                     else
                                         player.SendToSelf(Channel.Unsequenced, 10, "Invalid arguments. /debug get(player)hash [username]");
                                 }
@@ -44,13 +42,13 @@ namespace BP_Essentials.Commands {
                                                 if (shPlayer2.IsRealPlayer())
                                                 {
                                                     found = true;
-                                                    player.SendToSelf(Channel.Unsequenced, 10, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetSpaceIndex());
+                                                    player.SendToSelf(Channel.Unsequenced, 10, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
                                                 }
                                         if (!found)
                                             player.SendToSelf(Channel.Unsequenced, 10, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
                                     }
                                     else
-                                        player.SendToSelf(Channel.Unsequenced, 10, "Your SpaceIndex: " + shPlayer.GetSpaceIndex());
+                                        player.SendToSelf(Channel.Unsequenced, 10, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
                                 }
                             }
                 }
