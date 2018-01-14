@@ -110,7 +110,6 @@ namespace BP_Essentials
         public static string CmdConfirm,            CmdConfirm2;
         public static string CmdReload,             CmdReload2;
         public static string CmdClearChat,          CmdClearChat2;
-        public static string CmdRules,              CmdRules2;
         public static string CmdHelp;
         public static string CmdCommandCharacter;
         public static bool CmdClearChatDisabled;

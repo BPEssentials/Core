@@ -101,8 +101,6 @@ namespace BP_Essentials
                     return Commands.OnlinePlayers.Run(player);
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand);
-            else if (message.StartsWith(CmdRules) || message.StartsWith(CmdRules2))
-                    return Commands.Rules.Run(player);
             else if (message.StartsWith(CmdGive) || (message.StartsWith(CmdGive2)))
                 if (!CmdGiveDisabled)
                     return Commands.Give.Run(player, message );

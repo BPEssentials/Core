@@ -24,9 +24,10 @@ namespace BP_Essentials
                     Debug.Log("");
                     Debug.Log("");
                     Debug.Log("[ERROR] Essentials - Recreating settings file!");
-                    if (File.Exists(SettingsFile + "." + DateTime.Now +".OLD"))
-                        File.Delete(SettingsFile + "." + DateTime.Now +".OLD");
-                    File.Move(SettingsFile, SettingsFile + "." + DateTime.Now + ".OLD");
+                    DateTime date = DateTime.Now;
+                    if (File.Exists(SettingsFile + "." + date +".OLD"))
+                        File.Delete(SettingsFile + "." + date +".OLD");
+                    File.Move(SettingsFile, SettingsFile + "." + date + ".OLD");
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);

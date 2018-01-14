@@ -43,7 +43,7 @@ namespace BP_Essentials
         }
 
         [Hook("SvPlayer.SpawnBot")]
-        public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref WaypointNode node, ref ShTransport vehicle, ref byte spawnJobIndex) {
+        public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref WaypointNode node, ref ShTransport vehicle, ref ShPlayer enemy, ref byte spawnJobIndex) {
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(spawnJobIndex);
         }
 
@@ -71,7 +71,7 @@ namespace BP_Essentials
                             player.SendToAll(Channel.Unsequenced, 10, shPlayer.svPlayer.playerData.username + " Just got banned by " + player.playerData.username);
         }
 
-        [Hook("SvPlayer.SvStartVote", true)]
+        [Hook("SvPlayer.SvStartVote")]
         public static bool SvStartVote(SvPlayer player, ref byte voteIndex, ref int ID)
         {
             if (voteIndex == 1)

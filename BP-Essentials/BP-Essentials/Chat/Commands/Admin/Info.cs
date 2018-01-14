@@ -25,18 +25,18 @@ namespace BP_Essentials.Commands
                             if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
-                                    shPlayer.svPlayer.Save();
-                                    player.SendToSelf(Channel.Unsequenced, 10, "Info about: '" + shPlayer.svPlayer.playerData.username + "'.");
+                                    player.SendToSelf(Channel.Unsequenced, 10, "Info about: '" + shPlayer.username + "'.");
                                     string[] contentarray = {
-                                    "Username:              " +  shPlayer.svPlayer.playerData.username,
+                                    "Username:              " +  shPlayer.username,
                                     "",
                                     "",
-                                    "Job:                         " + Jobs[shPlayer.svPlayer.playerData.jobIndex],
-                                    "Health:                    " + shPlayer.svPlayer.playerData.health,
-                                    "OwnsApartment:   " + shPlayer.svPlayer.playerData.ownedApartment,
-                                    "Position:                 " + shPlayer.svPlayer.playerData.position,
+                                    "Job:                         " + Jobs[shPlayer.job.jobIndex],
+                                    "Health:                    " + shPlayer.health,
+                                    "OwnsApartment:   " + shPlayer.ownedApartment,
+                                    "Position:                 " + shPlayer.GetPosition().ToString(),
                                     "WantedLevel:         " + shPlayer.wantedLevel,
                                     "IsAdmin:                 " + shPlayer.admin,
+                                    "BankBalance:       " + shPlayer.svPlayer.bankBalance,
                                     "IP:                            " + shPlayer.svPlayer.netMan.GetAddress(shPlayer.svPlayer.connection)
                                 };
 

@@ -23,7 +23,7 @@ namespace BP_Essentials.Commands
                         player.SendToAll(Channel.Unsequenced, 10, arg1 + " disconncted");
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, "A argument is needed for this command.");
+                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
