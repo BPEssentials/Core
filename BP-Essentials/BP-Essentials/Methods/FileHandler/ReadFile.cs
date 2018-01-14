@@ -21,6 +21,7 @@ namespace BP_Essentials
         public string version { get; set; }
         public string CommandCharacter { get; set; }
         public string TimestapFormat { get; set; }
+        public string MsgSayColor { get; set; }
         public bool DisplayUnknownCommandMessage { get; set; }
         public bool VoteKickDisabled { get; set; }
         public bool ShowDMGMessage { get; set; }
@@ -78,6 +79,7 @@ namespace BP_Essentials
                         LocalVersion = m.General.version;
                         CmdCommandCharacter = m.General.CommandCharacter;
                         TimestampFormat = m.General.TimestapFormat;
+                        MsgSayColor = m.General.MsgSayColor;
                         MsgUnknownCommand = m.General.DisplayUnknownCommandMessage;
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
