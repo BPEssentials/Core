@@ -76,7 +76,7 @@ namespace BP_Essentials
         public static string Rules;
         public static string DisabledSpawnBots;
         public static string LocalVersion;
-
+        public static string MsgSayColor;
         // Commands
         #region Commands
 

@@ -21,7 +21,7 @@ namespace BP_Essentials.Commands
                     if (String.IsNullOrWhiteSpace(arg1))
                         player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
                     else
-                        player.SendToAll(Channel.Unsequenced, 10, MsgSayPrefix + " " + player.playerData.username + ": " + arg1);
+                        player.SendToAll(Channel.Unsequenced, 10, $"<color=#{MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
