@@ -15,11 +15,11 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdHealExecutableBy == "admin" || CmdHealExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdHealExecutableBy == "admins" || CmdHealExecutableBy == "everyone")
                 {
                     string arg1 = GetArgument.Run(1, false, true, message).Trim();
-                    const string msg = "Healed {0}.";
-                    if (String.IsNullOrWhiteSpace(arg1))
+                    string msg = $"<color={infoColor}>Healed </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
+                    if (String.IsNullOrEmpty(arg1))
                     {
                         player.Heal(100);
                         player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "yourself"));
@@ -28,15 +28,15 @@ namespace BP_Essentials.Commands
                     {
                         bool found = false;
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                            if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
                                     shPlayer.svPlayer.Heal(100);
-                                    player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, shPlayer.svPlayer.playerData.username));
+                                    player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, shPlayer.username));
                                     found = true;
                                 }
                         if (!found)
-                            player.SendToSelf(Channel.Unsequenced, 10, "Player '" + arg1 + "' Not found/online.");
+                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
                     }
                 }
                 else

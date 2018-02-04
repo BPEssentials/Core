@@ -15,19 +15,30 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                bool found = false;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.svPlayer.playerData.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1.ToString() && shPlayer.IsRealPlayer())
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdClearWantedExecutableBy == "admins" || CmdClearWantedExecutableBy == "everyone")
+                {
+                    bool found = false;
+                    string arg1 = GetArgument.Run(1, false, true, message);
+                    string msg;
+                    if (String.IsNullOrEmpty(arg1))
                     {
-                        shPlayer.ClearCrimes();
-                        shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
-                        player.SendToSelf(Channel.Unsequenced, 10, "Cleared crimes of '" + shPlayer.svPlayer.playerData.username + "'.");
-                        found = true;
+                        arg1 = player.playerData.username;
+                        msg = "yourself";
                     }
-                if (!found)
-                    player.SendToSelf(Channel.Unsequenced, 10, "Player not found/online.");
-
+                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                        if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1.ToString() && shPlayer.IsRealPlayer())
+                        {
+                            msg = shPlayer.username;
+                            shPlayer.ClearCrimes();
+                            shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
+                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
+                            found = true;
+                        }
+                    if (!found)
+                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                }
+                else
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
             catch (Exception ex)
             {

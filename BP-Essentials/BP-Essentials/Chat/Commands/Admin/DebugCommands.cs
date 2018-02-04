@@ -23,9 +23,8 @@ namespace BP_Essentials.Commands {
                                     player.SendToSelf(Channel.Unsequenced, 10, "Your location: " + shPlayer.GetPosition());
                                 else if (arg == "getplayerhash" || arg == "gethash")
                                 {
-                                    string TempMSG = GetArgument.Run(0, false, false, message).Trim().ToLower() + arg;
-                                    string arg2 = TempMSG.Substring(TempMSG.Length + 1);
-                                    if (!String.IsNullOrWhiteSpace(arg2))
+                                    string arg2 = GetArgument.Run(2, false, true, message);
+                                    if (!String.IsNullOrEmpty(arg2))
                                         player.SendToSelf(Channel.Unsequenced, 10, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2).ToString());
                                     else
                                         player.SendToSelf(Channel.Unsequenced, 10, "Invalid arguments. /debug get(player)hash [username]");
@@ -34,7 +33,7 @@ namespace BP_Essentials.Commands {
                                 {
                                     string TempMSG = GetArgument.Run(0, false, false, message).Trim().ToLower() + arg;
                                     string arg2 = TempMSG.Substring(TempMSG.Length + 1);
-                                    if (!String.IsNullOrWhiteSpace(arg2))
+                                    if (!String.IsNullOrEmpty(arg2))
                                     {
                                         bool found = false;
                                         foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())

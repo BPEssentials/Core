@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+
+
+    BP:Essentials
+
+    Created by UserR00T, DBK, and BP.
+
+    License: GPLv3.
+
+
+*/
+
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -13,6 +26,7 @@ namespace BP_Essentials
         [Hook("SvNetMan.StartServerNetwork")]
         public static void StartServerNetwork(SvNetMan netMan)
         {
+
             try
             {
                 Reload.Run(true);

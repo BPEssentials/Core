@@ -10,7 +10,7 @@ namespace BP_Essentials.Commands {
             {
                 var player = (SvPlayer)oPlayer;
                 string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrWhiteSpace(arg1))
+                if (!string.IsNullOrEmpty(arg1))
                     Commands.ExecuteOnPlayer.Run(player, message, arg1);
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
@@ -27,7 +27,7 @@ namespace BP_Essentials.Commands {
             {
                 var player = (SvPlayer)oPlayer;
                 string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrWhiteSpace(arg1))
+                if (!string.IsNullOrEmpty(arg1))
                     Commands.ExecuteOnPlayer.Run(player, message, arg1);
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);

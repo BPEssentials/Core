@@ -45,6 +45,14 @@ namespace BP_Essentials
                     placeHolderText = placeHolderText.Replace("{username}", player.playerData.username);
                 if (str.ToLower().Contains("{discordlink}"))
                     placeHolderText = placeHolderText.Replace("{discordlink}", MsgDiscord);
+                if (str.ToLower().Contains("{infocolor}"))
+                    placeHolderText = placeHolderText.Replace("{infocolor}", infoColor);
+                if (str.ToLower().Contains("{warningcolor}"))
+                    placeHolderText = placeHolderText.Replace("{warningcolor}", warningColor);
+                if (str.ToLower().Contains("{errorcolor}"))
+                    placeHolderText = placeHolderText.Replace("{errorcolor}", errorColor);
+                if (str.ToLower().Contains("{argcolor}"))
+                    placeHolderText = placeHolderText.Replace("{argcolor}", argColor);
                 return placeHolderText;
             }
             catch (Exception ex)

@@ -35,7 +35,7 @@ namespace BP_Essentials
                 if (shPlayer.IsRealPlayer())
                 {
                     if (shPlayer.GetPlaceIndex() >= 13) continue;
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "Saving game.. This can take up to 5 seconds.");
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
                     shPlayer.svPlayer.Save();
                 }
         }

@@ -16,11 +16,11 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdCheckAltsExecutableBy == "admin" || CmdCheckAltsExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdCheckAltsExecutableBy == "admins" || CmdCheckAltsExecutableBy == "everyone")
                 {
                     var arg1 = GetArgument.Run(1, false, false, message);
                     var found = 0;
-                    if (!String.IsNullOrWhiteSpace(arg1))
+                    if (!String.IsNullOrEmpty(arg1))
                     {
                         var arg2 = GetArgument.Run(2, false, true, message);
                         if (arg1.Equals("ip", StringComparison.InvariantCultureIgnoreCase))

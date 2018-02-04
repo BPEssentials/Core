@@ -36,7 +36,17 @@ namespace BP_Essentials
         public string PlayerIsAFK { get; set; }
         public string SelfIsMuted { get; set; }
         public string ArgRequired { get; set; }
+        public string NotFoundOnline { get; set; }
     }
+    [Serializable]
+    public class MessageColors
+    {
+        public string info { get; set; }
+        public string error { get; set; }
+        public string warning { get; set; }
+        public string arg { get; set; }
+    }
+
     [Serializable]
     public class _Misc
     {
@@ -62,6 +72,7 @@ namespace BP_Essentials
     {
         public _General General { get; set; }
         public _Messages Messages { get; set; }
+        public MessageColors MessageColors { get; set; }
         public _Misc Misc { get; set; }
         public List<_Command> Commands { get; set; }
     }
@@ -75,7 +86,7 @@ namespace BP_Essentials
                 switch (fileName)
                 {
                     case SettingsFile:
-                        RootObject m = JsonConvert.DeserializeObject<RootObject>(File.ReadAllText(SettingsFile));
+                        RootObject m = JsonConvert.DeserializeObject<RootObject>(FilterComments.Run(SettingsFile));
                         LocalVersion = m.General.version;
                         CmdCommandCharacter = m.General.CommandCharacter;
                         TimestampFormat = m.General.TimestapFormat;
@@ -84,13 +95,19 @@ namespace BP_Essentials
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
 
+                        infoColor = m.MessageColors.info;
+                        errorColor = m.MessageColors.error;
+                        warningColor = m.MessageColors.warning;
+                        argColor = m.MessageColors.arg;
+
                         MsgNoPerm = m.Messages.noperm;
                         MsgDiscord = m.Messages.DiscordLink;
                         MsgSayPrefix = m.Messages.msgSayPrefix;
-                        DisabledCommand = m.Messages.DisabledCommand;
-                        PlayerIsAFK = m.Messages.PlayerIsAFK;
-                        SelfIsMuted = m.Messages.SelfIsMuted;
-                        ArgRequired = m.Messages.ArgRequired;
+                        DisabledCommand = $"<color={errorColor}>{m.Messages.DisabledCommand}</color>";
+                        PlayerIsAFK = $"<color={warningColor}>{m.Messages.PlayerIsAFK}</color>";
+                        SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
+                        ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
+                        NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
                         LanguageBlock = m.Misc.enableLanguageBlock;

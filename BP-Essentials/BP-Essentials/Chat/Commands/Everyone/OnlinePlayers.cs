@@ -16,19 +16,16 @@ namespace BP_Essentials.Commands
             {
 
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdPlayersExecutableBy == "admin" || CmdPlayersExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdPlayersExecutableBy == "admins" || CmdPlayersExecutableBy == "everyone")
                 {
                     var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
                     switch (realPlayers)
                     {
                         case 1:
-                            player.SendToSelf(Channel.Unsequenced, 10, "There is " + realPlayers + " player online");
+                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>There is </color><color={argColor}>{realPlayers}</color><color={infoColor}> player online</color>");
                             break;
                         default:
-                            if (realPlayers < 1)
-                                player.SendToSelf(Channel.Unsequenced, 10, "There are " + realPlayers + " play- wait, how is that possible");
-                            else
-                                player.SendToSelf(Channel.Unsequenced, 10, "There are " + realPlayers + " player(s) online");
+                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>There are </color><color={argColor}>{realPlayers}</color><color={infoColor}> players online</color>");
                             break;
                     }
                 }

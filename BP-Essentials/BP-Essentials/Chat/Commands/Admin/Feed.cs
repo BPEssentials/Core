@@ -15,11 +15,11 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdFeedExecutableBy == "admin" || CmdFeedExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdFeedExecutableBy == "admins" || CmdFeedExecutableBy == "everyone")
                 {
                     string arg1 = GetArgument.Run(1, false, true, message).Trim();
-                    const string msg = "Maxed stats for {0}.";
-                    if (String.IsNullOrWhiteSpace(arg1))
+                    string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";
+                    if (String.IsNullOrEmpty(arg1))
                     {
                         for (byte i = 0; i < 4; i++)
                             player.UpdateStat(i, 100);
@@ -29,16 +29,16 @@ namespace BP_Essentials.Commands
                     {
                         bool found = false;
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                            if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
                                     for (byte i = 0; i < 4; i++)
                                         shPlayer.svPlayer.UpdateStat(i, 100);
-                                    player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, shPlayer.svPlayer.playerData.username));
+                                    player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, shPlayer.username));
                                     found = true;
                                 }
                         if (!found)
-                            player.SendToSelf(Channel.Unsequenced, 10, "Player '" + arg1 + "' Not found/online.");
+                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
                     }
                 }
                 else
