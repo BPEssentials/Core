@@ -15,18 +15,18 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAtmExecutableBy == "admin" || CmdAtmExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAtmExecutableBy == "admins" || CmdAtmExecutableBy == "everyone")
                 {
                     foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                         if (shPlayer.svPlayer == player)
                             if (shPlayer.IsRealPlayer())
                                 if (shPlayer.wantedLevel == 0)
                                 {
-                                    player.SendToSelf(Channel.Unsequenced, 10, "Opening ATM menu..");
+                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Opening ATM menu..</color>");
                                     player.SendToSelf(Channel.Reliable, 40, player.bankBalance);
                                 }
                                 else if (shPlayer.wantedLevel != 0)
-                                    player.SendToSelf(Channel.Unsequenced, 10, "Criminal Activity: Account Locked");
+                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);

@@ -8,20 +8,20 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAfkExecutableBy == "admin" || CmdAfkExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAfkExecutableBy == "admins" || CmdAfkExecutableBy == "everyone")
                 {
                     ReadFile.Run(AfkListFile);
                     if (AfkPlayers.Contains(player.playerData.username))
                     {
                         RemoveStringFromFile.Run(AfkListFile, player.playerData.username);
                         ReadFile.Run(AfkListFile);
-                        player.SendToSelf(Channel.Unsequenced, 10, "You are no longer AFK");
+                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>You are no longer AFK.</color>");
                     }
                     else
                     {
                         File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
                         AfkPlayers.Add(player.playerData.username);
-                        player.SendToSelf(Channel.Unsequenced, 10, "You are now AFK");
+                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>You are now AFK.</color>");
                     }
                 }
                 else

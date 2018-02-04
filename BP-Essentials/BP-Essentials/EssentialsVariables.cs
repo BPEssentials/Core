@@ -71,7 +71,9 @@ namespace BP_Essentials
         public static string ArgRequired;
         public static string PlayerIsAFK;
         public static string SelfIsMuted;
+        public static string NotFoundOnline;
 
+        public static string infoColor, errorColor, warningColor, argColor;
         // Strings
         public static string Rules;
         public static string DisabledSpawnBots;
@@ -96,6 +98,7 @@ namespace BP_Essentials
         public static string CmdFeed,               CmdFeed2,               CmdFeedExecutableBy;
         public static string CmdCheckAlts,          CmdCheckAlts2,          CmdCheckAltsExecutableBy;
         public static string CmdGive,               CmdGive2,               CmdGiveExecutableBy;
+        public static string CmdSetjob,             CmdSetjob2,             CmdSetjobExecutableBy;
         public static string CmdKill,                                       CmdKillExecutableBy;
         public static string CmdBan,                                        CmdBanExecutableBy;
         public static string CmdKick,                                       CmdKickExecutableBy;
@@ -106,6 +109,7 @@ namespace BP_Essentials
         public static string CmdTp,                                         CmdTpExecutableBy;
         public static string CmdSave,                                       CmdSaveExecutableBy;
         public static string CmdLatestVoteResults,  CmdLatestVoteResults2,  CmdLatestVoteResultsExecutableBy;
+        public static string CmdClearWanted,        CmdClearWanted2,        CmdClearWantedExecutableBy;
         public static string CmdDebug,              CmdDebug2;
         public static string CmdConfirm,            CmdConfirm2;
         public static string CmdReload,             CmdReload2;
@@ -124,13 +128,13 @@ namespace BP_Essentials
         public static bool CmdMoneyDisabled;
         public static bool CmdAtmDisabled;
         public static bool CmdPayDisabled;
-        public static bool CmdTpHereDisabled;
         public static bool CmdHealDisabled;
         public static bool CmdFeedDisabled;
         public static bool CmdCheckAltsDisabled;
         public static bool CmdGiveDisabled;
         public static bool CmdLatestVoteResultsDisabled;
-
+        public static bool CmdSetjobDisabled;
+        public static bool CmdClearWantedDisabled;
         #endregion
 
         // Ints (arrays)
@@ -141,6 +145,9 @@ namespace BP_Essentials
 
         // Misc.
         public static string TimestampFormat;
+        public const string CensoredText = "******";
+        public const string PatternTemplate = @"\b({0})(s?)\b";
+
         #region ID LIST
 
         public static int[] IDs = {

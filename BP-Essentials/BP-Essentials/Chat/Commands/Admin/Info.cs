@@ -15,14 +15,14 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdInfoExecutableBy == "admin" || CmdInfoExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdInfoExecutableBy == "admins" || CmdInfoExecutableBy == "everyone")
                 {
                     var arg1 = GetArgument.Run(1, false, true, message);
                     var found = false;
-                    if (!String.IsNullOrWhiteSpace(arg1))
+                    if (!String.IsNullOrEmpty(arg1))
                     {
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                            if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
                                     player.SendToSelf(Channel.Unsequenced, 10, "Info about: '" + shPlayer.username + "'.");
@@ -47,7 +47,7 @@ namespace BP_Essentials.Commands
                                     found = true;
                                 }
                         if (!(found))
-                            player.SendToSelf(Channel.Unsequenced, 10, "'" + arg1 + "' Not found/online.");
+                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
                     }
                     else
                         player.SendToSelf(Channel.Reliable, 10, ArgRequired);

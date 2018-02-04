@@ -81,6 +81,57 @@ namespace BP_Essentials.Commands
                         {
                             throw new ArgumentNullException("message", "boi you fucked up");
                         }
+                        else if (message.StartsWith("/tryvalue"))
+                        {
+                            ShPlayer shplyr = (ShPlayer)typeof(SvPlayer).GetField("player", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(shPlayer.svPlayer);
+                            Debug.Log("Your ID:" + shplyr.ID);
+                        }
+                        else if (message.StartsWith("/usetheforce"))
+                        {
+                            player.SvForce(new Vector3(0f, 5000f, 0f));
+                            player.ExplosionDamage(20f, 20f, shPlayer);
+                            shPlayer.StartEffect(EffectIndex.Flashed);
+                            player.SendToSelf(Channel.Unsequenced, 10, "Off he goes!");
+                        }
+                        else if (message.StartsWith("/sendtoself"))
+                        {
+                            string arg1 = GetArgument.Run(1, false, false, message);
+                            string arg2 = GetArgument.Run(2, false, false, message);
+                            byte barg1 = Convert.ToByte(arg1);
+                            player.SendToSelf(Channel.Unsequenced, barg1, arg2);
+                        }
+                        else if (message.StartsWith("/addnew"))
+                        {
+                            GameMan gm = shPlayer.gameMan;
+                            Vector3 position = shPlayer.GetPosition();
+                            position[1] += 15f;
+
+                            ShEntity she = new ShEntity();
+                            if (shPlayer.GetPlaceIndex() == 0)
+                            {
+                                she = player.netMan.AddNewEntity(gm.GetEntity(884127623).gameObject, gm.places[0], position, player.playerData.rotation, false, false);
+                                she.Spawn(position, player.playerData.rotation, gm.places[0]);
+                            }
+                            else
+                                player.SendToSelf(Channel.Unsequenced, 10, "Cannot spawn inside a place");
+
+
+                            //int size = 0;
+                            //IndexCollection<ShEntity> ECol = (IndexCollection<ShEntity>)typeof(GameMan).GetField("entityCollection", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(gm);
+                            //foreach (ShEntity v in ECol)
+                            //{
+                            //    ++size;
+                            //    Debug.Log(v.index);
+                            //}
+                            //Debug.Log("Size of IndexCollection: " + size);
+                        }
+                        else if (message.StartsWith("/gl"))
+                        {
+                            shPlayer.playerInventory.TransferItem(1, -700261193, 1, true);
+                            shPlayer.playerInventory.TransferItem(1, 1695812550, 1, true);
+                            shPlayer.playerInventory.TransferItem(1, 499504400, 1, true);
+                            shPlayer.playerInventory.TransferItem(1, 607710552, 1, true);
+                        }
                     }
             }
             catch (Exception ex)

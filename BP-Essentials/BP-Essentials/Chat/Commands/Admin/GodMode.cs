@@ -12,15 +12,15 @@ namespace BP_Essentials.Commands {
                 try
                 {
                     var player = (SvPlayer)oPlayer;
-                    if (AdminsListPlayers.Contains(player.playerData.username) && CmdGodmodeExecutableBy == "admin" || CmdGodmodeExecutableBy == "everyone")
+                    if (AdminsListPlayers.Contains(player.playerData.username) && CmdGodmodeExecutableBy == "admins" || CmdGodmodeExecutableBy == "everyone")
                     {
                         ReadFile.Run(GodListFile);
                             string name = GetArgument.Run(1, false, true, message).Trim();
-                            string msg = "Godmode {0} for '" + name + "'.";
-                            if (String.IsNullOrWhiteSpace(name))
+                            string msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'" + name + $"'</color><color={infoColor}>.</color>";
+                            if (String.IsNullOrEmpty(name))
                             {
                                 name = player.playerData.username;
-                                msg = "Godmode {0}.";
+                                msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
                             }
                             if (GodListPlayers.Contains(name))
                             {

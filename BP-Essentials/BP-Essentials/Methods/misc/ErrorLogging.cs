@@ -59,7 +59,10 @@ namespace BP_Essentials
                     "Exception Method: " + frame.GetMethod(),
                     "\r\nException STOP ---------------- Date: " + DateTime.Now
                 };
-                File.AppendAllLines(ExceptionFile, content);
+                StringBuilder sb = new StringBuilder();
+                foreach (string line in content)
+                    sb.Append(line);
+                File.AppendAllText(ExceptionFile, sb.ToString());
             }
             catch (Exception exx)
             {

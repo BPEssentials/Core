@@ -15,55 +15,40 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMoneyExecutableBy == "admin" || CmdMoneyExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMoneyExecutableBy == "admins" || CmdMoneyExecutableBy == "everyone")
                 {
-                    string arg1 = null;
-                    string arg2 = null;
-                    try
+                    string CorrSyntax = $"<color={argColor}>" + GetArgument.Run(0, false, false, message) + $"</color><color={errorColor}> [Player] [Amount]</color><color={warningColor}> (Incorrect or missing argument(s).)</color>";
+                    string arg1 = GetArgument.Run(1, false, true, message);
+                    string arg2 = message.Split(' ').Last().Trim();
+                    if (String.IsNullOrEmpty(GetArgument.Run(1, false, false, message)) || String.IsNullOrEmpty(arg2))
                     {
-                        if (message.StartsWith(CmdMoney))
-                            arg1 = message.Substring(CmdMoney.Length + 1).Trim();
-                        else if (message.StartsWith(CmdMoney2))
-                            arg1 = message.Substring(CmdMoney2.Length + 1).Trim();
-                        arg2 = message.Split(' ').Last().Trim();
-                        arg1 = arg1.Substring(0, arg1.Length - arg2.Length).Trim();
-                        if (String.IsNullOrEmpty(arg1))
-                        {
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument.Run(0, false, false, message) + " [Player] [Amount]");
-                            return true;
-                        }
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument.Run(0, false, false, message) + " [Player] [Amount]");
+                        player.SendToSelf(Channel.Unsequenced, 10, CorrSyntax);
                         return true;
                     }
-                    if (!(String.IsNullOrEmpty(arg2)))
+                    else
                     {
-                        int arg2int;
-                        bool isNumeric = int.TryParse(arg2, out arg2int);
-
-                        if (isNumeric)
-                        {
-                            bool found = false;
-                            foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                                if (shPlayer.svPlayer.playerData.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                                    if (shPlayer.IsRealPlayer())
-                                    {
-                                        shPlayer.playerInventory.TransferMoney(1, arg2int, true);
-                                        player.SendToSelf(Channel.Unsequenced, (byte)10, "Succesfully gave " + shPlayer.svPlayer.playerData.username + " " + arg2int + "$");
-                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, (byte)10, player.playerData.username + " gave you " + arg2int + "$!");
-                                        found = true;
-                                    }
-                            if (!(found))
-                                player.SendToSelf(Channel.Unsequenced, (byte)10, arg1 + @" Not found/online.");
-
-                        }
-                        else
-                            player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument.Run(0, false, false, message) + " [Player] [Amount] (incorrect argument!)");
+                        int lastIndex = arg1.LastIndexOf(" ");
+                        if (lastIndex != -1)
+                            arg1 = arg1.Remove(lastIndex).Trim();
+                    }
+                    int arg2int;
+                    bool isNumeric = int.TryParse(arg2, out arg2int);
+                    if (isNumeric)
+                    {
+                        bool found = false;
+                        foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                            if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
+                            {
+                                shPlayer.playerInventory.TransferMoney(1, arg2int, true);
+                                player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Successfully gave</color><color={argColor}> " + shPlayer.username + " " + arg2int + $"</color><color={infoColor}>$</color>");
+                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + player.playerData.username + $"</color><color={infoColor}> gave you </color><color={argColor}>" + arg2int + $"</color><color={infoColor}>$!</color>");
+                                found = true;
+                            }
+                        if (!found)
+                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, GetArgument.Run(0, false, false, message) + " [Player] [Amount]");
+                        player.SendToSelf(Channel.Unsequenced, 10, CorrSyntax);
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);

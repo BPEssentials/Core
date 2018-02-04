@@ -27,7 +27,7 @@ namespace BP_Essentials
         {
             try
             {
-                _RootObject m = JsonConvert.DeserializeObject<_RootObject>(File.ReadAllText(CustomCommandsFile));
+                _RootObject m = JsonConvert.DeserializeObject<_RootObject>(FilterComments.Run(CustomCommandsFile));
                 foreach (var command in m.CustomCommands)
                 {
                     CustomCommands.Add(CmdCommandCharacter + command.command);

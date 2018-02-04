@@ -1,8 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
-namespace BP_Essentials.Commands {
-    public class Ban : EssentialsChatPlugin {
-        public static bool Run(object oPlayer, string message) {
+using static BP_Essentials.EssentialsMethodsPlugin;
+
+namespace BP_Essentials.Commands
+{
+    class Arrest : EssentialsChatPlugin
+    {
+        public static bool Run(object oPlayer, string message)
+        {
             try
             {
                 var player = (SvPlayer)oPlayer;

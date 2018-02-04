@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLogsExecutableBy == "admin" || CmdLogsExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLogsExecutableBy == "admins" || CmdLogsExecutableBy == "everyone")
                 {
                     if (logFile != ChatLogFile) return true;
                     string content = null;
@@ -31,8 +31,8 @@ namespace BP_Essentials.Commands
                                 break;
                         }
                     }
-                    player.SendToSelf(Channel.Unsequenced, 10, "WARNING: This is a very unstable command and doesn't work all of the times.");
-                    player.SendToSelf(Channel.Reliable, 50, content);
+                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={warningColor}>WARNING: This is a very unstable command and doesn't work all of the times.</color>");
+                    player.SendToSelf(Channel.Fragmented, 50, content);
                 }
                 else
                     player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);

@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BP_Essentials</RootNamespace>
     <AssemblyName>BP_Essentials</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,18 +41,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Chat\Commands\Admin\Arrest.cs" />
     <Compile Include="Chat\Commands\Admin\CheckAlts.cs" />
     <Compile Include="Chat\Commands\Admin\ClearWanted.cs" />
     <Compile Include="Chat\Commands\Admin\FakeJoin.cs" />
     <Compile Include="Chat\Commands\Admin\FakeLeave.cs" />
     <Compile Include="Chat\Commands\Admin\Feed.cs" />
+    <Compile Include="Chat\Commands\Admin\Free.cs" />
     <Compile Include="Chat\Commands\Admin\Give.cs" />
     <Compile Include="Chat\Commands\Admin\Heal.cs" />
     <Compile Include="Chat\Commands\Admin\Info.cs" />
+    <Compile Include="Chat\Commands\Admin\Kick.cs" />
     <Compile Include="Chat\Commands\Admin\Kill.cs" />
     <Compile Include="Chat\Commands\Admin\LatestVoteResults.cs" />
     <Compile Include="Chat\Commands\Admin\Money.cs" />
+    <Compile Include="Chat\Commands\Admin\Restrain.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
+    <Compile Include="Chat\Commands\Admin\SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\TestCommand.cs" />
     <Compile Include="Chat\Commands\Everyone\Afk.cs" />
     <Compile Include="Chat\Commands\Admin\Ban.cs" />
@@ -74,6 +80,8 @@
     <Compile Include="EssentialsVariables.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Chat\Announce.cs" />
+    <Compile Include="Methods\API\DownloadFile.cs" />
+    <Compile Include="Methods\API\FilterComments.cs" />
     <Compile Include="Methods\API\StringToVar.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
     <Compile Include="Methods\Check\CheckBanned.cs" />
@@ -111,6 +119,7 @@
     <Reference Include="System.Runtime.Serialization, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Unity Full v3.5\System.Runtime.Serialization.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\BrokeProtocol_Data\Managed\UnityEngine.dll</HintPath>

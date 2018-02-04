@@ -30,13 +30,13 @@ namespace BP_Essentials
                     {
                         string tmessage = message + " ";
                         string[] args = tmessage.Split(' ');
-                        return tmessage.IndexOf(args[nr]) != 0 ? tmessage.Substring(tmessage.IndexOf(args[nr])).TrimEnd() : "";
+                        return tmessage.IndexOf(args[nr]) != 0 ? tmessage.Substring(tmessage.IndexOf(args[nr])).TrimEnd() : string.Empty;
                     }
                     else
                     {
                         string tmessage = message + " ";
                         string[] args = tmessage.Split(' ');
-                        return args[nr];
+                        return args[nr] ?? string.Empty;
                     }
                 }
             }

@@ -15,11 +15,11 @@ namespace BP_Essentials
             try
             {
                 typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s).SetValue("Cmd" + s, CmdCommandCharacter + cmd1);
-                if (!string.IsNullOrWhiteSpace(cmd2))
+                if (!string.IsNullOrEmpty(cmd2))
                     typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + "2").SetValue("Cmd" + s + "2", CmdCommandCharacter + cmd2);
-                if (!string.IsNullOrWhiteSpace(ExeBy))
+                if (!string.IsNullOrEmpty(ExeBy))
                     typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + "ExecutableBy").SetValue("Cmd" + s + "ExecutableBy", ExeBy);
-                if (!string.IsNullOrWhiteSpace(Disabled.ToString()))
+                if (!string.IsNullOrEmpty(Disabled.ToString()))
                     typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + "Disabled").SetValue("Cmd" + s + "Disabled", Disabled);
             }
             catch (Exception ex)

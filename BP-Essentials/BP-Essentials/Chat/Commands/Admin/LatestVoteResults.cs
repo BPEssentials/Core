@@ -15,13 +15,13 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLatestVoteResultsExecutableBy == "admin" || CmdLatestVoteResultsExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLatestVoteResultsExecutableBy == "admins" || CmdLatestVoteResultsExecutableBy == "everyone")
                 {
                     if (!LatestVotePeople.Any())
-                        player.SendToSelf(Channel.Unsequenced, 10, "The list seems empty.");
+                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>The list seems empty.</color>");
                     else
                     {
-                        string content = string.Join("\r\n", LatestVotePeople);
+                        string content = string.Join("\r\n", LatestVotePeople.ToArray());
                         player.SendToSelf(Channel.Unsequenced, 50, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
                     }
                 }

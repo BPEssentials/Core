@@ -16,21 +16,21 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMuteExecutableBy == "admin" || CmdMuteExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMuteExecutableBy == "admins" || CmdMuteExecutableBy == "everyone")
                 {
                     string muteuser = null;
                     var found = false;
                     muteuser = GetArgument.Run(1, false, true, message);
                     foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.svPlayer.playerData.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
+                        if (shPlayer.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
                             if (shPlayer.IsRealPlayer())
                             {
-                                muteuser = shPlayer.svPlayer.playerData.username;
+                                muteuser = shPlayer.username;
                                 found = true;
                             }
                     if (!found)
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, "User or ID '" + muteuser + "' is not found.");
+                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
                         return true;
                     }
                     ReadFile.Run(MuteListFile);
@@ -38,14 +38,14 @@ namespace BP_Essentials.Commands
                     {
                         MutePlayers.Add(muteuser);
                         File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                        player.SendToSelf(Channel.Unsequenced, 10, muteuser + " Muted");
+                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Muted </color><color={argColor}>" + muteuser + "</color>");
 
                     }
                     else
                     {
                         RemoveStringFromFile.Run(MuteListFile, muteuser);
                         ReadFile.Run(MuteListFile);
-                        player.SendToSelf(Channel.Unsequenced, 10, muteuser + " Unmuted");
+                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Unmuted </color><color={argColor}>" + muteuser + "</color>");
                     }
                 }
                 else

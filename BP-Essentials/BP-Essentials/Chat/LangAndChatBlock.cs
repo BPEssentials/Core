@@ -5,48 +5,38 @@ using System.Text;
 using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
+using System.Text.RegularExpressions;
 
 namespace BP_Essentials.Chat
 {
     class LangAndChatBlock : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static string Run(object oPlayer, string message)
         {
             try
             {
-                message = message.ToLower();
+                string tmessage = message.ToLower();
                 var player = (SvPlayer)oPlayer;
                 if (ChatBlock)
                 {
-                    if (ChatBlockWords.Any(s => message.Contains(s)))
-                    {
-                        player.SendToSelf(Channel.Unsequenced, 10, "Please don't say a blacklisted word, the message has been blocked.");
-                        Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Said a word that is blocked.");
-                        return true;
-                    }
+                    const RegexOptions Options = RegexOptions.IgnoreCase;
+                    IEnumerable<Regex> badWordMatchers = ChatBlockWords.ToArray().Select(x => new Regex(string.Format(PatternTemplate, x), Options));
+                    string output = badWordMatchers.Aggregate(tmessage, (current, matcher) => matcher.Replace(current, CensoredText));
+                    return output;
                 }
                 if (LanguageBlock)
                 {
-                    if (LanguageBlockWords.Any(s => message.Contains(s)))
-                    {
-                        if (AdminsListPlayers.Contains(player.playerData.username))
-                            player.SendToSelf(Channel.Unsequenced, 10, "Because you are staff, your message has NOT been blocked.");
-                        else
-                        {
-                            player.SendToSelf(Channel.Unsequenced, 10, "--------------------------------------------------------------------------------------------");
-                            player.SendToSelf(Channel.Unsequenced, 10, "             Solo inglés! Tu mensaje ha sido bloqueado.");
-                            player.SendToSelf(Channel.Unsequenced, 10, "             Only English! Your message has been blocked.");
-                            player.SendToSelf(Channel.Unsequenced, 10, "--------------------------------------------------------------------------------------------");
-                            return true;
-                        }
-                    }
+                    const RegexOptions Options = RegexOptions.IgnoreCase;
+                    IEnumerable<Regex> badWordMatchers = LanguageBlockWords.ToArray().Select(x => new Regex(string.Format(PatternTemplate, x), Options));
+                    string output = badWordMatchers.Aggregate(tmessage, (current, matcher) => matcher.Replace(current, CensoredText));
+                    return output;
                 }
             }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
             }
-            return false;
+            return message;
         }
     }
 }

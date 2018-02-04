@@ -15,10 +15,10 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSayExecutableBy == "admin" || CmdSayExecutableBy == "everyone")
+                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSayExecutableBy == "admins" || CmdSayExecutableBy == "everyone")
                 {
                     string arg1 = GetArgument.Run(1, false, true, message);
-                    if (String.IsNullOrWhiteSpace(arg1))
+                    if (String.IsNullOrEmpty(arg1))
                         player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
                     else
                         player.SendToAll(Channel.Unsequenced, 10, $"<color=#{MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
