@@ -1,6 +1,6 @@
 # Website
 
-Check our [Website](https://userr00t.github.io/BP-Essentials/) for features, commands, and more!
+Check our [Website](https://userr00t.github.io/BP-Essentials/) for features, commands, installation, and more!
 
 
 ## Synopsis
