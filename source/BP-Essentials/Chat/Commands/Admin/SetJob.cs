@@ -36,13 +36,13 @@ namespace BP_Essentials.Commands
                         {
                             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                                 if (shPlayer.username == arg2 || shPlayer.ID.ToString() == arg2.ToString())
-                                    if (arg1int <= 9 && arg1int >= 0)
+                                    if (arg1int <= Jobs.Length && arg1int >= 0)
                                     {
                                         player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, arg2, Jobs[arg1int]));
                                         typeof(SvPlayer).GetMethod("SvTrySetJob", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { arg1int, true, false });
                                     }
                                     else
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Error: The value must be between 0 and 9.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Error: The value must be between 0 and {Jobs.Length}.</color>");
                         }
                         else
                             player.SendToSelf(Channel.Unsequenced, 10, NotValidArg);

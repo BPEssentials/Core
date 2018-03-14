@@ -20,11 +20,7 @@ namespace BP_Essentials.Commands {
                                     {
                                         if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
                                         {
-                                            // TODO:
-                                            // - Rotation doesn't work all the time
-                                            // - Doesn't always TP
-                                            shPlayer.SetPosition(shPlayer1.GetPosition());
-                                            shPlayer.SetRotation(shPlayer1.GetRotation());
+                                            shPlayer.svPlayer.SvReset(shPlayer1.GetPosition(), shPlayer1.GetRotation(), shPlayer1.GetPlaceIndex());
                                             shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + shPlayer1.username + $"</color><color={infoColor}> Teleported you to him.</color>");
                                             player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Teleported</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}> To you.</color>");
                                         }

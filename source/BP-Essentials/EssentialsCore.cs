@@ -33,15 +33,15 @@ namespace BP_Essentials
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
                     Debug.Log("[ERROR] Essentials - Versions do not match!");
-                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsVariablesPlugin.Version);
-                    Debug.Log("[ERROR] Essentials - Settings file version" + LocalVersion);
+                    Debug.Log("[ERROR] Essentials - Essentials version: " + EssentialsVariablesPlugin.Version);
+                    Debug.Log("[ERROR] Essentials - Settings file version: " + LocalVersion);
                     Debug.Log("");
                     Debug.Log("");
                     Debug.Log("[ERROR] Essentials - Recreating settings file!");
-                    DateTime date = DateTime.Now;
-                    if (File.Exists(SettingsFile + "." + date +".OLD"))
-                        File.Delete(SettingsFile + "." + date +".OLD");
-                    File.Move(SettingsFile, SettingsFile + "." + date + ".OLD");
+                    string date = DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss");
+                    if (File.Exists(SettingsFile + "." + date + ".OLD"))
+                        File.Delete(SettingsFile + "." + date + ".OLD");
+                    File.Move(SettingsFile, $"{SettingsFile}.{date}.OLD");
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);
