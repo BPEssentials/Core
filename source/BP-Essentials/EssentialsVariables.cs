@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "PRE-2.0.0";
+        public const string Version = "2.0.1";
 
 
         // Generic Constants
@@ -61,7 +61,7 @@ namespace BP_Essentials
 
         // Arrays
         public static string[] Announcements;
-        public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor" };
+        public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor", "DeliveryDriver", "TaxiDriver" };
 
         // Messages
         public static string MsgSayPrefix;

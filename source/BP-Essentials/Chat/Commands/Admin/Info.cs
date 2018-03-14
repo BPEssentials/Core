@@ -31,12 +31,12 @@ namespace BP_Essentials.Commands
                                     "",
                                     "",
                                     "Job:                         " + Jobs[shPlayer.job.jobIndex],
-                                    "Health:                    " + shPlayer.health,
-                                    "OwnsApartment:   " + shPlayer.ownedApartment,
+                                    "Health:                    " + Math.Floor(shPlayer.health),
+                                    "OwnsApartment:   " + (bool)shPlayer.ownedApartment,
                                     "Position:                 " + shPlayer.GetPosition().ToString(),
                                     "WantedLevel:         " + shPlayer.wantedLevel,
                                     "IsAdmin:                 " + shPlayer.admin,
-                                    "BankBalance:       " + shPlayer.svPlayer.bankBalance,
+                                    "BankBalance:         " + shPlayer.svPlayer.bankBalance,
                                     "IP:                            " + shPlayer.svPlayer.svManager.GetAddress(shPlayer.svPlayer.connection)
                                 };
 
