@@ -21,12 +21,12 @@ namespace BP_Essentials
                 Confirmed = false;
                 return false;
             }
-            else if (!(Confirmed))
+            else
             {
                 Confirmed = false;
                 player.SendToSelf(Channel.Unsequenced, 10, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdConfirm}</color><color={warningColor}>' to confirm.</color>");
             }
-            return false;
+            return true;
         }
 
         [Hook("SvPlayer.Initialize")]
