@@ -67,6 +67,7 @@
     <Compile Include="Chat\Commands\Everyone\Atm.cs" />
     <Compile Include="Chat\Commands\Everyone\ClearChat.cs" />
     <Compile Include="Chat\Commands\Admin\DebugCommands.cs" />
+    <Compile Include="Chat\Commands\Everyone\Confirm.cs" />
     <Compile Include="Chat\Commands\Everyone\Essentials.cs" />
     <Compile Include="Chat\Commands\Admin\ExecuteOnPlayer.cs" />
     <Compile Include="Chat\Commands\Admin\GodMode.cs" />

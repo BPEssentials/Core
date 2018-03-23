@@ -44,12 +44,12 @@ namespace BP_Essentials
                         if (!CmdClearChatDisabled)
                             return Commands.ClearChat.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdAfk) || message.StartsWith(CmdAfk2))
                         if (!CmdAfkDisabled)
                             return Commands.Afk.Run(player);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
                         return Commands.Essentials.Run(player, message);
                     else if (message.StartsWith(CmdDebug) || (message.StartsWith(CmdDebug2)))
@@ -58,12 +58,12 @@ namespace BP_Essentials
                         if (!CmdGodmodeDisabled)
                             return Commands.GodMode.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdPay) || message.StartsWith(CmdPay2))
                         if (!CmdPayDisabled)
                             return Commands.Pay.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdSave))
                         return Commands.Save.Run(player);
                     else if (message.StartsWith(CmdBan))
@@ -88,17 +88,17 @@ namespace BP_Essentials
                         if (!CmdMuteDisabled)
                             return Commands.Mute.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdSay) || message.StartsWith(CmdSay2))
                         if (!CmdSayDisabled)
                             return Commands.Say.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdInfo) || message.StartsWith(CmdInfo2))
                         if (!CmdInfoDisabled)
                             return Commands.Info.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
 
                     else if (message.StartsWith(CmdLogs))
                         return Commands.GetLogs.Run(player, ChatLogFile);
@@ -107,32 +107,32 @@ namespace BP_Essentials
                         if (!CmdPlayersDisabled)
                             return Commands.OnlinePlayers.Run(player);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdGive) || (message.StartsWith(CmdGive2)))
                         if (!CmdGiveDisabled)
                             return Commands.Give.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdFakeJoin) || (message.StartsWith(CmdFakeJoin2)))
                         if (!CmdFakeJoinDisabled)
                             return Commands.FakeJoin.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdFakeLeave) || (message.StartsWith(CmdFakeLeave2)))
                         if (!CmdFakeLeaveDisabled)
                             return Commands.FakeLeave.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdAtm) || (message.StartsWith(CmdAtm2)))
                         if (!CmdAtmDisabled)
                             return Commands.Atm.Run(player);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdCheckAlts) || (message.StartsWith(CmdCheckAlts2)))
                         if (!CmdCheckAltsDisabled)
                             return Commands.CheckAlts.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdHeal) || message.StartsWith(CmdHeal2))
                         return Commands.Heal.Run(player, message);
                     else if (message.StartsWith(CmdFeed) || message.StartsWith(CmdFeed2))
@@ -141,49 +141,51 @@ namespace BP_Essentials
                         if (!CmdLatestVoteResultsDisabled)
                             return Commands.LatestVoteResults.Run(player);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdMoney) || message.StartsWith(CmdMoney2))
                         if (!CmdMoneyDisabled)
                             return Commands.Money.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdSetjob) || message.StartsWith(CmdSetjob2))
                         if (!CmdSetjobDisabled)
                             return Commands.SetJob.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdClearWanted) || message.StartsWith(CmdClearWanted2))
                         if (!CmdClearWantedDisabled)
                             return Commands.ClearWanted.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
 
                     else if (message.StartsWith(CmdReport) || message.StartsWith(CmdReport2))
                         if (!CmdReportDisabled)
                             return Commands.Report.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdLaunch) || message.StartsWith(CmdLaunch2))
                         if (!CmdLaunchDisabled)
                             return Commands.Launch.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdStrip) || message.StartsWith(CmdStrip2))
                         if (!CmdStripDisabled)
                             return Commands.Strip.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdSlap) || message.StartsWith(CmdSlap2))
                         if (!CmdSlapDisabled)
                             return Commands.Slap.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
 
                     else if (message.StartsWith(CmdSearch) || message.StartsWith(CmdSearch2))
                         if (!CmdSearchDisabled)
                             return Commands.Search.Run(player, message);
                         else
-                            { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                    else if (message.StartsWith(CmdConfirm) || message.StartsWith(CmdConfirm2))
+                        return Commands.Confirm.Run(player);
                     if (MsgUnknownCommand)
                     {
                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");
