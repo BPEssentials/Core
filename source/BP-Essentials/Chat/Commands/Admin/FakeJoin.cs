@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdFakeJoinExecutableBy == "admins" || CmdFakeJoinExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdFakeJoinExecutableBy))
                 {
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (!String.IsNullOrEmpty(arg1))

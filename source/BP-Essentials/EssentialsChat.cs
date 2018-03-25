@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -204,17 +205,31 @@ namespace BP_Essentials
                     player.SendToSelf(Channel.Unsequenced, 10, PlayerIsAFK);
                     return true;
                 }
-                message = new Regex("(<)").Replace(message, "<<b></b>"); // Escape Rich Text tags : Message
-                string username = new Regex("(<)").Replace(player.playerData.username, "<<b></b>");// Escape Rich Text tags : Username
+
+                // Will improve this someday..
+                foreach (KeyValuePair<string, _Group> curr in Groups)
+                {
+                    if (curr.Value.Users.Contains(player.playerData.username))
+                    {
+                        _msg = curr.Value.Message;
+                        _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
+                        _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
+                        player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
+                        return true;
+                    }
+                }
                 if (AdminsListPlayers.Contains(player.playerData.username))
                 {
-                    player.SendToAllOthers(Channel.Unsequenced, 10, $"<color=#f45342>[STAFF]</color> <color=#f47141>{username}: </color><color=#35dfe8>{message}</color>");
+                    _msg = AdminMessage;
+                    _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
+                    _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
+                    player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
                     return true;
                 }
-                if (!ChatBlock && !LanguageBlock)
-                    return false;
-                string filteredmsg = Chat.LangAndChatBlock.Run(player, message);
-                player.SendToAllOthers(Channel.Unsequenced, 10, $"{username}: {filteredmsg}");
+                _msg = PlayerMessage;
+                _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
+                _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
+                player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
                 return true;
             }
             catch (Exception ex)

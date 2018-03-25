@@ -39,6 +39,11 @@ namespace BP_Essentials
                             File.WriteAllText(CustomCommandsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/customcommands.txt"));
                             break;
                         }
+                    case CustomGroupsFile:
+                        {
+                            File.WriteAllText(CustomGroupsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/customgroups.txt"));
+                            break;
+                        }
                 }
             }
             catch (Exception ex)

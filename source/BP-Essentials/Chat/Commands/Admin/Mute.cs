@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdMuteExecutableBy == "admins" || CmdMuteExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdMuteExecutableBy))
                 {
                     string muteuser = null;
                     var found = false;

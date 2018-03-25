@@ -16,7 +16,7 @@ namespace BP_Essentials
         public string response { get; set; }
     }
 
-    public class _RootObject
+    class RootObject
     {
         public List<CustomCommand> CustomCommands { get; set; }
     }
@@ -27,7 +27,7 @@ namespace BP_Essentials
         {
             try
             {
-                _RootObject m = JsonConvert.DeserializeObject<_RootObject>(FilterComments.Run(CustomCommandsFile));
+                RootObject m = JsonConvert.DeserializeObject<RootObject>(FilterComments.Run(CustomCommandsFile));
                 foreach (var command in m.CustomCommands)
                 {
                     CustomCommands.Add(CmdCommandCharacter + command.command);

@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSayExecutableBy == "admins" || CmdSayExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdSayExecutableBy))
                 {
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (String.IsNullOrEmpty(arg1))

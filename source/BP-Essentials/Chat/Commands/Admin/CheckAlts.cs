@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdCheckAltsExecutableBy == "admins" || CmdCheckAltsExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdCheckAltsExecutableBy))
                 {
                     var arg1 = GetArgument.Run(1, false, false, message);
                     var found = 0;

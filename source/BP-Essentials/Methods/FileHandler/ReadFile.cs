@@ -38,6 +38,8 @@ namespace BP_Essentials
         public string ArgRequired { get; set; }
         public string NotFoundOnline { get; set; }
         public string AdminSearchingInv { get; set; }
+        public string PlayerMessage { get; set; }
+        public string AdminMessage { get; set; }
     }
     [Serializable]
     public class MessageColors
@@ -69,7 +71,7 @@ namespace BP_Essentials
         public string c { get; set; }
     }
     [Serializable]
-    public class RootObject
+    public class __RootObject
     {
         public _General General { get; set; }
         public _Messages Messages { get; set; }
@@ -87,7 +89,7 @@ namespace BP_Essentials
                 switch (fileName)
                 {
                     case SettingsFile:
-                        RootObject m = JsonConvert.DeserializeObject<RootObject>(FilterComments.Run(SettingsFile));
+                        __RootObject m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
                         LocalVersion = m.General.version;
                         CmdCommandCharacter = m.General.CommandCharacter;
                         TimestampFormat = m.General.TimestapFormat;
@@ -110,6 +112,8 @@ namespace BP_Essentials
                         ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
                         NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
                         AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
+                        PlayerMessage = m.Messages.PlayerMessage;
+                        AdminMessage = m.Messages.AdminMessage;
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
                         LanguageBlock = m.Misc.enableLanguageBlock;

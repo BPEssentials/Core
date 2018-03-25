@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands {
                 try
                 {
                     var player = (SvPlayer)oPlayer;
-                    if (AdminsListPlayers.Contains(player.playerData.username) && CmdGodmodeExecutableBy == "admins" || CmdGodmodeExecutableBy == "everyone")
+                    if (HasPermission.Run(player, CmdGodmodeExecutableBy))
                     {
                         ReadFile.Run(GodListFile);
                             string name = GetArgument.Run(1, false, true, message).Trim();

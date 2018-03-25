@@ -15,6 +15,7 @@ namespace BP_Essentials
         {
             try
             {
+                // this really needs some improvement
                 if (fileName == "all")
                 {
                     if (!Directory.Exists(FileDirectory))
@@ -70,6 +71,12 @@ namespace BP_Essentials
                         CreateFile.Run(SettingsFile);
                         Debug.Log(SettingsFile + " Does not exist! Creating one.");
                     }
+                    if (!File.Exists(CustomGroupsFile))
+                    {
+                        File.Create(CustomGroupsFile).Close();
+                        CreateFile.Run(CustomGroupsFile);
+                        Debug.Log(CustomGroupsFile + " Does not exist! Creating one.");
+                    }
                     if (!File.Exists(CustomCommandsFile))
                     {
                         File.Create(CustomCommandsFile).Close();
@@ -101,7 +108,7 @@ namespace BP_Essentials
                 {
                     if (!File.Exists(fileName))
                     {
-                        if (fileName == SettingsFile || fileName == ChatBlockFile || fileName == LanguageBlockFile || fileName == CustomCommandsFile)
+                        if (fileName == SettingsFile || fileName == ChatBlockFile || fileName == LanguageBlockFile || fileName == CustomCommandsFile || fileName == CustomGroupsFile)
                         {
                             File.Create(fileName).Close();
                             CreateFile.Run(fileName);

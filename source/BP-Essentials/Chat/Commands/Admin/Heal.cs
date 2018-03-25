@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdHealExecutableBy == "admins" || CmdHealExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdHealExecutableBy))
                 {
                     string arg1 = GetArgument.Run(1, false, true, message).Trim();
                     string msg = $"<color={infoColor}>Healed </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";

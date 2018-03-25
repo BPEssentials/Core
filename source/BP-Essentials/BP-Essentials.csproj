@@ -87,12 +87,14 @@
     <Compile Include="Chat\Announce.cs" />
     <Compile Include="Methods\API\DownloadFile.cs" />
     <Compile Include="Methods\API\FilterComments.cs" />
+    <Compile Include="Methods\API\HasPermission.cs" />
     <Compile Include="Methods\API\StringToVar.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
     <Compile Include="Methods\Check\CheckBanned.cs" />
     <Compile Include="Methods\FileHandler\CheckFiles.cs" />
     <Compile Include="Methods\Check\CheckGodMode.cs" />
     <Compile Include="Methods\FileHandler\CreateFile.cs" />
+    <Compile Include="Methods\FileHandler\ReadGroups.cs" />
     <Compile Include="Methods\misc\ErrorLogging.cs" />
     <Compile Include="Methods\API\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />
