@@ -8,7 +8,7 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAfkExecutableBy == "admins" || CmdAfkExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdAfkExecutableBy))
                 {
                     ReadFile.Run(AfkListFile);
                     if (AfkPlayers.Contains(player.playerData.username))

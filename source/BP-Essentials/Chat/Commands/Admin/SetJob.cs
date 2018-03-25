@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSetjobExecutableBy == "admins" || CmdSetjobExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdSetjobExecutableBy))
                 {
                     string NotValidArg = $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>";
                     string arg1 = GetArgument.Run(1, false, false, message);

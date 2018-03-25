@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdAtmExecutableBy == "admins" || CmdAtmExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdAtmExecutableBy))
                 {
                     foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                         if (shPlayer.svPlayer == player)

@@ -10,7 +10,7 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdSaveExecutableBy == "admins" || CmdSaveExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdSaveExecutableBy))
                 {
                     var thread = new Thread(SaveNow.Run);
                     thread.Start();

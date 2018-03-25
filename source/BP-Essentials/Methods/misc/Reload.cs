@@ -25,6 +25,7 @@ namespace BP_Essentials
                         player.SendToSelf(Channel.Unsequenced, 10, "[OK] Config file reloaded");
                         player.SendToSelf(Channel.Unsequenced, 10, "Reloading critical .txt files...");
                         ReadCustomCommands.Run();
+                        ReadGroups.Run();
                         ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
                         ReadStream.Run(ChatBlockFile, ChatBlockWords);
                         ReadStream.Run(AdminListFile, AdminsListPlayers);
@@ -50,6 +51,7 @@ namespace BP_Essentials
                     ReadStream.Run(ChatBlockFile, ChatBlockWords);
                     ReadStream.Run(AdminListFile, AdminsListPlayers);
                     ReadCustomCommands.Run();
+                    ReadGroups.Run();
                     LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                     ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
                     ReadFile.Run(AnnouncementsFile);

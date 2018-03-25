@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdPayExecutableBy == "admins" || CmdPayExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdPayExecutableBy))
                 {
                     string CorrSyntax = $"<color={argColor}>" + GetArgument.Run(0, false, false, message) + $"</color><color={errorColor}> [Player] [Amount]</color><color={warningColor}> (Incorrect or missing argument(s).)</color>";
                     string arg1 = GetArgument.Run(1, false, true, message);

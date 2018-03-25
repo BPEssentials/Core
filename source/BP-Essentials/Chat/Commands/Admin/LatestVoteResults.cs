@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLatestVoteResultsExecutableBy == "admins" || CmdLatestVoteResultsExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdLatestVoteResultsExecutableBy))
                 {
                     if (!LatestVotePeople.Any())
                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>The list seems empty.</color>");

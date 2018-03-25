@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.0.3";
+        public const string Version = "2.1.4";
 
 
         // Generic Constants
@@ -24,6 +24,7 @@ namespace BP_Essentials
         public const string MuteListFile = FileDirectory + "mutelist.txt";
         public const string ExceptionFile = FileDirectory + "exceptions.txt";
         public const string CustomCommandsFile = FileDirectory + "CustomCommands.txt";
+        public const string CustomGroupsFile = FileDirectory + "CustomGroups.txt";
 
         public const string AdminListFile = "admin_list.txt";
         public const string RulesFile = "server_info.txt";
@@ -73,6 +74,8 @@ namespace BP_Essentials
         public static string SelfIsMuted;
         public static string NotFoundOnline;
         public static string AdminSearchingInv;
+        public static string PlayerMessage;
+        public static string AdminMessage;
 
         public static string infoColor, errorColor, warningColor, argColor;
         // Strings
@@ -155,10 +158,14 @@ namespace BP_Essentials
         public static int[] BlockedSpawnIds;
 
         // Misc.
+        public static string _msg;
+        public static string username;
         public static string TimestampFormat;
         public const string CensoredText = "******";
         public const string PatternTemplate = @"\b({0})(s?)\b";
         public static Dictionary<_PlayerList, int> playerList = new Dictionary<_PlayerList, int>();
+        public static Dictionary<string, _Group> Groups = new Dictionary<string, _Group>();
+
         public static string[] ReportReasons =
         {
             "Random Vote Kick",
@@ -933,6 +940,12 @@ namespace BP_Essentials
         public int LastMenu;
         public ShPlayer reportedPlayer { get; set; }
         public string reportedReason;
+    }
+    public class _Group
+    {
+        public string Name;
+        public string Message;
+        public List<string> Users = new List<string>();
     }
     public static class CurrentMenu //Todo: convert to enum
     {

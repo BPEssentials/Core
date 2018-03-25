@@ -15,7 +15,8 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdClearWantedExecutableBy == "admins" || CmdClearWantedExecutableBy == "everyone")
+
+                if (HasPermission.Run(player, CmdClearWantedExecutableBy))
                 {
                     bool found = false;
                     string arg1 = GetArgument.Run(1, false, true, message);

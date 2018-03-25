@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdFeedExecutableBy == "admins" || CmdFeedExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdFeedExecutableBy))
                 {
                     string arg1 = GetArgument.Run(1, false, true, message).Trim();
                     string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";

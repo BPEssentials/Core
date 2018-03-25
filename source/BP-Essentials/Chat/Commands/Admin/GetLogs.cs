@@ -14,7 +14,7 @@ namespace BP_Essentials.Commands
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdLogsExecutableBy == "admins" || CmdLogsExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdLogsExecutableBy))
                 {
                     if (logFile != ChatLogFile) return true;
                     // My solution wasn't efficient, so stackoverflow it is!

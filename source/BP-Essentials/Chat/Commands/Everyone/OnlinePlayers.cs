@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             {
 
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username) && CmdPlayersExecutableBy == "admins" || CmdPlayersExecutableBy == "everyone")
+                if (HasPermission.Run(player, CmdPlayersExecutableBy))
                 {
                     var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
                     switch (realPlayers)
