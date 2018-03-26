@@ -15,20 +15,19 @@ namespace BP_Essentials.Chat
         {
             try
             {
-                string tmessage = message.ToLower();
                 var player = (SvPlayer)oPlayer;
                 if (ChatBlock)
                 {
                     const RegexOptions Options = RegexOptions.IgnoreCase;
                     IEnumerable<Regex> badWordMatchers = ChatBlockWords.ToArray().Select(x => new Regex(string.Format(PatternTemplate, x), Options));
-                    string output = badWordMatchers.Aggregate(tmessage, (current, matcher) => matcher.Replace(current, CensoredText));
+                    string output = badWordMatchers.Aggregate(message, (current, matcher) => matcher.Replace(current, CensoredText));
                     return output;
                 }
                 if (LanguageBlock)
                 {
                     const RegexOptions Options = RegexOptions.IgnoreCase;
                     IEnumerable<Regex> badWordMatchers = LanguageBlockWords.ToArray().Select(x => new Regex(string.Format(PatternTemplate, x), Options));
-                    string output = badWordMatchers.Aggregate(tmessage, (current, matcher) => matcher.Replace(current, CensoredText));
+                    string output = badWordMatchers.Aggregate(message, (current, matcher) => matcher.Replace(current, CensoredText));
                     return output;
                 }
             }
