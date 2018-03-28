@@ -26,6 +26,11 @@ namespace BP_Essentials
                 //AFK Handling
                 if (AfkPlayers.Contains(player.playerData.username))
                     Commands.Afk.Run(player);
+                else if (message.StartsWith(CmdAfk) || message.StartsWith(CmdAfk2))
+                    if (!CmdAfkDisabled)
+                        return Commands.Afk.Run(player);
+                    else
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                 if (message.StartsWith(CmdCommandCharacter))
                 {
                     // CustomCommands
@@ -44,11 +49,6 @@ namespace BP_Essentials
                     else if (message.StartsWith(CmdClearChat) || message.StartsWith(CmdClearChat2))
                         if (!CmdClearChatDisabled)
                             return Commands.ClearChat.Run(player, message);
-                        else
-                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
-                    else if (message.StartsWith(CmdAfk) || message.StartsWith(CmdAfk2))
-                        if (!CmdAfkDisabled)
-                            return Commands.Afk.Run(player);
                         else
                         { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith("/essentials") || message.StartsWith("/ess"))
