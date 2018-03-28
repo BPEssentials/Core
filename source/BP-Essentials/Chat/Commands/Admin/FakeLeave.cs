@@ -20,7 +20,7 @@ namespace BP_Essentials.Commands
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (!String.IsNullOrEmpty(arg1))
                     {
-                        player.SendToAll(Channel.Unsequenced, 10, arg1 + " disconncted");
+                        player.SendToAll(Channel.Unsequenced, 10, arg1 + " disconnected");
                     }
                     else
                         player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
