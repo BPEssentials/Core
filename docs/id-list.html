@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+  <title>BP-Essentials - ID-List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.css" type="text/css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#292b2c;"
+        },
+        "button": {
+          "background": "#5cb85c"
+        }
+      },
+      "position": "top"
+    })});
+  </script>
+        <script>
+        function GetIdList() {
+          var tb = document.getElementById("idtablebody");
+          tb.innerHTML = ""; // Clear tbody before if ran twice
+          $.getJSON("id-list.json", function (json) {
+              $.each(json.items, function (i, ch) {
+                tb.innerHTML += "<tr><th>" + ch.id +"</th><th>" + ch.name + "</th><th>" + ch.gameid+ "</th><th>"; // Construct rows
+              });
+              document.getElementById("Table").style.display = "table";
+              document.getElementById("Loader").style.display = "none";
+              document.getElementById("LoadingText").style.display = "none";
+          });
+        }
+       </script>
+</head>
+
+<body style="width=100%;word-wrap: break-word;" class="bg-inverse" onload="GetIdList();">
+  <div class="py-5 section text-center bg-inverse" id="About">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-warning">ID List</h1>
+          <p class="lead" id="LoadingText">Loading... please wait!</p>
+          <div class="loader" id="Loader" style="display:block"><span></span></div>
+          <table id="Table" class="table" style="display: none;width: 537px; border-radius: 0;border-radius: 5px;width: 50%;margin: 0px auto;float: none;">
+            <thead style="background-color: #2f2f2f; color:white;">
+            <tr>
+              <th>ID</th>
+              <th>Item name</th>
+              <th>Game ID</th>
+            </tr>
+            </thead>
+            <tbody id="idtablebody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+  <script src="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.min.js"></script>
+</body>
+
+</html>

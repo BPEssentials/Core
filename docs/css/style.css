@@ -26,6 +26,16 @@ a.btn {
   .title {
     font-size: xx-large;
   }
+  .parallax-margin {
+    margin-top: 0px !important;
+  }
+  .parallax {
+    width: 100% !important;
+    position: unset !important;
+  }
+  body {
+    height: 100% !important;
+  }
 }
 /* Gradient  */
 /* Project card css */
@@ -64,6 +74,25 @@ a.btn {
     cursor: pointer;
 }
 
+body {
+  scrollbar-face-color: slategray;
+  scrollbar-track-color: #b8c0c8;
+}
+
+body {
+  height: 0px;
+  width: 100%;
+}
+/* Parallax scrolling effect */
+.parallax {
+  width: 100%;
+  z-index: -1;
+  position: fixed;
+}
+.parallax-margin {
+  margin-top: 55%;
+}
+
 /* Scrollbar */
 
 ::-webkit-scrollbar {
@@ -87,4 +116,77 @@ body {
 body {
   height: 100%;
   width: 100%;
+}
+
+/* Loader Circle */
+.loader {
+  display: block;
+	height: 128px;
+	width: 128px;
+  margin: 0px auto;float: none;
+	-webkit-animation: loader-1 3s linear infinite;
+	        animation: loader-1 3s linear infinite;
+}
+@-webkit-keyframes loader-1 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes loader-2-1 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.loader span {
+	display: block;
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 128px;
+	width: 128px;
+	clip: rect(16px, 128px, 128px, 0);
+	-webkit-animation: loader-2 1.5s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+	        animation: loader-2 1.5s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+}
+@-webkit-keyframes loader-2 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes loader-2 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.loader span::before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 128px;
+	width: 128px;
+	border: 3px solid transparent;
+	border-top: 3px solid #FFF;
+	border-radius: 50%;
+	-webkit-animation: loader-3 1.5s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+	        animation: loader-3 1.5s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+}
+@-webkit-keyframes loader-3 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes loader-2-3 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.loader span::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 128px;
+	width: 128px;
+	border: 3px solid rgba(255, 255, 255, .5);
+	border-radius: 50%;
 }
