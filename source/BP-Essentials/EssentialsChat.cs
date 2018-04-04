@@ -19,7 +19,6 @@ namespace BP_Essentials
             try
             {
 
-
                 //Message Logging
                 if (!(MutePlayers.Contains(player.playerData.username)))
                     LogMessage.Run(player, message);
@@ -214,7 +213,7 @@ namespace BP_Essentials
                         _msg = curr.Value.Message;
                         _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                         _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                        player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
+                        player.SendToAll(Channel.Unsequenced, 10, _msg);
                         return true;
                     }
                 }
@@ -223,13 +222,13 @@ namespace BP_Essentials
                     _msg = AdminMessage;
                     _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                     _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                    player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
+                    player.SendToAll(Channel.Unsequenced, 10, _msg);
                     return true;
                 }
                 _msg = PlayerMessage;
                 _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                 _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                player.SendToAllOthers(Channel.Unsequenced, 10, _msg);
+                player.SendToAll(Channel.Unsequenced, 10, _msg);
                 return true;
             }
             catch (Exception ex)
