@@ -14,7 +14,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsMethodsPlugin;
@@ -24,25 +23,25 @@ namespace BP_Essentials
     public class EssentialsCorePlugin {
 
         //Initialization
-        [Hook("SvManager.StartServerNetwork")]
-        public static void StartServerNetwork(SvManager svManager)
+        [Hook("SvNetMan.StartServerNetwork")]
+        public static void StartServerNetwork(SvNetMan netMan)
         {
-       //     ShManager Manager = (ShManager)typeof(SvManager).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(svManager);
+
             try
             {
                 Reload.Run(true);
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
                     Debug.Log("[ERROR] Essentials - Versions do not match!");
-                    Debug.Log("[ERROR] Essentials - Essentials version: " + EssentialsVariablesPlugin.Version);
-                    Debug.Log("[ERROR] Essentials - Settings file version: " + LocalVersion);
+                    Debug.Log("[ERROR] Essentials - Essentials version:" + EssentialsVariablesPlugin.Version);
+                    Debug.Log("[ERROR] Essentials - Settings file version" + LocalVersion);
                     Debug.Log("");
                     Debug.Log("");
                     Debug.Log("[ERROR] Essentials - Recreating settings file!");
-                    string date = DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss");
-                    if (File.Exists(SettingsFile + "." + date + ".OLD"))
-                        File.Delete(SettingsFile + "." + date + ".OLD");
-                    File.Move(SettingsFile, $"{SettingsFile}.{date}.OLD");
+                    DateTime date = DateTime.Now;
+                    if (File.Exists(SettingsFile + "." + date +".OLD"))
+                        File.Delete(SettingsFile + "." + date +".OLD");
+                    File.Move(SettingsFile, SettingsFile + "." + date + ".OLD");
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);
@@ -70,7 +69,7 @@ namespace BP_Essentials
             if (Announcements.Length != 0)
             {
                 var thread = new Thread(new ParameterizedThreadStart(Chat.Announce.Run));
-                thread.Start(svManager);
+                thread.Start(netMan);
                 Debug.Log(SetTimeStamp.Run() + "[INFO] Announcer started successfully!");
             }
             else

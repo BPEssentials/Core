@@ -1,0 +1,326 @@
+/*
+        BP-Essentials ----------------------------------------------------------------
+        |                                                                            |
+        |                        Broke Protocol: Essentials                          |
+        |                     Created by UserR00T, DBK, and BP                       |
+        |                                                                            |
+        |  Note:                                                                     |
+        |  -  'CommandCharacter' will be automatically added to all commands.        |
+        |       E.g:                                                                 |
+        |         Wrong:   "Command": "/say"                                         |
+        |         Correct: "Command": "say"                                          |
+        |                                                                            |
+        |  -  Basic JSON rules are still required. C like comments are allowed.      |
+        |                                                                            |
+        |  -  You CANNOT change CommandName.                                         |
+        |       It defines what the command is in the code.                          |
+        |                                                                            |
+        |                                                                            |
+        ------------------------------------------------------------------------------
+        
+*/
+{
+  "General": {
+    // File version number, do not change this.
+    "version": "PRE-2.0.0",
+    
+    // The character that messages need to start with to recognize it as command.
+    "CommandCharacter": "/",
+    
+    // The timestamp you'll see infront of a message.
+    // Placeholders:
+    // {YYYY}  | Year
+    // {MM}    | Month (2 Numbers)
+    // {MMMM}  | Month (Full Name)
+    // {DD}    | Day (2 Numbers)
+    // {DDDD}  | Day (Full Name)
+    // {H}     | Hours (24 hour clock)
+    // {h}     | Hours (12 hour clock) (add {T} for PM/AM)
+    // {M}     | Minutes
+    // {S}     | Seconds
+    // {T}     | AM/PM (used in {h} 12 hour clock)
+    "TimestapFormat": "[{YYYY}/{MM}/{DD}] [{H}:{M}:{S}]",
+    
+    // Set this to the hex color the say message will appear in.
+    "MsgSayColor": "#d63302",
+    
+    // If this is set to true it will block and send a message to the player if it is an command and it isn't 
+    // recognized in BP-Essentials.
+    "DisplayUnknownCommandMessage": true,
+    
+    // Set this to 'true' if you want to disable vote kicking.
+    "VoteKickDisabled": false,
+    
+    // Set this to 'false' if you want to disable those '10 DMG Blocked!' while in godmode.
+    "ShowDMGMessage": true
+  },
+  "Messages": {
+    // The message you'll see if you have no permission to the command.
+    "noperm": "No permission.",
+    
+    // The message you will get if you execute a command that is 'Disabled'.
+    "DisabledCommand": "The owner of this server disabled this command.",
+    
+    // The prefix of say.
+    "msgSayPrefix": "[!!!]",
+    
+    "DiscordLink": "https://discord.gg/Test"
+  },
+  "Misc": {
+    // If set to 'true', blocks messages defined in 'chatblock.txt'.
+    "enableChatBlock": true,
+    
+    // If set to 'true', blocks messages defined in 'languageblock.txt'.
+    "enableLanguageBlock": true,
+    
+    // If the player connects with a second account on the same IP it will IP-Ban him.
+    // WARNING: this will also happen if for example a brother connects because he shares the same IP.
+    // Use with caution.
+    "CheckForAlts": true,
+    
+    // Time between annoucments, in seconds.
+    "TimeBetweenAnnounce": 360,
+    
+    // Blocks spawning NPCs with the job ID's 
+    // Separate with comma
+    // 0 = Citizen
+    // 1 = Criminal
+    // 2 = Prisoner
+    // 3 = Police
+    // 4 = Paramedic
+    // 5 = Firefighter
+    // 6 = Gangster: Red
+    // 7 = Gangster: Green
+    // 8 = Gangster: Blue
+    // 9 = Mayor
+    // If you want to block everything except 'Citizen' to spawn, you would type this:
+    // 1, 2, 3, 4, 5, 6, 7, 8, 9
+    // And if you only want to block cops you would type this
+    // 3
+    // Set EnableBlockSpawnBot to false if you want to disable this
+    "BlockSpawnBot": "3",
+    "EnableBlockSpawnBot": false
+  },
+  "Commands": [
+  
+  
+    // Example Command
+    // {
+    // NEVER Change this, it will break stuff.
+    // Type: string
+    //   "CommandName": "Example",  
+    
+    // Command 
+    // Type: string
+    //   "Command": "hello",
+    //   "Command2": "world",
+    
+    // Defines who can execute this command.    
+    // Possible Values: 'everyone' or 'admins'
+    // Type: string
+    //   "ExecutableBy": "admins",     
+    
+    // Defines if the command is disabled.
+    // Possible Values: 'true' or 'false'
+    // Type: boolean
+    //   "Disabled": false
+    // },
+    
+    
+    {
+      "CommandName": "Say",
+      "Command": "say",
+      "Command2": "broadcast",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Pay",
+      "Command": "pay",
+      "Command2": "send",
+      "ExecutableBy": "everyone",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Reload",
+      "Command": "reload",
+      "Command2": "rl",
+    },
+    {
+      "CommandName": "ClearChat",
+      "Command": "clearchat",
+      "Command2": "cc",
+      "Disabled": false
+    },
+    {
+      "CommandName": "CheckAlts", 
+      "Command": "checkalts",
+      "Command2": "ca",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "FakeJoin",
+      "Command": "fakejoin",
+      "Command2": "fj",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "FakeLeave",
+      "Command": "fakeleave",
+      "Command2": "fl",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Info",
+      "Command": "info",
+      "Command2": "stats",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Money",
+      "Command": "money",
+      "Command2": "setbal",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Players",
+      "Command": "players",
+      "Command2": "online",
+      "ExecutableBy": "everyone",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Godmode",
+      "Command": "god",
+      "Command2": "godmode",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Afk",
+      "Command": "afk",
+      "Command2": "brb",
+      "ExecutableBy": "everyone",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Mute",
+      "Command": "mute",
+      "Command2": "unmute",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Atm",
+      "Command": "atm",
+      "Command2": "bank",
+      "ExecutableBy": "everyone",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Feed",
+      "Command": "feed",
+      "Command2": "maxstats",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Heal",
+      "Command": "heal",
+      "Command2": "hp",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Confirm",
+      "Command": "confirm",
+      "Command2": "sellapartment"
+    },
+    {
+      "CommandName": "Debug",
+      "Command": "debug",
+      "Command2": "dbug"
+    },
+    {
+      "CommandName": "Pay",
+      "Command": "pay",
+      "Command2": "send",
+      "ExecutableBy": "everyone",
+      "Disabled": false
+    },
+    {
+      "CommandName": "Help",
+      "Command": "help"
+    },
+    {
+      "CommandName": "Save",
+      "Command": "save",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Free",
+      "Command": "free",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Kill",
+      "Command": "kill",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Kick",
+      "Command": "kick",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Ban",
+      "Command": "ban",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Arrest",
+      "Command": "arrest",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Restrain",
+      "Command": "restrain",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Logs",
+      "Command": "logs",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Tp",
+      "Command": "tp",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "TpHere",
+      "Command": "tph",
+      "Command2": "tphere",
+      "ExecutableBy": "admins"
+    },
+    {
+      "CommandName": "Give",
+      "Command": "give",
+      "Command2": "spawn",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    },
+    {
+      "CommandName": "LatestVoteResults",
+      "Command": "lvr",
+      "Command2": "voteresult",
+      "ExecutableBy": "admins",
+      "Disabled": false
+    }
+  ]
+}
