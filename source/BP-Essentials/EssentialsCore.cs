@@ -14,6 +14,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using UnityEngine;
 using static BP_Essentials.EssentialsMethodsPlugin;
@@ -26,7 +27,7 @@ namespace BP_Essentials
         [Hook("SvManager.StartServerNetwork")]
         public static void StartServerNetwork(SvManager svManager)
         {
-
+       //     ShManager Manager = (ShManager)typeof(SvManager).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(svManager);
             try
             {
                 Reload.Run(true);
