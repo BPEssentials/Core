@@ -36,7 +36,7 @@ namespace BP_Essentials
                     {
                         string tmessage = message + " ";
                         string[] args = tmessage.Split(' ');
-                        return nr < args.Length ? args[nr] : string.Empty;
+                        return args[nr] ?? string.Empty;
                     }
                 }
             }
