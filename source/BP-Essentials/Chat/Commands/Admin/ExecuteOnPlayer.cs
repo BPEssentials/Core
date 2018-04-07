@@ -33,8 +33,8 @@ namespace BP_Essentials.Commands {
                                             {
                                                 if (SendToJail.Run(shPlayer, t))
                                                 {
-                                                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>{shPlayer1.username}</color> <color={infoColor}>Send you to jail.</color>");
-                                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Send</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
+                                                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>{shPlayer1.username}</color> <color={infoColor}>sent you to jail.</color>");
+                                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
                                                 }
                                                 else
                                                     player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
