@@ -15,28 +15,37 @@ namespace BP_Essentials.Commands {
                     if (HasPermission.Run(player, CmdGodmodeExecutableBy))
                     {
                         ReadFile.Run(GodListFile);
-                            string name = GetArgument.Run(1, false, true, message).Trim();
-                            string msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'" + name + $"'</color><color={infoColor}>.</color>";
-                            if (String.IsNullOrEmpty(name))
-                            {
-                                name = player.playerData.username;
-                                msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
-                            }
-                            if (GodListPlayers.Contains(name))
-                            {
-                                RemoveStringFromFile.Run(GodListFile, name);
-                                ReadFile.Run(GodListFile);
-                                player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "disabled"));
-                            }
-                            else
-                            {
-                                File.AppendAllText(GodListFile, name + Environment.NewLine);
-                                GodListPlayers.Add(name);
-                                player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "enabled"));
-                            }
+                        string name = GetArgument.Run(1, false, true, message).Trim();
+                        string msg = String.Empty;
+                        if (String.IsNullOrEmpty(name))
+                        {
+                            name = player.playerData.username;
+                            msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
                         }
                         else
-                            player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                            foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                                if (shPlayer.username == name && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == name && shPlayer.IsRealPlayer())
+                                {
+                                    name = shPlayer.username;
+                                    msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'{name}'</color><color={infoColor}>.</color>";
+                                    break;
+                                }
+
+                        if (GodListPlayers.Contains(name))
+                        {
+                            RemoveStringFromFile.Run(GodListFile, name);
+                            ReadFile.Run(GodListFile);
+                            player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "disabled"));
+                        }
+                        else
+                        {
+                            File.AppendAllText(GodListFile, name + Environment.NewLine);
+                            GodListPlayers.Add(name);
+                            player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "enabled"));
+                        }
+                    }
+                    else
+                        player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
 
                 }
                 catch (Exception ex)

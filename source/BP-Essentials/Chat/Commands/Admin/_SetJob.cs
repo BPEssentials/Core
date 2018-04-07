@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace BP_Essentials.Commands
 {
-    class SetJob : SvPlayer
+    class _SetJob : SvPlayer
     {
         public static bool Run(object oPlayer, string message)
         {
@@ -39,7 +39,8 @@ namespace BP_Essentials.Commands
                                     if (arg1int <= Jobs.Length && arg1int >= 0)
                                     {
                                         player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, arg2, Jobs[arg1int]));
-                                        typeof(SvPlayer).GetMethod("SvTrySetJob", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { arg1int, true, false });
+                                        SetJob.Run(shPlayer, arg1int, true, false);
+
                                     }
                                     else
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Error: The value must be between 0 and {Jobs.Length}.</color>");

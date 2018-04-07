@@ -109,6 +109,8 @@ namespace BP_Essentials
         public static string CmdStrip,              CmdStrip2,              CmdStripExecutableBy;
         public static string CmdSlap,               CmdSlap2,               CmdSlapExecutableBy;
         public static string CmdSearch,             CmdSearch2,             CmdSearchExecutableBy;
+        public static string CmdJail,               CmdJail2,               CmdJailExecutableBy;
+        public static string CmdKnockout,           CmdKnockout2,           CmdKnockoutExecutableBy;
         public static string CmdKill,                                       CmdKillExecutableBy;
         public static string CmdBan,                                        CmdBanExecutableBy;
         public static string CmdKick,                                       CmdKickExecutableBy;
@@ -151,6 +153,8 @@ namespace BP_Essentials
         public static bool CmdStripDisabled;
         public static bool CmdSlapDisabled;
         public static bool CmdSearchDisabled;
+        public static bool CmdJailDisabled;
+        public static bool CmdKnockoutDisabled;
         #endregion
 
         // Ints (arrays)
