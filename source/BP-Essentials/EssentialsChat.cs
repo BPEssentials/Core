@@ -151,7 +151,7 @@ namespace BP_Essentials
                         { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdSetjob) || message.StartsWith(CmdSetjob2))
                         if (!CmdSetjobDisabled)
-                            return Commands.SetJob.Run(player, message);
+                            return Commands._SetJob.Run(player, message);
                         else
                         { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdClearWanted) || message.StartsWith(CmdClearWanted2))
@@ -188,6 +188,16 @@ namespace BP_Essentials
                         { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     else if (message.StartsWith(CmdConfirm) || message.StartsWith(CmdConfirm2))
                         return Commands.Confirm.Run(player);
+                    else if (message.StartsWith(CmdJail) || message.StartsWith(CmdJail2))
+                        if (!CmdJailDisabled)
+                            return Commands.Jail.Run(player, message);
+                        else
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
+                    else if (message.StartsWith(CmdKnockout) || message.StartsWith(CmdKnockout2))
+                        if (!CmdKnockoutDisabled)
+                            return Commands.Knockout.Run(player, message);
+                        else
+                        { player.SendToSelf(Channel.Unsequenced, 10, DisabledCommand); return true; }
                     if (MsgUnknownCommand)
                     {
                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");

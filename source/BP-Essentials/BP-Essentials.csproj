@@ -51,15 +51,17 @@
     <Compile Include="Chat\Commands\Admin\Give.cs" />
     <Compile Include="Chat\Commands\Admin\Heal.cs" />
     <Compile Include="Chat\Commands\Admin\Info.cs" />
+    <Compile Include="Chat\Commands\Admin\Jail.cs" />
     <Compile Include="Chat\Commands\Admin\Kick.cs" />
     <Compile Include="Chat\Commands\Admin\Kill.cs" />
+    <Compile Include="Chat\Commands\Admin\Knockout.cs" />
     <Compile Include="Chat\Commands\Admin\LatestVoteResults.cs" />
     <Compile Include="Chat\Commands\Admin\Launch.cs" />
     <Compile Include="Chat\Commands\Admin\Money.cs" />
     <Compile Include="Chat\Commands\Admin\Restrain.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
     <Compile Include="Chat\Commands\Admin\Search.cs" />
-    <Compile Include="Chat\Commands\Admin\SetJob.cs" />
+    <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
     <Compile Include="Chat\Commands\Admin\Strip.cs" />
     <Compile Include="Chat\Commands\Everyone\Afk.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Methods\Check\CheckGodMode.cs" />
     <Compile Include="Methods\FileHandler\CreateFile.cs" />
     <Compile Include="Methods\FileHandler\ReadGroups.cs" />
+    <Compile Include="Methods\GameMethods\SetJob.cs" />
     <Compile Include="Methods\misc\ErrorLogging.cs" />
     <Compile Include="Methods\API\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Methods\misc\ReportPlayer.cs" />
     <Compile Include="Methods\misc\SaveNow.cs" />
     <Compile Include="Methods\misc\SavePeriodically.cs" />
+    <Compile Include="Methods\GameMethods\SendToJail.cs" />
     <Compile Include="Methods\misc\SetTimeStamp.cs" />
     <Compile Include="Methods\FileHandler\WriteIpToFile.cs" />
   </ItemGroup>
