@@ -76,7 +76,7 @@
       <div class="row">
         <div class="col-md-12">
           <h1 class="text-warning">Commands</h1>
-          <p class="">You can change command names in the essentials_settings.txt file.
+          <p class="">You can change all commands, aliases, and the commandchar <i>(/)</i> in the settings file. <i>(Essentials/essentials_settings.txt)</i>
           <br>
           <i>Tip: You can press the </i>▶<i> for more info about that command/feature.</i>
             <br>
@@ -132,27 +132,27 @@
               </tr>
               <tr>
                 <td>/heal [Username/ID]</td>
-                <td>n/a</td>
+                <td>/hp</td>
                 <td>Changes the HP of [Username/ID] to 100.</td>
               </tr>
               <tr>
                 <td>/feed [Username/ID]</td>
-                <td>n/a</td>
+                <td>/maxstats</td>
                 <td>Maxes all stats of [Username/ID].</td>
               </tr>
               <tr>
                 <td>/info [Username/ID]</td>
-                <td>n/a</td>
+                <td>/stats</td>
                 <td>Gives information about the player eg, HP, Job, IsAdmin, IP, etc.</td>
               </tr>
               <tr>
                 <td>/clearwanted [Username/ID]</td>
-                <td>n/a</td>
+                <td>cw</td>
                 <td>This command resets the players wanted level.</td>
               </tr>
               <tr>
                 <td>/give [ID] [AMOUNT]</td>
-                <td>n/a</td>
+                <td>/spawn</td>
                 <td>Gives an item to the player.</td>
               </tr><tr>
                 <td>/latestvoteresults</td>
@@ -165,7 +165,7 @@
               </tr>
               <tr>
                 <td>/pay [Username/ID] [Amount]</td>
-                <td>n/a</td>
+                <td>/send</td>
                 <td>Pays a user [amount] of money. <i>The money must be in your inventory.</i></td>
               </tr>
               <tr>
@@ -175,27 +175,27 @@
               </tr>
               <tr>
                 <td>/slap [Username/ID]</td>
-                <td>n/a</td>
+                <td>/slp</td>
                 <td>Damages a player a little bit (between 4 and 15) and moves him around.</td>
               </tr>
               <tr>
                 <td>/strip [Username/ID]</td>
-                <td>n/a</td>
+                <td>/rc</td>
                 <td>Removes <b>all</b> clothes from an player.</td>
               </tr>
               <tr>
                 <td>/launch [Username/ID]</td>
-                <td>n/a</td>
+                <td>takeoff</td>
                 <td>Launches an player into the air.</td>
               </tr>
               <tr>
                 <td>/setjob [JobID/JobName] [Username/ID]</td>
-                <td>n/a</td>
+                <td>/sj</td>
                 <td><details><summary>Sets the job of a player to: </summary><br>0: Citizen<br>1: Criminal<br>2: Prisoner<br>3: Police<br>4: Paramedic<br>5: Firefighter<br>6: GangsterRed<br>7: GangsterGreen<br>8: GangsterBlue<br>9: Mayor<br>10: DeliveryDriver<br>11: TaxiDriver</details></td>
               </tr>
               <tr>
                 <td>/tphere [Username/ID]</td>
-                <td>n/a</td>
+                <td>/tph</td>
                 <td>Teleports a player to you.</td>
               </tr>
               <tr>
@@ -204,13 +204,18 @@
                 <td>Gets latest chat logs. <b>NOTE:</b> This command is very unstable. <b>Limted to last 100 messages.</b></td>
               </tr>
               <tr>
-                <td>/report [Username/ID]</td>
+                <td>/save</td>
                 <td>n/a</td>
+                <td>Saves all current connected players progress. <b>NOTE:</b> It does not save while the player is in the apartment.</td>
+              </tr>
+              <tr>
+                <td>/report [Username/ID]</td>
+                <td>rport</td>
                 <td><details><summary>Opens an UI where the player can report someone, after they did that it gets send to all online staff.</summary><img src="https://camo.githubusercontent.com/2e49cfd7f0b302970c10c31e3ae298e255059bd3/68747470733a2f2f7075752e73682f7a70684a422f373939636566313130652e706e67" width="563" height="519"><img src="https://camo.githubusercontent.com/abdd6680af6128fe2a8119d45332d32e21d383a1/68747470733a2f2f7075752e73682f7a70684d722f653836386532663830392e706e67"></details></td>
               </tr>
               <tr>
                 <td>/search [Username/ID]</td>
-                <td>n/a</td>
+                <td>srch</td>
                 <td>Searches [Username/ID].</td>
               </tr>
               <tr>
@@ -242,6 +247,16 @@
                 <td>/restrain [Username/ID]</td>
                 <td>n/a</td>
                 <td>Restrains [Username/ID].</td>
+              </tr>
+              <tr>
+                <td>/jail [Username/ID] [TimeInSeconds]</td>
+                <td>placeinjail</td>
+                <td>Jails [Username/ID] for [TimeInSeconds].</td>
+              </tr>
+              <tr>
+                <td>/knockout [Username/ID]</td>
+                <td>ko</td>
+                <td>Knocks out [Username/ID].</td>
               </tr>
               <tr>
                 <td>/afk</td>
@@ -322,6 +337,10 @@
               <tr>
                 <td>JSON Config</td>
                 <td>A config where you can change alot of stuff like who can execute a command, message colors, and loads more!</td>
+              <tr>
+              <tr>
+                <td>Custom Groups</td>
+                <td>Custom Groups will allow groups to have a custom color in chat, and permission to specific commands! <i>For more info, check Essentials/CustomGroups.txt</i></td>
               <tr>
             </tbody>
           </table>
