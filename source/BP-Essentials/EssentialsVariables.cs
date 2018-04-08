@@ -9,7 +9,7 @@ namespace BP_Essentials
     {
 
 
-        public const string Version = "2.1.7";
+        public const string Version = "2.1.8";
 
 
         // Generic Constants
