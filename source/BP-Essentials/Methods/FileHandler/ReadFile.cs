@@ -49,7 +49,15 @@ namespace BP_Essentials
         public string warning { get; set; }
         public string arg { get; set; }
     }
-
+    [Serializable]
+    public class FunctionUI
+    {
+        public string AccessMoneyMenu { get; set; }
+        public string AccessItemMenu { get; set; }
+        public string AccessCWMenu { get; set; }
+        public string AccessSetHPMenu { get; set; }
+        public string AccessSetStatsMenu { get; set; }
+    }
     [Serializable]
     public class _Misc
     {
@@ -76,6 +84,7 @@ namespace BP_Essentials
         public _General General { get; set; }
         public _Messages Messages { get; set; }
         public MessageColors MessageColors { get; set; }
+        public FunctionUI FunctionUI { get; set; }
         public _Misc Misc { get; set; }
         public List<_Command> Commands { get; set; }
     }
@@ -114,6 +123,12 @@ namespace BP_Essentials
                         AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
                         PlayerMessage = m.Messages.PlayerMessage;
                         AdminMessage = m.Messages.AdminMessage;
+
+                        AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
+                        AccessItemMenu = m.FunctionUI.AccessItemMenu;
+                        AccessSetHPMenu = m.FunctionUI.AccessSetHPMenu;
+                        AccessSetStatsMenu = m.FunctionUI.AccessSetStatsMenu;
+                        AccessCWMenu = m.FunctionUI.AccessCWMenu;
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
                         LanguageBlock = m.Misc.enableLanguageBlock;

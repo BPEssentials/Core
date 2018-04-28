@@ -9,7 +9,7 @@ namespace BP_Essentials
     {
 
 
-        public const string Version = "2.1.8";
+        public const string Version = "2.2.8";
 
 
         // Generic Constants
@@ -85,6 +85,11 @@ namespace BP_Essentials
         public static string DisabledSpawnBots;
         public static string LocalVersion;
         public static string MsgSayColor;
+        public static string AccessMoneyMenu;
+        public static string AccessItemMenu;
+        public static string AccessCWMenu;
+        public static string AccessSetHPMenu;
+        public static string AccessSetStatsMenu;
         // Commands
         #region Commands
 

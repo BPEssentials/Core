@@ -37,7 +37,7 @@ namespace BP_Essentials.Commands
                                                 {
                                                     builder.Append("<color=#00ffffff>F" + (i + 2) + ":</color> " + ReportReasons[i] + "\n");
                                                 }
-                                                player.SendToSelf(Channel.Reliable, 62, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
+                                                player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                                 item.Key.LastMenu = CurrentMenu.Report;
                                                 item.Key.reportedPlayer = shPlayer;
                                             }
