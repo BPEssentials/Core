@@ -17,21 +17,21 @@ namespace BP_Essentials.Chat
             try
             {
                 var svManager = (SvManager)man;
-                using (System.Timers.Timer Tmer = new System.Timers.Timer())
-                {
-                    Tmer.Elapsed += (sender, e) => OnTime(svManager);
-                    Tmer.Interval = TimeBetweenAnnounce * 1000;
-                    Tmer.Enabled = true;
-                }
+                var Tmer = new System.Timers.Timer();
+                Tmer.Elapsed += (sender, e) => OnTime(svManager);
+                Tmer.Interval = TimeBetweenAnnounce * 1000;
+                Tmer.Enabled = true;
             }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
             }
         }
+
         private static void OnTime(object onetMan)
         {
             var svManager = (SvManager)onetMan;
+
             foreach (var player in svManager.players)
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, Announcements[AnnounceIndex]);
             Debug.Log(SetTimeStamp.Run() + "[INFO] Announcement made...");
