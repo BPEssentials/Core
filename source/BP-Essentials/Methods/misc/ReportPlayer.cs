@@ -18,8 +18,8 @@ namespace BP_Essentials
                     {
                         if (item.Key.LastMenu == CurrentMenu.Main)
                         {
-                            item.Key.shplayer.svPlayer.SendToSelf(Channel.Reliable, 76);
-                            item.Key.shplayer.svPlayer.SendToSelf(Channel.Reliable, 75, "<color=#00ffffff>New report:</color>\n<color=#00ffffff>Username: </color>" + reportedPlayer.username + "\n<color=#00ffffff>Reporter: </color>" + Reporter + "\n<color=#00ffffff>Reason: </color>" + ReportReason + "\n\n<color=#00ffffff>F2: </color>Teleport to player<color=#00ffffff>\nF3-11: </color>Close menu\n\n<color=#00ffffff>Press</color><color=#ea8220> F11 </color><color=#00ffffff>To close this (G)UI</color>");
+                            item.Key.shplayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
+                            item.Key.shplayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>New report:</color>\n<color=#00ffffff>Username: </color>" + reportedPlayer.username + "\n<color=#00ffffff>Reporter: </color>" + Reporter + "\n<color=#00ffffff>Reason: </color>" + ReportReason + "\n\n<color=#00ffffff>F2: </color>Teleport to player<color=#00ffffff>\nF3-11: </color>Close menu\n\n<color=#00ffffff>Press</color><color=#ea8220> F11 </color><color=#00ffffff>To close this (G)UI</color>");
                             item.Key.LastMenu = CurrentMenu.AdminReport;
                             item.Key.reportedPlayer = reportedPlayer;
                         }
