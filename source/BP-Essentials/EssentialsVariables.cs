@@ -7,10 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-
-
-        public const string Version = "2.2.8";
-
+        public const string Version = "2.2.9";
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -35,7 +32,6 @@ namespace BP_Essentials
         public const string LogFile = LogDirectory + "all.txt";
         public const string ChatLogFile = LogDirectory + "chat.txt";
         public const string CommandLogFile = LogDirectory + "commands.txt";
-
 
         // Bools
         public static bool MsgUnknownCommand;
@@ -93,45 +89,45 @@ namespace BP_Essentials
         // Commands
         #region Commands
 
-        public static string CmdSay,                CmdSay2,                CmdSayExecutableBy;
-        public static string CmdGodmode,            CmdGodmode2,            CmdGodmodeExecutableBy;
-        public static string CmdMute,               CmdMute2,               CmdMuteExecutableBy;
-        public static string CmdAfk,                CmdAfk2,                CmdAfkExecutableBy;
-        public static string CmdFakeJoin,           CmdFakeJoin2,           CmdFakeJoinExecutableBy;
-        public static string CmdFakeLeave,          CmdFakeLeave2,          CmdFakeLeaveExecutableBy;
-        public static string CmdPlayers,            CmdPlayers2,            CmdPlayersExecutableBy;
-        public static string CmdInfo,               CmdInfo2,               CmdInfoExecutableBy;
-        public static string CmdMoney,              CmdMoney2,              CmdMoneyExecutableBy;
-        public static string CmdAtm,                CmdAtm2,                CmdAtmExecutableBy;
-        public static string CmdPay,                CmdPay2,                CmdPayExecutableBy;
-        public static string CmdTpHere,             CmdTpHere2,             CmdTpHereExecutableBy;
-        public static string CmdHeal,               CmdHeal2,               CmdHealExecutableBy;
-        public static string CmdFeed,               CmdFeed2,               CmdFeedExecutableBy;
-        public static string CmdCheckAlts,          CmdCheckAlts2,          CmdCheckAltsExecutableBy;
-        public static string CmdGive,               CmdGive2,               CmdGiveExecutableBy;
-        public static string CmdSetjob,             CmdSetjob2,             CmdSetjobExecutableBy;
-        public static string CmdLaunch,             CmdLaunch2,             CmdLaunchExecutableBy;
-        public static string CmdStrip,              CmdStrip2,              CmdStripExecutableBy;
-        public static string CmdSlap,               CmdSlap2,               CmdSlapExecutableBy;
-        public static string CmdSearch,             CmdSearch2,             CmdSearchExecutableBy;
-        public static string CmdJail,               CmdJail2,               CmdJailExecutableBy;
-        public static string CmdKnockout,           CmdKnockout2,           CmdKnockoutExecutableBy;
-        public static string CmdKill,                                       CmdKillExecutableBy;
-        public static string CmdBan,                                        CmdBanExecutableBy;
-        public static string CmdKick,                                       CmdKickExecutableBy;
-        public static string CmdLogs,                                       CmdLogsExecutableBy;
-        public static string CmdArrest,                                     CmdArrestExecutableBy;
-        public static string CmdRestrain,                                   CmdRestrainExecutableBy;
-        public static string CmdFree,                                       CmdFreeExecutableBy;
-        public static string CmdTp,                                         CmdTpExecutableBy;
-        public static string CmdSave,                                       CmdSaveExecutableBy;
-        public static string CmdLatestVoteResults,  CmdLatestVoteResults2,  CmdLatestVoteResultsExecutableBy;
-        public static string CmdClearWanted,        CmdClearWanted2,        CmdClearWantedExecutableBy;
-        public static string CmdDebug,              CmdDebug2;
-        public static string CmdConfirm,            CmdConfirm2;
-        public static string CmdReload,             CmdReload2;
-        public static string CmdClearChat,          CmdClearChat2;
-        public static string CmdReport,             CmdReport2;
+        public static string CmdSay, CmdSay2, CmdSayExecutableBy;
+        public static string CmdGodmode, CmdGodmode2, CmdGodmodeExecutableBy;
+        public static string CmdMute, CmdMute2, CmdMuteExecutableBy;
+        public static string CmdAfk, CmdAfk2, CmdAfkExecutableBy;
+        public static string CmdFakeJoin, CmdFakeJoin2, CmdFakeJoinExecutableBy;
+        public static string CmdFakeLeave, CmdFakeLeave2, CmdFakeLeaveExecutableBy;
+        public static string CmdPlayers, CmdPlayers2, CmdPlayersExecutableBy;
+        public static string CmdInfo, CmdInfo2, CmdInfoExecutableBy;
+        public static string CmdMoney, CmdMoney2, CmdMoneyExecutableBy;
+        public static string CmdAtm, CmdAtm2, CmdAtmExecutableBy;
+        public static string CmdPay, CmdPay2, CmdPayExecutableBy;
+        public static string CmdTpHere, CmdTpHere2, CmdTpHereExecutableBy;
+        public static string CmdHeal, CmdHeal2, CmdHealExecutableBy;
+        public static string CmdFeed, CmdFeed2, CmdFeedExecutableBy;
+        public static string CmdCheckAlts, CmdCheckAlts2, CmdCheckAltsExecutableBy;
+        public static string CmdGive, CmdGive2, CmdGiveExecutableBy;
+        public static string CmdSetjob, CmdSetjob2, CmdSetjobExecutableBy;
+        public static string CmdLaunch, CmdLaunch2, CmdLaunchExecutableBy;
+        public static string CmdStrip, CmdStrip2, CmdStripExecutableBy;
+        public static string CmdSlap, CmdSlap2, CmdSlapExecutableBy;
+        public static string CmdSearch, CmdSearch2, CmdSearchExecutableBy;
+        public static string CmdJail, CmdJail2, CmdJailExecutableBy;
+        public static string CmdKnockout, CmdKnockout2, CmdKnockoutExecutableBy;
+        public static string CmdKill, CmdKillExecutableBy;
+        public static string CmdBan, CmdBanExecutableBy;
+        public static string CmdKick, CmdKickExecutableBy;
+        public static string CmdLogs, CmdLogsExecutableBy;
+        public static string CmdArrest, CmdArrestExecutableBy;
+        public static string CmdRestrain, CmdRestrainExecutableBy;
+        public static string CmdFree, CmdFreeExecutableBy;
+        public static string CmdTp, CmdTpExecutableBy;
+        public static string CmdSave, CmdSaveExecutableBy;
+        public static string CmdLatestVoteResults, CmdLatestVoteResults2, CmdLatestVoteResultsExecutableBy;
+        public static string CmdClearWanted, CmdClearWanted2, CmdClearWantedExecutableBy;
+        public static string CmdDebug, CmdDebug2;
+        public static string CmdConfirm, CmdConfirm2;
+        public static string CmdReload, CmdReload2;
+        public static string CmdClearChat, CmdClearChat2;
+        public static string CmdReport, CmdReport2;
         public static string CmdHelp;
         public static string CmdCommandCharacter;
         public static bool CmdClearChatDisabled;
@@ -945,6 +941,7 @@ namespace BP_Essentials
         };
         #endregion
     }
+
     public class _PlayerList
     {
         public ShPlayer shplayer { get; set; }
@@ -952,12 +949,14 @@ namespace BP_Essentials
         public ShPlayer reportedPlayer { get; set; }
         public string reportedReason;
     }
+
     public class _Group
     {
         public string Name;
         public string Message;
         public List<string> Users = new List<string>();
     }
+
     public static class CurrentMenu //Todo: convert to enum
     {
         public static readonly int Main;
