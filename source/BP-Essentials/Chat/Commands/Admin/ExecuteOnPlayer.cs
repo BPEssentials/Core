@@ -11,8 +11,6 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username))
-                {
                     var found = false;
                     foreach (var shPlayer1 in GameObject.FindObjectsOfType<ShPlayer>())
                         if (shPlayer1.svPlayer == player)
@@ -90,9 +88,6 @@ namespace BP_Essentials.Commands {
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not a real player.</color>");
                     if (!(found))
                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not online.</color>");
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
             catch (Exception ex)
             {
