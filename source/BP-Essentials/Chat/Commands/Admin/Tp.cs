@@ -9,11 +9,16 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrEmpty(arg1))
-                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                if (HasPermission.Run(player, CmdTpHereExecutableBy))
+                {
+                    string arg1 = GetArgument.Run(1, false, true, message);
+                    if (!string.IsNullOrEmpty(arg1))
+                        ExecuteOnPlayer.Run(player, message, arg1);
+                    else
+                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
             catch (Exception ex)
             {
@@ -26,11 +31,16 @@ namespace BP_Essentials.Commands {
             try
             {
                 var player = (SvPlayer)oPlayer;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrEmpty(arg1))
-                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
+                if (HasPermission.Run(player, CmdTpExecutableBy))
+                {
+                    string arg1 = GetArgument.Run(1, false, true, message);
+                    if (!string.IsNullOrEmpty(arg1))
+                        ExecuteOnPlayer.Run(player, message, arg1);
+                    else
+                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
             catch (Exception ex)
             {
