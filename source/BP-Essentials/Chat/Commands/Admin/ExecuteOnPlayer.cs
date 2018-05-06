@@ -53,23 +53,26 @@ namespace BP_Essentials.Commands {
                                     }
                                     else if (message.Contains(CmdBan))
                                     {
-                                        player.SvBan(shPlayer.ID);
+                                        player.svManager.AddBanned(shPlayer);
+                                        player.svManager.Disconnect(shPlayer.svPlayer.connection);
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Banned</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdKick))
                                     {
-                                        player.SvKick(shPlayer.ID);
+                                        player.svManager.Kick(shPlayer.svPlayer.connection);
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Kicked</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdArrest))
                                     {
-                                        player.SvArrest(shPlayer.ID);
+                                        shPlayer.svPlayer.Arrest();
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Arrested</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdRestrain))
                                     {
-                                        player.SvArrest(shPlayer.ID);
-                                        player.SvRestrain(shPlayer.ID);
+                                        shPlayer.svPlayer.Arrest();
+                                        shPlayer.svPlayer.SvSetEquipable(shPlayer.manager.restrained.index);
+                                        if (!shPlayer.svPlayer.IsServerside())
+                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "You've been restrained");
                                         player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdKill))
