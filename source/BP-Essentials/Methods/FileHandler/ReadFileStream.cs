@@ -15,6 +15,7 @@ namespace BP_Essentials
         {
             try
             {
+                output.Clear();
                 foreach (var line in File.ReadAllLines(fileName))
                     if (line.StartsWith("#"))
                         continue;
