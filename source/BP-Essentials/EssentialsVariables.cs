@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.2.10";
+        public const string Version = "2.2.11";
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
