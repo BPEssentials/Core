@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands
                 if (AdminsListPlayers.Contains(player.playerData.username))
                     BP_Essentials.Reload.Run(false, player);
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

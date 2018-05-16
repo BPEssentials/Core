@@ -20,14 +20,14 @@ namespace BP_Essentials.Commands {
                             {
                                 string arg = GetArgument.Run(1, false, false, message).Trim().ToLower();
                                 if (arg == "location" || arg == "getlocation")
-                                    player.SendToSelf(Channel.Unsequenced, 10, "Your location: " + shPlayer.GetPosition());
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Your location: " + shPlayer.GetPosition());
                                 else if (arg == "getplayerhash" || arg == "gethash")
                                 {
                                     string arg2 = GetArgument.Run(2, false, true, message);
                                     if (!String.IsNullOrEmpty(arg2))
-                                        player.SendToSelf(Channel.Unsequenced, 10, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2).ToString());
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2).ToString());
                                     else
-                                        player.SendToSelf(Channel.Unsequenced, 10, "Invalid arguments. /debug get(player)hash [username]");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments. /debug get(player)hash [username]");
                                 }
                                 else if (arg == "spaceindex" || arg == "getspaceindex")
                                 {
@@ -40,18 +40,18 @@ namespace BP_Essentials.Commands {
                                                 if (shPlayer2.IsRealPlayer())
                                                 {
                                                     found = true;
-                                                    player.SendToSelf(Channel.Unsequenced, 10, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
+                                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
                                                 }
                                         if (!found)
-                                            player.SendToSelf(Channel.Unsequenced, 10, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
                                     }
                                     else
-                                        player.SendToSelf(Channel.Unsequenced, 10, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
                                 }
                             }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

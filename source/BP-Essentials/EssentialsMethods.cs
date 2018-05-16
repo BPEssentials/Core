@@ -13,22 +13,13 @@ namespace BP_Essentials
 {
     public class EssentialsMethodsPlugin : EssentialsCorePlugin
     {
-
-
-
         [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
+            Confirmed = false;
             if (Confirmed)
-            {
-                Confirmed = false;
                 return false;
-            }
-            else
-            {
-                Confirmed = false;
-                player.SendToSelf(Channel.Unsequenced, 10, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdConfirm}</color><color={warningColor}>' to confirm.</color>");
-            }
+            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdConfirm}</color><color={warningColor}>' to confirm.</color>");
             return true;
         }
 
@@ -76,13 +67,12 @@ namespace BP_Essentials
         [Hook("ShRetainer.HitEffect")]
         public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
-
-            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.IsRealPlayer())
                 {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.username)) continue;
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "<color=#b7b5b5>Being handcuffed Blocked!</color>");
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#b7b5b5>Being handcuffed Blocked!</color>");
                     return true;
                 }
             return false;
@@ -91,16 +81,17 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvBan")]
         public static void SvBan(SvPlayer player, ref int otherID)
         {
-            foreach (var shPlayer in GameObject.FindObjectsOfType<ShPlayer>())
+            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
                     if (shPlayer.IsRealPlayer() && !shPlayer.svPlayer.IsServerside())
-                        player.SendToAll(Channel.Unsequenced, 10, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
+                        player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
         }
 
         [Hook("SvPlayer.SvStartVote")]
         public static bool SvStartVote(SvPlayer player, ref byte voteIndex, ref int ID)
         {
             if (voteIndex == 1)
+            {
                 if (!VoteKickDisabled)
                 {
                     foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
@@ -117,7 +108,7 @@ namespace BP_Essentials
                                         player.SendToAll(Channel.Reliable, 60, voteIndex, ID);
                                         player.svManager.StartCoroutine(player.svManager.StartVote());
                                         Debug.Log($"{SetTimeStamp.Run()}[INFO] {player.playerData.username} Has issued a votekick against {shPlayer.username}");
-                                        player.SendToAll(Channel.Unsequenced, 10, $"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.username}</color>");
+                                        player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.username}</color>");
                                         LatestVotePeople.Clear();
                                     }
                                     else
@@ -125,8 +116,10 @@ namespace BP_Essentials
                                 }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Vote kicking has been disabled on this server.</color>");
-            return true;
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Vote kicking has been disabled on this server.</color>");
+                return true;
+            }
+            return false;
         }
 
         [Hook("SvPlayer.SvVoteYes", true)]
@@ -152,7 +145,7 @@ namespace BP_Essentials
                             if (item.Key.LastMenu == CurrentMenu.Report && key > 1 && key < 11)
                             {
                                 player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>Reported \"</color><color={warningColor}>{item.Key.reportedPlayer.username}</color><color={infoColor}>\" With the reason \"</color><color={warningColor}>{ReportReasons[key - 2]}</color><color={infoColor}>\".</color>");
+                                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Reported \"</color><color={warningColor}>{item.Key.reportedPlayer.username}</color><color={infoColor}>\" With the reason \"</color><color={warningColor}>{ReportReasons[key - 2]}</color><color={infoColor}>\".</color>");
                                 item.Key.reportedReason = ReportReasons[key - 2];
                                 item.Key.LastMenu = CurrentMenu.Main;
                                 ReportPlayer.Run(player.playerData.username, ReportReasons[key - 2], item.Key.reportedPlayer);
@@ -181,7 +174,7 @@ namespace BP_Essentials
                                     if (item.Key.LastMenu == CurrentMenu.ServerInfo)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                        player.SendToSelf(Channel.Fragmented, 50, File.ReadAllText("server_info.txt"));
+                                        player.SendToSelf(Channel.Fragmented, ClPacket.ServerInfo, File.ReadAllText("server_info.txt"));
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
                                     if (item.Key.LastMenu == CurrentMenu.Staff && HasPermission.Run(player, AccessMoneyMenu))
@@ -193,7 +186,7 @@ namespace BP_Essentials
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
                                         shPlayer.TransferMoney(1, 1000, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 1.000 dollars.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 1.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 1.000 dollars through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -201,7 +194,7 @@ namespace BP_Essentials
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
                                         shPlayer.TransferItem(1, CommonIDs[0], 500, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 500 pistol ammo.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 500 pistol ammo.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 500 pistol ammo through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -211,10 +204,10 @@ namespace BP_Essentials
                                         if (IsOnline.Run(item.Key.reportedPlayer))
                                         {
                                             shPlayer.SetPosition(item.Key.reportedPlayer.GetPosition());
-                                            player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>Teleported to \"</color><color=#ea8220>{item.Key.reportedPlayer.username}</color><color={infoColor}>\".</color>");
+                                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Teleported to \"</color><color=#ea8220>{item.Key.reportedPlayer.username}</color><color={infoColor}>\".</color>");
                                         }
                                         else
-                                            player.SendToSelf(Channel.Reliable, 10, "<color=#ff0000ff>Player not online anymore.</color>");
+                                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, "<color=#ff0000ff>Player not online anymore.</color>");
                                         item.Key.reportedPlayer = null;
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -230,7 +223,7 @@ namespace BP_Essentials
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
                                         shPlayer.TransferMoney(1, 10000, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 10.000 dollars.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 10.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 10.000 dollars through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                         return true;
@@ -239,7 +232,7 @@ namespace BP_Essentials
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
                                         shPlayer.TransferItem(1, CommonIDs[1], 20, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 20 handcuffs.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 20 handcuffs.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 20 handcuffs through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                         return true;
@@ -263,7 +256,7 @@ namespace BP_Essentials
                                         foreach (var line in File.ReadAllLines("admin_list.txt"))
                                             if (line.Trim() != null && !line.Trim().StartsWith("#", StringComparison.OrdinalIgnoreCase))
                                                 builder.Append(line + "\r\n");
-                                        player.SendToSelf(Channel.Fragmented, 50, builder.ToString());
+                                        player.SendToSelf(Channel.Fragmented, ClPacket.ServerInfo, builder.ToString());
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
 
@@ -272,22 +265,22 @@ namespace BP_Essentials
                                     if (item.Key.LastMenu == CurrentMenu.GiveMoney)
                                     {
                                         item.Key.shplayer.TransferMoney(1, 100000, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 100.000 dollars.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 100.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 100.000 dollars through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
                                     else if (item.Key.LastMenu == CurrentMenu.Staff && HasPermission.Run(player, AccessSetHPMenu))
                                     {
                                         player.Heal(100);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You've been healed.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You've been healed.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " healed himself through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
                                     else if (item.Key.LastMenu == CurrentMenu.GiveItems)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                        shPlayer.TransferItem(1, CommonIDs[2], 10, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself 10 Taser ammo.</color>");
+                                        shPlayer.TransferItem(1, CommonIDs[2], ClPacket.GameMessage, true);
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 10 Taser ammo.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 10 taser ammo through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -298,7 +291,7 @@ namespace BP_Essentials
                                     {
                                         for (byte i = 0; i < 4; i++)
                                             player.UpdateStat(i, 100);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>Maxed out stats for yourself.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Maxed out stats for yourself.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Maxed out stats through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -306,7 +299,7 @@ namespace BP_Essentials
                                     {
                                         for (int i = 3; i < 7; i++)
                                             shPlayer.TransferItem(1, CommonIDs[i], 1, true);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>You have given yourself all licenses.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself all licenses.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in all licenses through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -318,7 +311,7 @@ namespace BP_Essentials
                                     {
                                         shPlayer.ClearCrimes();
                                         player.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
-                                        player.SendToSelf(Channel.Reliable, 10, $"<color={infoColor}>Cleared wanted level.</color>");
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Cleared wanted level.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Removed his wantedlevel through the functionUI");
                                         item.Key.LastMenu = CurrentMenu.Main;
                                     }
@@ -360,6 +353,21 @@ namespace BP_Essentials
             }
             return true;
 
+        }
+
+        [Hook("SvPlayer.SvSuicide")]
+        public static bool SvSuicide(SvPlayer player)
+        {
+            if (player.IsServerside())
+                return true;
+            var shPlayer = GetShBySv.Run(player);
+            if (shPlayer.IsDead())
+                return true;
+
+
+            shPlayer.ShDie();
+            player.SendToLocalAndSelf(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
+            return true;
         }
     }
 }

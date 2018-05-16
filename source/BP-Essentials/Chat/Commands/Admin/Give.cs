@@ -21,7 +21,7 @@ namespace BP_Essentials.Commands
                     string arg2 = GetArgument.Run(2, false, false, message);
                     if (String.IsNullOrEmpty(arg1) || String.IsNullOrEmpty(arg2))
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                         return true;
                     }
                     int arg1int, arg2int;
@@ -33,14 +33,14 @@ namespace BP_Essentials.Commands
                             if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
                             {
                                 shPlayer.TransferItem(1, IDs[arg1int], arg2int, true);
-                                player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>" + arg1 + "</color>");
+                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>" + arg1 + "</color>");
                             }
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

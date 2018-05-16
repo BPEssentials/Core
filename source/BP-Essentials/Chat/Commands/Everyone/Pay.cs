@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
                     string arg2 = message.Split(' ').Last().Trim();
                     if (String.IsNullOrEmpty(GetArgument.Run(1, false, false, message)) || String.IsNullOrEmpty(arg2))
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, CorrSyntax);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, CorrSyntax);
                         return true;
                     }
                     else
@@ -34,7 +34,7 @@ namespace BP_Essentials.Commands
                     {
                         if (arg2Int <= 0)
                         {
-                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Cannot transfer 0$.</color>");
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot transfer 0$.</color>");
                             return true;
                         }
                         foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
@@ -46,21 +46,21 @@ namespace BP_Essentials.Commands
                                         {
                                             _shPlayer.TransferMoney(2, arg2Int, true);
                                             shPlayer.TransferMoney(1, arg2Int, true);
-                                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Successfully transfered</color> <color={argColor}>{arg2Int}</color><color={infoColor}>$ to </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>!</color>");
-                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>{player.playerData.username}</color><color={infoColor}> gave you </color><color={argColor}>{arg2Int}</color><color={infoColor}>$!</color>");
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Successfully transfered</color> <color={argColor}>{arg2Int}</color><color={infoColor}>$ to </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>!</color>");
+                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color><color={infoColor}> gave you </color><color={argColor}>{arg2Int}</color><color={infoColor}>$!</color>");
                                         }
                                         else
-                                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Cannot transfer money, do you have</color><color={argColor}> " + arg2Int + $"</color><color={errorColor}>$ in your inventory?</color>");
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot transfer money, do you have</color><color={argColor}> " + arg2Int + $"</color><color={errorColor}>$ in your inventory?</color>");
                                         return true;
                                     }
 
-                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, CorrSyntax);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, CorrSyntax);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

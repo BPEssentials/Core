@@ -25,7 +25,7 @@ namespace BP_Essentials.Commands
                             if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                                 if (shPlayer.IsRealPlayer())
                                 {
-                                    player.SendToSelf(Channel.Unsequenced, 10, "Info about: '" + shPlayer.username + "'.");
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
                                     string[] contentarray = {
                                     "Username:              " +  shPlayer.username,
                                     "",
@@ -42,18 +42,18 @@ namespace BP_Essentials.Commands
 
                                     var content = string.Join("\r\n", contentarray);
 
-                                    player.SendToSelf(Channel.Reliable, 50, content);
+                                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
 
                                     found = true;
                                 }
                         if (!(found))
-                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     }
                     else
-                        player.SendToSelf(Channel.Reliable, 10, ArgRequired);
+                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, ArgRequired);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

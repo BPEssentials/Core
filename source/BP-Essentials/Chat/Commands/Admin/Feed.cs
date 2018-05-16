@@ -23,7 +23,7 @@ namespace BP_Essentials.Commands
                     {
                         for (byte i = 0; i < 4; i++)
                             player.UpdateStat(i, 100);
-                        player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "yourself"));
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
                     }
                     else
                     {
@@ -34,15 +34,15 @@ namespace BP_Essentials.Commands
                                 {
                                     for (byte i = 0; i < 4; i++)
                                         shPlayer.svPlayer.UpdateStat(i, 100);
-                                    player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, shPlayer.username));
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
                                     found = true;
                                 }
                         if (!found)
-                            player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

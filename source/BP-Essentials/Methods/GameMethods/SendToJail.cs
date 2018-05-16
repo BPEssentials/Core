@@ -18,8 +18,9 @@ namespace BP_Essentials
             SetJob.Run(shPlayer, 2, true, false);
             shPlayer.svEntity.SvReset(jailSpawn.position, jailSpawn.rotation, 0);
             shPlayer.StartCoroutine(shPlayer.svPlayer.JailTimer(time));
-            shPlayer.SendToJail();
-            shPlayer.svPlayer.SendToSelf(Channel.Reliable, 39, time);
+            shPlayer.svPlayer.SvClearCrimes();
+            shPlayer.RemoveItemsJail();
+            shPlayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.Timer, time);
             return true;
         }
     }

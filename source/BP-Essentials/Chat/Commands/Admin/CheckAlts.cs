@@ -40,7 +40,7 @@ namespace BP_Essentials.Commands
                             }
                             content = builder.ToString();
                             content += "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                            player.SendToSelf(Channel.Reliable, 50, content);
+                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
                         }
                         else if (arg1.Equals("ign", StringComparison.InvariantCultureIgnoreCase) || (arg1.Equals("player", StringComparison.InvariantCultureIgnoreCase)))
                         {
@@ -57,15 +57,15 @@ namespace BP_Essentials.Commands
                             }
                             content = builder.ToString();
                             content = content + "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                            player.SendToSelf(Channel.Reliable, 50, content);
+                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
                         }
                     }
                     else
-                        player.SendToSelf(Channel.Reliable, 10, CmdCheckAlts + "[IP/IGN] [Arg2] Eg " + CmdCheckAlts + " ip 127.0.0.1");
+                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, CmdCheckAlts + "[IP/IGN] [Arg2] Eg " + CmdCheckAlts + " ip 127.0.0.1");
 
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

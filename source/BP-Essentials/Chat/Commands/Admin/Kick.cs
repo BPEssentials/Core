@@ -21,10 +21,10 @@ namespace BP_Essentials.Commands
                     if (!string.IsNullOrEmpty(arg1))
                         ExecuteOnPlayer.Run(player, message, arg1);
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

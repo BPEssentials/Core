@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
                 {
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (String.IsNullOrEmpty(arg1))
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                     else
                     {
                         bool playerfound = false;
@@ -36,20 +36,20 @@ namespace BP_Essentials.Commands
                                 shPlayer.svPlayer.SvSetWearable(-501996567);   //NullHead
                                 shPlayer.svPlayer.SvSetWearable(-1191209217);  //NullLegs
                                 // ---
-                                foreach (ShInventoryItem item in shPlayer.myItems.Values.ToList())
+                                foreach (var item in shPlayer.myItems.Values.ToList())
                                     if (item.item.GetType() == typeof(ShWearable))
                                         shPlayer.TransferItem(2, item.item.index, shPlayer.MyItemCount(item.item.index), true);
-                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>{player.playerData.username}</color> <color={warningColor}>Removed your clothes.</color>");
-                                player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Removed </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>'s clothes.</color>");
+                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color> <color={warningColor}>Removed your clothes.</color>");
+                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Removed </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>'s clothes.</color>");
                                 playerfound = true;
                             }
                         if (!playerfound)
-                            player.SendToSelf(Channel.Reliable, 10, NotFoundOnline);
+                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
 
                     }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {
