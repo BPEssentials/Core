@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
                 {
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (String.IsNullOrEmpty(arg1))
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                     else
                     {
                         foreach (var shPlayer2 in FindObjectsOfType<ShPlayer>())
@@ -37,17 +37,17 @@ namespace BP_Essentials.Commands
                                             player.SendToSelf(Channel.Fragmented, 13, shPlayer.otherEntity.ID, shPlayer.otherEntity.SerializeMyItems());
                                             if (!shPlayer2.svPlayer.IsServerside() && shPlayer2.viewers.Count == 1)
                                                 shPlayer2.svPlayer.SendToSelf(Channel.Reliable, 16, new System.Object[] { });
-                                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Viewing inventory of</color> <color={argColor}>{shPlayer2.username}</color>");
-                                            shPlayer2.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"{AdminSearchingInv}");
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Viewing inventory of</color> <color={argColor}>{shPlayer2.username}</color>");
+                                            shPlayer2.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"{AdminSearchingInv}");
                                         }
                                         else
-                                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Player is dead.</color>");
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Player is dead.</color>");
                                     }
                             }
                     }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

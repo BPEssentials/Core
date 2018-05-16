@@ -18,12 +18,12 @@ namespace BP_Essentials
                     var player = (SvPlayer)oPlayer;
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, "Checking if file's exist...");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Checking if file's exist...");
                         CheckFiles.Run("all");
-                        player.SendToSelf(Channel.Unsequenced, 10, "Reloading config files...");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Reloading config files...");
                         ReadFile.Run(SettingsFile);
-                        player.SendToSelf(Channel.Unsequenced, 10, "[OK] Config file reloaded");
-                        player.SendToSelf(Channel.Unsequenced, 10, "Reloading critical .txt files...");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[OK] Config file reloaded");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Reloading critical .txt files...");
                         ReadCustomCommands.Run();
                         ReadGroups.Run();
                         ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
@@ -36,11 +36,11 @@ namespace BP_Essentials
                         ReadFile.Run(MuteListFile);
                         ReadFile.Run(AfkListFile);
                         ReadFile.Run(RulesFile);
-                        player.SendToSelf(Channel.Unsequenced, 10, "[OK] Critical .txt files reloaded");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[OK] Critical .txt files reloaded");
                     }
                     else
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
                     }
                 }
                 else

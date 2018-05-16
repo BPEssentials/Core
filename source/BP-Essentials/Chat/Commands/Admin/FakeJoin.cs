@@ -20,13 +20,13 @@ namespace BP_Essentials.Commands
                     string arg1 = GetArgument.Run(1, false, true, message);
                     if (!String.IsNullOrEmpty(arg1))
                     {
-                        player.SendToAll(Channel.Unsequenced, 10, arg1 + " connected");
+                        player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, arg1 + " connected");
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

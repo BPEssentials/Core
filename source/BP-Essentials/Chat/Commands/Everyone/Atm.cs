@@ -22,14 +22,14 @@ namespace BP_Essentials.Commands
                             if (shPlayer.IsRealPlayer())
                                 if (shPlayer.wantedLevel == 0)
                                 {
-                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Opening ATM menu..</color>");
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
                                     player.SendToSelf(Channel.Reliable, 40, player.bankBalance);
                                 }
                                 else if (shPlayer.wantedLevel != 0)
-                                    player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

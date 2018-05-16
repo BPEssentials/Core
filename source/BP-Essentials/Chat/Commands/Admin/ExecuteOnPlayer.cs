@@ -22,7 +22,7 @@ namespace BP_Essentials.Commands {
                                     if (message.StartsWith(CmdKnockout) || message.StartsWith(CmdKnockout2))
                                     {
                                         shPlayer.svPlayer.SvForceStance(StanceIndex.KnockedOut);
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Knocked out</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Knocked out</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.StartsWith(CmdJail) || message.StartsWith(CmdJail2))
                                     {
@@ -31,66 +31,66 @@ namespace BP_Essentials.Commands {
                                         {
                                             if (SendToJail.Run(shPlayer, t))
                                             {
-                                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>{shPlayer1.username}</color> <color={infoColor}>sent you to jail.</color>");
-                                                player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
+                                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer1.username}</color> <color={infoColor}>sent you to jail.</color>");
+                                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
                                             }
                                             else
-                                                player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
+                                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
                                         }
                                         else
-                                            player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                                     }
                                     else if (message.StartsWith(CmdTpHere) || message.StartsWith(CmdTpHere2))
                                     {
                                         shPlayer.svPlayer.SvReset(shPlayer1.GetPosition(), shPlayer1.GetRotation(), shPlayer1.GetPlaceIndex());
-                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + shPlayer1.username + $"</color><color={infoColor}> Teleported you to him.</color>");
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Teleported</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}> To you.</color>");
+                                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>" + shPlayer1.username + $"</color><color={infoColor}> Teleported you to him.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}> To you.</color>");
                                     }
                                     else if (message.StartsWith(CmdTp))
                                     {
                                         player.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdBan))
                                     {
                                         player.svManager.AddBanned(shPlayer);
                                         player.svManager.Disconnect(shPlayer.svPlayer.connection);
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Banned</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Banned</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdKick))
                                     {
                                         player.svManager.Kick(shPlayer.svPlayer.connection);
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Kicked</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kicked</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdArrest))
                                     {
                                         shPlayer.svPlayer.Arrest();
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Arrested</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Arrested</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdRestrain))
                                     {
                                         shPlayer.svPlayer.Arrest();
                                         shPlayer.svPlayer.SvSetEquipable(shPlayer.manager.restrained.index);
                                         if (!shPlayer.svPlayer.IsServerside())
-                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "You've been restrained");
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                            shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdKill))
                                     {
                                         shPlayer.svPlayer.SvSuicide();
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Killed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Killed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdFree))
                                     {
                                         shPlayer.svPlayer.Unhandcuff();
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Freed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Freed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                         found = true;
                                     }
                                     else
-                                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not a real player.</color>");
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not a real player.</color>");
                     if (!(found))
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not online.</color>");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>" + arg1 + $"</color><color={errorColor}> Is not online.</color>");
             }
             catch (Exception ex)
             {

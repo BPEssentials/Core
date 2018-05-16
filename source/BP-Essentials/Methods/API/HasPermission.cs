@@ -20,7 +20,7 @@ namespace BP_Essentials
                 if (Groups.Any(curr => $"group:{curr.Value.Name}".Equals(name.Trim()) && curr.Value.Users.Contains(player.playerData.username)))
                     return true;
             if (ShowNoPermMessage)
-                player.SendToSelf(Channel.Unsequenced, 10, $"<color={errorColor}>{MsgNoPerm}</color>");
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>{MsgNoPerm}</color>");
             return false;
         }
     }

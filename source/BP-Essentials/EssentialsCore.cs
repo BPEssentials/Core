@@ -24,8 +24,8 @@ namespace BP_Essentials
     public class EssentialsCorePlugin {
 
         //Initialization
-        [Hook("SvManager.StartServerNetwork")]
-        public static void StartServerNetwork(SvManager svManager)
+        [Hook("SvManager.StartServer")]
+        public static void StartServer(SvManager svManager)
         {
        //     ShManager Manager = (ShManager)typeof(SvManager).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(svManager);
             try
@@ -46,7 +46,7 @@ namespace BP_Essentials
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);
-                thread.Start();
+                thread.Start(svManager);
                 Debug.Log("-------------------------------------------------------------------------------");
                 Debug.Log("    ");
                 Debug.Log("[INFO] Essentials - version: " + LocalVersion + " Loaded in successfully!");

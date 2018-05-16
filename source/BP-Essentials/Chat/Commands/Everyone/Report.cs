@@ -42,22 +42,22 @@ namespace BP_Essentials.Commands
                                                 item.Key.reportedPlayer = shPlayer;
                                             }
                                             else
-                                                player.SendToSelf(Channel.Reliable, 10, $"<color={errorColor}>Hey! You cannot report an admin.</color>");
+                                                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report an admin.</color>");
                                             break;
                                         }
                                     if (!playerfound)
-                                        player.SendToSelf(Channel.Reliable, 10, NotFoundOnline);
+                                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
                                 }
                                 else
-                                    player.SendToSelf(Channel.Reliable, 10, $"<color={errorColor}>Hey! You cannot report as admin.</color>");
+                                    player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report as admin.</color>");
                             }
                             else
-                                player.SendToSelf(Channel.Reliable, 10, $"<color={errorColor}>Hey! You cannot report yourself, dummy.</color>");
+                                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report yourself, dummy.</color>");
                         }
                 }
                 else
                 {
-                    player.SendToSelf(Channel.Reliable, 10, $"<color={errorColor}>Missing argument! Correct syntax:</color> <color={warningColor}>{GetArgument.Run(0, false, false, message)} [player]</color>");
+                    player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Missing argument! Correct syntax:</color> <color={warningColor}>{GetArgument.Run(0, false, false, message)} [player]</color>");
                 }
             }
             catch (Exception ex)

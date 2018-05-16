@@ -35,17 +35,17 @@ namespace BP_Essentials.Commands {
                         {
                             RemoveStringFromFile.Run(GodListFile, name);
                             ReadFile.Run(GodListFile);
-                            player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "disabled"));
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "disabled"));
                         }
                         else
                         {
                             File.AppendAllText(GodListFile, name + Environment.NewLine);
                             GodListPlayers.Add(name);
-                            player.SendToSelf(Channel.Unsequenced, 10, String.Format(msg, "enabled"));
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "enabled"));
                         }
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
 
                 }
                 catch (Exception ex)

@@ -31,7 +31,6 @@ namespace BP_Essentials.Chat
         private static void OnTime(object onetMan)
         {
             var svManager = (SvManager)onetMan;
-
             foreach (var player in svManager.players)
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, Announcements[AnnounceIndex]);
             Debug.Log(SetTimeStamp.Run() + "[INFO] Announcement made...");

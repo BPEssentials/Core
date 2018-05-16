@@ -32,14 +32,14 @@ namespace BP_Essentials.Commands
                             msg = shPlayer.username;
                             shPlayer.ClearCrimes();
                             shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
                             found = true;
                         }
                     if (!found)
-                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

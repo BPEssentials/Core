@@ -18,15 +18,15 @@ namespace BP_Essentials.Commands
                 if (HasPermission.Run(player, CmdLatestVoteResultsExecutableBy))
                 {
                     if (!LatestVotePeople.Any())
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>The list seems empty.</color>");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>The list seems empty.</color>");
                     else
                     {
                         string content = string.Join("\r\n", LatestVotePeople.ToArray());
-                        player.SendToSelf(Channel.Unsequenced, 50, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.ServerInfo, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
                     }
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
             catch (Exception ex)
             {

@@ -89,6 +89,7 @@
     <Compile Include="Chat\Announce.cs" />
     <Compile Include="Methods\API\DownloadFile.cs" />
     <Compile Include="Methods\API\FilterComments.cs" />
+    <Compile Include="Methods\API\GetShBySv.cs" />
     <Compile Include="Methods\API\HasPermission.cs" />
     <Compile Include="Methods\API\StringToVar.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
