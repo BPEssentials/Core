@@ -13,12 +13,16 @@ namespace BP_Essentials
 {
     public class EssentialsMethodsPlugin : EssentialsCorePlugin
     {
+
         [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
-            Confirmed = false;
             if (Confirmed)
+            {
+                Confirmed = false;
                 return false;
+            }
+            Confirmed = false;
             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdConfirm}</color><color={warningColor}>' to confirm.</color>");
             return true;
         }
@@ -27,6 +31,7 @@ namespace BP_Essentials
         public static void Initialize(SvPlayer player)
         {
             ShPlayer shPlayer = (ShPlayer)typeof(SvPlayer).GetField(nameof(player), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player);
+
             if (shPlayer.IsRealPlayer())
             {
                 var thread1 = new Thread(new ParameterizedThreadStart(WriteIpToFile.Run));
@@ -84,7 +89,10 @@ namespace BP_Essentials
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
                     if (shPlayer.IsRealPlayer() && !shPlayer.svPlayer.IsServerside())
+                    {
+                        Debug.Log($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
+                    }
         }
 
         [Hook("SvPlayer.SvStartVote")]
@@ -251,6 +259,7 @@ namespace BP_Essentials
                                     else if (item.Key.LastMenu == CurrentMenu.ServerInfo)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
+
                                         var builder = new StringBuilder();
                                         builder.Append("All admins on this server:\n\n");
                                         foreach (var line in File.ReadAllLines("admin_list.txt"))
@@ -322,6 +331,7 @@ namespace BP_Essentials
                                     if (item.Key.LastMenu == CurrentMenu.Main)
                                     {
                                         var sb = new StringBuilder().Append("<color=#00ffffff>Staff menu:</color>\n\n");
+
                                         if (HasPermission.Run(player, AccessMoneyMenu))
                                             sb.Append("<color=#00ffffff>F2:</color> Give Money\n");
                                         if (HasPermission.Run(player, AccessItemMenu))
@@ -338,7 +348,6 @@ namespace BP_Essentials
                                     break;
                             }
                         }
-
                     }
                     return true;
                 }
@@ -352,7 +361,6 @@ namespace BP_Essentials
                 ErrorLogging.Run(ex);
             }
             return true;
-
         }
 
         [Hook("SvPlayer.SvSuicide")]
@@ -360,10 +368,11 @@ namespace BP_Essentials
         {
             if (player.IsServerside())
                 return true;
+
             var shPlayer = GetShBySv.Run(player);
+
             if (shPlayer.IsDead())
                 return true;
-
 
             shPlayer.ShDie();
             player.SendToLocalAndSelf(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);

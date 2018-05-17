@@ -13,6 +13,7 @@ namespace BP_Essentials.Commands
         public static bool Run(object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
+
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
                     if (shPlayer.ownedApartment)
