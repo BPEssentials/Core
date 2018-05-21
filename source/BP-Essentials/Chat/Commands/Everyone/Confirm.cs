@@ -13,18 +13,21 @@ namespace BP_Essentials.Commands
         public static bool Run(object oPlayer)
         {
             var player = (SvPlayer)oPlayer;
-
-            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
-                    if (shPlayer.ownedApartment)
-                    {
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, $"<color={infoColor}>Selling apartment...</color>");
-                        Confirmed = true;
-                        player.SvSellApartment();
-                    }
-                    else
-                        player.SendToSelf(Channel.Unsequenced, (byte)10, $"<color={warningColor}>You don't have a apartment to sell!</color>");
+            var shPlayer = GetShBySv.Run(player);
+            if (shPlayer.ownedApartment)
+            {
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
+                SellApartment(shPlayer);
+            }
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to sell!</color>");
             return true;
+        }
+        public static void SellApartment(ShPlayer shPlayer)
+        {
+            shPlayer.TransferMoney(1, shPlayer.ownedApartment.value / 2, true);
+            shPlayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.ApartmentOwner, new object[]{0,0});
+            CleanupApartment.Run(shPlayer);
         }
     }
 }

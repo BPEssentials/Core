@@ -29,12 +29,20 @@ namespace BP_Essentials.Commands
                     Parsed = int.TryParse(arg2, out arg2int);
                     if (Parsed)
                     {
-                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
-                            {
-                                shPlayer.TransferItem(1, IDs[arg1int], arg2int, true);
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>" + arg1 + "</color>");
-                            }
+                        if (arg1int > 1 && arg1int <= IDs.Length -1)
+                        {
+                            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                                if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
+                                {
+                                    if (arg1.Length > 4)
+                                        shPlayer.TransferItem(1, arg1int, arg2int, true);
+                                    else
+                                        shPlayer.TransferItem(1, IDs[arg1int], arg2int, true);
+                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>{arg1}</color>");
+                                }
+                        }
+                        else
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: The ID must be between 1 and {IDs.Length -1}.</color>");
                     }
                     else
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>");

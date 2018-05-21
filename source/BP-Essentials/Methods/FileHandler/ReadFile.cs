@@ -20,6 +20,7 @@ namespace BP_Essentials
     {
         public string version { get; set; }
         public string CommandCharacter { get; set; }
+        public bool DownloadIDList { get; set; }
         public string TimestapFormat { get; set; }
         public string MsgSayColor { get; set; }
         public bool DisplayUnknownCommandMessage { get; set; }
@@ -88,6 +89,18 @@ namespace BP_Essentials
         public _Misc Misc { get; set; }
         public List<_Command> Commands { get; set; }
     }
+    [Serializable]
+    public class Item
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public int gameid { get; set; }
+    }
+    [Serializable]
+    public class IdListObject
+    {
+        public List<Item> items { get; set; }
+    }
     class ReadFile : EssentialsChatPlugin
     {
 
@@ -101,6 +114,7 @@ namespace BP_Essentials
                         __RootObject m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
                         LocalVersion = m.General.version;
                         CmdCommandCharacter = m.General.CommandCharacter;
+                        DownloadIdList = m.General.DownloadIDList;
                         TimestampFormat = m.General.TimestapFormat;
                         MsgSayColor = m.General.MsgSayColor;
                         MsgUnknownCommand = m.General.DisplayUnknownCommandMessage;
@@ -139,6 +153,11 @@ namespace BP_Essentials
                         foreach (var command in m.Commands)
                             StringToVar.Run(command.CommandName, command.Command, command.Command2, command.ExecutableBy, command.Disabled);
                         break;
+                    case IdListFile:
+                        IdListObject idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListFile));
+                        IDs = idlist.items.Select(x => x.gameid).ToArray();
+                        break;
+
                     case AnnouncementsFile:
                         Announcements = File.ReadAllLines(fileName);
                         break;

@@ -17,12 +17,12 @@ namespace BP_Essentials.Commands
                 string arg1 = GetArgument.Run(1, false, true, message);
                 if (!String.IsNullOrEmpty(arg1))
                 {
-                    foreach (KeyValuePair<_PlayerList, int> item in playerList)
-                        if (item.Key.shplayer.svPlayer == player)
+                    foreach (KeyValuePair<int, _PlayerList> item in playerList)
+                        if (item.Value.shplayer.svPlayer == player)
                         {
-                            if (item.Key.shplayer.username != arg1)
+                            if (item.Value.shplayer.username != arg1)
                             {
-                                if (!item.Key.shplayer.admin)
+                                if (!item.Value.shplayer.admin)
                                 {
                                     bool playerfound = false;
                                     foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
@@ -38,8 +38,8 @@ namespace BP_Essentials.Commands
                                                     builder.Append("<color=#00ffffff>F" + (i + 2) + ":</color> " + ReportReasons[i] + "\n");
                                                 }
                                                 player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
-                                                item.Key.LastMenu = CurrentMenu.Report;
-                                                item.Key.reportedPlayer = shPlayer;
+                                                item.Value.LastMenu = CurrentMenu.Report;
+                                                item.Value.reportedPlayer = shPlayer;
                                             }
                                             else
                                                 player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report an admin.</color>");

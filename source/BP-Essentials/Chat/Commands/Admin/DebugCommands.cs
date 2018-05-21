@@ -2,6 +2,10 @@
 using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using System;
+using System.Reflection;
+using System.Text;
+using System.IO;
+
 namespace BP_Essentials.Commands {
     public class DebugCommands : EssentialsChatPlugin {
         public static bool Run(object oPlayer, string message)
@@ -25,7 +29,7 @@ namespace BP_Essentials.Commands {
                                 {
                                     string arg2 = GetArgument.Run(2, false, true, message);
                                     if (!String.IsNullOrEmpty(arg2))
-                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2).ToString());
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2));
                                     else
                                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments. /debug get(player)hash [username]");
                                 }
@@ -47,6 +51,44 @@ namespace BP_Essentials.Commands {
                                     }
                                     else
                                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
+                                }
+                                else if (arg == "createidlist")
+                                {
+                                    string arg2 = GetArgument.Run(2, false, true, message).ToLower();
+                                    if (!String.IsNullOrEmpty(arg2) && arg2 == "json" || arg2 == "array")
+                                    {
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
+                                        var shm = shPlayer.manager;
+                                        var location = $"{FileDirectory}IDLists/IDLIST_{DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss")}.txt";
+                                        if (!Directory.Exists($"{FileDirectory}IDLists/"))
+                                            Directory.CreateDirectory($"{FileDirectory}IDLists/");
+                                        var sb = new StringBuilder();
+                                        int currIndex = 1;
+                                        if (arg2 == "array")
+                                            sb.Append("public static int[] IDs = {\n0, // you don't want to use ID 0\n");
+                                        else
+                                            sb.Append("{\"items\": [");
+                                        IndexCollection<ShEntity> ECol = (IndexCollection<ShEntity>)typeof(ShManager).GetField("entityCollection", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(shm);
+                                        foreach (ShEntity v in ECol)
+                                        {
+                                            if (v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShGun) || v.GetType() == typeof(ShWeapon) || v.GetType() == typeof(ShFurniture) || v.GetType() == typeof(ShWearable) || v.GetType() == typeof(ShConsumable) || v.GetType() == typeof(ShDrugMaterial) || v.GetType() == typeof(ShExtinguisher) || v.GetType() == typeof(ShHealer) || v.GetType() == typeof(ShRetainer) || v.GetType() == typeof(ShSeed) || v.GetType() == typeof(ShProjectile))
+                                                if (arg2 == "array")
+                                                    sb.Append($"{v.index}, //{v.name}\n");
+                                                else
+                                                {
+                                                    sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
+                                                    ++currIndex;
+                                                }
+                                        }
+                                        if (arg2 == "array")
+                                            File.WriteAllText(location, $"{sb}}};");
+                                        else
+                                            File.WriteAllText(location, $"{sb.Remove(sb.Length - 2, 1)}]}}");
+
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"Success! ID List has been saved in {location}. ({currIndex} entries.)");
+                                    }
+                                    else
+                                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Please select file type /debug createidlist json/array");
                                 }
                             }
                 }
