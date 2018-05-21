@@ -198,6 +198,11 @@ namespace BP_Essentials
                             return Commands.Knockout.Run(player, message);
                         else
                         { player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand); return true; }
+                    else if (message.StartsWith(CmdToggleChat) || message.StartsWith(CmdToggleChat2))
+                        if (!CmdToggleChatDisabled)
+                            return Commands.ToggleChat.Run(player);
+                    else
+                        { player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand); return true; }
                     if (MsgUnknownCommand)
                     {
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");
@@ -216,7 +221,11 @@ namespace BP_Essentials
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, PlayerIsAFK);
                     return true;
                 }
-
+                if (!playerList[GetShBySv.Run(player).ID].chatEnabled)
+                {
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Please enable your chat again by typing</color> <color={argColor}>{CmdToggleChat}</color><color={warningColor}>.</color>");
+                    return true;
+                }
                 // Will improve this someday..
                 foreach (KeyValuePair<string, _Group> curr in Groups)
                 {
@@ -225,7 +234,7 @@ namespace BP_Essentials
                         _msg = curr.Value.Message;
                         _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                         _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                        player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, _msg);
+                        SendChatMessage.Run(_msg);
                         return true;
                     }
                 }
@@ -234,13 +243,13 @@ namespace BP_Essentials
                     _msg = AdminMessage;
                     _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                     _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                    player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, _msg);
+                    SendChatMessage.Run(_msg);
                     return true;
                 }
                 _msg = PlayerMessage;
                 _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                 _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
-                player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, _msg);
+                SendChatMessage.Run(_msg);
                 return true;
             }
             catch (Exception ex)

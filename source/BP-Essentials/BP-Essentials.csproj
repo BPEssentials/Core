@@ -80,6 +80,7 @@
     <Compile Include="Chat\Commands\Admin\Save.cs" />
     <Compile Include="Chat\Commands\Admin\Tp.cs" />
     <Compile Include="Chat\Commands\Everyone\Report.cs" />
+    <Compile Include="Chat\Commands\Everyone\ToggleChat.cs" />
     <Compile Include="Chat\LangAndChatBlock.cs" />
     <Compile Include="EssentialsChat.cs" />
     <Compile Include="EssentialsCore.cs" />
@@ -98,11 +99,13 @@
     <Compile Include="Methods\Check\CheckGodMode.cs" />
     <Compile Include="Methods\FileHandler\CreateFile.cs" />
     <Compile Include="Methods\FileHandler\ReadGroups.cs" />
+    <Compile Include="Methods\GameMethods\CleanupApartment.cs" />
     <Compile Include="Methods\GameMethods\SetJob.cs" />
     <Compile Include="Methods\misc\ErrorLogging.cs" />
     <Compile Include="Methods\API\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />
     <Compile Include="Methods\API\GetPlaceHolders.cs" />
+    <Compile Include="Methods\misc\GetIdList.cs" />
     <Compile Include="Methods\misc\IsOnline.cs" />
     <Compile Include="Methods\misc\LogMessage.cs" />
     <Compile Include="Methods\FileHandler\ReadCustomCommands.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="Methods\misc\SaveNow.cs" />
     <Compile Include="Methods\misc\SavePeriodically.cs" />
     <Compile Include="Methods\GameMethods\SendToJail.cs" />
+    <Compile Include="Methods\misc\SendChatMessage.cs" />
     <Compile Include="Methods\misc\SetTimeStamp.cs" />
     <Compile Include="Methods\FileHandler\WriteIpToFile.cs" />
   </ItemGroup>

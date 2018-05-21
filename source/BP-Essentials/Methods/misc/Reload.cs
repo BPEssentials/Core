@@ -31,6 +31,7 @@ namespace BP_Essentials
                         ReadStream.Run(AdminListFile, AdminsListPlayers);
                         LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                         ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
+                        // Doesn't seem like a good idea to get the id list every /reload
                         ReadFile.Run(AnnouncementsFile);
                         ReadFile.Run(GodListFile);
                         ReadFile.Run(MuteListFile);
@@ -54,6 +55,8 @@ namespace BP_Essentials
                     ReadGroups.Run();
                     LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                     ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
+                    if (DownloadIdList)
+                        GetIdList.Run(false);
                     ReadFile.Run(AnnouncementsFile);
                     ReadFile.Run(GodListFile);
                     ReadFile.Run(MuteListFile);

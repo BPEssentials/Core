@@ -27,7 +27,7 @@
         function GetIdList() {
           var tb = document.getElementById("idtablebody");
           tb.innerHTML = ""; // Clear tbody before if ran twice
-          $.getJSON("id-list.json", function (json) {
+          $.getJSON("https://userr00t.com/dev/BPEssentials/idlist.txt", function (json) {
               $.each(json.items, function (i, ch) {
                 tb.innerHTML += "<tr><th>" + ch.id +"</th><th>" + ch.name + "</th><th>" + ch.gameid+ "</th><th>"; // Construct rows
               });
