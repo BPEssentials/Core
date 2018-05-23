@@ -29,7 +29,7 @@ namespace BP_Essentials.Commands
                     Parsed = int.TryParse(arg2, out arg2int);
                     if (Parsed)
                     {
-                        if (arg1int > 1 && arg1int <= IDs.Length -1)
+                        if (arg1int > 0 && arg1int <= IDs.Length -1)
                         {
                             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                                 if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
@@ -37,7 +37,7 @@ namespace BP_Essentials.Commands
                                     if (arg1.Length > 4)
                                         shPlayer.TransferItem(1, arg1int, arg2int, true);
                                     else
-                                        shPlayer.TransferItem(1, IDs[arg1int], arg2int, true);
+                                        shPlayer.TransferItem(1, IDs[arg1int - 1], arg2int, true);
                                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>{arg1}</color>");
                                 }
                         }
