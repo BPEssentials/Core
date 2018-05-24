@@ -61,6 +61,8 @@
     <Compile Include="Chat\Commands\Admin\Restrain.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
     <Compile Include="Chat\Commands\Admin\Search.cs" />
+    <Compile Include="Chat\Commands\Admin\ToggleReceiveStaffChat.cs" />
+    <Compile Include="Chat\Commands\Admin\ToggleStaffChat.cs" />
     <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
     <Compile Include="Chat\Commands\Admin\Strip.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Methods\misc\SavePeriodically.cs" />
     <Compile Include="Methods\GameMethods\SendToJail.cs" />
     <Compile Include="Methods\misc\SendChatMessage.cs" />
+    <Compile Include="Methods\misc\SendChatMessageToAdmins.cs" />
     <Compile Include="Methods\misc\SetTimeStamp.cs" />
     <Compile Include="Methods\FileHandler\WriteIpToFile.cs" />
   </ItemGroup>

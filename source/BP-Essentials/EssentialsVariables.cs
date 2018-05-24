@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.3.0";
+        public const string Version = "2.4.0";
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -76,6 +76,7 @@ namespace BP_Essentials
         public static string AdminSearchingInv;
         public static string PlayerMessage;
         public static string AdminMessage;
+        public static string AdminChatMessage;
 
         public static string infoColor, errorColor, warningColor, argColor;
         // Strings
@@ -132,6 +133,8 @@ namespace BP_Essentials
         public static string CmdReload, CmdReload2;
         public static string CmdClearChat, CmdClearChat2;
         public static string CmdReport, CmdReport2;
+        public static string CmdStaffChat, CmdStaffChat2, CmdStaffChatExecutableBy;
+        public static string CmdStaffChatMessages, CmdStaffChatMessages2, CmdStaffChatMessagesExecutableBy;
         public static string CmdHelp;
         public static string CmdCommandCharacter;
         public static bool CmdClearChatDisabled;
@@ -161,6 +164,8 @@ namespace BP_Essentials
         public static bool CmdJailDisabled;
         public static bool CmdKnockoutDisabled;
         public static bool CmdToggleChatDisabled;
+        public static bool CmdStaffChatDisabled;
+        public static bool CmdStaffChatMessagesDisabled;
         #endregion
 
         // Ints
@@ -192,9 +197,10 @@ namespace BP_Essentials
         };
         public static int[] CommonIDs =
         {
-            1530892865, // Pistol Ammo
+            // need a better way of doing this
+            493970259, // Pistol Ammo
             -479434394, // Handcuffs
-            -1113305847, // Taser Ammo
+            -906852676, // Taser Ammo
             -700261193, //License Boating
             1695812550, //License Drivers
             499504400, //License Gun
@@ -975,6 +981,8 @@ namespace BP_Essentials
         public ShPlayer reportedPlayer { get; set; }
         public string reportedReason;
         public bool chatEnabled = true;
+        public bool staffChatEnabled;
+        public bool receiveStaffChat = true;
     }
 
     public class _Group
