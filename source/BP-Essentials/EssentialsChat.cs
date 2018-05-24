@@ -203,6 +203,18 @@ namespace BP_Essentials
                             return Commands.ToggleChat.Run(player);
                     else
                         { player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand); return true; }
+                    else if (message.StartsWith(CmdStaffChat) || message.StartsWith(CmdStaffChat2))
+                        if (!CmdStaffChatDisabled)
+                            return Commands.ToggleStaffChat.Run(player, message);
+                        else
+                        { player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand); return true; }
+                    else if (message.StartsWith(CmdStaffChatMessages) || message.StartsWith(CmdStaffChatMessages2))
+                        if (!CmdStaffChatMessagesDisabled)
+                            return Commands.ToggleReceiveStaffChat.Run(player, message);
+                        else
+                        { player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand); return true; }
+
+
                     if (MsgUnknownCommand)
                     {
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");
@@ -221,9 +233,18 @@ namespace BP_Essentials
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, PlayerIsAFK);
                     return true;
                 }
-                if (!playerList[GetShBySv.Run(player).ID].chatEnabled)
+                var shplayer = GetShBySv.Run(player);
+                if (!playerList[shplayer.ID].chatEnabled)
                 {
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Please enable your chat again by typing</color> <color={argColor}>{CmdToggleChat}</color><color={warningColor}>.</color>");
+                    return true;
+                }
+                if (playerList[shplayer.ID].staffChatEnabled)
+                {
+                    _msg = AdminChatMessage;
+                    _msg = _msg.Replace("{username}", new Regex("(<)").Replace(shplayer.username, "<<b></b>"));
+                    _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, message), "<<b></b>"));
+                    SendChatMessageToAdmins.Run(_msg);
                     return true;
                 }
                 // Will improve this someday..

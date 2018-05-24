@@ -25,7 +25,7 @@ namespace BP_Essentials
                 Debug.Log("[OK] ID list downloaded");
                 Debug.Log("Reloading ID list..");
                 ReadFile.Run(IdListFile);
-                Debug.Log("[OK] Downloaded newest ID list and reloaded it!");
+                Debug.Log($"[OK] Downloaded newest ID list and reloaded it! ({IDs.Length} entries loaded in.)");
             }
             return true;
         }

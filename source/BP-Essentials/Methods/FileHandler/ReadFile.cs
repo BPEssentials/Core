@@ -41,6 +41,7 @@ namespace BP_Essentials
         public string AdminSearchingInv { get; set; }
         public string PlayerMessage { get; set; }
         public string AdminMessage { get; set; }
+        public string AdminChatMessage { get; set; }
     }
     [Serializable]
     public class MessageColors
@@ -137,6 +138,7 @@ namespace BP_Essentials
                         AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
                         PlayerMessage = m.Messages.PlayerMessage;
                         AdminMessage = m.Messages.AdminMessage;
+                        AdminChatMessage = m.Messages.AdminChatMessage;
 
                         AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
                         AccessItemMenu = m.FunctionUI.AccessItemMenu;
