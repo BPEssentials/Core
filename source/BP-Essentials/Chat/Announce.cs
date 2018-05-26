@@ -33,7 +33,7 @@ namespace BP_Essentials.Chat
             var svManager = (SvManager)onetMan;
             foreach (var player in svManager.players)
                 player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, Announcements[AnnounceIndex]);
-            Debug.Log(SetTimeStamp.Run() + "[INFO] Announcement made...");
+            Debug.Log($"{SetTimeStamp.Run()}[INFO] Announcement made...");
             AnnounceIndex += 1;
             if (AnnounceIndex > Announcements.Length - 1)
                 AnnounceIndex = 0;

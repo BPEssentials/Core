@@ -25,8 +25,6 @@ namespace BP_Essentials.Commands
                         var arg2 = GetArgument.Run(2, false, true, message);
                         if (arg1.Equals("ip", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            if (!arg2.StartsWith("::ffff:"))
-                                arg2 = "::ffff:" + arg2;
                             var content = "Possible accounts using the IP " + arg2 + ":\r\n\r\n";
                             var builder = new StringBuilder();
                             builder.Append(content);
