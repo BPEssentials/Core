@@ -16,7 +16,7 @@ DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/D
 
 ## Data collection
 
-``BP-Essentials`` Collects the follwing:
+``BP-Essentials`` Collects the following:
 
 ### From Server to UserR00T.com:
 **User Agents:**
