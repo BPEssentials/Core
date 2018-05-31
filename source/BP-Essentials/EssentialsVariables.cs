@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.4.1";
+        public const string Version = "2.4.3";
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -185,6 +185,7 @@ namespace BP_Essentials
 
         public static string[] ReportReasons =
         {
+            // default values
             "Random Vote Kick",
             "Committing suicide/Disconnecting while arrested",
             "Hacks/Exploits/Cheats",

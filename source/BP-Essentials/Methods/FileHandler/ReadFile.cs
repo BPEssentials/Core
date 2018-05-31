@@ -61,6 +61,19 @@ namespace BP_Essentials
         public string AccessSetStatsMenu { get; set; }
     }
     [Serializable]
+    public class ReportOptions
+    {
+        public string F2 { get; set; }
+        public string F3 { get; set; }
+        public string F4 { get; set; }
+        public string F5 { get; set; }
+        public string F6 { get; set; }
+        public string F7 { get; set; }
+        public string F8 { get; set; }
+        public string F9 { get; set; }
+        public string F10 { get; set; }
+    }
+    [Serializable]
     public class _Misc
     {
         public bool enableChatBlock { get; set; }
@@ -87,6 +100,7 @@ namespace BP_Essentials
         public _Messages Messages { get; set; }
         public MessageColors MessageColors { get; set; }
         public FunctionUI FunctionUI { get; set; }
+        public ReportOptions ReportOptions { get; set; }
         public _Misc Misc { get; set; }
         public List<_Command> Commands { get; set; }
     }
@@ -145,6 +159,8 @@ namespace BP_Essentials
                         AccessSetHPMenu = m.FunctionUI.AccessSetHPMenu;
                         AccessSetStatsMenu = m.FunctionUI.AccessSetStatsMenu;
                         AccessCWMenu = m.FunctionUI.AccessCWMenu;
+
+                        ReportReasons = new string[] { m.ReportOptions.F2, m.ReportOptions.F3, m.ReportOptions.F4, m.ReportOptions.F5, m.ReportOptions.F6, m.ReportOptions.F7, m.ReportOptions.F8, m.ReportOptions.F9, m.ReportOptions.F10 };
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
                         LanguageBlock = m.Misc.enableLanguageBlock;
