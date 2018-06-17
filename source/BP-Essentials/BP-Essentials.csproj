@@ -103,6 +103,7 @@
     <Compile Include="Methods\FileHandler\ReadGroups.cs" />
     <Compile Include="Methods\GameMethods\CleanupApartment.cs" />
     <Compile Include="Methods\GameMethods\SetJob.cs" />
+    <Compile Include="Methods\GameMethods\UnRetain.cs" />
     <Compile Include="Methods\misc\ErrorLogging.cs" />
     <Compile Include="Methods\API\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />

@@ -26,8 +26,7 @@ namespace BP_Essentials.Commands {
                                     }
                                     else if (message.StartsWith(CmdJail) || message.StartsWith(CmdJail2))
                                     {
-                                        float t;
-                                        if (float.TryParse(message.Split(' ').Last().Trim(), out t))
+                                        if (float.TryParse(message.Split(' ').Last().Trim(), out float t))
                                         {
                                             if (SendToJail.Run(shPlayer, t))
                                             {
@@ -64,13 +63,14 @@ namespace BP_Essentials.Commands {
                                     }
                                     else if (message.Contains(CmdArrest))
                                     {
-                                        shPlayer.svPlayer.Arrest();
+                                        shPlayer.svPlayer.Arrest(shPlayer.manager.handcuffed);
                                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Arrested</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                     else if (message.Contains(CmdRestrain))
                                     {
-                                        shPlayer.svPlayer.Arrest();
-                                        shPlayer.svPlayer.SvSetEquipable(shPlayer.manager.restrained.index);
+                                        shPlayer.svPlayer.Arrest(shPlayer.manager.handcuffed);
+                                        ShRetained shRetained = shPlayer.curEquipable as ShRetained;
+                                        shPlayer.svPlayer.SvSetEquipable(shRetained.otherRetained.index);
                                         if (!shPlayer.svPlayer.IsServerside())
                                             shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
                                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
@@ -82,7 +82,7 @@ namespace BP_Essentials.Commands {
                                     }
                                     else if (message.Contains(CmdFree))
                                     {
-                                        shPlayer.svPlayer.Unhandcuff();
+                                        UnRetain.Run(shPlayer.svPlayer);
                                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Freed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
                                     }
                                         found = true;
