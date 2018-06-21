@@ -11,30 +11,16 @@ namespace BP_Essentials.Commands
 {
     class Say : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (String.IsNullOrEmpty(arg1))
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+            else
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdSayExecutableBy))
-                {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (String.IsNullOrEmpty(arg1))
-                        player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
-                    else
-                    {
-                        arg1 = new Regex("(<)").Replace(arg1, "<<b></b>");
-                        player.SendToAll(Channel.Unsequenced, 10, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
-                    }
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
+                arg1 = new Regex("(<)").Replace(arg1, "<<b></b>");
+                player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
         }
     }
 }

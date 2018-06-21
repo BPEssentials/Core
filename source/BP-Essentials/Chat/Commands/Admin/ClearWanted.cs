@@ -10,42 +10,27 @@ namespace BP_Essentials.Commands
 {
     class ClearWanted : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            bool found = false;
+            string arg1 = GetArgument.Run(1, false, true, message);
+            string msg;
+            if (String.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-
-                if (HasPermission.Run(player, CmdClearWantedExecutableBy))
+                arg1 = player.playerData.username;
+                msg = "yourself";
+            }
+            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1.ToString() && shPlayer.IsRealPlayer())
                 {
-                    bool found = false;
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    string msg;
-                    if (String.IsNullOrEmpty(arg1))
-                    {
-                        arg1 = player.playerData.username;
-                        msg = "yourself";
-                    }
-                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1.ToString() && shPlayer.IsRealPlayer())
-                        {
-                            msg = shPlayer.username;
-                            shPlayer.ClearCrimes();
-                            shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
-                            player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
-                            found = true;
-                        }
-                    if (!found)
-                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
+                    msg = shPlayer.username;
+                    shPlayer.ClearCrimes();
+                    shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
+                    found = true;
                 }
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            if (!found)
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
         }
     }
 }

@@ -12,11 +12,10 @@ namespace BP_Essentials
 {
     class LogMessage : EssentialsChatPlugin
     {
-        public static void Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
             try
             {
-                var player = (SvPlayer)oPlayer;
                 if (!message.StartsWith(CmdCommandCharacter))
                 {
                     var mssge = SetTimeStamp.Run() + "[MESSAGE] " + player.playerData.username + ": " + message;

@@ -7,10 +7,8 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-
-
-        public const string Version = "2.1.7";
-
+        public const string Version = "PRE-2.5.0";
+        public const bool isPreRelease = true;
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -27,6 +25,7 @@ namespace BP_Essentials
         public const string ExceptionFile = FileDirectory + "exceptions.txt";
         public const string CustomCommandsFile = FileDirectory + "CustomCommands.txt";
         public const string CustomGroupsFile = FileDirectory + "CustomGroups.txt";
+        public const string IdListFile = FileDirectory + "ID_list.txt";
 
         public const string AdminListFile = "admin_list.txt";
         public const string RulesFile = "server_info.txt";
@@ -35,7 +34,6 @@ namespace BP_Essentials
         public const string LogFile = LogDirectory + "all.txt";
         public const string ChatLogFile = LogDirectory + "chat.txt";
         public const string CommandLogFile = LogDirectory + "commands.txt";
-
 
         // Bools
         public static bool MsgUnknownCommand;
@@ -50,6 +48,7 @@ namespace BP_Essentials
         public static bool? EnableBlockSpawnBot;
         public static bool ShowDMGMessage;
         public static bool VoteKickDisabled;
+        public static bool DownloadIdList;
 
         // Lists
         public static List<string> CustomCommands = new List<string>();
@@ -62,6 +61,8 @@ namespace BP_Essentials
         public static List<string> MutePlayers = new List<string>();
         public static List<string> LatestVotePeople = new List<string>();
 
+        public static List<int> BlockedItems = new List<int>();
+
         // Arrays
         public static string[] Announcements;
         public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor", "DeliveryDriver", "TaxiDriver", "Special Forces" };
@@ -69,6 +70,7 @@ namespace BP_Essentials
         // Messages
         public static string MsgSayPrefix;
         public static string MsgNoPerm;
+        public static string MsgNoPermJob;
         public static string MsgDiscord;
         public static string DisabledCommand;
         public static string ArgRequired;
@@ -78,6 +80,8 @@ namespace BP_Essentials
         public static string AdminSearchingInv;
         public static string PlayerMessage;
         public static string AdminMessage;
+        public static string AdminChatMessage;
+        public static string BlockedItemMessage;
 
         public static string infoColor, errorColor, warningColor, argColor;
         // Strings
@@ -85,91 +89,36 @@ namespace BP_Essentials
         public static string DisabledSpawnBots;
         public static string LocalVersion;
         public static string MsgSayColor;
-        // Commands
-        #region Commands
-
-        public static string CmdSay,                CmdSay2,                CmdSayExecutableBy;
-        public static string CmdGodmode,            CmdGodmode2,            CmdGodmodeExecutableBy;
-        public static string CmdMute,               CmdMute2,               CmdMuteExecutableBy;
-        public static string CmdAfk,                CmdAfk2,                CmdAfkExecutableBy;
-        public static string CmdFakeJoin,           CmdFakeJoin2,           CmdFakeJoinExecutableBy;
-        public static string CmdFakeLeave,          CmdFakeLeave2,          CmdFakeLeaveExecutableBy;
-        public static string CmdPlayers,            CmdPlayers2,            CmdPlayersExecutableBy;
-        public static string CmdInfo,               CmdInfo2,               CmdInfoExecutableBy;
-        public static string CmdMoney,              CmdMoney2,              CmdMoneyExecutableBy;
-        public static string CmdAtm,                CmdAtm2,                CmdAtmExecutableBy;
-        public static string CmdPay,                CmdPay2,                CmdPayExecutableBy;
-        public static string CmdTpHere,             CmdTpHere2,             CmdTpHereExecutableBy;
-        public static string CmdHeal,               CmdHeal2,               CmdHealExecutableBy;
-        public static string CmdFeed,               CmdFeed2,               CmdFeedExecutableBy;
-        public static string CmdCheckAlts,          CmdCheckAlts2,          CmdCheckAltsExecutableBy;
-        public static string CmdGive,               CmdGive2,               CmdGiveExecutableBy;
-        public static string CmdSetjob,             CmdSetjob2,             CmdSetjobExecutableBy;
-        public static string CmdLaunch,             CmdLaunch2,             CmdLaunchExecutableBy;
-        public static string CmdStrip,              CmdStrip2,              CmdStripExecutableBy;
-        public static string CmdSlap,               CmdSlap2,               CmdSlapExecutableBy;
-        public static string CmdSearch,             CmdSearch2,             CmdSearchExecutableBy;
-        public static string CmdKill,                                       CmdKillExecutableBy;
-        public static string CmdBan,                                        CmdBanExecutableBy;
-        public static string CmdKick,                                       CmdKickExecutableBy;
-        public static string CmdLogs,                                       CmdLogsExecutableBy;
-        public static string CmdArrest,                                     CmdArrestExecutableBy;
-        public static string CmdRestrain,                                   CmdRestrainExecutableBy;
-        public static string CmdFree,                                       CmdFreeExecutableBy;
-        public static string CmdTp,                                         CmdTpExecutableBy;
-        public static string CmdSave,                                       CmdSaveExecutableBy;
-        public static string CmdLatestVoteResults,  CmdLatestVoteResults2,  CmdLatestVoteResultsExecutableBy;
-        public static string CmdClearWanted,        CmdClearWanted2,        CmdClearWantedExecutableBy;
-        public static string CmdDebug,              CmdDebug2;
-        public static string CmdConfirm,            CmdConfirm2;
-        public static string CmdReload,             CmdReload2;
-        public static string CmdClearChat,          CmdClearChat2;
-        public static string CmdReport,             CmdReport2;
-        public static string CmdHelp;
+        public static string AccessMoneyMenu;
+        public static string AccessItemMenu;
+        public static string AccessCWMenu;
+        public static string AccessSetHPMenu;
+        public static string AccessSetStatsMenu;
         public static string CmdCommandCharacter;
-        public static bool CmdClearChatDisabled;
-        public static bool CmdSayDisabled;
-        public static bool CmdGodmodeDisabled;
-        public static bool CmdMuteDisabled;
-        public static bool CmdAfkDisabled;
-        public static bool CmdFakeJoinDisabled;
-        public static bool CmdFakeLeaveDisabled;
-        public static bool CmdPlayersDisabled;
-        public static bool CmdInfoDisabled;
-        public static bool CmdMoneyDisabled;
-        public static bool CmdAtmDisabled;
-        public static bool CmdPayDisabled;
-        public static bool CmdHealDisabled;
-        public static bool CmdFeedDisabled;
-        public static bool CmdCheckAltsDisabled;
-        public static bool CmdGiveDisabled;
-        public static bool CmdLatestVoteResultsDisabled;
-        public static bool CmdSetjobDisabled;
-        public static bool CmdClearWantedDisabled;
-        public static bool CmdReportDisabled;
-        public static bool CmdLaunchDisabled;
-        public static bool CmdStripDisabled;
-        public static bool CmdSlapDisabled;
-        public static bool CmdSearchDisabled;
-        #endregion
-
-        // Ints (arrays)
-        public const int SaveTime = 60 * 5;
+        public static string CmdStaffChatExecutableBy;
+        public static string CmdConfirm;
+        public static string CmdToggleChat;
+        // Ints
+        public const int SaveTime = 5 * 60;
         public static int AnnounceIndex;
         public static int TimeBetweenAnnounce;
         public static int[] BlockedSpawnIds;
-
+        public static int DebugLevel;
+        public static int GodModeLevel;
         // Misc.
         public static string _msg;
         public static string username;
         public static string TimestampFormat;
         public const string CensoredText = "******";
         public const string PatternTemplate = @"\b({0})(s?)\b";
-        public static Dictionary<_PlayerList, int> playerList = new Dictionary<_PlayerList, int>();
+        public static Dictionary<int, _PlayerList> playerList = new Dictionary<int, _PlayerList>();
         public static Dictionary<string, _Group> Groups = new Dictionary<string, _Group>();
-
+        public static Dictionary<int, _CommandList> CommandList = new Dictionary<int, _CommandList>();
+        public static Dictionary<int, string> WhitelistedJobs = new Dictionary<int, string>();
+        public static System.Timers.Timer _Timer = new System.Timers.Timer();
         public static string[] ReportReasons =
         {
+            // default values
             "Random Vote Kick",
             "Committing suicide/Disconnecting while arrested",
             "Hacks/Exploits/Cheats",
@@ -182,21 +131,68 @@ namespace BP_Essentials
         };
         public static int[] CommonIDs =
         {
-            1530892865, // Pistol Ammo
+            // need a better way of doing this
+            493970259, // Pistol Ammo
             -479434394, // Handcuffs
-            -1113305847, // Taser Ammo
+            -906852676, // Taser Ammo
             -700261193, //License Boating
             1695812550, //License Drivers
             499504400, //License Gun
             607710552 //License Pilots
         };
         #region ID LIST
-
         public static int[] IDs = {
-        0, // you don't want to use ID 0
-        // ShPlaceable:
--1108084005, //Ashtray
+0, // you don't want to use ID 0
+-2081117539, //FireExtinguisher
+-1490613521, //FireHose
 1097271049, //Bandage
+2048164192, //Defibrillator
+1783530721, //Morphine
+-479434394, //Handcuffs
+1411864780, //Axe
+1953054383, //BatMetal
+2082248681, //Baton
+1021921521, //BatWood
+162623668, //BrassKnuckles
+304757094, //Chainsaw
+-1291023120, //Cleaver
+-900648623, //Crowbar
+1613601012, //Drill
+-1312754449, //FireAxe
+539449839, //FryPan1
+-1188165547, //FryPan2
+1800940813, //GolfClub
+2109002909, //AK47
+1968059740, //Colt
+-1975896234, //Glock
+633001730, //M4
+794733957, //Mac
+-1384309123, //MachineGun
+1875626018, //MP5SD
+554920573, //Shotgun
+-162370066, //Sig
+1053582733, //Springfield
+2015188875, //Taser
+238752591, //Winchester
+-648442112, //Hammer
+-1477501700, //Hands
+-484090981, //Kabar
+2072098604, //Knife
+1670374823, //Machete
+1216282502, //MetalPipe
+-406179965, //Plank
+-65303750, //PlankSpiked
+807974021, //Sledgehammer
+-1477281543, //Spade
+1529145355, //Sword
+1616058966, //Wrench
+869043502, //AmmoMG
+493970259, //AmmoPistol
+-872807194, //AmmoRifle
+1086364132, //AmmoShotgun
+168336396, //AmmoSMG
+-906852676, //AmmoTaser
+-1108084005, //Ashtray
 -242327999, //Binder1
 1753681915, //Binder2
 528498541, //Binder3
@@ -246,179 +242,194 @@ namespace BP_Essentials
 -78488252, //ComputerKeyboardOld
 532683176, //ComputerMouseModern
 -1179427236, //ComputerMouseOld
+-366810752, //Beer1
+1932245050, //Beer2
+70027436, //Beer3
+1202587699, //CoffeeCup1
+-559457911, //CoffeeCup2
+-1449105121, //CoffeeCup3
+935656636, //CoffeeCup4
+-82690173, //CoffeeCupSmall
+-1953356567, //CupWater
+1734556914, //EnergyCan1
+-26579640, //EnergyCan2
+-1495334556, //MilkBottle1
+1071010014, //MilkBottle2
+1414592914, //MilkCarton1
+-849762264, //MilkCarton2
+312215426, //PaperBottle1
+-1953147336, //PaperBottle2
+-755725543, //PlasticCoffeeCup1
+1274927779, //PlasticCoffeeCup2
+-1638525914, //SodaCan1
+123684252, //SodaCan2
+1884845322, //SodaCan3
+707466586, //SoftDrinkLarge1
+-1289599776, //SoftDrinkLarge2
+1736080705, //SoftDrinkSmall
+1877954167, //WaterBottle1
+-152690739, //WaterBottle2
+19015101, //Wine1
+-1741982713, //Wine2
+-282311535, //Wine3
+-846875713, //Cocaine
+-1617712860, //Heroin
+236716975, //Meth
+1314879085, //Moonshine
+1809308527, //Weed
+-273508955, //Apple1
+1992016927, //Apple2
+1279649806, //AppleBig1
+-716392012, //AppleBig2
+-1572107998, //AppleBig3
+1009720449, //AppleBig4
+310612836, //AppleHalf1
+-1953840418, //AppleHalf2
+1702175260, //Bacon
+69690105, //Banana
+1148264960, //BananaBunch1
+-579308614, //BananaBunch2
+971070930, //BananaSmall
+295609557, //BigMac
+-577045850, //BlueberryCream
+375734610, //BunBottom
+-1068735117, //BunTop
+-397451461, //Burger
+-1489105393, //BurgerMeal
+1793713626, //BurgerWrapped
+-2039755664, //Burrito
+1463680763, //Cake1
+-835408063, //Cake2
+-1187799081, //Cake3
+399745542, //CakeSliceChocolate
+1599774388, //CakeSliceVanilla1
+-967586034, //CakeSliceVanilla2
+-1089302024, //Carrot
+407176456, //CarrotSliced
+-1245471453, //CarrotSmall
+-362654475, //Cheese
+923427815, //Cheesecake
+1201374976, //Chicken
+1585611432, //ChickenLeg
+1963643076, //ChickenLegSmall
+-1598837947, //ChickenMeal
+74472777, //ChocolateBar1
+-1653011213, //ChocolateBar2
+-360825755, //ChocolateBar3
+-897720728, //CinnamonRoll
+-1924350128, //Cookie
+-420017340, //CookieBig1
+2147375870, //CookieBig2
+1205979388, //Corn1
+-555181754, //Corn2
+-1321228377, //CreamRoll1
+674690589, //CreamRoll2
+1941924400, //CreamSlice
+-392093828, //CreamTube
+-1617094551, //Croissant
+-162406301, //Cucumber1
+1868083673, //Cucumber2
+-1505527222, //CucumberSliced
+664587976, //Cupcake1
+-1097490574, //Cupcake2
+-913133596, //Cupcake3
+-649681443, //CupcakeSmall1
+1078981735, //CupcakeSmall2
+927515889, //CupcakeSmall3
+-1389912314, //Donut1
+875482812, //Donut2
+1126825514, //Donut3
+-582128759, //Donut4
+-302939084, //DonutBig1
+1962464654, //DonutBig2
+1887084450, //Egg
+-34417183, //Fish1
+1694205019, //Fish2
+1176993064, //Fries
+1775022893, //Gerkin
+-1928640708, //HamLeg
+-338274182, //HotDog
+-209488711, //IceBlock1
+1787438339, //IceBlock2
+495785365, //IceBlock3
+-580117133, //IceCream1
+1147489481, //IceCream2
+-1773123705, //IceCreamCone1
+257496637, //IceCreamCone2
+2019436203, //IceCreamCone3
+242189893, //IceCreamSundae
+460359885, //Kiwi1
+-2105943689, //Kiwi2
+1167664423, //KiwiSliced
+404542308, //Leak
+-1883035562, //Lettuce
+113691451, //Muffin1
+-1613784447, //Muffin2
+-389502441, //Muffin3
+516242109, //Mushroom
+-1363098368, //Mushrooms
+-938380499, //Onion
+443135054, //Orange
+-587460087, //OrangeBig1
+1173701555, //OrangeBig2
+-415825014, //Pancakes
+1289297238, //Patty
+-150239810, //Pear1
+1845679108, //Pear2
+419816594, //Pear3
+-467943479, //Pie1
+2098392691, //Pie2
+169205477, //Pie3
+-1220321196, //Pineapple
+236760427, //Pizza
+26382251, //PizzaThin
+1674766418, //Popcorn
+-1719549639, //Ribs
+1129488573, //Salami
+-61088408, //SalamiSliced
+1120707446, //Sandwich1
+-607784244, //Sandwich2
+-243156885, //Sausage1
+1753803217, //Sausage2
+-378704046, //SausageBread
+1973375733, //SausageRope
+390308133, //ShishKebab
+-1795417320, //Shrimp
+-1378573660, //ShrimpTray
+-1515157115, //Steak1
+1018812479, //Steak2
+1270802601, //Steak3
+-1178999815, //SteakSmall
+-800722565, //Sushi1
+1229758657, //Sushi2
+1045139543, //Sushi3
+-1075600813, //Taco
+-1906967086, //TakeawayBag
+1922778948, //Toast
+733496620, //Tomato
+-374771862, //TomatoSlice
+-1233064414, //TomatoSlices
+-1626110389, //Turkey1
+102422513, //Turkey2
+1897785191, //Turkey3
+-1566807776, //Waffle
+811305019, //WaterMelon1
+-1454188159, //WaterMelon2
+467765943, //MedicBox1
+-2098668787, //MedicBox2
 1789815627, //DeskLamp
+1324844400, //Cannabis
+-1626616456, //Coca
+-1605962214, //Ephedrin
+-719529300, //Ethanol
+1374943456, //Opium
 -1343270306, //FlowerVase
 -351400709, //Folder
 613358412, //FoodBowl1
 -1115272458, //FoodBowl2
 -897484192, //FoodBowl3
 1860288822, //FruitBowl
-539449839, //FryPan1
--1188165547, //FryPan2
 1699387113, //FuelCan
--1506794359, //Game1
-1060730163, //Game2
--81513546, //GameConsole
--390648404, //GamePad
-1334811906, //Handbag1
--695808840, //Handbag2
--1585316818, //Handbag3
-1071999373, //Handbag4
-1222793499, //Handbag5
--773125983, //Handbag6
-119353383, //HealthPack
-494261122, //Jam1
--2072214984, //Jam2
--209997138, //Jam3
-1830758157, //Jam4
-87407750, //Joystick
--502195999, //Ketchup
--1939907396, //KeyPrison
--1127724957, //KitchenFork
--567536648, //KitchenKnife
-2095575396, //KitchenSpoon
-1677000883, //Ladle
--408071411, //Laptop
--700261193, //LicenseBoating
-1695812550, //LicenseDrivers
-499504400, //LicenseGun
-607710552, //LicensePilots
--1092231192, //Lockpick
--1252471357, //Longboard1
-743545977, //Longboard2
--223936575, //MachineGunAmmo
--896858339, //Magazines1
-1401050791, //Magazines2
-451290069, //Microwave
--328781560, //MissileBig
--2080560987, //MissileSmall
-1981693152, //Money
-1108257615, //Mugshot
--1481382589, //Mustard
-1822567310, //Necklace1
--173311436, //Necklace2
-1241849122, //NecklaceDisplay1
--754168680, //NecklaceDisplay2
--1542751218, //NecklaceDisplay3
-980412845, //NecklaceDisplay4
-1298716987, //NecklaceDisplay5
--731805567, //NecklaceDisplay6
-1142121509, //Newspaper
-311999004, //Notepad
--1881452782, //Paper
--109265115, //PaperTray
-561849375, //Pen
--1915921987, //Pencil
--1945929627, //PhoneOffice
--1899151937, //PictureFrame
-1285549208, //Pills1
--711541470, //Pills2
-1530892865, //PistolAmmo
--3861386, //PlantSmall1
-1724663244, //PlantSmall2
-298546522, //PlantSmall3
--1884299015, //PlantSmall4
-1163839965, //PlateLong
--835689360, //PlateSmall
--1067629520, //Plunger
-1123106929, //Printer
--579697147, //RifleAmmo
--1287877920, //RingGold
--1125222960, //RingSilver
-398080430, //RiotShield
--921321944, //Rocket
-1438178225, //RolledPaper
-1642696866, //Scoop
--49005880, //ScotchTape
-1517652904, //Screwdriver1
--1015227886, //Screwdriver2
--1266947452, //Screwdriver3
--1104234897, //ShotgunAmmo
--1380688662, //Skateboard
--568534809, //SmartPhone1
-1192593757, //SmartPhone2
-806533579, //SmartPhone3
--1367987096, //SmartPhone4
--646898434, //SmartPhone5
-1081625924, //SmartPhone6
-931102162, //SmartPhone7
--1480564669, //SmartPhone8
--1195524169, //SMGAmmo
--318449686, //SoapDish
-1719938366, //SoapDispenser
--709313329, //SoundSystem
-521180800, //Spanner
-1706792829, //Spatula
-1080318452, //Speaker1
--647165874, //Speaker2
--1368770344, //Speaker3
-513670350, //SportsBag1
--2020299404, //SportsBag2
--258761246, //SportsBag3
-935534676, //Stapler
--4527003, //TableLamp
-1338841008, //Tablet1
--691780086, //Tablet2
--1581025636, //Tablet3
--1113305847, //TaserAmmo
--1678397020, //Toaster
--1468082443, //ToolBox1
-829917007, //ToolBox2
-1181792217, //ToolBox3
-2115192440, //Toolkit
-701212054, //TV1
--1329400788, //TV2
--943340358, //TV3
-1503744281, //TV4
-782655887, //TV5
--1213255627, //TV6
-203418146, //VaseSmall
--918444274, //VCR
-2046665206, //WalkieTalkie1
--520818612, //WalkieTalkie2
--1745633062, //WalkieTalkie3
--33192302, //WalkingStick
-1578700508, //Watches, //Display, //1
--955228314, //Watches, //Display, //2
-1304259192, //Weight1
--726385726, //Weight2
-// ShGun:
-2109002909, //AK47
-1968059740, //Colt
--1975896234, //Glock
-633001730, //M4
-794733957, //Mac
--1384309123, //MachineGun
-554920573, //Shotgun
--162370066, //Sig
-1053582733, //Springfield
-2015188875, //Taser
-238752591, //Winchester
-// ShWeapon:
-1411864780, //Axe
-1953054383, //BatMetal
-2082248681, //Baton
-1021921521, //BatWood
-162623668, //BrassKnuckles
-304757094, //Chainsaw
--1291023120, //Cleaver
--900648623, //Crowbar
-1613601012, //Drill
--1312754449, //FireAxe
-1800940813, //GolfClub
--648442112, //Hammer
--1477501700, //Hands
--484090981, //Kabar
-2072098604, //Knife
-1670374823, //Machete
-1216282502, //MetalPipe
--406179965, //Plank
--65303750, //PlankSpiked
-807974021, //Sledgehammer
--1477281543, //Spade
-1529145355, //Sword
-1616058966, //Wrench
-// ShFurniture:
 -2070052131, //Armchair1
 496292711, //Armchair2
 1788077041, //Armchair3
@@ -621,8 +632,133 @@ namespace BP_Essentials
 -1646994167, //Washer
 1546856892, //WaterCooler
 1312283616, //Whiteboard
-// ShWearable:
+-1506794359, //Game1
+1060730163, //Game2
+-81513546, //GameConsole
+-390648404, //GamePad
+1334811906, //Handbag1
+-695808840, //Handbag2
+-1585316818, //Handbag3
+1071999373, //Handbag4
+1222793499, //Handbag5
+-773125983, //Handbag6
+119353383, //HealthPack
+494261122, //Jam1
+-2072214984, //Jam2
+-209997138, //Jam3
+1830758157, //Jam4
+87407750, //Joystick
+-502195999, //Ketchup
+-1939907396, //KeyPrison
+-1127724957, //KitchenFork
+-567536648, //KitchenKnife
+2095575396, //KitchenSpoon
+1677000883, //Ladle
+-408071411, //Laptop
+-700261193, //LicenseBoating
+1695812550, //LicenseDrivers
+499504400, //LicenseGun
+607710552, //LicensePilots
+-1092231192, //Lockpick
+-1252471357, //Longboard1
+743545977, //Longboard2
+-896858339, //Magazines1
+1401050791, //Magazines2
+451290069, //Microwave
+-328781560, //MissileBig
+-2080560987, //MissileSmall
+1981693152, //Money
+1108257615, //Mugshot
+-1481382589, //Mustard
+1822567310, //Necklace1
+-173311436, //Necklace2
+1241849122, //NecklaceDisplay1
+-754168680, //NecklaceDisplay2
+-1542751218, //NecklaceDisplay3
+980412845, //NecklaceDisplay4
+1298716987, //NecklaceDisplay5
+-731805567, //NecklaceDisplay6
+1142121509, //Newspaper
+311999004, //Notepad
+-1881452782, //Paper
+-109265115, //PaperTray
+561849375, //Pen
+-1915921987, //Pencil
+-1945929627, //PhoneOffice
+-1899151937, //PictureFrame
+1285549208, //Pills1
+-711541470, //Pills2
+-3861386, //PlantSmall1
+1724663244, //PlantSmall2
+298546522, //PlantSmall3
+-1884299015, //PlantSmall4
+1163839965, //PlateLong
+-835689360, //PlateSmall
+-1067629520, //Plunger
+1123106929, //Printer
+-1500569022, //Register
+-961292868, //RegisterDigital
+-1714478603, //RegisterElectronic1
+13004879, //RegisterElectronic2
+-1287877920, //RingGold
+-1125222960, //RingSilver
+398080430, //RiotShield
+-921321944, //Rocket
+1438178225, //RolledPaper
+1642696866, //Scoop
+-49005880, //ScotchTape
+1517652904, //Screwdriver1
+-1015227886, //Screwdriver2
+-1266947452, //Screwdriver3
+-1561514462, //CannabisSeed
+1343067718, //CocaSeed
+-1428095884, //OpiumSeed
+-1380688662, //Skateboard
+-318449686, //SoapDish
+1719938366, //SoapDispenser
+-709313329, //SoundSystem
+521180800, //Spanner
+1706792829, //Spatula
+1080318452, //Speaker1
+-647165874, //Speaker2
+-1368770344, //Speaker3
+513670350, //SportsBag1
+-2020299404, //SportsBag2
+-258761246, //SportsBag3
+935534676, //Stapler
+-4527003, //TableLamp
+1338841008, //Tablet1
+-691780086, //Tablet2
+-1581025636, //Tablet3
+-1678397020, //Toaster
+-1468082443, //ToolBox1
+829917007, //ToolBox2
+1181792217, //ToolBox3
+2115192440, //Toolkit
+701212054, //TV1
+-1329400788, //TV2
+-943340358, //TV3
+1503744281, //TV4
+782655887, //TV5
+-1213255627, //TV6
+203418146, //VaseSmall
+-918444274, //VCR
+2046665206, //WalkieTalkie1
+-520818612, //WalkieTalkie2
+-1745633062, //WalkieTalkie3
+-33192302, //WalkingStick
+1578700508, //Watches Display 1
+-955228314, //Watches Display 2
+1304259192, //Weight1
+-726385726, //Weight2
+-1733366847, //Basketball
+-1572858027, //Bazooka
+161824251, //Flare
+895677224, //Flashbang
+-1520575955, //Grenade
+-2004367746, //Smoke
 -552154137, //BackpackBrown
+-544534799, //BackpackCombat
 -1201692785, //BackpackPurple
 334614070, //BackpackRed
 -409267593, //BackwardsCapBlue
@@ -634,25 +770,17 @@ namespace BP_Essentials
 -1221739260, //BlouseBlue
 -904946077, //BlouseNavy
 -1694703303, //BlouseTeal
--826396111, //BoonieHatDark
-276739542, //BoonieHatLight
--887267802, //BusinessJacketBlack
-226477829, //BusinessJacketPurple
--383196556, //BusinessJacketRed
--312610182, //BusinessShirtBlue
-1594378520, //BusinessShirtPink
--1384129110, //BusinessShirtYellow
 -843762116, //CapBlue
+1667534522, //CapChauffeur
+113858252, //CapFlat
 866805455, //CapGreen
+753732225, //CapPizza
 -1557289298, //CapPolice
+-913660239, //CapRacer
 -904992899, //CapRed
+-951990666, //CapSheriff
 -1376032294, //FaceScarfDark
 667274109, //FaceScarfLight
--379447780, //Fedora
-1335969418, //FireHat
--1619526435, //FireJacket
--596332629, //FirePants
--609148567, //FlatCap
 -1067924423, //GangJacketBlue
 1137541042, //GangJacketGreen
 1251400951, //GangJacketRed
@@ -660,21 +788,39 @@ namespace BP_Essentials
 1076848752, //GlovesFingerlessDark
 288052618, //GlovesFingerlessLight
 -390235841, //GlovesFingerlessMedium
+956220633, //GlovesFingerlessWhite
 -1911875617, //GlovesLight
 -880225031, //GlovesMedical
 -215745530, //GlovesMedium
+-1478588788, //GlovesWhite
 -657754262, //GoateeBlack
 -146523716, //GoateeBlond
 1012357398, //GoateeBrown
 -1849094355, //HardHatDark
 69246628, //HardHatLight
 880705339, //HardHatMedium
-520555767, //HippieJacketBlue
--2108836424, //HippieJacketBrown
-1138133140, //HippieJacketPurple
-878521661, //HipsterJacketBlue
--907391030, //HipsterJacketOrange
--2046257569, //HipsterJacketPink
+973238883, //HatBoonieDark
+-1779484338, //HatBoonieLight
+-544909805, //HatFedora
+-52820099, //HatFire
+-633509750, //HatHazard
+-1310874884, //HelmetCombat
+-766353867, //HelmetRiot
+-622606519, //JacketBusinessBlack
+-798800555, //JacketBusinessPurple
+1953581485, //JacketBusinessRed
+2065462452, //JacketFire
+-1867909606, //JacketFireBlack
+1992507847, //JacketHippieBlue
+-1526906535, //JacketHippieBrown
+-1795298674, //JacketHippiePurple
+-623640896, //JacketHipsterBlue
+1998765530, //JacketHipsterOrange
+1753630114, //JacketHipsterPink
+-313637738, //JacketRacer
+-1574869922, //JacketVarsityBlue
+-1871056151, //JacketVarsityGreen
+-299146069, //JacketVarsityRed
 112674745, //KevlarVest
 -1626497894, //NullArmor
 673780802, //NullBack
@@ -687,6 +833,14 @@ namespace BP_Essentials
 1645391131, //PantsBlue
 730598986, //PantsBrown
 -1793758716, //PantsBrownPatched
+-1888685880, //PantsChauffeur
+1998080865, //PantsCombat
+-312606938, //PantsConstructionBlue
+134344360, //PantsConstructionOrange
+1296190984, //PantsConstructionRed
+-443982957, //PantsDoctor
+-1527091616, //PantsFire
+2025319866, //PantsFireBlack
 2044418121, //PantsGray
 -1777372097, //PantsGreen
 -107652805, //PantsLightBlue
@@ -696,18 +850,21 @@ namespace BP_Essentials
 595581678, //PantsParamedic
 506851744, //PantsPolice
 -1175302500, //PantsPrisoner
+1815065665, //PantsRacer
 -295837114, //PantsRiot
+541389606, //PantsSheriff
 -757862723, //PunkTopBlue
 1985284270, //PunkTopRed
 996118564, //PunkTopWhite
-1937966560, //RiotHelmet
-167768276, //ShirtMerchant
--1501901464, //ShirtParamedic
-476833451, //ShirtPolice
--640347954, //ShirtPrisoner
+1372071833, //ShirtBusinessBlue
+-476209925, //ShirtBusinessPink
+781576011, //ShirtBusinessYellow
 -1755425193, //ShirtStripedBlue
 -376425089, //ShirtStripedGreen
 1718551758, //ShirtStripedPurple
+-1161119954, //ShirtTouristOrange
+1300919472, //ShirtTouristPurple
+1997269705, //ShirtTouristYellow
 -2054702454, //ShoesBlack
 1629197558, //ShoesBrown
 837068077, //ShoesGray
@@ -730,234 +887,61 @@ namespace BP_Essentials
 -1369391530, //SuspendersShortPurple
 1946500812, //SuspendersShortRed
 -1797185489, //SuspendersShortYellow
+-1691035721, //TeeApple
+-1779870671, //TeeLove
+-37255800, //TeePizza
+1234346447, //TopChauffeur
+388702693, //TopCombat
+1258964252, //TopConstructionBlue
+102550548, //TopConstructionOrange
+-1498475603, //TopConstructionRed
+-2051395305, //TopDoctor
+-1689248836, //TopMerchant
+-444494871, //TopParamedic
+2114362148, //TopPolice
+1266351014, //TopPrisoner
 -645285295, //TopRiot
--894226412, //TouristShirtOrange
-1039397770, //TouristShirtPurple
-124939763, //TouristShirtYellow
-// ShConsumable:
--366810752, //Beer1
-1932245050, //Beer2
-70027436, //Beer3
-1202587699, //CoffeeCup1
--559457911, //CoffeeCup2
--1449105121, //CoffeeCup3
-935656636, //CoffeeCup4
--82690173, //CoffeeCupSmall
--1953356567, //CupWater
-1734556914, //EnergyCan1
--26579640, //EnergyCan2
--1495334556, //MilkBottle1
-1071010014, //MilkBottle2
-1414592914, //MilkCarton1
--849762264, //MilkCarton2
-312215426, //PaperBottle1
--1953147336, //PaperBottle2
--755725543, //PlasticCoffeeCup1
-1274927779, //PlasticCoffeeCup2
--1638525914, //SodaCan1
-123684252, //SodaCan2
-1884845322, //SodaCan3
-707466586, //SoftDrinkLarge1
--1289599776, //SoftDrinkLarge2
-1736080705, //SoftDrinkSmall
-1877954167, //WaterBottle1
--152690739, //WaterBottle2
-19015101, //Wine1
--1741982713, //Wine2
--282311535, //Wine3
--846875713, //Cocaine
--1617712860, //Heroin
-236716975, //Meth
-1314879085, //Moonshine
-1809308527, //Weed
--273508955, //Apple1
-1992016927, //Apple2
-1279649806, //AppleBig1
--716392012, //AppleBig2
--1572107998, //AppleBig3
-1009720449, //AppleBig4
-310612836, //AppleHalf1
--1953840418, //AppleHalf2
-1702175260, //Bacon
-69690105, //Banana
-1148264960, //BananaBunch1
--579308614, //BananaBunch2
-971070930, //BananaSmall
-295609557, //BigMac
--577045850, //BlueberryCream
-375734610, //BunBottom
--1068735117, //BunTop
--397451461, //Burger
--1489105393, //BurgerMeal
-1793713626, //BurgerWrapped
--2039755664, //Burrito
-1463680763, //Cake1
--835408063, //Cake2
--1187799081, //Cake3
-399745542, //CakeSliceChocolate
-1599774388, //CakeSliceVanilla1
--967586034, //CakeSliceVanilla2
--1089302024, //Carrot
-407176456, //CarrotSliced
--1245471453, //CarrotSmall
--362654475, //Cheese
-923427815, //Cheesecake
-1201374976, //Chicken
-1585611432, //ChickenLeg
-1963643076, //ChickenLegSmall
--1598837947, //ChickenMeal
-74472777, //ChocolateBar1
--1653011213, //ChocolateBar2
--360825755, //ChocolateBar3
--897720728, //CinnamonRoll
--1924350128, //Cookie
--420017340, //CookieBig1
-2147375870, //CookieBig2
-1205979388, //Corn1
--555181754, //Corn2
--1321228377, //CreamRoll1
-674690589, //CreamRoll2
-1941924400, //CreamSlice
--392093828, //CreamTube
--1617094551, //Croissant
--162406301, //Cucumber1
-1868083673, //Cucumber2
--1505527222, //CucumberSliced
-664587976, //Cupcake1
--1097490574, //Cupcake2
--913133596, //Cupcake3
--649681443, //CupcakeSmall1
-1078981735, //CupcakeSmall2
-927515889, //CupcakeSmall3
--1389912314, //Donut1
-875482812, //Donut2
-1126825514, //Donut3
--582128759, //Donut4
--302939084, //DonutBig1
-1962464654, //DonutBig2
-1887084450, //Egg
--34417183, //Fish1
-1694205019, //Fish2
-1176993064, //Fries
-1775022893, //Gerkin
--1928640708, //HamLeg
--338274182, //HotDog
--209488711, //IceBlock1
-1787438339, //IceBlock2
-495785365, //IceBlock3
--580117133, //IceCream1
-1147489481, //IceCream2
--1773123705, //IceCreamCone1
-257496637, //IceCreamCone2
-2019436203, //IceCreamCone3
-242189893, //IceCreamSundae
-460359885, //Kiwi1
--2105943689, //Kiwi2
-1167664423, //KiwiSliced
-404542308, //Leak
--1883035562, //Lettuce
-113691451, //Muffin1
--1613784447, //Muffin2
--389502441, //Muffin3
-516242109, //Mushroom
--1363098368, //Mushrooms
--938380499, //Onion
-443135054, //Orange
--587460087, //OrangeBig1
-1173701555, //OrangeBig2
--415825014, //Pancakes
-1289297238, //Patty
--150239810, //Pear1
-1845679108, //Pear2
-419816594, //Pear3
--467943479, //Pie1
-2098392691, //Pie2
-169205477, //Pie3
--1220321196, //Pineapple
-236760427, //Pizza
-26382251, //PizzaThin
-1674766418, //Popcorn
--1719549639, //Ribs
-1129488573, //Salami
--61088408, //SalamiSliced
-1120707446, //Sandwich1
--607784244, //Sandwich2
--243156885, //Sausage1
-1753803217, //Sausage2
--378704046, //SausageBread
-1973375733, //SausageRope
-390308133, //ShishKebab
--1795417320, //Shrimp
--1378573660, //ShrimpTray
--1515157115, //Steak1
-1018812479, //Steak2
-1270802601, //Steak3
--1178999815, //SteakSmall
--800722565, //Sushi1
-1229758657, //Sushi2
-1045139543, //Sushi3
--1075600813, //Taco
--1906967086, //TakeawayBag
-1922778948, //Toast
-733496620, //Tomato
--374771862, //TomatoSlice
--1233064414, //TomatoSlices
--1626110389, //Turkey1
-102422513, //Turkey2
-1897785191, //Turkey3
--1566807776, //Waffle
-811305019, //WaterMelon1
--1454188159, //WaterMelon2
-467765943, //MedicBox1
--2098668787, //MedicBox2
-// ShDrugMaterial:
-1324844400, //Cannabis
--1626616456, //Coca
--1605962214, //Ephedrin
--719529300, //Ethanol
-1374943456, //Opium
-//ShExtinguisher:
--2081117539, //FireExtinguisher
-// ShHealer:
-2048164192, //Defibrillator
-1783530721, //Morphine
-// ShRetainer:
--479434394, //Handcuffs
-// ShSeed:
--1561514462, //CannabisSeed
-1343067718, //CocaSeed
--1428095884, //OpiumSeed
-// ShProjectile:
--1572858027, //Bazooka
-161824251, //Flare
-895677224, //Flashbang
--1520575955, //Grenade
--2004367746, //Smoke
-        };
+602133489, //TopSafetyVest
+-890140811, //TopSheriff
+};
+
         #endregion
+    }
+    public class _CommandList
+    {
+        public Action<SvPlayer, string> RunMethod;
+        public List<string> commandCmds;
+        public bool? commandDisabled;
+        public string commandGroup;
+        public string commandName;
     }
     public class _PlayerList
     {
         public ShPlayer shplayer { get; set; }
-        public int LastMenu;
+        public CurrentMenu LastMenu;
         public ShPlayer reportedPlayer { get; set; }
         public string reportedReason;
+        public bool chatEnabled = true;
+        public bool staffChatEnabled;
+        public bool receiveStaffChat = true;
     }
+
     public class _Group
     {
         public string Name;
         public string Message;
         public List<string> Users = new List<string>();
     }
-    public static class CurrentMenu //Todo: convert to enum
+
+    public enum CurrentMenu
     {
-        public static readonly int Main;
-        public static readonly int Help = 1;
-        public static readonly int Staff = 2;
-        public static readonly int GiveMoney = 3;
-        public static readonly int GiveItems = 4;
-        public static readonly int ServerInfo = 5;
-        public static readonly int Report = 6;
-        public static readonly int AdminReport = 7;
+        Main,
+        Help,
+        Staff,
+        GiveMoney,
+        GiveItems,
+        ServerInfo,
+        Report,
+        AdminReport
     }
 }

@@ -2,9 +2,8 @@
 {
     class IsOnline : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer)
+        public static bool Run(ShPlayer player)
         {
-            var player = (ShPlayer)oPlayer;
             foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                 if (shPlayer == player && shPlayer.IsRealPlayer())
                     return true;

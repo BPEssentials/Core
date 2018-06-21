@@ -12,14 +12,13 @@ namespace BP_Essentials
 {
     class CheckAltAcc : EssentialsChatPlugin
     {
-        public static void Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
             if (CheckAlt)
             {
                 Thread.Sleep(3000);
                 try
                 {
-                    var player = (SvPlayer)oPlayer;
                     if (!string.IsNullOrEmpty(player.playerData.username.Trim()))
                         if (File.ReadAllText(BansFile).Contains(player.svManager.GetAddress(player.connection)))
                         {

@@ -11,11 +11,10 @@ namespace BP_Essentials.Chat
 {
     class LangAndChatBlock : EssentialsChatPlugin
     {
-        public static string Run(object oPlayer, string message)
+        public static string Run(string message)
         {
             try
             {
-                var player = (SvPlayer)oPlayer;
                 if (ChatBlock)
                 {
                     const RegexOptions Options = RegexOptions.IgnoreCase;

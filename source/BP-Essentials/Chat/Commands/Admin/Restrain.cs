@@ -10,22 +10,26 @@ namespace BP_Essentials.Commands
 {
     class Restrain : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (!string.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrEmpty(arg1))
-                    ExecuteOnPlayer.Run(player, message, arg1);
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                var shPlayer = GetShByStr.Run(arg1);
+                if (shPlayer == null)
+                {
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    return;
+                }
+                shPlayer.svPlayer.Arrest(shPlayer.manager.handcuffed);
+                ShRetained shRetained = shPlayer.curEquipable as ShRetained;
+                shPlayer.svPlayer.SvSetEquipable(shRetained.otherRetained.index);
+                if (!shPlayer.svPlayer.IsServerside())
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

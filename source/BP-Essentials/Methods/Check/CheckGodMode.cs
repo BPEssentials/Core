@@ -10,15 +10,16 @@ namespace BP_Essentials
 {
     class CheckGodMode : EssentialsCorePlugin
     {
-        public static bool Run(object oPlayer, float amount)
+        public static bool Run(SvPlayer player, float? amount = null, string customMessage = null)
         {
             try
             {
-                var player = (SvPlayer)oPlayer;
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
-                    if (ShowDMGMessage)
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color=#b7b5b5>{amount} DMG Blocked!</color>");
+                    if (amount != null && ShowDMGMessage)
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color=#b7b5b5>{amount} DMG Blocked!</color>");
+                    if (customMessage != null)
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, customMessage);
                     return true;
                 }
             }

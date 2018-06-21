@@ -11,51 +11,37 @@ namespace BP_Essentials.Commands
 {
     class Mute : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
-            {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdMuteExecutableBy))
-                {
-                    string muteuser = null;
-                    var found = false;
-                    muteuser = GetArgument.Run(1, false, true, message);
-                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
-                            if (shPlayer.IsRealPlayer())
-                            {
-                                muteuser = shPlayer.username;
-                                found = true;
-                            }
-                    if (!found)
+            string muteuser = null;
+            var found = false;
+            muteuser = GetArgument.Run(1, false, true, message);
+            foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                if (shPlayer.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
+                    if (shPlayer.IsRealPlayer())
                     {
-                        player.SendToSelf(Channel.Unsequenced, 10, NotFoundOnline);
-                        return true;
+                        muteuser = shPlayer.username;
+                        found = true;
                     }
-                    ReadFile.Run(MuteListFile);
-                    if (!MutePlayers.Contains(muteuser))
-                    {
-                        MutePlayers.Add(muteuser);
-                        File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Muted </color><color={argColor}>" + muteuser + "</color>");
+            if (!found)
+            {
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                return;
+            }
+            ReadFile.Run(MuteListFile);
+            if (!MutePlayers.Contains(muteuser))
+            {
+                MutePlayers.Add(muteuser);
+                File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Muted </color><color={argColor}>" + muteuser + "</color>");
 
-                    }
-                    else
-                    {
-                        RemoveStringFromFile.Run(MuteListFile, muteuser);
-                        ReadFile.Run(MuteListFile);
-                        player.SendToSelf(Channel.Unsequenced, 10, $"<color={infoColor}>Unmuted </color><color={argColor}>" + muteuser + "</color>");
-                    }
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, MsgNoPerm);
             }
-            catch (Exception ex)
+            else
             {
-                ErrorLogging.Run(ex);
+                RemoveStringFromFile.Run(MuteListFile, muteuser);
+                ReadFile.Run(MuteListFile);
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Unmuted </color><color={argColor}>" + muteuser + "</color>");
             }
-            return true;
         }
     }
 }

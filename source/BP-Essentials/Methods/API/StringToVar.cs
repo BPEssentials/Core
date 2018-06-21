@@ -20,7 +20,7 @@ namespace BP_Essentials
                 if (!string.IsNullOrEmpty(ExeBy))
                     typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + "ExecutableBy").SetValue("Cmd" + s + "ExecutableBy", ExeBy);
                 if (!string.IsNullOrEmpty(Disabled.ToString()))
-                    typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + "Disabled").SetValue("Cmd" + s + "Disabled", Disabled);
+                    typeof(EssentialsVariablesPlugin).GetField(@"Cmd" + s + nameof(Disabled)).SetValue("Cmd" + s + nameof(Disabled), Disabled);
             }
             catch (Exception ex)
             {

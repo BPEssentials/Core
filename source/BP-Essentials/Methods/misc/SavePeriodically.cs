@@ -12,30 +12,30 @@ namespace BP_Essentials
 {
     class SavePeriodically : EssentialsChatPlugin
     {
-        public static void Run()
+        public static void Run(object man)
         {
             try
             {
-                using (System.Timers.Timer Tmer = new System.Timers.Timer())
-                {
-                    Tmer.Elapsed += new ElapsedEventHandler(OnTime);
-                    Tmer.Interval = SaveTime * 1000;
-                    Tmer.Enabled = true;
-                }
+                var svManager = (SvManager)man;
+                var Tmer = new System.Timers.Timer(); // TODO: Disposing the timer seems to break
+                Tmer.Elapsed += (sender, e) => OnTime(svManager);
+                Tmer.Interval = SaveTime * 1000;
+                Tmer.Enabled = true;
             }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
             }
         }
-        private static void OnTime(object source, ElapsedEventArgs e)
+        static void OnTime(object onetMan)
         {
+            var svManager = (SvManager)onetMan;
             Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
-            foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+            foreach (var shPlayer in svManager.players)
                 if (shPlayer.IsRealPlayer())
                 {
                     if (shPlayer.GetPlaceIndex() >= 13) continue;
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, 10, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
                     shPlayer.svPlayer.Save();
                 }
         }

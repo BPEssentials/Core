@@ -3,40 +3,23 @@ using System;
 using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands {
-    public class Tp : EssentialsChatPlugin{
-        public static bool TpHere(object oPlayer, string message)
+    public class Tp : EssentialsChatPlugin {
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (!string.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrEmpty(arg1))
-                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
+                var shPlayer = GetShByStr.Run(arg1);
+                if (shPlayer == null)
+                {
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    return;
+                }
+                player.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
-        }
-
-        public static bool Run(object oPlayer, string message) {
-            try
-            {
-                var player = (SvPlayer)oPlayer;
-                string arg1 = GetArgument.Run(1, false, true, message);
-                if (!string.IsNullOrEmpty(arg1))
-                    Commands.ExecuteOnPlayer.Run(player, message, arg1);
-                else
-                    player.SendToSelf(Channel.Unsequenced, 10, ArgRequired);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

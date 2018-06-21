@@ -17,17 +17,15 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
     public class EssentialsCorePlugin {
 
         //Initialization
-        [Hook("SvManager.StartServerNetwork")]
-        public static void StartServerNetwork(SvManager svManager)
+        [Hook("SvManager.StartServer")]
+        public static void StartServer(SvManager svManager)
         {
-       //     ShManager Manager = (ShManager)typeof(SvManager).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(svManager);
             try
             {
                 Reload.Run(true);
@@ -46,11 +44,9 @@ namespace BP_Essentials
                     Reload.Run(true);
                 }
                 var thread = new Thread(SavePeriodically.Run);
-                thread.Start();
+                thread.Start(svManager);
                 Debug.Log("-------------------------------------------------------------------------------");
-                Debug.Log("    ");
-                Debug.Log("[INFO] Essentials - version: " + LocalVersion + " Loaded in successfully!");
-                Debug.Log("    ");
+                Debug.Log($"[INFO] Essentials - version: {LocalVersion} {(isPreRelease ? "[PRE-RELEASE]" : "")} Loaded in successfully!");
                 Debug.Log("-------------------------------------------------------------------------------");
             }
             catch (Exception ex)
@@ -66,7 +62,6 @@ namespace BP_Essentials
                 Debug.Log("-------------------------------------------------------------------------------");
 
             }
-
             if (Announcements.Length != 0)
             {
                 var thread = new Thread(new ParameterizedThreadStart(Chat.Announce.Run));

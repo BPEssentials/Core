@@ -12,12 +12,11 @@ namespace BP_Essentials
 {
     class CheckBanned : EssentialsCorePlugin
     {
-        public static void Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
             try
             {
                 Thread.Sleep(3000);
-                var player = (SvPlayer)oPlayer;
                 if (!string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
                     if (File.ReadAllText(BansFile).Contains(player.playerData.username))
                     {
