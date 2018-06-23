@@ -12,10 +12,14 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player)
         {
-            if (AdminsListPlayers.Contains(player.playerData.username))
-                BP_Essentials.Reload.Run(false, player);
-            else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+            var shPlayer = GetShBySv.Run(player);
+            if (shPlayer != null)
+            {
+                if (shPlayer.admin)
+                    BP_Essentials.Reload.Run(false, player);
+                else
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+            }
         }
     }
 }
