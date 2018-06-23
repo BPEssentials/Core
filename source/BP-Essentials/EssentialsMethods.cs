@@ -74,15 +74,22 @@ namespace BP_Essentials
         }
 
         [Hook("SvPlayer.SvBan")]
-        public static void SvBan(SvPlayer player, ref int otherID)
+        public static bool SvBan(SvPlayer player, ref int otherID)
         {
+            if (BlockBanButtonTabMenu)
+            {
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>This button has been disabled. Please use the ban commands.</color>");
+                return true;
+            }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
                     if (shPlayer.IsRealPlayer() && !shPlayer.svPlayer.IsServerside())
                     {
-                        Debug.Log($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
+                        LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
+                        SendDiscordMessage.BanMessage(shPlayer.username, player.playerData.username);
                     }
+            return false;
         }
 
         [Hook("SvPlayer.SvStartVote")]

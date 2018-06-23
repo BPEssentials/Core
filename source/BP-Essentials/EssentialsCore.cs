@@ -28,6 +28,7 @@ namespace BP_Essentials
         {
             try
             {
+                SvMan = svManager;
                 Reload.Run(true);
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
@@ -42,6 +43,7 @@ namespace BP_Essentials
                         File.Delete(SettingsFile + "." + date + ".OLD");
                     File.Move(SettingsFile, $"{SettingsFile}.{date}.OLD");
                     Reload.Run(true);
+
                 }
                 var thread = new Thread(SavePeriodically.Run);
                 thread.Start(svManager);

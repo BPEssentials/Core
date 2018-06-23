@@ -49,6 +49,8 @@ namespace BP_Essentials
         public static bool ShowDMGMessage;
         public static bool VoteKickDisabled;
         public static bool DownloadIdList;
+        public static bool EnableDiscordWebhook;
+        public static bool BlockBanButtonTabMenu;
 
         // Lists
         public static List<string> CustomCommands = new List<string>();
@@ -77,6 +79,7 @@ namespace BP_Essentials
         public static string PlayerIsAFK;
         public static string SelfIsMuted;
         public static string NotFoundOnline;
+        public static string NotFoundOnlineIdOnly;
         public static string AdminSearchingInv;
         public static string PlayerMessage;
         public static string AdminMessage;
@@ -98,6 +101,8 @@ namespace BP_Essentials
         public static string CmdStaffChatExecutableBy;
         public static string CmdConfirm;
         public static string CmdToggleChat;
+        public static string DiscordWebhook;
+
         // Ints
         public const int SaveTime = 5 * 60;
         public static int AnnounceIndex;
@@ -116,6 +121,7 @@ namespace BP_Essentials
         public static Dictionary<int, _CommandList> CommandList = new Dictionary<int, _CommandList>();
         public static Dictionary<int, string> WhitelistedJobs = new Dictionary<int, string>();
         public static System.Timers.Timer _Timer = new System.Timers.Timer();
+        public static SvManager SvMan;
         public static string[] ReportReasons =
         {
             // default values
@@ -924,6 +930,7 @@ namespace BP_Essentials
         public bool chatEnabled = true;
         public bool staffChatEnabled;
         public bool receiveStaffChat = true;
+        public bool spyEnabled;
     }
 
     public class _Group

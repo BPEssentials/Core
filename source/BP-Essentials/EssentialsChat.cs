@@ -46,6 +46,10 @@ namespace BP_Essentials
                             }
                             if (HasPermission.Run(player, cmd.commandGroup, true))
                             {
+                                // Improve (use LINQ, not that familiar with it though
+                                foreach (var currPlayer in playerList.Values)
+                                    if (currPlayer.spyEnabled && currPlayer.shplayer.svPlayer != player)
+                                        currPlayer.shplayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {message}");
                                 switch (cmd.commandName)
                                 {
                                     // If anyone knows a way to improve this, let me know :)
@@ -72,6 +76,9 @@ namespace BP_Essentials
                                         break;
                                     case "StaffChatMessages":
                                         Commands.ToggleReceiveStaffChat.Run(player);
+                                        break;
+                                    case "Spy":
+                                        Commands.Spy.Run(player);
                                         break;
                                     case "Save":
                                         Commands.Save.Run();

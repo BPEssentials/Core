@@ -10,12 +10,12 @@ namespace BP_Essentials
 {
     class GetShByStr : EssentialsCorePlugin
     {
-        public static ShPlayer Run(string player)
+        public static ShPlayer Run(string player, bool idOnly = false)
         {
             try
             {
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.ID.ToString() == player || shPlayer.username == player)
+                    if ((shPlayer.ID.ToString() == player || shPlayer.username == player) && !idOnly || shPlayer.ID.ToString() == player && idOnly)
                         return shPlayer;
                 return null;
             }

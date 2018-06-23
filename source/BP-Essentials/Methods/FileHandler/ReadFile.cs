@@ -27,6 +27,9 @@ namespace BP_Essentials
         public bool VoteKickDisabled { get; set; }
         public bool ShowDMGMessage { get; set; }
         public int DebugLevel { get; set; }
+        public string DiscordWebhook { get; set; }
+        public bool EnableDiscordWebhook { get; set; }
+        public bool BlockBanButtonTabMenu { get; set; }
     }
     [Serializable]
     public class _Messages
@@ -39,6 +42,7 @@ namespace BP_Essentials
         public string SelfIsMuted { get; set; }
         public string ArgRequired { get; set; }
         public string NotFoundOnline { get; set; }
+        public string NotFoundOnlineIdOnly { get; set;}
         public string AdminSearchingInv { get; set; }
         public string PlayerMessage { get; set; }
         public string AdminMessage { get; set; }
@@ -147,6 +151,15 @@ namespace BP_Essentials
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
                         DebugLevel = m.General.DebugLevel;
+                        EnableDiscordWebhook = m.General.EnableDiscordWebhook;
+                        if (EnableDiscordWebhook && string.IsNullOrEmpty(m.General.DiscordWebhook.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook is empty but EnableDiscordWebhook is true! Disabling webhook.");
+                            EnableDiscordWebhook = false;
+                        }
+                        else
+                            DiscordWebhook = m.General.DiscordWebhook;
+                        BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
 
                         infoColor = m.MessageColors.info;
                         errorColor = m.MessageColors.error;
@@ -161,6 +174,7 @@ namespace BP_Essentials
                         SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
                         ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
                         NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
+                        NotFoundOnlineIdOnly = $"<color={errorColor}>{m.Messages.NotFoundOnlineIdOnly}</color>";
                         AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
                         PlayerMessage = m.Messages.PlayerMessage;
                         AdminMessage = m.Messages.AdminMessage;

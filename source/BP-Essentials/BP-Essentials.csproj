@@ -63,9 +63,11 @@
     <Compile Include="Chat\Commands\Admin\Restrain.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
     <Compile Include="Chat\Commands\Admin\Search.cs" />
+    <Compile Include="Chat\Commands\Admin\Spy.cs" />
     <Compile Include="Chat\Commands\Admin\ToggleReceiveStaffChat.cs" />
     <Compile Include="Chat\Commands\Admin\ToggleStaffChat.cs" />
     <Compile Include="Chat\Commands\Admin\TpHere.cs" />
+    <Compile Include="Chat\Commands\Admin\TpToApartment.cs" />
     <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
     <Compile Include="Chat\Commands\Admin\Strip.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Methods\API\GetShByStr.cs" />
     <Compile Include="Methods\API\GetShBySv.cs" />
     <Compile Include="Methods\API\HasPermission.cs" />
+    <Compile Include="Methods\API\SendDiscordMessage.cs" />
     <Compile Include="Methods\API\StringToVar.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
     <Compile Include="Methods\Check\CheckBanned.cs" />
