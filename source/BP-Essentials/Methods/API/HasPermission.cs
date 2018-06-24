@@ -17,11 +17,13 @@ namespace BP_Essentials
             string[] GroupsSplit = ExeBy.Split(',');
             foreach (string name in GroupsSplit)
                 if (jobIndex != null)
+                {
                     if (Groups.Any(curr => $"group:{curr.Value.Name}".Equals(name.Trim()) && curr.Value.Users.Contains(player.playerData.username)) || name == $"jobindex:{jobIndex}")
                         return true;
-                    else
-                        if (Groups.Any(curr => $"group:{curr.Value.Name}".Equals(name.Trim()) && curr.Value.Users.Contains(player.playerData.username)))
-                            return true;
+                }
+                else
+                    if (Groups.Any(curr => $"group:{curr.Value.Name}".Equals(name.Trim()) && curr.Value.Users.Contains(player.playerData.username)))
+                        return true;
             if (ShowNoPermMessage)
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>{MsgNoPerm}</color>");
             return false;
