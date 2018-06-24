@@ -74,7 +74,7 @@ namespace BP_Essentials
                                     case "LatestVoteResults":
                                         Commands.LatestVoteResults.Run(player);
                                         break;
-                                    case "StaffChatMessages":
+                                    case "ToggleReceiveStaffChat":
                                         Commands.ToggleReceiveStaffChat.Run(player);
                                         break;
                                     case "Spy":
