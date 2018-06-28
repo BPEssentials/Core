@@ -24,8 +24,8 @@ namespace BP_Essentials
         [Hook("SvPlayer.Initialize")]
         public static void Initialize(SvPlayer player)
         {
-            ShPlayer shPlayer = (ShPlayer)typeof(SvPlayer).GetField(nameof(player), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player);
-            if (shPlayer.IsRealPlayer())
+            var shPlayer = player.player;
+            if (!player.IsServerside())
             {
                 new Thread(() => WriteIpToFile.Run(player)).Start();
                 new Thread(() => CheckBanned.Run(player)).Start();
@@ -38,7 +38,7 @@ namespace BP_Essentials
         public static void Destroy(SvPlayer player)
         {
             foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                if (item.Value.shplayer.svPlayer == player && item.Value.shplayer.IsRealPlayer())
+                if (item.Value.shplayer.svPlayer == player && !item.Value.shplayer.svPlayer.IsServerside())
                 {
                     Debug.Log(SetTimeStamp.Run() + "[INFO] [LEAVE] " + item.Value.shplayer.username);
                     playerList.Remove(item.Key);
@@ -55,15 +55,15 @@ namespace BP_Essentials
         [Hook("SvPlayer.SpawnBot")]
         public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref WaypointNode node, ref ShPlayer spawner, ref ShTransport transport, ref ShPlayer enemy)
         {
-            ShPlayer shPlayer = (ShPlayer)typeof(SvPlayer).GetField(nameof(player), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player);
+            var shPlayer = player.player;
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(shPlayer.spawnJobIndex);
         }
 
-        [Hook("ShRetainer.HitEffect")]
-        public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
+        [Hook("ShRestraint.HitEffect")]
+        public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.IsRealPlayer())
+                if (!shPlayer.svPlayer.IsServerside())
                 {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.username)) continue;
@@ -83,7 +83,7 @@ namespace BP_Essentials
             }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
-                    if (shPlayer.IsRealPlayer() && !shPlayer.svPlayer.IsServerside())
+                    if (!shPlayer.svPlayer.IsServerside() && !shPlayer.svPlayer.IsServerside())
                     {
                         LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
@@ -364,7 +364,7 @@ namespace BP_Essentials
                 return true;
 
             shPlayer.ShDie();
-            player.SendToLocalAndSelf(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
+            player.SendToLocal(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
             return true;
         }
         [Hook("SvPlayer.SvGetJob")]
@@ -412,8 +412,7 @@ namespace BP_Essentials
                     {
                         foreach (ShEntity shEntity in sector.centered)
                         {
-                            /* Oh god this doesn't look very good */
-                            if (shEntity != (ShEntity)typeof(SvPlayer).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player) && shEntity != victim)
+                            if (shEntity != player.entity && shEntity != victim)
                             {
                                 ShPlayer shPlayer3 = shEntity as ShPlayer;
                                 if (shPlayer3 && shPlayer.CanSeeEntity(shPlayer2, 100f))
@@ -457,7 +456,7 @@ namespace BP_Essentials
         {
             try
             {
-                if (BlockedItems.Contains(itemIndex))
+                if (player != null && BlockedItems.Count > 0  && BlockedItems.Contains(itemIndex))
                 {
                     player.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, BlockedItemMessage);
                     return true;

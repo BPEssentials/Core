@@ -18,15 +18,15 @@ namespace BP_Essentials.Commands
             else
             {
                 foreach (var shPlayer2 in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer2.username == arg1 && shPlayer2.IsRealPlayer() || shPlayer2.ID.ToString() == arg1 && shPlayer2.IsRealPlayer())
+                    if (shPlayer2.username == arg1 && !shPlayer2.svPlayer.IsServerside() || shPlayer2.ID.ToString() == arg1 && !shPlayer2.svPlayer.IsServerside())
                     {
                         foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
+                            if (shPlayer.svPlayer == player && !shPlayer.svPlayer.IsServerside())
                             {
                                 if (!shPlayer2.IsDead())
                                 {
                                     if (shPlayer2.otherEntity)
-                                        shPlayer2.svPlayer.SvStopInventory();
+                                        shPlayer2.svPlayer.SvStopInventory(true);
                                     shPlayer2.viewers.Add(shPlayer);
                                     shPlayer.otherEntity = shPlayer2;
                                     player.SendToSelf(Channel.Fragmented, 13, shPlayer.otherEntity.ID, shPlayer.otherEntity.SerializeMyItems());

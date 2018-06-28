@@ -19,10 +19,10 @@ namespace BP_Essentials.Commands
             {
                 bool playerfound = false;
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
                         foreach (var shPlayer2 in FindObjectsOfType<ShPlayer>())
-                            if (shPlayer2.svPlayer == player && shPlayer2.IsRealPlayer())
+                            if (shPlayer2.svPlayer == player && !shPlayer2.svPlayer.IsServerside())
                             {
                                 int amount = new System.Random().Next(4, 15);
                                 shPlayer.svPlayer.Damage(DamageIndex.Null, amount, null, null);

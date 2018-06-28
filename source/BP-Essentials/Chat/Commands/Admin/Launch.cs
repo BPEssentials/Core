@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
             {
                 bool playerfound = false;
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
                         shPlayer.svPlayer.SvForce(new Vector3(0f, 6500f, 0f));
                         shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Off you go!</color>");

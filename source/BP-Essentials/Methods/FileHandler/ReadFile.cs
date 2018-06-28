@@ -86,6 +86,7 @@ namespace BP_Essentials
         public bool enableChatBlock { get; set; }
         public bool enableLanguageBlock { get; set; }
         public bool CheckForAlts { get; set; }
+        public bool CheckBannedEnabled { get; set; }
         public int TimeBetweenAnnounce { get; set; }
         public string BlockSpawnBot { get; set; }
         public bool EnableBlockSpawnBot { get; set; }
@@ -196,6 +197,7 @@ namespace BP_Essentials
                         LanguageBlock = m.Misc.enableLanguageBlock;
                         ChatBlock = m.Misc.enableChatBlock;
                         CheckAlt = m.Misc.CheckForAlts;
+                        CheckBannedEnabled = m.Misc.CheckBannedEnabled;
                         TimeBetweenAnnounce = m.Misc.TimeBetweenAnnounce;
                         if (_Timer.Enabled)
                         {

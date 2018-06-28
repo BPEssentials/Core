@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
             {
                 bool playerfound = false;
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
                         // To be improved
                         shPlayer.svPlayer.SvSetWearable(-1626497894);  //NullArmor

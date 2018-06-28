@@ -32,9 +32,9 @@ namespace BP_Essentials.Commands
                     return;
                 }
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1.ToString() && shPlayer.IsRealPlayer())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1.ToString() && !shPlayer.svPlayer.IsServerside())
                         foreach (var _shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (_shPlayer.svPlayer == player && _shPlayer.IsRealPlayer())
+                            if (_shPlayer.svPlayer == player && !_shPlayer.svPlayer.IsServerside())
                             {
                                 if (_shPlayer.MyMoneyCount() >= arg2Int)
                                 {

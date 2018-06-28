@@ -34,4 +34,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0057:Unused parameters", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.EssentialsMethodsPlugin.TransferItem(ShPlayer,System.Byte@,System.Int32@,System.Int32@,System.Boolean@)~System.Boolean")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CC0120:Your Switch maybe include default clause", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.CreateFile.Run(System.String)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "CC0037:Remove commented code.", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.SendDiscordMessage.Run(System.String)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0057:Unused parameters", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.EssentialsMethodsPlugin.HitEffect(ShRestraint,ShEntity@,ShPlayer@,UnityEngine.Collider@)~System.Boolean")]
 

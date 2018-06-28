@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands {
         {
             foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                 if (shPlayer.svPlayer == player)
-                    if (shPlayer.IsRealPlayer())
+                    if (!shPlayer.svPlayer.IsServerside())
                     {
                         string arg = GetArgument.Run(1, false, false, message).Trim().ToLower();
                         if (arg == "location" || arg == "getlocation")
@@ -34,7 +34,7 @@ namespace BP_Essentials.Commands {
                                 bool found = false;
                                 foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                                     if (shPlayer2.svPlayer.playerData.username == arg2 || shPlayer2.ID.ToString() == arg2)
-                                        if (shPlayer2.IsRealPlayer())
+                                        if (!shPlayer2.svPlayer.IsServerside())
                                         {
                                             found = true;
                                             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
@@ -64,7 +64,7 @@ namespace BP_Essentials.Commands {
                                 IndexCollection<ShEntity> ECol = (IndexCollection<ShEntity>)typeof(ShManager).GetField("entityCollection", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(shm);
                                 foreach (ShEntity v in ECol)
                                 {
-                                    if (v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShGun) || v.GetType() == typeof(ShWeapon) || v.GetType() == typeof(ShFurniture) || v.GetType() == typeof(ShWearable) || v.GetType() == typeof(ShConsumable) || v.GetType() == typeof(ShDrugMaterial) || v.GetType() == typeof(ShExtinguisher) || v.GetType() == typeof(ShHealer) || v.GetType() == typeof(ShRetainer) || v.GetType() == typeof(ShSeed) || v.GetType() == typeof(ShProjectile))
+                                    if (v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShGun) || v.GetType() == typeof(ShWeapon) || v.GetType() == typeof(ShFurniture) || v.GetType() == typeof(ShWearable) || v.GetType() == typeof(ShConsumable) || v.GetType() == typeof(ShDrugMaterial) || v.GetType() == typeof(ShExtinguisher) || v.GetType() == typeof(ShHealer) || v.GetType() == typeof(ShRestraint) || v.GetType() == typeof(ShSeed) || v.GetType() == typeof(ShProjectile))
                                         if (arg2 == "array")
                                             sb.Append($"{v.index}, //{v.name}\n");
                                         else

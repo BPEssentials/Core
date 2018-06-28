@@ -26,7 +26,7 @@ namespace BP_Essentials.Commands
                 if (arg1int > 0 && arg1int <= IDs.Length)
                 {
                     foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.svPlayer == player && shPlayer.IsRealPlayer())
+                        if (shPlayer.svPlayer == player && !shPlayer.svPlayer.IsServerside())
                         {
                             if (arg1.Length > 4)
                                 shPlayer.TransferItem(1, arg1int, arg2int, true);

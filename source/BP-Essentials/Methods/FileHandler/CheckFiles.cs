@@ -16,6 +16,7 @@ namespace BP_Essentials
             try
             {
                 // this really needs some improvement
+                // I don't know when I added that comment but seriously I should really redo this method.. whenever I have time
                 if (fileName == "all")
                 {
                     if (!Directory.Exists(FileDirectory))

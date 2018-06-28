@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player)
         {
-            var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
+            var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.IsServerside());
             switch (realPlayers)
             {
                 case 1:

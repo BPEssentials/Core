@@ -31,7 +31,7 @@ namespace BP_Essentials.Commands
             {
                 bool found = false;
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
                         shPlayer.TransferMoney(1, arg2int, true);
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Successfully gave</color><color={argColor}> " + shPlayer.username + " " + arg2int + $"</color><color={infoColor}>$</color>");

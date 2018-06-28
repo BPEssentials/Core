@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands {
                 }
                 else
                     foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.username == name && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == name && shPlayer.IsRealPlayer())
+                        if (shPlayer.username == name && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == name && !shPlayer.svPlayer.IsServerside())
                         {
                             name = shPlayer.username;
                             msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'{name}'</color><color={infoColor}>.</color>";

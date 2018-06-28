@@ -25,7 +25,7 @@ namespace BP_Essentials
                             Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.svManager.GetAddress(player.connection));
                             foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                                 if (shPlayer.svPlayer == player)
-                                    if (shPlayer.IsRealPlayer())
+                                    if (!shPlayer.svPlayer.IsServerside())
                                     {
                                         player.svManager.AddBanned(shPlayer);
                                         player.svManager.Disconnect(player.connection);

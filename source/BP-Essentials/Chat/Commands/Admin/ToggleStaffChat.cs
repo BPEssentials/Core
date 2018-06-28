@@ -37,8 +37,6 @@ namespace BP_Essentials.Commands
                 _msg = _msg.Replace("{jobname}", new Regex("(<)").Replace($"{shplayer.job.info.jobName}", "<<b></b>"));
                 _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(arg1), "<<b></b>"));
                 SendChatMessageToAdmins.Run(_msg);
-                if (!playerList[shplayer.ID].staffChatEnabled)
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, _msg);
             }
         }
     }

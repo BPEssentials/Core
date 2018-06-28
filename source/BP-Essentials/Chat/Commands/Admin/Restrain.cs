@@ -21,9 +21,9 @@ namespace BP_Essentials.Commands
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
-                shPlayer.svPlayer.Arrest(shPlayer.manager.handcuffed);
-                ShRetained shRetained = shPlayer.curEquipable as ShRetained;
-                shPlayer.svPlayer.SvSetEquipable(shRetained.otherRetained.index);
+                shPlayer.svPlayer.Restrain(shPlayer.manager.handcuffed);
+                var shRetained = shPlayer.curEquipable as ShRestrained;
+                shPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
                 if (!shPlayer.svPlayer.IsServerside())
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");

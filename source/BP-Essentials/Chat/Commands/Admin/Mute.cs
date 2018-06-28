@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands
             muteuser = GetArgument.Run(1, false, true, message);
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
-                    if (shPlayer.IsRealPlayer())
+                    if (!shPlayer.svPlayer.IsServerside())
                     {
                         muteuser = shPlayer.username;
                         found = true;

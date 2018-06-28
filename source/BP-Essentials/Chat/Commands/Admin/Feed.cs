@@ -25,7 +25,7 @@ namespace BP_Essentials.Commands
                 bool found = false;
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (shPlayer.IsRealPlayer())
+                        if (!shPlayer.svPlayer.IsServerside())
                         {
                             for (byte i = 0; i < 4; i++)
                                 shPlayer.svPlayer.UpdateStat(i, 100);

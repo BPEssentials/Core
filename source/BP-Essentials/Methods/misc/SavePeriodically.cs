@@ -31,8 +31,8 @@ namespace BP_Essentials
         {
             var svManager = (SvManager)onetMan;
             Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
-            foreach (var shPlayer in svManager.players)
-                if (shPlayer.IsRealPlayer())
+            foreach (var shPlayer in svManager.players.Values)
+                if (!shPlayer.svPlayer.IsServerside())
                 {
                     if (shPlayer.GetPlaceIndex() >= 13) continue;
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");

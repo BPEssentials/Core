@@ -21,7 +21,7 @@ namespace BP_Essentials.Commands
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
-                shPlayer.svPlayer.Arrest(shPlayer.manager.handcuffed);
+                shPlayer.svPlayer.Restrain(shPlayer.manager.handcuffed);
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Arrested</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
 
             }

@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands
             {
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (shPlayer.IsRealPlayer())
+                        if (!shPlayer.svPlayer.IsServerside())
                         {
                             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
                             string[] contentarray = {

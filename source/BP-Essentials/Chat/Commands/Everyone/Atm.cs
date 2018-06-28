@@ -14,7 +14,7 @@ namespace BP_Essentials.Commands
         {
             foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                 if (shPlayer.svPlayer == player)
-                    if (shPlayer.IsRealPlayer())
+                    if (!shPlayer.svPlayer.IsServerside())
                         if (shPlayer.wantedLevel == 0)
                         {
                             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
