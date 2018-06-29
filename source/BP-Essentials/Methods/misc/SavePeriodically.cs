@@ -17,7 +17,7 @@ namespace BP_Essentials
             try
             {
                 var svManager = (SvManager)man;
-                var Tmer = new System.Timers.Timer();
+                var Tmer = new System.Timers.Timer(); // TODO: Disposing the timer seems to break
                 Tmer.Elapsed += (sender, e) => OnTime(svManager);
                 Tmer.Interval = SaveTime * 1000;
                 Tmer.Enabled = true;
@@ -31,8 +31,8 @@ namespace BP_Essentials
         {
             var svManager = (SvManager)onetMan;
             Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
-            foreach (var shPlayer in svManager.players)
-                if (shPlayer.IsRealPlayer())
+            foreach (var shPlayer in svManager.players.Values)
+                if (!shPlayer.svPlayer.IsServerside())
                 {
                     if (shPlayer.GetPlaceIndex() >= 13) continue;
                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");

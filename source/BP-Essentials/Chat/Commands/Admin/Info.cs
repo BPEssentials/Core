@@ -10,23 +10,18 @@ namespace BP_Essentials.Commands
 {
     class Info : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            var arg1 = GetArgument.Run(1, false, true, message);
+            var found = false;
+            if (!String.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdInfoExecutableBy))
-                {
-                    var arg1 = GetArgument.Run(1, false, true, message);
-                    var found = false;
-                    if (!String.IsNullOrEmpty(arg1))
-                    {
-                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                                if (shPlayer.IsRealPlayer())
-                                {
-                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
-                                    string[] contentarray = {
+                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                        if (!shPlayer.svPlayer.IsServerside())
+                        {
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
+                            string[] contentarray = {
                                     "Username:              " +  shPlayer.username,
                                     "",
                                     "",
@@ -37,29 +32,21 @@ namespace BP_Essentials.Commands
                                     "WantedLevel:         " + shPlayer.wantedLevel,
                                     "IsAdmin:                 " + shPlayer.admin,
                                     "BankBalance:         " + shPlayer.svPlayer.bankBalance,
+                                    "ChatEnabled:         " + playerList[shPlayer.ID].chatEnabled,
                                     "IP:                            " + shPlayer.svPlayer.svManager.GetAddress(shPlayer.svPlayer.connection)
                                 };
 
-                                    var content = string.Join("\r\n", contentarray);
+                            var content = string.Join("\r\n", contentarray);
 
-                                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
 
-                                    found = true;
-                                }
-                        if (!(found))
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
-                    }
-                    else
-                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, ArgRequired);
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                            found = true;
+                        }
+                if (!(found))
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

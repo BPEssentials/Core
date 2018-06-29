@@ -15,7 +15,7 @@ namespace BP_Essentials
         {
             try
             {
-                typeof(SvPlayer).GetMethod(nameof(UnRetain), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(player, new object[] {});
+                typeof(SvPlayer).GetMethod(nameof(UnRetain), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(player, new object[] { });
             }
             catch (Exception ex)
             {

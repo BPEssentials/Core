@@ -10,40 +10,25 @@ namespace BP_Essentials.Commands
 {
     class Launch : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (String.IsNullOrEmpty(arg1))
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+            else
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdLaunchExecutableBy))
-                {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (String.IsNullOrEmpty(arg1))
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
-                    else
+                bool playerfound = false;
+                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
-                        bool playerfound = false;
-                        foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.username == arg1 && shPlayer.IsRealPlayer() || shPlayer.ID.ToString() == arg1 && shPlayer.IsRealPlayer())
-                            {
-                                shPlayer.svPlayer.SvForce(new Vector3(0f, 6500f, 0f));
-                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Off you go!</color>");
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've launched </color><color={argColor}>{shPlayer.username}</color><color={infoColor}> into space!</color>");
-                                playerfound = true;
-                            }
-                        if (!playerfound)
-                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
-
+                        shPlayer.svPlayer.SvForce(new Vector3(0f, 6500f, 0f));
+                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Off you go!</color>");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've launched </color><color={argColor}>{shPlayer.username}</color><color={infoColor}> into space!</color>");
+                        playerfound = true;
                     }
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                if (!playerfound)
+                    player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
         }
     }
 }

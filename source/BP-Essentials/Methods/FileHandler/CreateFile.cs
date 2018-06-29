@@ -19,7 +19,14 @@ namespace BP_Essentials
                 {
                     case SettingsFile:
                         {
-                            File.WriteAllText(SettingsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/settings.txt"));
+                            if (isPreRelease)
+#pragma warning disable CS0162 // Unreachable code detected / *shrugs*
+                                File.WriteAllText(SettingsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/settings_test.txt"));
+#pragma warning restore CS0162 // Unreachable code detected
+                            else
+#pragma warning disable CS0162 // Unreachable code detected / *shrugs*
+                                File.WriteAllText(SettingsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/settings.txt"));
+#pragma warning restore CS0162 // Unreachable code detected
                             break;
                         }
                     case ChatBlockFile:

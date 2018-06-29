@@ -10,11 +10,11 @@ namespace BP_Essentials
 {
     class GetPlaceHolders : EssentialsCorePlugin
     {
-        public static string Run(string str, object oPlayer)
+        public static string Run(string str, SvPlayer player)
         {
             try
             {
-                var player = (SvPlayer)oPlayer;
+                var shPlayer = GetShBySv.Run(player);
                 var src = DateTime.Now;
                 var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second);
                 var placeHolderText = str;
@@ -43,6 +43,13 @@ namespace BP_Essentials
                     placeHolderText = placeHolderText.Replace("{T}", hm.ToString("tt"));
                 if (str.ToLower().Contains("{username}"))
                     placeHolderText = placeHolderText.Replace("{username}", player.playerData.username);
+                if (str.ToLower().Contains("{id}"))
+                    placeHolderText = placeHolderText.Replace("{id}", $"{shPlayer.ID}");
+                if (str.ToLower().Contains("{jobname}"))
+                    placeHolderText = placeHolderText.Replace("{jobname}", shPlayer.job.info.jobName);
+                if (str.ToLower().Contains("{jobindex}"))
+                    placeHolderText = placeHolderText.Replace("{jobindex}", $"{shPlayer.job.jobIndex}");
+
                 if (str.ToLower().Contains("{discordlink}"))
                     placeHolderText = placeHolderText.Replace("{discordlink}", MsgDiscord);
                 if (str.ToLower().Contains("{infocolor}"))

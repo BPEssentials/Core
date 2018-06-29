@@ -12,33 +12,37 @@ namespace BP_Essentials
 {
     class CheckBanned : EssentialsCorePlugin
     {
-        public static void Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
-            try
+            if (CheckBannedEnabled)
             {
-                Thread.Sleep(3000);
-                var player = (SvPlayer)oPlayer;
-                if (!string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
-                    if (File.ReadAllText(BansFile).Contains(player.playerData.username))
-                    {
-                        Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.svManager.GetAddress(player.connection));
-                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                try
+                {
+                    Thread.Sleep(3000);
+                    if (!string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
+                        foreach (var line in File.ReadAllLines(BansFile))
                         {
-                            if (shPlayer.svPlayer == player)
+                            if (line.StartsWith(player.playerData.username))
                             {
-                                if (shPlayer.IsRealPlayer())
+                                Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.svManager.GetAddress(player.connection));
+                                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                                 {
-                                    player.svManager.AddBanned(shPlayer);
-                                    player.svManager.Disconnect(player.connection);
+                                    if (shPlayer.svPlayer == player)
+                                    {
+                                        if (!shPlayer.svPlayer.IsServerside())
+                                        {
+                                            player.svManager.AddBanned(shPlayer);
+                                            player.svManager.Disconnect(player.connection);
+                                        }
+                                    }
                                 }
                             }
                         }
-
-                    }
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogging.Run(ex);
+                }
             }
         }
     }

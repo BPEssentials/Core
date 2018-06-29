@@ -17,7 +17,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using UnityEngine;
-using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
@@ -27,9 +26,9 @@ namespace BP_Essentials
         [Hook("SvManager.StartServer")]
         public static void StartServer(SvManager svManager)
         {
-       //     ShManager Manager = (ShManager)typeof(SvManager).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(svManager);
             try
             {
+                SvMan = svManager;
                 Reload.Run(true);
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
@@ -44,13 +43,12 @@ namespace BP_Essentials
                         File.Delete(SettingsFile + "." + date + ".OLD");
                     File.Move(SettingsFile, $"{SettingsFile}.{date}.OLD");
                     Reload.Run(true);
+
                 }
                 var thread = new Thread(SavePeriodically.Run);
                 thread.Start(svManager);
                 Debug.Log("-------------------------------------------------------------------------------");
-                Debug.Log("    ");
-                Debug.Log("[INFO] Essentials - version: " + LocalVersion + " Loaded in successfully!");
-                Debug.Log("    ");
+                Debug.Log($"[INFO] Essentials - version: {LocalVersion} {(isPreRelease ? "[PRE-RELEASE]" : "")} Loaded in successfully!");
                 Debug.Log("-------------------------------------------------------------------------------");
             }
             catch (Exception ex)
@@ -66,7 +64,6 @@ namespace BP_Essentials
                 Debug.Log("-------------------------------------------------------------------------------");
 
             }
-
             if (Announcements.Length != 0)
             {
                 var thread = new Thread(new ParameterizedThreadStart(Chat.Announce.Run));

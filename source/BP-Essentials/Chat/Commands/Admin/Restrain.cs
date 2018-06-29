@@ -10,27 +10,26 @@ namespace BP_Essentials.Commands
 {
     class Restrain : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (!string.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdRestrainExecutableBy))
+                var shPlayer = GetShByStr.Run(arg1);
+                if (shPlayer == null)
                 {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (!string.IsNullOrEmpty(arg1))
-                        ExecuteOnPlayer.Run(player, message, arg1);
-                    else
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    return;
                 }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                shPlayer.svPlayer.Restrain(shPlayer.manager.handcuffed);
+                var shRetained = shPlayer.curEquipable as ShRestrained;
+                shPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
+                if (!shPlayer.svPlayer.IsServerside())
+                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

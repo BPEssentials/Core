@@ -5,24 +5,10 @@ using static BP_Essentials.EssentialsCorePlugin;
 
 namespace BP_Essentials.Commands {
     public class Save : EssentialsChatPlugin {
-        public static bool Run(object oPlayer)
+        public static void Run()
         {
-            try
-            {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdSaveExecutableBy))
-                {
-                    var thread = new Thread(SaveNow.Run);
-                    thread.Start();
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            var thread = new Thread(SaveNow.Run);
+            thread.Start();
         }
     }
 }

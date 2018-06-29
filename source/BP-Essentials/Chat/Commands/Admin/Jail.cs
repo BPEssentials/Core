@@ -10,32 +10,32 @@ namespace BP_Essentials.Commands
 {
     class Jail : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (!string.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdJailExecutableBy))
+                var shPlayer = GetShByStr.Run(arg1);
+                if (shPlayer == null)
                 {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (!string.IsNullOrEmpty(arg1))
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    return;
+                }
+                if (float.TryParse(message.Split(' ').Last().Trim(), out float t))
+                {
+                    if (SendToJail.Run(shPlayer, t))
                     {
-                        int lastIndex = arg1.LastIndexOf(" ");
-                        if (lastIndex != -1)
-                            arg1 = arg1.Remove(lastIndex).Trim();
-                        ExecuteOnPlayer.Run(player, message, arg1);
+                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color> <color={infoColor}>sent you to jail.</color>");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

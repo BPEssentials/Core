@@ -10,21 +10,16 @@ namespace BP_Essentials.Commands
 {
     class Reload : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
-            try
+            var shPlayer = GetShBySv.Run(player);
+            if (shPlayer != null)
             {
-                var player = (SvPlayer)oPlayer;
-                if (AdminsListPlayers.Contains(player.playerData.username))
+                if (shPlayer.admin)
                     BP_Essentials.Reload.Run(false, player);
                 else
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
         }
     }
 }
