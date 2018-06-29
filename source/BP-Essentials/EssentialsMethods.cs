@@ -393,63 +393,14 @@ namespace BP_Essentials
         {
             try
             {
-                if (GodModeLevel >= 2 && CheckGodMode.Run(player, null, "<color=#b7b5b5>Blocked crime and losing EXP!</color>"))
+                if (GodModeLevel >= 1 && CheckGodMode.Run(player, null, "<color=#b7b5b5>Blocked crime and losing EXP!</color>"))
                     return true;
-                var shPlayer = GetShBySv.Run(player);
-                Crime crime;
-                foreach (Offense offense in shPlayer.offenses)
-                    if (offense.crimeIndex == crimeIndex)
-                    {
-                        crime = offense.GetCrime();
-                        if (Time.time - offense.commitTime < crime.repeatDelay)
-                            return true;
-                    }
-                crime = shPlayer.manager.GetCrime(crimeIndex);
-                ShPlayer shPlayer2 = null;
-                if (crime.witness)
-                {
-                    foreach (Sector sector in player.localSectors)
-                    {
-                        foreach (ShEntity shEntity in sector.centered)
-                        {
-                            if (shEntity != player.entity && shEntity != victim)
-                            {
-                                ShPlayer shPlayer3 = shEntity as ShPlayer;
-                                if (shPlayer3 && shPlayer.CanSeeEntity(shPlayer2, 100f))
-                                {
-                                    shPlayer2 = shPlayer3;
-                                    if (shPlayer2.svPlayer.witnessedPlayers.ContainsKey(shPlayer))
-                                    {
-                                        Dictionary<ShPlayer, int> dictionary;
-                                        ShPlayer key;
-                                        (dictionary = shPlayer.svPlayer.witnessedPlayers)[key = shPlayer] = dictionary[key] + 1;
-                                    }
-                                    else
-                                        shPlayer.svPlayer.witnessedPlayers[shPlayer] = 1;
-                                    break;
-                                }
-                            }
-                        }
-                        if (shPlayer)
-                            break;
-                    }
-                    if (!shPlayer)
-                        return true;
-                }
-                shPlayer.AddCrime(crimeIndex, shPlayer);
-                player.SendToSelf(Channel.Reliable, 34, crimeIndex, !shPlayer2 ? 0 : shPlayer2.ID);
-                if (shPlayer.job.info.groupIndex != GroupIndex.Criminal)
-                    shPlayer.svPlayer.Reward(-crime.experiencePenalty, -crime.fine);
-                if (GodModeLevel >= 1 && CheckGodMode.Run(player, null, "<color=#b7b5b5>Blocked losing EXP!</color>") && shPlayer.job.info.groupIndex != GroupIndex.Criminal)
-                    return true;
-                player.Reward(-crime.experiencePenalty, -crime.fine);
-                return true;
             }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
             }
-            return true;
+            return false;
         }
         [Hook("ShPlayer.TransferItem")]
         public static bool TransferItem(ShPlayer player, ref byte deltaType, ref int itemIndex, ref int amount, ref bool dispatch)

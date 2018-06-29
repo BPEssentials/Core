@@ -83,6 +83,9 @@ namespace BP_Essentials
                                     case "Save":
                                         Commands.Save.Run();
                                         break;
+                                    case "GetLogs":
+                                        Commands.GetLogs.Run(player, ChatLogFile);
+                                        break;
                                     default:
                                         cmd.RunMethod.Invoke(player, message);
                                         break;
