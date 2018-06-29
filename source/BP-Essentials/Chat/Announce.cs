@@ -6,7 +6,6 @@ using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using System.Threading;
-using System.Timers;
 
 namespace BP_Essentials.Chat
 {
@@ -17,10 +16,9 @@ namespace BP_Essentials.Chat
             try
             {
                 var svManager = (SvManager)man;
-                var Tmer = new System.Timers.Timer();
-                Tmer.Elapsed += (sender, e) => OnTime(svManager);
-                Tmer.Interval = TimeBetweenAnnounce * 1000;
-                Tmer.Enabled = true;
+                _Timer.Elapsed += (sender, e) => OnTime(svManager);
+                _Timer.Interval = TimeBetweenAnnounce * 1000;
+                _Timer.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -32,7 +30,8 @@ namespace BP_Essentials.Chat
         {
             var svManager = (SvManager)onetMan;
             foreach (var player in svManager.players)
-                player.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, Announcements[AnnounceIndex]);
+                foreach (var line in Announcements[AnnounceIndex].Split(new[] { "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None))
+                    player.Value.svPlayer.SendToSelf(Channel.Reliable, ClPacket.GameMessage, line);
             Debug.Log($"{SetTimeStamp.Run()}[INFO] Announcement made...");
             AnnounceIndex += 1;
             if (AnnounceIndex > Announcements.Length - 1)

@@ -26,6 +26,10 @@ namespace BP_Essentials
         public bool DisplayUnknownCommandMessage { get; set; }
         public bool VoteKickDisabled { get; set; }
         public bool ShowDMGMessage { get; set; }
+        public int DebugLevel { get; set; }
+        public string DiscordWebhook { get; set; }
+        public bool EnableDiscordWebhook { get; set; }
+        public bool BlockBanButtonTabMenu { get; set; }
     }
     [Serializable]
     public class _Messages
@@ -38,10 +42,13 @@ namespace BP_Essentials
         public string SelfIsMuted { get; set; }
         public string ArgRequired { get; set; }
         public string NotFoundOnline { get; set; }
+        public string NotFoundOnlineIdOnly { get; set;}
         public string AdminSearchingInv { get; set; }
         public string PlayerMessage { get; set; }
         public string AdminMessage { get; set; }
         public string AdminChatMessage { get; set; }
+        public string MsgNoPermJob { get; set; }
+        public string BlockedItem { get; set; }
     }
     [Serializable]
     public class MessageColors
@@ -79,16 +86,23 @@ namespace BP_Essentials
         public bool enableChatBlock { get; set; }
         public bool enableLanguageBlock { get; set; }
         public bool CheckForAlts { get; set; }
+        public bool CheckBannedEnabled { get; set; }
         public int TimeBetweenAnnounce { get; set; }
         public string BlockSpawnBot { get; set; }
         public bool EnableBlockSpawnBot { get; set; }
+        public int GodModeLevel { get; set; }
+    }
+    [Serializable]
+    public class WhitelistedJob
+    {
+        public int JobIndex { get; set; }
+        public string Whitelisted { get; set; }
     }
     [Serializable]
     public class _Command
     {
         public string CommandName { get; set; }
-        public string Command { get; set; }
-        public string Command2 { get; set; }
+        public List<string> Commands { get; set; }
         public string ExecutableBy { get; set; }
         public bool? Disabled { get; set; }
         public string c { get; set; }
@@ -102,6 +116,8 @@ namespace BP_Essentials
         public FunctionUI FunctionUI { get; set; }
         public ReportOptions ReportOptions { get; set; }
         public _Misc Misc { get; set; }
+        public List<int> BlockedItems { get; set; }
+        public List<WhitelistedJob> WhitelistedJobs { get; set; }
         public List<_Command> Commands { get; set; }
     }
     [Serializable]
@@ -135,6 +151,16 @@ namespace BP_Essentials
                         MsgUnknownCommand = m.General.DisplayUnknownCommandMessage;
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
+                        DebugLevel = m.General.DebugLevel;
+                        EnableDiscordWebhook = m.General.EnableDiscordWebhook;
+                        if (EnableDiscordWebhook && string.IsNullOrEmpty(m.General.DiscordWebhook.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook is empty but EnableDiscordWebhook is true! Disabling webhook.");
+                            EnableDiscordWebhook = false;
+                        }
+                        else
+                            DiscordWebhook = m.General.DiscordWebhook;
+                        BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
 
                         infoColor = m.MessageColors.info;
                         errorColor = m.MessageColors.error;
@@ -149,10 +175,13 @@ namespace BP_Essentials
                         SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
                         ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
                         NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
+                        NotFoundOnlineIdOnly = $"<color={errorColor}>{m.Messages.NotFoundOnlineIdOnly}</color>";
                         AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
                         PlayerMessage = m.Messages.PlayerMessage;
                         AdminMessage = m.Messages.AdminMessage;
                         AdminChatMessage = m.Messages.AdminChatMessage;
+                        MsgNoPermJob = $"<color={errorColor}>{m.Messages.MsgNoPermJob}</color>";
+                        BlockedItemMessage = $"<color={errorColor}>{m.Messages.BlockedItem}</color>";
 
                         AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
                         AccessItemMenu = m.FunctionUI.AccessItemMenu;
@@ -162,17 +191,34 @@ namespace BP_Essentials
 
                         ReportReasons = new string[] { m.ReportOptions.F2, m.ReportOptions.F3, m.ReportOptions.F4, m.ReportOptions.F5, m.ReportOptions.F6, m.ReportOptions.F7, m.ReportOptions.F8, m.ReportOptions.F9, m.ReportOptions.F10 };
 
+                        BlockedItems = m.BlockedItems;
+
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
                         LanguageBlock = m.Misc.enableLanguageBlock;
                         ChatBlock = m.Misc.enableChatBlock;
                         CheckAlt = m.Misc.CheckForAlts;
+                        CheckBannedEnabled = m.Misc.CheckBannedEnabled;
                         TimeBetweenAnnounce = m.Misc.TimeBetweenAnnounce;
+                        if (_Timer.Enabled)
+                        {
+                            _Timer.Enabled = false;
+                            _Timer.Interval = m.Misc.TimeBetweenAnnounce * 1000;
+                            _Timer.Enabled = true;
+                        }
                         BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
-                        foreach (var command in m.Commands)
-                            StringToVar.Run(command.CommandName, command.Command, command.Command2, command.ExecutableBy, command.Disabled);
+                        GodModeLevel = m.Misc.GodModeLevel;
+
+                        foreach (var currJob in m.WhitelistedJobs)
+                        {
+                            if (!WhitelistedJobs.ContainsKey(currJob.JobIndex))
+                                WhitelistedJobs.Add(currJob.JobIndex, currJob.Whitelisted);
+                            else
+                                Debug.Log($"{SetTimeStamp.Run()}[WARNING] WhitelistedJobs already contains a item with the key '{currJob.JobIndex}'! (Did you make 2 objects with the same JobIndex?)");
+                        }
+                        RegisterCommands.Run(m.Commands);
                         break;
                     case IdListFile:
-                        IdListObject idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListFile));
+                        var idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListFile));
                         IDs = idlist.items.Select(x => x.gameid).ToArray();
                         break;
 

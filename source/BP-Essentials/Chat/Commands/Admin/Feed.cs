@@ -10,45 +10,31 @@ namespace BP_Essentials.Commands
 {
     class Feed : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            string arg1 = GetArgument.Run(1, false, true, message).Trim();
+            string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";
+            if (String.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdFeedExecutableBy))
-                {
-                    string arg1 = GetArgument.Run(1, false, true, message).Trim();
-                    string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";
-                    if (String.IsNullOrEmpty(arg1))
-                    {
-                        for (byte i = 0; i < 4; i++)
-                            player.UpdateStat(i, 100);
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
-                    }
-                    else
-                    {
-                        bool found = false;
-                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                                if (shPlayer.IsRealPlayer())
-                                {
-                                    for (byte i = 0; i < 4; i++)
-                                        shPlayer.svPlayer.UpdateStat(i, 100);
-                                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
-                                    found = true;
-                                }
-                        if (!found)
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
-                    }
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                for (byte i = 0; i < 4; i++)
+                    player.UpdateStat(i, 100);
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
             }
-            catch (Exception ex)
+            else
             {
-                ErrorLogging.Run(ex);
+                bool found = false;
+                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
+                        if (!shPlayer.svPlayer.IsServerside())
+                        {
+                            for (byte i = 0; i < 4; i++)
+                                shPlayer.svPlayer.UpdateStat(i, 100);
+                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
+                            found = true;
+                        }
+                if (!found)
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
-            return true;
         }
     }
 }

@@ -12,12 +12,11 @@ namespace BP_Essentials
 {
     class WriteIpToFile : EssentialsCorePlugin
     {
-        public static void Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
             try
             {
                 Thread.Sleep(500);
-                var player = (SvPlayer)oPlayer;
                 Debug.Log(SetTimeStamp.Run() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.svManager.GetAddress(player.connection));
                 int tries = 0;
                 while (tries < 2)

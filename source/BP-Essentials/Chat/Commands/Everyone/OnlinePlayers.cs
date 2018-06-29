@@ -10,33 +10,18 @@ namespace BP_Essentials.Commands
 {
     class OnlinePlayers : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer)
+        public static void Run(SvPlayer player)
         {
-            try
+            var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.IsServerside());
+            switch (realPlayers)
             {
-
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdPlayersExecutableBy))
-                {
-                    var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => shPlayer.IsRealPlayer());
-                    switch (realPlayers)
-                    {
-                        case 1:
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There is </color><color={argColor}>{realPlayers}</color><color={infoColor}> player online</color>");
-                            break;
-                        default:
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There are </color><color={argColor}>{realPlayers}</color><color={infoColor}> players online</color>");
-                            break;
-                    }
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                case 1:
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There is </color><color={argColor}>{realPlayers}</color><color={infoColor}> player online</color>");
+                    break;
+                default:
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There are </color><color={argColor}>{realPlayers}</color><color={infoColor}> players online</color>");
+                    break;
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
         }
     }
 }

@@ -10,29 +10,13 @@ namespace BP_Essentials.Commands
 {
     class FakeJoin : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
-            {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdFakeJoinExecutableBy))
-                {
-                    string arg1 = GetArgument.Run(1, false, true, message);
-                    if (!String.IsNullOrEmpty(arg1))
-                    {
-                        player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, arg1 + " connected");
-                    }
-                    else
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
-                }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (!String.IsNullOrEmpty(arg1))
+                player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, arg1 + " connected");
+            else
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

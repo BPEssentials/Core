@@ -16,7 +16,7 @@ namespace BP_Essentials
             {
                 Debug.Log(SetTimeStamp.Run() + "[INFO] Saving game..");
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.IsRealPlayer())
+                    if (!shPlayer.svPlayer.IsServerside())
                     {
                         if (shPlayer.GetPlaceIndex() >= 13) continue;
                         shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");

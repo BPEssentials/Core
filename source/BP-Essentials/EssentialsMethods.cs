@@ -17,23 +17,19 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
-            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdConfirm}</color><color={warningColor}>' to confirm.</color>");
+            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdCommandCharacter}{CmdConfirm}</color><color={warningColor}>' to confirm.</color>"); //softcode command
             return true;
         }
 
         [Hook("SvPlayer.Initialize")]
         public static void Initialize(SvPlayer player)
         {
-            ShPlayer shPlayer = (ShPlayer)typeof(SvPlayer).GetField(nameof(player), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player);
-
-            if (shPlayer.IsRealPlayer())
+            var shPlayer = player.player;
+            if (!player.IsServerside())
             {
-                var thread1 = new Thread(new ParameterizedThreadStart(WriteIpToFile.Run));
-                thread1.Start(player);
-                var thread2 = new Thread(new ParameterizedThreadStart(CheckBanned.Run));
-                thread2.Start(player);
-                var thread3 = new Thread(new ParameterizedThreadStart(CheckAltAcc.Run));
-                thread3.Start(player);
+                new Thread(() => WriteIpToFile.Run(player)).Start();
+                new Thread(() => CheckBanned.Run(player)).Start();
+                new Thread(() => CheckAltAcc.Run(player)).Start();
                 playerList.Add(shPlayer.ID, new _PlayerList { shplayer = shPlayer });
             }
         }
@@ -42,7 +38,7 @@ namespace BP_Essentials
         public static void Destroy(SvPlayer player)
         {
             foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                if (item.Value.shplayer.svPlayer == player && item.Value.shplayer.IsRealPlayer())
+                if (item.Value.shplayer.svPlayer == player && !item.Value.shplayer.svPlayer.IsServerside())
                 {
                     Debug.Log(SetTimeStamp.Run() + "[INFO] [LEAVE] " + item.Value.shplayer.username);
                     playerList.Remove(item.Key);
@@ -59,15 +55,15 @@ namespace BP_Essentials
         [Hook("SvPlayer.SpawnBot")]
         public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref WaypointNode node, ref ShPlayer spawner, ref ShTransport transport, ref ShPlayer enemy)
         {
-            ShPlayer shPlayer = (ShPlayer)typeof(SvPlayer).GetField(nameof(player), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(player);
+            var shPlayer = player.player;
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(shPlayer.spawnJobIndex);
         }
 
-        [Hook("ShRetainer.HitEffect")]
-        public static bool HitEffect(ShRetainer player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
+        [Hook("ShRestraint.HitEffect")]
+        public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.IsRealPlayer())
+                if (!shPlayer.svPlayer.IsServerside())
                 {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.username)) continue;
@@ -78,15 +74,22 @@ namespace BP_Essentials
         }
 
         [Hook("SvPlayer.SvBan")]
-        public static void SvBan(SvPlayer player, ref int otherID)
+        public static bool SvBan(SvPlayer player, ref int otherID)
         {
+            if (BlockBanButtonTabMenu)
+            {
+                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>This button has been disabled. Please use the ban commands.</color>");
+                return true;
+            }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
-                    if (shPlayer.IsRealPlayer() && !shPlayer.svPlayer.IsServerside())
+                    if (!shPlayer.svPlayer.IsServerside() && !shPlayer.svPlayer.IsServerside())
                     {
-                        Debug.Log($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
+                        LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
+                        SendDiscordMessage.BanMessage(shPlayer.username, player.playerData.username);
                     }
+            return false;
         }
 
         [Hook("SvPlayer.SvStartVote")]
@@ -159,20 +162,12 @@ namespace BP_Essentials
                             {
                                 case 1:
                                     if (HasPermission.Run(player, AccessMoneyMenu) || HasPermission.Run(player, AccessItemMenu) || HasPermission.Run(player, AccessSetHPMenu) || HasPermission.Run(player, AccessSetStatsMenu) || HasPermission.Run(player, AccessCWMenu))
-                                        //player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>Main menu:</color>\n\n<color=#00ffffff>F2:</color> Help menu\n<color=#00ffffff>F3:</color> Server info menu\n<color=#00ffffff>F10:</color> Staff menu\n\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                         player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>Main menu:</color>\n\n<color=#00ffffff>F3:</color> Server info menu\n<color=#00ffffff>F10:</color> Extras menu\n\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                     else
-                                        //player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>Main menu:</color>\n\n<color=#00ffffff>F2:</color> Help menu\n<color=#00ffffff>F3:</color> Server info menu\n\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                         player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>Main menu:</color>\n\n<color=#00ffffff>F3:</color> Server info menu\n\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                     item.Value.LastMenu = CurrentMenu.Main;
                                     break;
                                 case 2:
-                                    //if (item.Value.LastMenu == CurrentMenu.Main)
-                                    //{
-                                    //    player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, "<color=#00ffffff>(example) Help menu:</color>\n\n<color=#00ffffff>F2:</color> Getting started\n<color=#00ffffff>F3:</color> How to earn money\n\n<color=#00ffffff>Press</color><color=#ea8220> F11 </color><color=#00ffffff>To close this (G)UI</color>");
-                                    //    item.Value.LastMenu = CurrentMenu.Help;
-                                    //}
-                                    //else
                                     if (item.Value.LastMenu == CurrentMenu.ServerInfo)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
@@ -369,8 +364,60 @@ namespace BP_Essentials
                 return true;
 
             shPlayer.ShDie();
-            player.SendToLocalAndSelf(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
+            player.SendToLocal(Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
             return true;
+        }
+        [Hook("SvPlayer.SvGetJob")]
+        public static bool SvGetJob(SvPlayer player, ref int employerID)
+        {
+            try
+            {
+                var shPlayer = GetShBySv.Run(player);
+                var shEmployer = shPlayer.manager.FindByID<ShPlayer>(employerID);
+                if (WhitelistedJobs.ContainsKey(shEmployer.job.jobIndex))
+                    if (!HasPermission.Run(player, WhitelistedJobs[shEmployer.job.jobIndex], false, shPlayer.job.jobIndex))
+                    {
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPermJob);
+                        return true;
+                    }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+                return false;
+            }
+        }
+        [Hook("SvPlayer.SvAddCrime")]
+        public static bool SvAddCrime(SvPlayer player, ref byte crimeIndex, ref ShEntity victim)
+        {
+            try
+            {
+                if (GodModeLevel >= 1 && CheckGodMode.Run(player, null, "<color=#b7b5b5>Blocked crime and losing EXP!</color>"))
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
+            return false;
+        }
+        [Hook("ShPlayer.TransferItem")]
+        public static bool TransferItem(ShPlayer player, ref byte deltaType, ref int itemIndex, ref int amount, ref bool dispatch)
+        {
+            try
+            {
+                if (player != null && BlockedItems.Count > 0  && BlockedItems.Contains(itemIndex))
+                {
+                    player.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, BlockedItemMessage);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
+            return false;
         }
     }
 }

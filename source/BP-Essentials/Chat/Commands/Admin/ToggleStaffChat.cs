@@ -11,49 +11,33 @@ namespace BP_Essentials.Commands
 {
     class ToggleStaffChat : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            var arg1 = GetArgument.Run(1, false, true, message);
+            var shplayer = GetShBySv.Run(player);
+            if (string.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdStaffChatExecutableBy))
+                if (playerList[shplayer.ID].staffChatEnabled)
                 {
-                    var arg1 = GetArgument.Run(1, false, true, message);
-                    var shplayer = GetShBySv.Run(player);
-                    if (string.IsNullOrEmpty(arg1))
-                    {
-                        if (playerList[shplayer.ID].staffChatEnabled)
-                        {
-                            playerList[shplayer.ID].staffChatEnabled = false;
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat disabled.</color>");
-                        }
-                        else
-                        {
-                            playerList[shplayer.ID].staffChatEnabled = true;
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat enabled.</color>");
-                        }
-                    }
-                    else
-                    {
-                        if (playerList[shplayer.ID].staffChatEnabled)
-                        {
-                            _msg = AdminChatMessage;
-                            _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
-                            _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(player, arg1), "<<b></b>"));
-                            SendChatMessageToAdmins.Run(_msg);
-                        }
-                        else
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You must enable staff chat first before you can send a message.</color>");
-                    }
+                    playerList[shplayer.ID].staffChatEnabled = false;
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat disabled.</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                {
+                    playerList[shplayer.ID].staffChatEnabled = true;
+                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat enabled.</color>");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ErrorLogging.Run(ex);
+                _msg = AdminChatMessage;
+                _msg = _msg.Replace("{username}", new Regex("(<)").Replace(shplayer.username, "<<b></b>"));
+                _msg = _msg.Replace("{id}", new Regex("(<)").Replace($"{shplayer.ID}", "<<b></b>"));
+                _msg = _msg.Replace("{jobindex}", new Regex("(<)").Replace($"{shplayer.job.jobIndex}", "<<b></b>"));
+                _msg = _msg.Replace("{jobname}", new Regex("(<)").Replace($"{shplayer.job.info.jobName}", "<<b></b>"));
+                _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(arg1), "<<b></b>"));
+                SendChatMessageToAdmins.Run(_msg);
             }
-            return true;
         }
     }
 }

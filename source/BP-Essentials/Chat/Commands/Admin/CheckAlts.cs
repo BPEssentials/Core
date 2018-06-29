@@ -11,65 +11,50 @@ namespace BP_Essentials.Commands
 {
     class CheckAlts : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer, string message)
+        public static void Run(SvPlayer player, string message)
         {
-            try
+            var arg1 = GetArgument.Run(1, false, false, message);
+            var found = 0;
+            if (!String.IsNullOrEmpty(arg1))
             {
-                var player = (SvPlayer)oPlayer;
-                if (HasPermission.Run(player, CmdCheckAltsExecutableBy))
+                var arg2 = GetArgument.Run(2, false, true, message);
+                if (arg1.Equals("ip", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var arg1 = GetArgument.Run(1, false, false, message);
-                    var found = 0;
-                    if (!String.IsNullOrEmpty(arg1))
+                    var content = "Possible accounts using the IP " + arg2 + ":\r\n\r\n";
+                    var builder = new StringBuilder();
+                    builder.Append(content);
+                    foreach (var line in File.ReadAllLines(IpListFile))
                     {
-                        var arg2 = GetArgument.Run(2, false, true, message);
-                        if (arg1.Equals("ip", StringComparison.InvariantCultureIgnoreCase))
+                        if (line.EndsWith(arg2))
                         {
-                            var content = "Possible accounts using the IP " + arg2 + ":\r\n\r\n";
-                            var builder = new StringBuilder();
-                            builder.Append(content);
-                            foreach (var line in File.ReadAllLines(IpListFile))
-                            {
-                                if (line.EndsWith(arg2))
-                                {
-                                    ++found;
-                                    builder.Append(line.Replace(": " + arg2, String.Empty) + "\r\n");
-                                }
-                            }
-                            content = builder.ToString();
-                            content += "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
-                        }
-                        else if (arg1.Equals("ign", StringComparison.InvariantCultureIgnoreCase) || (arg1.Equals("player", StringComparison.InvariantCultureIgnoreCase)))
-                        {
-                            var content = "Possible logins on the account " + arg2 + " using the following IP's:\r\n\r\n";
-                            var builder = new StringBuilder();
-                            builder.Append(content);
-                            foreach (var line in File.ReadAllLines(IpListFile))
-                            {
-                                if (line.StartsWith(arg2 + ": "))
-                                {
-                                    ++found;
-                                    builder.Append(line.Replace(arg2 + ": ", String.Empty) + "\r\n");
-                                }
-                            }
-                            content = builder.ToString();
-                            content = content + "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                            ++found;
+                            builder.Append(line.Replace(": " + arg2, String.Empty) + "\r\n");
                         }
                     }
-                    else
-                        player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, CmdCheckAlts + "[IP/IGN] [Arg2] Eg " + CmdCheckAlts + " ip 127.0.0.1");
-
+                    content = builder.ToString();
+                    content += "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
+                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
                 }
-                else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                else if (arg1.Equals("ign", StringComparison.InvariantCultureIgnoreCase) || (arg1.Equals(nameof(player), StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    var content = "Possible logins on the account " + arg2 + " using the following IP's:\r\n\r\n";
+                    var builder = new StringBuilder();
+                    builder.Append(content);
+                    foreach (var line in File.ReadAllLines(IpListFile))
+                    {
+                        if (line.StartsWith(arg2 + ": "))
+                        {
+                            ++found;
+                            builder.Append(line.Replace(arg2 + ": ", String.Empty) + "\r\n");
+                        }
+                    }
+                    content = builder.ToString();
+                    content = content + "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
+                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                }
             }
-            catch (Exception ex)
-            {
-                ErrorLogging.Run(ex);
-            }
-            return true;
+            else
+                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, GetArgument.Run(0, false,false,message) + "[IP/IGN] [Arg2] Eg " + GetArgument.Run(0,false,false,message) + " ip 127.0.0.1");
         }
     }
 }

@@ -9,13 +9,12 @@ namespace BP_Essentials
 {
     class Reload : EssentialsChatPlugin
     {
-        public static void Run(bool silentExecution, object oPlayer = null)
+        public static void Run(bool silentExecution, SvPlayer player = null)
         {
             try
             {
                 if (!silentExecution)
                 {
-                    var player = (SvPlayer)oPlayer;
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Checking if file's exist...");

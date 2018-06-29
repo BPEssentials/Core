@@ -7,7 +7,8 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.4.4";
+        public const string Version = "2.5.1";
+        public const bool isPreRelease = false;
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -48,6 +49,9 @@ namespace BP_Essentials
         public static bool ShowDMGMessage;
         public static bool VoteKickDisabled;
         public static bool DownloadIdList;
+        public static bool EnableDiscordWebhook;
+        public static bool BlockBanButtonTabMenu;
+        public static bool CheckBannedEnabled;
 
         // Lists
         public static List<string> CustomCommands = new List<string>();
@@ -60,6 +64,8 @@ namespace BP_Essentials
         public static List<string> MutePlayers = new List<string>();
         public static List<string> LatestVotePeople = new List<string>();
 
+        public static List<int> BlockedItems = new List<int>();
+
         // Arrays
         public static string[] Announcements;
         public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor", "DeliveryDriver", "TaxiDriver", "Special Forces" };
@@ -67,16 +73,19 @@ namespace BP_Essentials
         // Messages
         public static string MsgSayPrefix;
         public static string MsgNoPerm;
+        public static string MsgNoPermJob;
         public static string MsgDiscord;
         public static string DisabledCommand;
         public static string ArgRequired;
         public static string PlayerIsAFK;
         public static string SelfIsMuted;
         public static string NotFoundOnline;
+        public static string NotFoundOnlineIdOnly;
         public static string AdminSearchingInv;
         public static string PlayerMessage;
         public static string AdminMessage;
         public static string AdminChatMessage;
+        public static string BlockedItemMessage;
 
         public static string infoColor, errorColor, warningColor, argColor;
         // Strings
@@ -89,91 +98,19 @@ namespace BP_Essentials
         public static string AccessCWMenu;
         public static string AccessSetHPMenu;
         public static string AccessSetStatsMenu;
-
-        // Commands
-        #region Commands
-
-        public static string CmdSay, CmdSay2, CmdSayExecutableBy;
-        public static string CmdGodmode, CmdGodmode2, CmdGodmodeExecutableBy;
-        public static string CmdMute, CmdMute2, CmdMuteExecutableBy;
-        public static string CmdAfk, CmdAfk2, CmdAfkExecutableBy;
-        public static string CmdFakeJoin, CmdFakeJoin2, CmdFakeJoinExecutableBy;
-        public static string CmdFakeLeave, CmdFakeLeave2, CmdFakeLeaveExecutableBy;
-        public static string CmdPlayers, CmdPlayers2, CmdPlayersExecutableBy;
-        public static string CmdInfo, CmdInfo2, CmdInfoExecutableBy;
-        public static string CmdMoney, CmdMoney2, CmdMoneyExecutableBy;
-        public static string CmdAtm, CmdAtm2, CmdAtmExecutableBy;
-        public static string CmdPay, CmdPay2, CmdPayExecutableBy;
-        public static string CmdTpHere, CmdTpHere2, CmdTpHereExecutableBy;
-        public static string CmdHeal, CmdHeal2, CmdHealExecutableBy;
-        public static string CmdFeed, CmdFeed2, CmdFeedExecutableBy;
-        public static string CmdCheckAlts, CmdCheckAlts2, CmdCheckAltsExecutableBy;
-        public static string CmdGive, CmdGive2, CmdGiveExecutableBy;
-        public static string CmdSetjob, CmdSetjob2, CmdSetjobExecutableBy;
-        public static string CmdLaunch, CmdLaunch2, CmdLaunchExecutableBy;
-        public static string CmdStrip, CmdStrip2, CmdStripExecutableBy;
-        public static string CmdSlap, CmdSlap2, CmdSlapExecutableBy;
-        public static string CmdSearch, CmdSearch2, CmdSearchExecutableBy;
-        public static string CmdJail, CmdJail2, CmdJailExecutableBy;
-        public static string CmdKnockout, CmdKnockout2, CmdKnockoutExecutableBy;
-        public static string CmdKill, CmdKillExecutableBy;
-        public static string CmdBan, CmdBanExecutableBy;
-        public static string CmdKick, CmdKickExecutableBy;
-        public static string CmdLogs, CmdLogsExecutableBy;
-        public static string CmdArrest, CmdArrestExecutableBy;
-        public static string CmdRestrain, CmdRestrainExecutableBy;
-        public static string CmdFree, CmdFreeExecutableBy;
-        public static string CmdTp, CmdTpExecutableBy;
-        public static string CmdSave, CmdSaveExecutableBy;
-        public static string CmdLatestVoteResults, CmdLatestVoteResults2, CmdLatestVoteResultsExecutableBy;
-        public static string CmdClearWanted, CmdClearWanted2, CmdClearWantedExecutableBy;
-        public static string CmdToggleChat, CmdToggleChat2, CmdToggleChatExecutableBy;
-        public static string CmdDebug, CmdDebug2;
-        public static string CmdConfirm, CmdConfirm2;
-        public static string CmdReload, CmdReload2;
-        public static string CmdClearChat, CmdClearChat2;
-        public static string CmdReport, CmdReport2;
-        public static string CmdStaffChat, CmdStaffChat2, CmdStaffChatExecutableBy;
-        public static string CmdStaffChatMessages, CmdStaffChatMessages2, CmdStaffChatMessagesExecutableBy;
-        public static string CmdHelp;
         public static string CmdCommandCharacter;
-        public static bool CmdClearChatDisabled;
-        public static bool CmdSayDisabled;
-        public static bool CmdGodmodeDisabled;
-        public static bool CmdMuteDisabled;
-        public static bool CmdAfkDisabled;
-        public static bool CmdFakeJoinDisabled;
-        public static bool CmdFakeLeaveDisabled;
-        public static bool CmdPlayersDisabled;
-        public static bool CmdInfoDisabled;
-        public static bool CmdMoneyDisabled;
-        public static bool CmdAtmDisabled;
-        public static bool CmdPayDisabled;
-        public static bool CmdHealDisabled;
-        public static bool CmdFeedDisabled;
-        public static bool CmdCheckAltsDisabled;
-        public static bool CmdGiveDisabled;
-        public static bool CmdLatestVoteResultsDisabled;
-        public static bool CmdSetjobDisabled;
-        public static bool CmdClearWantedDisabled;
-        public static bool CmdReportDisabled;
-        public static bool CmdLaunchDisabled;
-        public static bool CmdStripDisabled;
-        public static bool CmdSlapDisabled;
-        public static bool CmdSearchDisabled;
-        public static bool CmdJailDisabled;
-        public static bool CmdKnockoutDisabled;
-        public static bool CmdToggleChatDisabled;
-        public static bool CmdStaffChatDisabled;
-        public static bool CmdStaffChatMessagesDisabled;
-        #endregion
+        public static string CmdStaffChatExecutableBy;
+        public static string CmdConfirm;
+        public static string CmdToggleChat;
+        public static string DiscordWebhook;
 
         // Ints
-        public const int SaveTime = 60 * 5;
+        public const int SaveTime = 5 * 60;
         public static int AnnounceIndex;
         public static int TimeBetweenAnnounce;
         public static int[] BlockedSpawnIds;
-
+        public static int DebugLevel;
+        public static int GodModeLevel;
         // Misc.
         public static string _msg;
         public static string username;
@@ -182,7 +119,10 @@ namespace BP_Essentials
         public const string PatternTemplate = @"\b({0})(s?)\b";
         public static Dictionary<int, _PlayerList> playerList = new Dictionary<int, _PlayerList>();
         public static Dictionary<string, _Group> Groups = new Dictionary<string, _Group>();
-
+        public static Dictionary<int, _CommandList> CommandList = new Dictionary<int, _CommandList>();
+        public static Dictionary<int, string> WhitelistedJobs = new Dictionary<int, string>();
+        public static System.Timers.Timer _Timer = new System.Timers.Timer();
+        public static SvManager SvMan;
         public static string[] ReportReasons =
         {
             // default values
@@ -974,16 +914,24 @@ namespace BP_Essentials
 
         #endregion
     }
-
+    public class _CommandList
+    {
+        public Action<SvPlayer, string> RunMethod;
+        public List<string> commandCmds;
+        public bool? commandDisabled;
+        public string commandGroup;
+        public string commandName;
+    }
     public class _PlayerList
     {
         public ShPlayer shplayer { get; set; }
-        public int LastMenu;
+        public CurrentMenu LastMenu;
         public ShPlayer reportedPlayer { get; set; }
         public string reportedReason;
         public bool chatEnabled = true;
         public bool staffChatEnabled;
         public bool receiveStaffChat = true;
+        public bool spyEnabled;
     }
 
     public class _Group
@@ -993,15 +941,15 @@ namespace BP_Essentials
         public List<string> Users = new List<string>();
     }
 
-    public static class CurrentMenu //Todo: convert to enum
+    public enum CurrentMenu
     {
-        public static readonly int Main;
-        public static readonly int Help = 1;
-        public static readonly int Staff = 2;
-        public static readonly int GiveMoney = 3;
-        public static readonly int GiveItems = 4;
-        public static readonly int ServerInfo = 5;
-        public static readonly int Report = 6;
-        public static readonly int AdminReport = 7;
+        Main,
+        Help,
+        Staff,
+        GiveMoney,
+        GiveItems,
+        ServerInfo,
+        Report,
+        AdminReport
     }
 }

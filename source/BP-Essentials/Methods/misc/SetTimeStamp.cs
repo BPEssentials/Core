@@ -43,7 +43,7 @@ namespace BP_Essentials
                 placeHolderText = placeHolderText + " ";
                 return placeHolderText;
             }
-            catch
+            catch (Exception)
             {
                 return "[Failed] ";
             }

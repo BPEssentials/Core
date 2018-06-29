@@ -10,9 +10,8 @@ namespace BP_Essentials.Commands
 {
     class Confirm : EssentialsChatPlugin
     {
-        public static bool Run(object oPlayer)
+        public static bool Run(SvPlayer player)
         {
-            var player = (SvPlayer)oPlayer;
             var shPlayer = GetShBySv.Run(player);
             if (shPlayer.ownedApartment)
             {
