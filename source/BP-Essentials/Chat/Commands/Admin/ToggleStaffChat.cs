@@ -14,7 +14,7 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             var arg1 = GetArgument.Run(1, false, true, message);
-            var shplayer = GetShBySv.Run(player);
+            var shplayer = player.player;
             if (string.IsNullOrEmpty(arg1))
             {
                 if (playerList[shplayer.ID].staffChatEnabled)

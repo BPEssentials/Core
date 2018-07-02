@@ -21,7 +21,7 @@ namespace BP_Essentials.Commands
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
-                UnRetain.Run(shPlayer.svPlayer);
+                UnRestrain.Run(shPlayer.svPlayer);
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Freed</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
             else

@@ -16,21 +16,15 @@ namespace BP_Essentials
         {
             if (CheckAlt)
             {
-                Thread.Sleep(3000);
                 try
                 {
+                    Thread.Sleep(3000);
                     if (!string.IsNullOrEmpty(player.playerData.username.Trim()))
-                        if (File.ReadAllText(BansFile).Contains(player.svManager.GetAddress(player.connection)))
+                        if (File.ReadAllText(IpListFile).Contains(player.svManager.GetAddress(player.connection)))
                         {
-                            Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined with a possible alt! IP: " + player.svManager.GetAddress(player.connection));
-                            foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                                if (shPlayer.svPlayer == player)
-                                    if (!shPlayer.svPlayer.IsServerside())
-                                    {
-                                        player.svManager.AddBanned(shPlayer);
-                                        player.svManager.Disconnect(player.connection);
-                                    }
-
+                            Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} Joined with a possible alt! IP: {player.svManager.GetAddress(player.connection)}");
+                            player.svManager.AddBanned(player.player);
+                            player.svManager.Disconnect(player.connection);
                         }
                 }
                 catch (Exception ex)

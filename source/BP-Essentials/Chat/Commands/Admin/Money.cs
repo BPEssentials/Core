@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             string CorrSyntax = $"<color={argColor}>" + GetArgument.Run(0, false, false, message) + $"</color><color={errorColor}> [Player] [Amount]</color><color={warningColor}> (Incorrect or missing argument(s).)</color>";
             string arg1 = GetArgument.Run(1, false, true, message);
             string arg2 = message.Split(' ').Last().Trim();
-            if (String.IsNullOrEmpty(GetArgument.Run(1, false, false, message)) || String.IsNullOrEmpty(arg2))
+            if (String.IsNullOrEmpty(arg1) || String.IsNullOrEmpty(arg2))
             {
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, CorrSyntax);
                 return;

@@ -14,7 +14,7 @@ namespace BP_Essentials
         {
             try
             {
-                var shPlayer = GetShBySv.Run(player);
+                var shPlayer = player.player;
                 var src = DateTime.Now;
                 var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, src.Second);
                 var placeHolderText = str;

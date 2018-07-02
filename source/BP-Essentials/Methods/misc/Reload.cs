@@ -17,12 +17,9 @@ namespace BP_Essentials
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Checking if file's exist...");
+                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[WAIT] Reloading all files..");
                         CheckFiles.Run("all");
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Reloading config files...");
                         ReadFile.Run(SettingsFile);
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[OK] Config file reloaded");
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Reloading critical .txt files...");
                         ReadCustomCommands.Run();
                         ReadGroups.Run();
                         ReadStream.Run(LanguageBlockFile, LanguageBlockWords);

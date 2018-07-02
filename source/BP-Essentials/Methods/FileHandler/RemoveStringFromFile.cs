@@ -15,15 +15,7 @@ namespace BP_Essentials
         {
             try
             {
-                string content = null;
-                foreach (var line in File.ReadAllLines(FileName))
-                {
-                    if (!line.Contains(RemoveString))
-                    {
-                        content = content + line + Environment.NewLine;
-                    }
-                }
-                File.WriteAllText(FileName, content);
+                File.WriteAllLines(FileName, File.ReadLines(FileName).Where(s => !s.Contains(RemoveString)).ToList());
             }
             catch (Exception ex)
             {

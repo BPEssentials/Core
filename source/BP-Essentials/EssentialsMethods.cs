@@ -358,7 +358,7 @@ namespace BP_Essentials
             if (player.IsServerside())
                 return true;
 
-            var shPlayer = GetShBySv.Run(player);
+            var shPlayer = player.player;
 
             if (shPlayer.IsDead())
                 return true;
@@ -372,7 +372,7 @@ namespace BP_Essentials
         {
             try
             {
-                var shPlayer = GetShBySv.Run(player);
+                var shPlayer = player.player;
                 var shEmployer = shPlayer.manager.FindByID<ShPlayer>(employerID);
                 if (WhitelistedJobs.ContainsKey(shEmployer.job.jobIndex))
                     if (!HasPermission.Run(player, WhitelistedJobs[shEmployer.job.jobIndex], false, shPlayer.job.jobIndex))
@@ -418,6 +418,84 @@ namespace BP_Essentials
                 ErrorLogging.Run(ex);
             }
             return false;
+        }
+
+        [Hook("ShPlayer.ShDie")]
+        public static bool ShDie(ShPlayer player)
+        {
+            if (player.manager.isClient)
+            {
+                if (player.clPlayer.isMain)
+                {
+                    foreach (PlayerEffect playerEffect in player.effects)
+                        playerEffect.active = false;
+                    player.manager.mainCamera.ClearEffects();
+                    player.clPlayer.deathSound.Play();
+                }
+            }
+            else
+            {
+                player.svPlayer.ClearWitnessed();
+                foreach (PlayerEffect playerEffect2 in player.effects)
+                    playerEffect2.active = false;
+                if (player.svPlayer.IsServerside())
+                    player.svPlayer.SetState(0);
+                player.svPlayer.SendToSelf(Channel.Reliable, 45, new object[] {player.svPlayer.respawnDelay});
+                if (Physics.Raycast(player.GetPosition() + Vector3.up, Vector3.down, out RaycastHit raycastHit, 10f, 1))
+                {
+                    var shEntity = player.manager.svManager.AddNewEntity(player.manager.svManager.GetRandomBriefcase(), player.GetPlace(), raycastHit.point, player.GetRotationT().rotation, false);
+                    foreach (var keyValuePair in player.myItems)
+                    {
+                        if (UnityEngine.Random.value < 0.8f)
+                        {
+                            InventoryItem value = new InventoryItem(keyValuePair.Value.item, Mathf.CeilToInt(keyValuePair.Value.count * UnityEngine.Random.Range(0.05f, 0.3f)), 0);
+                            shEntity.myItems.Add(keyValuePair.Key, value);
+                        }
+                    }
+                }
+                foreach (InventoryItem inventoryItem in player.myItems.Values.ToArray())
+                {
+                    bool flag = false;
+                    int num = inventoryItem.count;
+                    if (player.job.info.rankItems.Length > player.rank)
+                    {
+                        for (int l = player.rank; l >= 0; l--)
+                        {
+                            foreach (InventoryItem inventoryItem2 in player.job.info.rankItems[l].items)
+                                if (inventoryItem.item.index == inventoryItem2.item.index)
+                                {
+                                    num = Mathf.Max(0, inventoryItem.count - inventoryItem2.count);
+                                    flag = true;
+                                    break;
+                                }
+                            if (flag)
+                                break;
+                        }
+                    }
+                    if (num > 0)
+                    {
+                        var shWearable = inventoryItem.item as ShWearable;
+                        if (!shWearable || shWearable.illegal || player.curWearables[(int)shWearable.type].index != shWearable.index || (blockLicenseRemoved && !shWearable.name.StartsWith("License")))
+                            player.TransferItem(2, inventoryItem.item.index, num, true);
+                    }
+                }
+                if (blockLicenseRemoved)
+                    player.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>This server disabled losing licenses on death.</color>");
+            }
+
+            player.CleanUp();
+            player.health = 0f;
+            if (player.manager.isServer)
+                SvMan.StartCoroutine(player.svMovable.RespawnDelay());
+
+            player.SetSimpleLayer(true);
+            if (player.manager.isClient)
+            {
+                player.clPlayer.ClSetStance(5);
+                if (player.clPlayer.isMain)
+                    player.clPlayer.mainCamera.ResetCamera();
+            }
+            return true;
         }
     }
 }

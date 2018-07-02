@@ -20,7 +20,8 @@ using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
-    public class EssentialsCorePlugin {
+    public class EssentialsCorePlugin
+    {
 
         //Initialization
         [Hook("SvManager.StartServer")]

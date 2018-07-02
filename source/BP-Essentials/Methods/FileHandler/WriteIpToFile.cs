@@ -17,7 +17,7 @@ namespace BP_Essentials
             try
             {
                 Thread.Sleep(500);
-                Debug.Log(SetTimeStamp.Run() + "[INFO] " + "[JOIN] " + player.playerData.username + " IP is: " + player.svManager.GetAddress(player.connection));
+                Debug.Log($"{SetTimeStamp.Run()}[INFO] [JOIN] {player.playerData.username} IP is: {player.svManager.GetAddress(player.connection)}");
                 int tries = 0;
                 while (tries < 2)
                     try

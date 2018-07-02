@@ -15,13 +15,13 @@ namespace BP_Essentials
         {
             if (silent)
             {
-                File.WriteAllText(IdListFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/idlist.txt"));
+                DownloadAndWriteToFile.Run(IdListFile, "http://www.UserR00T.com/dev/BPEssentials/idlist.txt");
                 ReadFile.Run(IdListFile);
             }
             else
             {
                 Debug.Log("Downloading newest ID list...");
-                File.WriteAllText(IdListFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/idlist.txt"));
+                DownloadAndWriteToFile.Run(IdListFile, "http://www.UserR00T.com/dev/BPEssentials/idlist.txt");
                 Debug.Log("[OK] ID list downloaded");
                 Debug.Log("Reloading ID list..");
                 ReadFile.Run(IdListFile);

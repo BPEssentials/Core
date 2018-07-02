@@ -20,13 +20,9 @@ namespace BP_Essentials
                     case SettingsFile:
                         {
                             if (isPreRelease)
-#pragma warning disable CS0162 // Unreachable code detected / *shrugs*
-                                File.WriteAllText(SettingsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/settings_test.txt"));
-#pragma warning restore CS0162 // Unreachable code detected
+                                DownloadAndWriteToFile.Run(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings_test.txt");
                             else
-#pragma warning disable CS0162 // Unreachable code detected / *shrugs*
-                                File.WriteAllText(SettingsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/settings.txt"));
-#pragma warning restore CS0162 // Unreachable code detected
+                                DownloadAndWriteToFile.Run(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings.txt");
                             break;
                         }
                     case ChatBlockFile:
@@ -43,12 +39,12 @@ namespace BP_Essentials
                         }
                     case CustomCommandsFile:
                         {
-                            File.WriteAllText(CustomCommandsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/customcommands.txt"));
+                            DownloadAndWriteToFile.Run(CustomCommandsFile, "http://www.UserR00T.com/dev/BPEssentials/customcommands.txt");
                             break;
                         }
                     case CustomGroupsFile:
                         {
-                            File.WriteAllText(CustomGroupsFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/customgroups.txt"));
+                            DownloadAndWriteToFile.Run(CustomGroupsFile, "http://www.UserR00T.com/dev/BPEssentials/customgroups.txt");
                             break;
                         }
                 }

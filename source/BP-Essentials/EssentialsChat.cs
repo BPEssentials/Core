@@ -111,7 +111,7 @@ namespace BP_Essentials
                 if (AfkPlayers.Any(message.Contains))
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, PlayerIsAFK);
 
-                var shplayer = GetShBySv.Run(player);
+                var shplayer = player.player;
                 if (!playerList[shplayer.ID].chatEnabled)
                 {
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Please enable your chat again by typing</color> <color={argColor}>{CmdCommandCharacter}{CmdToggleChat}</color><color={warningColor}>.</color>");

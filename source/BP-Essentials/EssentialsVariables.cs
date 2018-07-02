@@ -8,7 +8,7 @@ namespace BP_Essentials
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
         public const string Version = "2.5.1";
-        public const bool isPreRelease = false;
+        public static bool isPreRelease;
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -52,6 +52,7 @@ namespace BP_Essentials
         public static bool EnableDiscordWebhook;
         public static bool BlockBanButtonTabMenu;
         public static bool CheckBannedEnabled;
+        public static bool blockLicenseRemoved;
 
         // Lists
         public static List<string> CustomCommands = new List<string>();

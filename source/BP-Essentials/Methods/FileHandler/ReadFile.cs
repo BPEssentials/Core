@@ -30,6 +30,7 @@ namespace BP_Essentials
         public string DiscordWebhook { get; set; }
         public bool EnableDiscordWebhook { get; set; }
         public bool BlockBanButtonTabMenu { get; set; }
+        public bool BlockLicenseRemoved { get; set; }
     }
     [Serializable]
     public class _Messages
@@ -161,6 +162,7 @@ namespace BP_Essentials
                         else
                             DiscordWebhook = m.General.DiscordWebhook;
                         BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
+                        blockLicenseRemoved = m.General.BlockLicenseRemoved;
 
                         infoColor = m.MessageColors.info;
                         errorColor = m.MessageColors.error;

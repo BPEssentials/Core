@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
             if (!string.IsNullOrEmpty(arg1))
             {
                 var shPlayer = GetShByStr.Run(arg1);
-                var shPlayer1 = GetShBySv.Run(player);
+                var shPlayer1 = player.player;
                 if (shPlayer == null)
                 {
                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);

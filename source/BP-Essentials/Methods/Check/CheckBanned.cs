@@ -21,23 +21,12 @@ namespace BP_Essentials
                     Thread.Sleep(3000);
                     if (!string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
                         foreach (var line in File.ReadAllLines(BansFile))
-                        {
                             if (line.StartsWith(player.playerData.username))
                             {
-                                Debug.Log(SetTimeStamp.Run() + "[WARNING] " + player.playerData.username + " Joined while banned! IP: " + player.svManager.GetAddress(player.connection));
-                                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                                {
-                                    if (shPlayer.svPlayer == player)
-                                    {
-                                        if (!shPlayer.svPlayer.IsServerside())
-                                        {
-                                            player.svManager.AddBanned(shPlayer);
-                                            player.svManager.Disconnect(player.connection);
-                                        }
-                                    }
-                                }
+                                Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} Joined while banned! IP: {player.svManager.GetAddress(player.connection)}");
+                                player.svManager.AddBanned(player.player);
+                                player.svManager.Disconnect(player.connection);
                             }
-                        }
                 }
                 catch (Exception ex)
                 {
