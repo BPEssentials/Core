@@ -24,27 +24,32 @@
     })});
   </script>
         <script>
-        function GetIdList() {
-          var tb = document.getElementById("idtablebody");
+        function GetIdList(idlist) {
+          var tb = document.getElementById(idlist);
           tb.innerHTML = ""; // Clear tbody before if ran twice
-          $.getJSON("https://userr00t.com/dev/BPEssentials/idlist.txt", function (json) {
+          $.getJSON("https://userr00t.com/dev/BPEssentials/" + idlist+ ".txt", function (json) {
               $.each(json.items, function (i, ch) {
                 tb.innerHTML += "<tr><th>" + ch.id +"</th><th>" + ch.name + "</th><th>" + ch.gameid+ "</th><th>"; // Construct rows
               });
               document.getElementById("Table").style.display = "table";
-              document.getElementById("Loader").style.display = "none";
-              document.getElementById("LoadingText").style.display = "none";
+              $("#itemTypeBtns").show();
+              $("#Loader").hide();
+              $("#LoadingText").hide();
           });
         }
        </script>
 </head>
 
-<body style="width=100%;word-wrap: break-word;" class="bg-inverse" onload="GetIdList();">
+<body style="width=100%;word-wrap: break-word;" class="bg-inverse" onload="GetIdList('idlist_items');GetIdList('idlist_vehicles');">
   <div class="py-5 section text-center bg-inverse" id="About">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <h1 class="text-warning">ID List</h1>
+          <div id="itemTypeBtns" style="margin-bottom: 20px; display:none;">
+            <a href="#" class="btn" onclick="$('#idlist_vehicles').hide();$('#idlist_items').show();">Items</a>
+            <a href="#" class="btn" onclick="$('#idlist_vehicles').show();$('#idlist_items').hide();">Vehicles</a>
+          </div>
           <p class="lead" id="LoadingText">Loading... please wait!</p>
           <div class="loader" id="Loader" style="display:block"><span></span></div>
           <table id="Table" class="table" style="display: none;width: 537px; border-radius: 0;border-radius: 5px;width: 50%;margin: 0px auto;float: none;">
@@ -55,7 +60,9 @@
               <th>Game ID</th>
             </tr>
             </thead>
-            <tbody id="idtablebody">
+            <tbody id="idlist_vehicles" style="display:none;">
+            </tbody>
+            <tbody id="idlist_items">
             </tbody>
           </table>
         </div>
