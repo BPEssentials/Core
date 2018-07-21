@@ -284,9 +284,6 @@
     <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\BrokeProtocol_Data\Managed\UnityEngine.VRModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.WebModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\BrokeProtocol_Data\Managed\UnityEngine.WebModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.WindModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\BrokeProtocol_Data\Managed\UnityEngine.WindModule.dll</HintPath>
     </Reference>

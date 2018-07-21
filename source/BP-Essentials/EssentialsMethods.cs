@@ -287,8 +287,7 @@ namespace BP_Essentials
                                 case 5:
                                     if (item.Value.LastMenu == CurrentMenu.Staff && HasPermission.Run(player, AccessSetStatsMenu))
                                     {
-                                        for (byte i = 0; i < 4; i++)
-                                            player.UpdateStat(i, 100);
+                                        player.UpdateStats(100f, 100f, 100f, 100f);
                                         player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Maxed out stats for yourself.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Maxed out stats through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
