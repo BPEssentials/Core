@@ -25,24 +25,30 @@ namespace BP_Essentials
                 }
                 else
                 {
+                    message = message.Trim();
                     if (IncludeSpaces)
                     {
-                        string tmessage = message + " ";
-                        string[] args = tmessage.Split(' ');
-                        return tmessage.IndexOf(args[nr]) != 0 ? tmessage.Substring(tmessage.IndexOf(args[nr])).TrimEnd() : string.Empty;
+                        message = message.Trim();
+                        if (!message.Contains(" "))
+                            return "";
+                        var args = message.Split(' ');
+                        if (nr >= args.Length)
+                            return "";
+                        return message.Substring(message.IndexOf(args[nr])).TrimEnd();
                     }
                     else
                     {
-                        string tmessage = message + " ";
-                        string[] args = tmessage.Split(' ');
-                        return nr < args.Length ? args[nr] : string.Empty;
+                        if (!message.Contains(" "))
+                            message = message + " ";
+                        string[] args = message.Split(' ');
+                        return nr <= args.Length ? args[nr] : "";
                     }
                 }
             }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
-                return null;
+                return "";
             }
         }
     }

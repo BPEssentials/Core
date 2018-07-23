@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-            string arg1 = GetArgument.Run(1, false, true, message).Trim();
+            string arg1 = GetArgument.Run(1, false, true, message);
             string msg = $"<color={infoColor}>Healed </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
             if (String.IsNullOrEmpty(arg1))
             {

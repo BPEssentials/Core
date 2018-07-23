@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static bool Run(SvPlayer player)
         {
-            var shPlayer = GetShBySv.Run(player);
+            var shPlayer = player.player;
             if (shPlayer.ownedApartment)
             {
                 player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
@@ -24,7 +24,7 @@ namespace BP_Essentials.Commands
         }
         public static void SellApartment(ShPlayer shPlayer)
         {
-            shPlayer.TransferMoney(1, shPlayer.ownedApartment.value / 2, true);
+            shPlayer.TransferMoney(DeltaInv.AddToMe, shPlayer.ownedApartment.value / 2, true);
             shPlayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.ApartmentOwner, new object[]{0,0});
             CleanupApartment.Run(shPlayer);
         }

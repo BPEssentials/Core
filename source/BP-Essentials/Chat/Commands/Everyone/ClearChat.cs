@@ -7,7 +7,7 @@ namespace BP_Essentials.Commands {
     public class ClearChat : EssentialsChatPlugin {
         public static void Run(SvPlayer player, string message)
         {
-            string arg1 = GetArgument.Run(1, false, false, message).Trim();
+            string arg1 = GetArgument.Run(1, false, false, message);
             if (arg1 == "all" || arg1 == "everyone")
             {
                 if (AdminsListPlayers.Contains(player.playerData.username))

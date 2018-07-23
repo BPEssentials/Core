@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +45,7 @@
     <Compile Include="Chat\Commands\Admin\CheckAlts.cs" />
     <Compile Include="Chat\Commands\Admin\Clear.cs" />
     <Compile Include="Chat\Commands\Admin\ClearWanted.cs" />
+    <Compile Include="Chat\Commands\Admin\CreateKit.cs" />
     <Compile Include="Chat\Commands\Admin\FakeJoin.cs" />
     <Compile Include="Chat\Commands\Admin\FakeLeave.cs" />
     <Compile Include="Chat\Commands\Admin\Feed.cs" />
@@ -63,10 +64,13 @@
     <Compile Include="Chat\Commands\Admin\Restrain.cs" />
     <Compile Include="Chat\Commands\Admin\Say.cs" />
     <Compile Include="Chat\Commands\Admin\Search.cs" />
+    <Compile Include="Chat\Commands\Admin\SpawnVehicle.cs" />
     <Compile Include="Chat\Commands\Admin\Spy.cs" />
     <Compile Include="Chat\Commands\Admin\ToggleReceiveStaffChat.cs" />
     <Compile Include="Chat\Commands\Admin\ToggleStaffChat.cs" />
+    <Compile Include="Chat\Commands\Admin\TpAll.cs" />
     <Compile Include="Chat\Commands\Admin\TpHere.cs" />
+    <Compile Include="Chat\Commands\Admin\TpLocation.cs" />
     <Compile Include="Chat\Commands\Admin\TpToApartment.cs" />
     <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
@@ -80,6 +84,8 @@
     <Compile Include="Chat\Commands\Everyone\Essentials.cs" />
     <Compile Include="Chat\Commands\Admin\GodMode.cs" />
     <Compile Include="Chat\Commands\Admin\Mute.cs" />
+    <Compile Include="Chat\Commands\Everyone\GetKit.cs" />
+    <Compile Include="Chat\Commands\Everyone\ListKits.cs" />
     <Compile Include="Chat\Commands\Everyone\OnlinePlayers.cs" />
     <Compile Include="Chat\Commands\Everyone\Pay.cs" />
     <Compile Include="Chat\Commands\Admin\Reload.cs" />
@@ -106,6 +112,7 @@
     <Compile Include="Methods\Check\CheckGodMode.cs" />
     <Compile Include="Methods\FileHandler\CreateFile.cs" />
     <Compile Include="Methods\FileHandler\ReadGroups.cs" />
+    <Compile Include="Methods\FileHandler\Kits.cs" />
     <Compile Include="Methods\FileHandler\RegisterCommands.cs" />
     <Compile Include="Methods\GameMethods\CleanupApartment.cs" />
     <Compile Include="Methods\GameMethods\SetJob.cs" />

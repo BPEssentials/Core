@@ -10,7 +10,7 @@ namespace BP_Essentials.Commands {
         public static void Run(SvPlayer player, string message) {
             {
                 ReadFile.Run(GodListFile);
-                string name = GetArgument.Run(1, false, true, message).Trim();
+                string name = GetArgument.Run(1, false, true, message);
                 string msg = String.Empty;
                 if (String.IsNullOrEmpty(name))
                 {

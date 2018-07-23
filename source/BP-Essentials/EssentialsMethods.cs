@@ -182,7 +182,7 @@ namespace BP_Essentials
                                     else if (item.Value.LastMenu == CurrentMenu.GiveMoney)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                        shPlayer.TransferMoney(1, 1000, true);
+                                        shPlayer.TransferMoney(DeltaInv.AddToMe, 1000, true);
                                         player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 1.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 1.000 dollars through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
@@ -219,7 +219,7 @@ namespace BP_Essentials
                                     else if (item.Value.LastMenu == CurrentMenu.GiveMoney)
                                     {
                                         player.SendToSelf(Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                        shPlayer.TransferMoney(1, 10000, true);
+                                        shPlayer.TransferMoney(DeltaInv.AddToMe, 10000, true);
                                         player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 10.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 10.000 dollars through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
@@ -262,7 +262,7 @@ namespace BP_Essentials
                                 case 4:
                                     if (item.Value.LastMenu == CurrentMenu.GiveMoney)
                                     {
-                                        item.Value.shplayer.TransferMoney(1, 100000, true);
+                                        item.Value.shplayer.TransferMoney(DeltaInv.AddToMe, 100000, true);
                                         player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 100.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 100.000 dollars through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
@@ -287,8 +287,7 @@ namespace BP_Essentials
                                 case 5:
                                     if (item.Value.LastMenu == CurrentMenu.Staff && HasPermission.Run(player, AccessSetStatsMenu))
                                     {
-                                        for (byte i = 0; i < 4; i++)
-                                            player.UpdateStat(i, 100);
+                                        player.UpdateStats(100F, 100F, 100F, 100F);
                                         player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Maxed out stats for yourself.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Maxed out stats through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
@@ -475,7 +474,7 @@ namespace BP_Essentials
                     if (num > 0)
                     {
                         var shWearable = inventoryItem.item as ShWearable;
-                        if (!shWearable || shWearable.illegal || player.curWearables[(int)shWearable.type].index != shWearable.index || (blockLicenseRemoved && !shWearable.name.StartsWith("License")))
+                        if ((blockLicenseRemoved && !inventoryItem.item.name.StartsWith("License")) || !shWearable || shWearable.illegal || player.curWearables[(int)shWearable.type].index != shWearable.index)
                             player.TransferItem(2, inventoryItem.item.index, num, true);
                     }
                 }

@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player)
         {
-            var shplayer = GetShBySv.Run(player);
+            var shplayer = player.player;
             if (playerList[shplayer.ID].receiveStaffChat)
             {
                 playerList[shplayer.ID].receiveStaffChat = false;

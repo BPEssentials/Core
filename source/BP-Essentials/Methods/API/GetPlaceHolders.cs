@@ -46,7 +46,7 @@ namespace BP_Essentials
                 if (str.ToLower().Contains("{id}"))
                     placeHolderText = placeHolderText.Replace("{id}", $"{shPlayer.ID}");
                 if (str.ToLower().Contains("{jobname}"))
-                    placeHolderText = placeHolderText.Replace("{jobname}", shPlayer.job.info.jobName);
+                    placeHolderText = placeHolderText.Replace("{jobname}", Jobs[shPlayer.job.jobIndex]);
                 if (str.ToLower().Contains("{jobindex}"))
                     placeHolderText = placeHolderText.Replace("{jobindex}", $"{shPlayer.job.jobIndex}");
 

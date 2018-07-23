@@ -7,7 +7,7 @@ namespace BP_Essentials.Commands {
         {
             var arg1 = GetArgument.Run(1, false, false, message);
             var arg2 = GetArgument.Run(2, false, true, message);
-            if (!string.IsNullOrEmpty(arg1) || !string.IsNullOrEmpty(arg2))
+            if (!string.IsNullOrEmpty(arg1) && !string.IsNullOrEmpty(arg2))
             {
                 var shPlayer = GetShByStr.Run(arg1, true);
                 if (shPlayer == null)

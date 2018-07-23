@@ -13,21 +13,33 @@ namespace BP_Essentials
 {
     class DownloadFile : EssentialsChatPlugin
     {
-        static IEnumerator GetSiteContent(string link)
+        // Redo method(s)
+
+        public static string Run(string DownloadLink)
         {
-            using (WWW www = new WWW(link))
+            using (WebClient client = new WebClient())
             {
+                Stream stream = client.OpenRead(DownloadLink);
+                using (StreamReader reader = new StreamReader(stream))
+                    return reader.ReadToEnd();
+            }
+        }
+
+
+        public static IEnumerator Run(string link, Action<string> callback)
+        {
+            using (var www = new WWW(link))
+            {
+                yield return www;
                 if (www.error != null)
                 {
                     Debug.Log($"{SetTimeStamp.Run()}[ERROR] {link} responded with HTTP error code: {www.error}!");
-                    yield return null;
+                    callback?.Invoke(null);
+                    yield break;
                 }
-                yield return www.text;
+                callback?.Invoke(www.text);
+                yield break;
             }
-        }
-        public static string Run(string link)
-        {
-            return GetSiteContent(link).ToString();
         }
     }
 }

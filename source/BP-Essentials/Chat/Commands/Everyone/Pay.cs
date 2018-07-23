@@ -38,8 +38,8 @@ namespace BP_Essentials.Commands
                             {
                                 if (_shPlayer.MyMoneyCount() >= arg2Int)
                                 {
-                                    _shPlayer.TransferMoney(2, arg2Int, true);
-                                    shPlayer.TransferMoney(1, arg2Int, true);
+                                    _shPlayer.TransferMoney(DeltaInv.RemoveFromMe, arg2Int, true);
+                                    shPlayer.TransferMoney(DeltaInv.AddToMe, arg2Int, true);
                                     player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Successfully transfered</color> <color={argColor}>{arg2Int}</color><color={infoColor}>$ to </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>!</color>");
                                     shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color><color={infoColor}> gave you </color><color={argColor}>{arg2Int}</color><color={infoColor}>$!</color>");
                                 }

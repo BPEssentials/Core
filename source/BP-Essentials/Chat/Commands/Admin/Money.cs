@@ -33,7 +33,7 @@ namespace BP_Essentials.Commands
                 foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
-                        shPlayer.TransferMoney(1, arg2int, true);
+                        shPlayer.TransferMoney(DeltaInv.AddToMe, arg2int, true);
                         player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Successfully gave</color><color={argColor}> " + shPlayer.username + " " + arg2int + $"</color><color={infoColor}>$</color>");
                         shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>" + player.playerData.username + $"</color><color={infoColor}> gave you </color><color={argColor}>" + arg2int + $"</color><color={infoColor}>$!</color>");
                         found = true;

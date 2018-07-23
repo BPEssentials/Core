@@ -19,7 +19,7 @@ namespace BP_Essentials
                 try
                 {
                     Thread.Sleep(3000);
-                    if (!string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
+                    if (!player.player.admin && !string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
                         foreach (var line in File.ReadAllLines(BansFile))
                             if (line.StartsWith(player.playerData.username))
                             {

@@ -15,11 +15,11 @@ namespace BP_Essentials.Commands
         {
             string NotValidArg = $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>";
             string arg1 = GetArgument.Run(1, false, false, message);
-            string arg2 = GetArgument.Run(2, false, true, message + " ");
+            string arg2 = GetArgument.Run(2, false, true, message);
             byte arg1int = 10;
             string msg = $"<color={infoColor}>Set </color><color={argColor}>{{0}}</color><color={infoColor}>'s Job to</color> <color={argColor}>{{1}}</color><color={infoColor}>.</color>";
             if (String.IsNullOrEmpty(arg2))
-                arg2 = player.playerData.username;
+                arg2 = player.player.username;
             if (!String.IsNullOrEmpty(arg1))
             {
                 bool Parsed = true;
@@ -33,7 +33,7 @@ namespace BP_Essentials.Commands
                         if (shPlayer.username == arg2 || shPlayer.ID.ToString() == arg2.ToString())
                             if (arg1int <= Jobs.Length && arg1int >= 0)
                             {
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, arg2, Jobs[arg1int]));
+                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username, Jobs[arg1int]));
                                 SetJob.Run(shPlayer, arg1int, true, false);
 
                             }

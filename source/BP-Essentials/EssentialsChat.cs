@@ -31,7 +31,7 @@ namespace BP_Essentials
                         foreach (var command2 in CustomCommands)
                             if (message.StartsWith(command2))
                                 i = CustomCommands.IndexOf(command2);
-                        foreach (string line in Responses[i].Split(new[] { "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None))
+                        foreach (string line in Responses[i].Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
                             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, GetPlaceHolders.Run(line, player));
                         return true;
                     }
@@ -86,6 +86,12 @@ namespace BP_Essentials
                                     case "GetLogs":
                                         Commands.GetLogs.Run(player, ChatLogFile);
                                         break;
+                                    case "TpAll":
+                                        Commands.TpAll.Run(player);
+                                        break;
+                                    case "ListKits":
+                                        Commands.ListKits.Run(player);
+                                        break;
                                     default:
                                         cmd.RunMethod.Invoke(player, message);
                                         break;
@@ -123,7 +129,7 @@ namespace BP_Essentials
                     _msg = _msg.Replace("{username}", new Regex("(<)").Replace(shplayer.username, "<<b></b>"));
                     _msg = _msg.Replace("{id}", $"{shplayer.ID}");
                     _msg = _msg.Replace("{jobindex}", $"{shplayer.job.jobIndex}");
-                    _msg = _msg.Replace("{jobname}", $"{shplayer.job.info.jobName}");
+                    _msg = _msg.Replace("{jobname}", $"{Jobs[shplayer.job.jobIndex]}");
                     _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(message), "<<b></b>"));
                     SendChatMessageToAdmins.Run(_msg);
                     return true;
@@ -137,7 +143,7 @@ namespace BP_Essentials
                         _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                         _msg = _msg.Replace("{id}", $"{shplayer.ID}");
                         _msg = _msg.Replace("{jobindex}", $"{shplayer.job.jobIndex}");
-                        _msg = _msg.Replace("{jobname}", $"{shplayer.job.info.jobName}");
+                        _msg = _msg.Replace("{jobname}", $"{Jobs[shplayer.job.jobIndex]}");
                         _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(message), "<<b></b>"));
                         SendChatMessage.Run(_msg);
                         return true;
@@ -149,7 +155,7 @@ namespace BP_Essentials
                     _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                     _msg = _msg.Replace("{id}", $"{shplayer.ID}");
                     _msg = _msg.Replace("{jobindex}", $"{shplayer.job.jobIndex}");
-                    _msg = _msg.Replace("{jobname}", $"{shplayer.job.info.jobName}");
+                    _msg = _msg.Replace("{jobname}", $"{Jobs[shplayer.job.jobIndex]}");
                     _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(message), "<<b></b>"));
                     SendChatMessage.Run(_msg);
                     return true;
@@ -158,7 +164,7 @@ namespace BP_Essentials
                 _msg = _msg.Replace("{username}", new Regex("(<)").Replace(player.playerData.username, "<<b></b>"));
                 _msg = _msg.Replace("{id}", $"{shplayer.ID}");
                 _msg = _msg.Replace("{jobindex}", $"{shplayer.job.jobIndex}");
-                _msg = _msg.Replace("{jobname}", $"{shplayer.job.info.jobName}");
+                _msg = _msg.Replace("{jobname}", $"{Jobs[shplayer.job.jobIndex]}");
                 _msg = _msg.Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(message), "<<b></b>"));
                 SendChatMessage.Run(_msg);
                 return true;

@@ -15,9 +15,17 @@ namespace BP_Essentials
     {
         public static void Run(string fileName, string websiteLink)
         {
-            var content = DownloadFile.Run(websiteLink);
-            if (content != null)
-                File.WriteAllText(fileName, content);
+            var output = DownloadFile.Run(websiteLink);
+            if (output != null)
+                File.WriteAllText(fileName, output);
+        }
+        public static void Run(string fileName, string websiteLink, Action<bool> callback)
+        {
+            SvMan.StartCoroutine(DownloadFile.Run(websiteLink, new Action<string>((output) => {
+                if (output != null)
+                    File.WriteAllText(fileName, output);
+                callback?.Invoke(output != null);
+            })));
         }
     }
 }
