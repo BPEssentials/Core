@@ -30,6 +30,8 @@ namespace BP_Essentials
         public const string IdListItemsFile = FileDirectory + "ID_list-Items.txt";
         public const string IdListVehicleFile = FileDirectory + "ID_list-Vehicles.txt";
 
+        public const string AutoReloader = FileDirectory + "autoReloader.txt";
+
         public const string AdminListFile = "admin_list.txt";
         public const string RulesFile = "server_info.txt";
         public const string BansFile = "ban_list.txt";

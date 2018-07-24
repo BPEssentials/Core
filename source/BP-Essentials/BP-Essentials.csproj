@@ -108,6 +108,7 @@
     <Compile Include="Methods\API\SendDiscordMessage.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
     <Compile Include="Methods\Check\CheckBanned.cs" />
+    <Compile Include="Methods\FileHandler\CheckAutoReloadFile.cs" />
     <Compile Include="Methods\FileHandler\CheckFiles.cs" />
     <Compile Include="Methods\Check\CheckGodMode.cs" />
     <Compile Include="Methods\FileHandler\CreateFile.cs" />

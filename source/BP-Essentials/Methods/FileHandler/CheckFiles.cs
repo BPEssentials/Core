@@ -32,6 +32,11 @@ namespace BP_Essentials
                     Directory.CreateDirectory(KitDirectory);
                     Debug.Log(KitDirectory + " Does not exist! Creating one.");
                 }
+                if (!File.Exists(AutoReloader))
+                {
+                    File.Create(AutoReloader).Close();
+                    Debug.Log(AutoReloader + " Does not exist! Creating one.");
+                }
                 if (!File.Exists(AfkListFile))
                 {
                     File.Create(AfkListFile).Close();
