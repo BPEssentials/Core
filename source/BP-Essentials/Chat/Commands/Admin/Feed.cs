@@ -26,7 +26,7 @@ namespace BP_Essentials.Commands
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                         if (!shPlayer.svPlayer.IsServerside())
                         {
-                            player.UpdateStats(100F, 100F, 100F, 100F);
+                            shPlayer.svPlayer.UpdateStats(100F, 100F, 100F, 100F);
                             player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
                             found = true;
                         }
