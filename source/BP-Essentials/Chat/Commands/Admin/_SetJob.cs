@@ -33,18 +33,18 @@ namespace BP_Essentials.Commands
                         if (shPlayer.username == arg2 || shPlayer.ID.ToString() == arg2.ToString())
                             if (arg1int <= Jobs.Length && arg1int >= 0)
                             {
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username, Jobs[arg1int]));
+                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username, Jobs[arg1int]));
                                 SetJob.Run(shPlayer, arg1int, true, false);
 
                             }
                             else
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: The value must be between 0 and {Jobs.Length}.</color>");
+                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: The value must be between 0 and {Jobs.Length}.</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotValidArg);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotValidArg);
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotValidArg);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotValidArg);
         }
     }
 }

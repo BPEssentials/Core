@@ -25,12 +25,12 @@ namespace BP_Essentials.Commands
                 {
                     msg = shPlayer.username;
                     shPlayer.ClearCrimes();
-                    shPlayer.svPlayer.SendToSelf(Channel.Reliable, 33, shPlayer.ID);
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
+                    shPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, 33, shPlayer.ID);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Cleared crimes of '" + msg + "'.</color>");
                     found = true;
                 }
             if (!found)
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BP_Essentials
                 {
                     if (AdminsListPlayers.Contains(player.playerData.username))
                     {
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[WAIT] Reloading all files..");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "[WAIT] Reloading all files..");
                         CheckFiles.Run();
                         ReadFile.Run(SettingsFile);
                         ReadCustomCommands.Run();
@@ -37,11 +37,11 @@ namespace BP_Essentials
                         ReadFile.Run(MuteListFile);
                         ReadFile.Run(AfkListFile);
                         ReadFile.Run(RulesFile);
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "[OK] Critical .txt files reloaded");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "[OK] Critical .txt files reloaded");
                     }
                     else
                     {
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
                     }
                 }
                 else

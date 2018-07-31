@@ -20,12 +20,12 @@ namespace BP_Essentials.Commands
                 if (playerList[shplayer.ID].staffChatEnabled)
                 {
                     playerList[shplayer.ID].staffChatEnabled = false;
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat disabled.</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat disabled.</color>");
                 }
                 else
                 {
                     playerList[shplayer.ID].staffChatEnabled = true;
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat enabled.</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat enabled.</color>");
                 }
             }
             else

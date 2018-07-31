@@ -15,17 +15,17 @@ namespace BP_Essentials.Commands
             var shPlayer = player.player;
             if (shPlayer.ownedApartment)
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
                 SellApartment(shPlayer);
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to sell!</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to sell!</color>");
             return true;
         }
         public static void SellApartment(ShPlayer shPlayer)
         {
             shPlayer.TransferMoney(DeltaInv.AddToMe, shPlayer.ownedApartment.value / 2, true);
-            shPlayer.svPlayer.SendToSelf(Channel.Reliable, ClPacket.ApartmentOwner, new object[]{0,0});
+            shPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ApartmentOwner, new object[]{0,0});
             CleanupApartment.Run(shPlayer);
         }
     }

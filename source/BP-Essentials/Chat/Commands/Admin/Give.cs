@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands
             string arg2 = GetArgument.Run(2, false, false, message);
             if (String.IsNullOrEmpty(arg1) || String.IsNullOrEmpty(arg2))
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                 return;
             }
             bool Parsed = int.TryParse(arg1, out int arg1int);
@@ -30,13 +30,13 @@ namespace BP_Essentials.Commands
                         shPlayer.TransferItem(1, arg1int, arg2int, true);
                     else
                         shPlayer.TransferItem(1, IDs_Items[arg1int - 1], arg2int, true);
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>{arg1}</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Giving you item ID: </color><color={argColor}>{arg1}</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: The ID must be between 1 and {IDs_Items.Length}.</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: The ID must be between 1 and {IDs_Items.Length}.</color>");
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>");
         }
     }
 }

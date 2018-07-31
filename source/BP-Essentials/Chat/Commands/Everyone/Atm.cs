@@ -17,11 +17,11 @@ namespace BP_Essentials.Commands
                     if (!shPlayer.svPlayer.IsServerside())
                         if (shPlayer.wantedLevel == 0)
                         {
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
-                            player.SendToSelf(Channel.Reliable, 40, player.bankBalance);
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
+                            player.Send(SvSendType.Self, Channel.Reliable, 40, player.bankBalance);
                         }
                         else if (shPlayer.wantedLevel != 0)
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
         }
     }
 }

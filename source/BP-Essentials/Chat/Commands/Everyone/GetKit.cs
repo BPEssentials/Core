@@ -16,23 +16,23 @@ namespace BP_Essentials.Commands
             var arg1 = GetArgument.Run(1, false, true, message);
             if (string.IsNullOrEmpty(arg1.Trim()))
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                 return;
             }
             if (!listKits.Any(x=>x.Name == arg1))
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>That kit doesn't exist.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>That kit doesn't exist.</color>");
                 return;
             }
             var obj = listKits.FirstOrDefault(x => x.Name == arg1);
             if (obj.Disabled)
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>That kit is currently disabled.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>That kit is currently disabled.</color>");
                 return;
             }
             if (obj.CurrentlyInCooldown.ContainsKey(player.player.username))
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You already used this kit. Please wait</color> <color={argColor}>{obj.CurrentlyInCooldown[player.player.username]}</color> <color={errorColor}>second(s) before executing this command again.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You already used this kit. Please wait</color> <color={argColor}>{obj.CurrentlyInCooldown[player.player.username]}</color> <color={errorColor}>second(s) before executing this command again.</color>");
                 return;
             }
             foreach (var item in obj.Items)
@@ -40,7 +40,7 @@ namespace BP_Essentials.Commands
                 player.player.TransferItem(DeltaInv.AddToMe, item.Id, item.Amount, true);
             }
             player.StartCoroutine(Kits.KitCooldown(player, obj));
-            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've been given the kit</color> <color={argColor}>{arg1}</color><color={infoColor}>.</color>");
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've been given the kit</color> <color={argColor}>{arg1}</color><color={infoColor}>.</color>");
         }
     }
 }

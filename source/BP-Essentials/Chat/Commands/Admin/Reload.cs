@@ -15,7 +15,7 @@ namespace BP_Essentials.Commands
             if (player.player.admin)
                 BP_Essentials.Reload.Run(false, player);
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
         }
     }
 }

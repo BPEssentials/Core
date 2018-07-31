@@ -15,14 +15,14 @@ namespace BP_Essentials.Commands {
             string arg = GetArgument.Run(1, false, false, message).Trim().ToLower();
 
             if (arg == "location" || arg == "getlocation")
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Your location: " + shPlayer.GetPosition());
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Your location: " + shPlayer.GetPosition());
             else if (arg == "getplayerhash" || arg == "gethash")
             {
                 string arg2 = GetArgument.Run(2, false, true, message);
                 if (!String.IsNullOrEmpty(arg2))
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2));
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2));
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments. /debug get(player)hash [username]");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments. /debug get(player)hash [username]");
             }
             else if (arg == "spaceindex" || arg == "getspaceindex")
             {
@@ -35,20 +35,20 @@ namespace BP_Essentials.Commands {
                             if (!shPlayer2.svPlayer.IsServerside())
                             {
                                 found = true;
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
+                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
                             }
                     if (!found)
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
             }
             else if (arg == "createidlist")
             {
                 string arg2 = GetArgument.Run(2, false, true, message).Trim().ToLower();
                 if (!String.IsNullOrEmpty(arg2) && (arg2 == "item" || arg2 == "vehicle"))
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
                     var location = $"{FileDirectory}IDLists/{arg2}/IDLIST_{DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss")}.txt";
                     if (!Directory.Exists($"{FileDirectory}IDLists/{arg2}"))
                         Directory.CreateDirectory($"{FileDirectory}IDLists/{arg2}");
@@ -79,14 +79,14 @@ namespace BP_Essentials.Commands {
                     }
                     File.WriteAllText(location, $"{sb.Remove(sb.Length - 2, 1)}]}}");
 
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"Success! ID List has been saved in {location}. ({currIndex} entries.)");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"Success! ID List has been saved in {location}. ({currIndex} entries.)");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Please select idlist type: /debug createidlist item/vehicle");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Please select idlist type: /debug createidlist item/vehicle");
             }
             else if (arg == "jobarray")
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"Jobs array: (Length: {Jobs.Length}) {string.Join(", ", Jobs)}");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"Jobs array: (Length: {Jobs.Length}) {string.Join(", ", Jobs)}");
             }
             else if (arg == "tpall")
             {
@@ -94,7 +94,7 @@ namespace BP_Essentials.Commands {
                     currPlayer.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "/debug location/getplayerhash/getspaceindex/createidlist/jobarray");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "/debug location/getplayerhash/getspaceindex/createidlist/jobarray");
         }
 
     }

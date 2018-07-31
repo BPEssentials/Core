@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands
             var pIndex = player.player.GetPlaceIndex();
             foreach (var currPlayer in SvMan.players.Values)
                 currPlayer.svPlayer.SvReset(pos, rot, pIndex);
-            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported</color> <color={argColor}>everyone</color> <color={infoColor}>to your location.</color>");
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported</color> <color={argColor}>everyone</color> <color={infoColor}>to your location.</color>");
         }
     }
 }

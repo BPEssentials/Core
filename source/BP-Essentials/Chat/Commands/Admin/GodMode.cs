@@ -30,13 +30,13 @@ namespace BP_Essentials.Commands {
                 {
                     RemoveStringFromFile.Run(GodListFile, name);
                     ReadFile.Run(GodListFile);
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "disabled"));
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "disabled"));
                 }
                 else
                 {
                     File.AppendAllText(GodListFile, name + Environment.NewLine);
                     GodListPlayers.Add(name);
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "enabled"));
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "enabled"));
                 }
 
             }

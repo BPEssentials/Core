@@ -18,24 +18,24 @@ namespace BP_Essentials.Commands
                 var shPlayer = GetShByStr.Run(arg1);
                 if (shPlayer == null)
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
                 if (float.TryParse(message.Split(' ').Last().Trim(), out float t))
                 {
                     if (SendToJail.Run(shPlayer, t))
                     {
-                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color> <color={infoColor}>sent you to jail.</color>");
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
+                        shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username}</color> <color={infoColor}>sent you to jail.</color>");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Sent</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>To jail.</color>");
                     }
                     else
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot send </color> <color={argColor}>{shPlayer.username}</color> <color={errorColor}>To jail.</color>");
                 }
                 else
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

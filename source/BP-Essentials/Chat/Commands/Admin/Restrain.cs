@@ -18,18 +18,18 @@ namespace BP_Essentials.Commands
                 var shPlayer = GetShByStr.Run(arg1);
                 if (shPlayer == null)
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
                 shPlayer.svPlayer.Restrain(shPlayer.manager.handcuffed);
                 var shRetained = shPlayer.curEquipable as ShRestrained;
                 shPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
                 if (!shPlayer.svPlayer.IsServerside())
-                    shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                    shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

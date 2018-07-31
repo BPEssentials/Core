@@ -31,29 +31,27 @@ namespace BP_Essentials.Commands
                                             var builder = new StringBuilder();
                                             builder.Append("<color=#00ffffff>Reporting</color> <color=#ea8220>" + arg1 + "</color>\n<color=#00ffffff>Reason:</color>\n\n");
                                             for (int i = 0; i < ReportReasons.Length; i++)
-                                            {
                                                 builder.Append("<color=#00ffffff>F" + (i + 2) + ":</color> " + ReportReasons[i] + "\n");
-                                            }
-                                            player.SendToSelf(Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
+                                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                             item.Value.LastMenu = CurrentMenu.Report;
                                             item.Value.reportedPlayer = shPlayer;
                                         }
                                         else
-                                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report an admin.</color>");
+                                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report an admin.</color>");
                                         break;
                                     }
                                 if (!playerfound)
-                                    player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
+                                    player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
                             }
                             else
-                                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report as admin.</color>");
+                                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report as admin.</color>");
                         }
                         else
-                            player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report yourself, dummy.</color>");
+                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report yourself, dummy.</color>");
                     }
             }
             else
-                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Missing argument! Correct syntax:</color> <color={warningColor}>{GetArgument.Run(0, false, false, message)} [player]</color>");
+                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Missing argument! Correct syntax:</color> <color={warningColor}>{GetArgument.Run(0, false, false, message)} [player]</color>");
         }
     }
 }

@@ -27,8 +27,10 @@ namespace BP_Essentials
         public bool VoteKickDisabled { get; set; }
         public bool ShowDMGMessage { get; set; }
         public int DebugLevel { get; set; }
-        public string DiscordWebhook { get; set; }
-        public bool EnableDiscordWebhook { get; set; }
+        public string DiscordWebhook_Ban { get; set; }
+        public bool EnableDiscordWebhook_Ban { get; set; }
+        public string DiscordWebhook_Report { get; set; }
+        public bool EnableDiscordWebhook_Report { get; set; }
         public bool BlockBanButtonTabMenu { get; set; }
         public bool BlockLicenseRemoved { get; set; }
     }
@@ -174,14 +176,22 @@ namespace BP_Essentials
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
                         DebugLevel = m.General.DebugLevel;
-                        EnableDiscordWebhook = m.General.EnableDiscordWebhook;
-                        if (EnableDiscordWebhook && string.IsNullOrEmpty(m.General.DiscordWebhook.Trim()))
+                        EnableDiscordWebhook_Ban = m.General.EnableDiscordWebhook_Ban;
+                        if (EnableDiscordWebhook_Ban && string.IsNullOrEmpty(m.General.DiscordWebhook_Ban.Trim()))
                         {
-                            Debug.Log("[ERROR] Discord webhook is empty but EnableDiscordWebhook is true! Disabling webhook.");
-                            EnableDiscordWebhook = false;
+                            Debug.Log("[ERROR] Discord webhook_Ban is empty but EnableDiscordWebhook_Ban is true! Disabling webhook_Ban.");
+                            EnableDiscordWebhook_Ban = false;
                         }
                         else
-                            DiscordWebhook = m.General.DiscordWebhook;
+                            DiscordWebhook_Ban = m.General.DiscordWebhook_Ban;
+                        EnableDiscordWebhook_Report = m.General.EnableDiscordWebhook_Report;
+                        if (EnableDiscordWebhook_Report && string.IsNullOrEmpty(m.General.DiscordWebhook_Report.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook_Report is empty but EnableDiscordWebhook_Report is true! Disabling webhook_Report.");
+                            EnableDiscordWebhook_Report = false;
+                        }
+                        else
+                            DiscordWebhook_Report = m.General.DiscordWebhook_Report;
                         BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
                         blockLicenseRemoved = m.General.BlockLicenseRemoved;
 

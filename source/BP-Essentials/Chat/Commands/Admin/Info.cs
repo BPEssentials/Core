@@ -20,7 +20,7 @@ namespace BP_Essentials.Commands
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                         if (!shPlayer.svPlayer.IsServerside())
                         {
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
                             string[] contentarray = {
                                     "Username:              " +  shPlayer.username,
                                     "",
@@ -38,15 +38,15 @@ namespace BP_Essentials.Commands
 
                             var content = string.Join("\r\n", contentarray);
 
-                            player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, content);
 
                             found = true;
                         }
                 if (!(found))
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
             else
-                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

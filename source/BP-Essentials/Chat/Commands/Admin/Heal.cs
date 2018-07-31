@@ -17,7 +17,7 @@ namespace BP_Essentials.Commands
             if (String.IsNullOrEmpty(arg1))
             {
                 player.Heal(100);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
             }
             else
             {
@@ -27,11 +27,11 @@ namespace BP_Essentials.Commands
                         if (!shPlayer.svPlayer.IsServerside())
                         {
                             shPlayer.svPlayer.Heal(100);
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
                             found = true;
                         }
                 if (!found)
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
         }
     }

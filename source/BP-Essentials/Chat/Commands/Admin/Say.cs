@@ -15,11 +15,11 @@ namespace BP_Essentials.Commands
         {
             string arg1 = GetArgument.Run(1, false, true, message);
             if (String.IsNullOrEmpty(arg1))
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
             else
             {
                 arg1 = new Regex("(<)").Replace(arg1, "<<b></b>");
-                player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
+                player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1}</color>");
             }
         }
     }

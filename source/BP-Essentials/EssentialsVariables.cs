@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.2";
+        public const string Version = "2.5.3";
         public static bool isPreRelease;
 
         // Generic Constants
@@ -54,7 +54,8 @@ namespace BP_Essentials
         public static bool ShowDMGMessage;
         public static bool VoteKickDisabled;
         public static bool DownloadIdList;
-        public static bool EnableDiscordWebhook;
+        public static bool EnableDiscordWebhook_Ban;
+        public static bool EnableDiscordWebhook_Report;
         public static bool BlockBanButtonTabMenu;
         public static bool CheckBannedEnabled;
         public static bool blockLicenseRemoved;
@@ -129,7 +130,8 @@ namespace BP_Essentials
         public static string CmdStaffChatExecutableBy;
         public static string CmdConfirm;
         public static string CmdToggleChat;
-        public static string DiscordWebhook;
+        public static string DiscordWebhook_Ban;
+        public static string DiscordWebhook_Report;
 
         // Ints
         public const int SaveTime = 5 * 60;

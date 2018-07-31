@@ -19,7 +19,7 @@ namespace BP_Essentials
                     if (!shPlayer.svPlayer.IsServerside())
                     {
                         if (shPlayer.GetPlaceIndex() >= 13) continue;
-                        shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
+                        shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
                         shPlayer.svPlayer.Save();
                     }
             }
