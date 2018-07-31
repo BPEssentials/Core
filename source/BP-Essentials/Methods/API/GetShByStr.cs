@@ -14,7 +14,7 @@ namespace BP_Essentials
         {
             try
             {
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                foreach (var shPlayer in SvMan.players.Values)
                     if ((shPlayer.ID.ToString() == player || shPlayer.username == player) && !idOnly || shPlayer.ID.ToString() == player && idOnly)
                         return shPlayer;
                 return null;

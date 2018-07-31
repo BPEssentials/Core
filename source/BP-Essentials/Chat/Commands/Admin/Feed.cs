@@ -12,26 +12,26 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-            string arg1 = GetArgument.Run(1, false, true, message).Trim();
+            string arg1 = GetArgument.Run(1, false, true, message);
             string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";
             if (String.IsNullOrEmpty(arg1))
             {
-                player.UpdateStats(100f, 100f, 100f, 100f);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
+                    player.UpdateStats(100F, 100F, 100F, 100F);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
             }
             else
             {
                 bool found = false;
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
                         if (!shPlayer.svPlayer.IsServerside())
                         {
-                            player.UpdateStats(100f, 100f, 100f, 100f);
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
+                            shPlayer.svPlayer.UpdateStats(100F, 100F, 100F, 100F);
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
                             found = true;
                         }
                 if (!found)
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
         }
     }

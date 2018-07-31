@@ -25,7 +25,7 @@ namespace BP_Essentials.Commands
                     }
             if (!found)
             {
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                 return;
             }
             ReadFile.Run(MuteListFile);
@@ -33,14 +33,14 @@ namespace BP_Essentials.Commands
             {
                 MutePlayers.Add(muteuser);
                 File.AppendAllText(MuteListFile, muteuser + Environment.NewLine);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Muted </color><color={argColor}>" + muteuser + "</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Muted </color><color={argColor}>" + muteuser + "</color>");
 
             }
             else
             {
                 RemoveStringFromFile.Run(MuteListFile, muteuser);
                 ReadFile.Run(MuteListFile);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Unmuted </color><color={argColor}>" + muteuser + "</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Unmuted </color><color={argColor}>" + muteuser + "</color>");
             }
         }
     }

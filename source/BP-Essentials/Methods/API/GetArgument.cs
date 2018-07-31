@@ -21,29 +21,34 @@ namespace BP_Essentials
                         .Cast<Match>()
                         .Select(m => m.Value)
                         .ToList();
-
                     return args[nr];
                 }
                 else
                 {
                     if (IncludeSpaces)
                     {
-                        string tmessage = message + " ";
-                        string[] args = tmessage.Split(' ');
-                        return tmessage.IndexOf(args[nr]) != 0 ? tmessage.Substring(tmessage.IndexOf(args[nr])).TrimEnd() : string.Empty;
+                        message = message.Trim();
+                        if (nr == 0)
+                            return message;
+                        if (!message.Contains(" "))
+                            return "";
+                        var args = message.Split(' ');
+                        if (nr > args.Length)
+                            return "";
+                        return message.Substring(message.IndexOf(args[nr])).TrimEnd();
                     }
                     else
                     {
-                        string tmessage = message + " ";
-                        string[] args = tmessage.Split(' ');
-                        return nr < args.Length ? args[nr] : string.Empty;
+                        var args = message.Trim().Split(' ');
+                        if (nr > args.Length - 1)
+                            return "";
+                        return args[nr];
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorLogging.Run(ex);
-                return null;
+                return "";
             }
         }
     }

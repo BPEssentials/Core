@@ -16,10 +16,10 @@ namespace BP_Essentials.Commands
             switch (realPlayers)
             {
                 case 1:
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There is </color><color={argColor}>{realPlayers}</color><color={infoColor}> player online</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There is </color><color={argColor}>{realPlayers}</color><color={infoColor}> player online</color>");
                     break;
                 default:
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There are </color><color={argColor}>{realPlayers}</color><color={infoColor}> players online</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>There are </color><color={argColor}>{realPlayers}</color><color={infoColor}> players online</color>");
                     break;
             }
         }

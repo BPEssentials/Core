@@ -10,13 +10,13 @@ namespace BP_Essentials.Commands {
             {
                 RemoveStringFromFile.Run(AfkListFile, player.playerData.username);
                 ReadFile.Run(AfkListFile);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You are no longer AFK.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You are no longer AFK.</color>");
             }
             else
             {
                 File.AppendAllText(AfkListFile, player.playerData.username + Environment.NewLine);
                 AfkPlayers.Add(player.playerData.username);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You are now AFK.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You are now AFK.</color>");
             }
         }
     }

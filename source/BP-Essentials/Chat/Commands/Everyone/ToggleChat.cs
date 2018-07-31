@@ -19,12 +19,12 @@ namespace BP_Essentials.Commands
                     if (player2.chatEnabled)
                     {
                         player2.chatEnabled = false;
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Chat </color><color={argColor}>disabled</color><color={infoColor}>.</color>");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Chat </color><color={argColor}>disabled</color><color={infoColor}>.</color>");
                     }
                     else
                     {
                         player2.chatEnabled = true;
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Chat </color><color={argColor}>enabled</color><color={infoColor}>.</color>");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Chat </color><color={argColor}>enabled</color><color={infoColor}>.</color>");
                     }
                     break;
                 }

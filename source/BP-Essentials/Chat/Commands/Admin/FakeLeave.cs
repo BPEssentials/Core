@@ -14,9 +14,9 @@ namespace BP_Essentials.Commands
         {
             string arg1 = GetArgument.Run(1, false, true, message);
             if (!String.IsNullOrEmpty(arg1))
-                player.SendToAll(Channel.Unsequenced, ClPacket.GameMessage, arg1 + " disconnected");
+                player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, arg1 + " disconnected");
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

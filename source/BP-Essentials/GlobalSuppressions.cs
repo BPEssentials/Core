@@ -36,4 +36,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "CC0037:Remove commented code.", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.SendDiscordMessage.Run(System.String)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0057:Unused parameters", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.EssentialsMethodsPlugin.HitEffect(ShRestraint,ShEntity@,ShPlayer@,UnityEngine.Collider@)~System.Boolean")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0057:Unused parameters", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.EssentialsMethodsPlugin.SvAddCrime(SvPlayer,System.Byte@,ShEntity@)~System.Boolean")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0022:Should dispose object", Justification = "<Pending>", Scope = "member", Target = "~M:BP_Essentials.CheckAutoReloadFile.Run(System.String)")]
 

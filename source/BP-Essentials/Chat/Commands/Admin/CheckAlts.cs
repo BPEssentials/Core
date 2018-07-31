@@ -33,7 +33,7 @@ namespace BP_Essentials.Commands
                     }
                     content = builder.ToString();
                     content += "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                    player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, content);
                 }
                 else if (arg1.Equals("ign", StringComparison.InvariantCultureIgnoreCase) || (arg1.Equals(nameof(player), StringComparison.InvariantCultureIgnoreCase)))
                 {
@@ -50,11 +50,11 @@ namespace BP_Essentials.Commands
                     }
                     content = builder.ToString();
                     content = content + "\r\n\r\n" + arg2 + " occurred " + found + " times in the iplog file." + "\r\n";
-                    player.SendToSelf(Channel.Reliable, ClPacket.ServerInfo, content);
+                    player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, content);
                 }
             }
             else
-                player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, GetArgument.Run(0, false,false,message) + "[IP/IGN] [Arg2] Eg " + GetArgument.Run(0,false,false,message) + " ip 127.0.0.1");
+                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, GetArgument.Run(0, false,false,message) + "[IP/IGN] [Arg2] Eg " + GetArgument.Run(0,false,false,message) + " ip 127.0.0.1");
         }
     }
 }

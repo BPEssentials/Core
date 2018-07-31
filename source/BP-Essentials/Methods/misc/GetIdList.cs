@@ -13,20 +13,21 @@ namespace BP_Essentials
     {
         public static bool Run(bool silent)
         {
-            if (silent)
+            // yeah eh redo
+            if (!silent)
+                Debug.Log("Downloading newest ID list's and reloading them...");
+            DownloadAndWriteToFile.Run(IdListItemsFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_items.txt", new Action<bool>((success) =>
             {
-                File.WriteAllText(IdListFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/idlist.txt"));
-                ReadFile.Run(IdListFile);
-            }
-            else
-            {
-                Debug.Log("Downloading newest ID list...");
-                File.WriteAllText(IdListFile, DownloadFile.Run("http://www.UserR00T.com/dev/BPEssentials/idlist.txt"));
-                Debug.Log("[OK] ID list downloaded");
-                Debug.Log("Reloading ID list..");
-                ReadFile.Run(IdListFile);
-                Debug.Log($"[OK] Downloaded newest ID list and reloaded it! ({IDs.Length} entries loaded in.)");
-            }
+                if (success)
+                    ReadFile.Run(IdListItemsFile);
+                DownloadAndWriteToFile.Run(IdListVehicleFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_vehicles.txt", new Action<bool>((success2) =>
+                {
+                    if (success2)
+                        ReadFile.Run(IdListVehicleFile);
+                    if (!silent && success && success2)
+                        Debug.Log($"[OK] Downloaded newest ID list's and reloaded them! ({IDs_Items.Length}(items) {IDs_Vehicles.Length}(vehicles) entries loaded in.)");
+                }));
+            }));
             return true;
         }
     }

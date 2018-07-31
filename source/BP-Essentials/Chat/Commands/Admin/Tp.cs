@@ -12,14 +12,14 @@ namespace BP_Essentials.Commands {
                 var shPlayer = GetShByStr.Run(arg1);
                 if (shPlayer == null)
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
                 player.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }

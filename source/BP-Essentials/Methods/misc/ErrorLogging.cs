@@ -18,9 +18,6 @@ namespace BP_Essentials
             try
             {
                 Thread.Sleep(20);
-
-
-
                 System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace(ex, true);
                 var frame = st.GetFrame(st.FrameCount - 1);
                 Debug.Log("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
