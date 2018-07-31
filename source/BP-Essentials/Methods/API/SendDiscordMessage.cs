@@ -16,16 +16,16 @@ namespace BP_Essentials
 {
     class SendDiscordMessage : MonoBehaviour
     {
-        public static void Run(string json)
+        public static void Run(string json, string link, bool enabled)
         {
             try
             {
-                if (!EnableDiscordWebhook)
+                if (!enabled)
                     return;
                 if (DebugLevel >= 2)
-                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Creating POST request to {DiscordWebhook}");
+                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Creating POST request to {link}");
                 var formData = Encoding.UTF8.GetBytes(json);
-                var www = new WWW(DiscordWebhook, formData);
+                var www = new WWW(link, formData);
                 SvMan.StartCoroutine(WaitForRequest(www));
                 if (DebugLevel >= 2)
                     Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request sent!");
@@ -34,6 +34,13 @@ namespace BP_Essentials
             {
                 ErrorLogging.Run(ex);
             }
+        }
+        public static void ReportMessage(string username, string issuer, string reason)
+        {
+            var fUsername = JsonConvert.ToString(username);
+            var fIssuer = JsonConvert.ToString(issuer);
+            var fReason = JsonConvert.ToString(reason);
+            Run(@"{ ""username"":""BP-Essentials Report Log"", ""avatar_url"":""https://i.imgur.com/ckuPXOH.jpg"", ""embeds"":[ {""title"":""New report AutoLogger"",""description"":""\u200B"",""color"":3837400,""timestamp"":""2018-06-23T12:26:09.635Z"",""footer"":{""text"":""BP-Essentials""},""fields"":[{""name"":""Username"",""value"":" + fUsername + @"},{""name"":""Issuer"",""value"":" + fIssuer + @"},{""name"":""Reason"",""value"":" + fReason + @"},{""name"":""Date (UTC)"",""value"":""" + DateTime.UtcNow + @"""}]}] }", DiscordWebhook_Report, EnableDiscordWebhook_Report);
         }
         public static void BanMessage(string username, string issuer)
         {
@@ -44,13 +51,13 @@ namespace BP_Essentials
             var fUsername = JsonConvert.ToString(username);
             var fIssuer = JsonConvert.ToString(issuer);
             var fReason = JsonConvert.ToString(banReason);
-            Run(@"{ ""username"":""BP-Essentials Ban Log"", ""avatar_url"":""https://i.imgur.com/ckuPXOH.jpg"", ""embeds"":[ {""title"":""New ban AutoLogger"",""description"":""\u200B"",""color"":3837400,""timestamp"":""2018-06-23T12:26:09.635Z"",""footer"":{""text"":""BP-Essentials""},""fields"":[{""name"":""Username"",""value"":" + fUsername + @"},{""name"":""Issuer"",""value"":" + fIssuer + @"},{""name"":""Reason"",""value"":" + fReason + @"},{""name"":""Date (UTC)"",""value"":""" + DateTime.UtcNow + @"""}]}] }");
+            Run(@"{ ""username"":""BP-Essentials Ban Log"", ""avatar_url"":""https://i.imgur.com/ckuPXOH.jpg"", ""embeds"":[ {""title"":""New ban AutoLogger"",""description"":""\u200B"",""color"":3837400,""timestamp"":""2018-06-23T12:26:09.635Z"",""footer"":{""text"":""BP-Essentials""},""fields"":[{""name"":""Username"",""value"":" + fUsername + @"},{""name"":""Issuer"",""value"":" + fIssuer + @"},{""name"":""Reason"",""value"":" + fReason + @"},{""name"":""Date (UTC)"",""value"":""" + DateTime.UtcNow + @"""}]}] }", DiscordWebhook_Ban, EnableDiscordWebhook_Ban);
         }
         static IEnumerator WaitForRequest(WWW www)
         {
             yield return www;
             if (DebugLevel >= 2)
-                Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request response received: {(www.error ?? www.text)}");
+                Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request response received: {(www.error ?? $"[HTTP-ERROR] {www.text}")}");
             www.Dispose();
         }
     }

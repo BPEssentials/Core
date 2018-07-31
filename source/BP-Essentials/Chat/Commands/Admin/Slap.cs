@@ -14,7 +14,7 @@ namespace BP_Essentials.Commands
         {
             string arg1 = GetArgument.Run(1, false, true, message);
             if (String.IsNullOrEmpty(arg1))
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
             else
             {
                 bool playerfound = false;
@@ -27,13 +27,13 @@ namespace BP_Essentials.Commands
                                 int amount = new System.Random().Next(4, 15);
                                 shPlayer.svPlayer.Damage(DamageIndex.Null, amount, null, null);
                                 shPlayer.svPlayer.SvForce(new Vector3(500f, 0f, 500f));
-                                shPlayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You got slapped by </color><color={argColor}>{shPlayer2.username}</color><color={warningColor}>! [-{amount} HP]</color>");
-                                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've slapped </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>. [-{amount} HP]</color>");
+                                shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You got slapped by </color><color={argColor}>{shPlayer2.username}</color><color={warningColor}>! [-{amount} HP]</color>");
+                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've slapped </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>. [-{amount} HP]</color>");
                                 playerfound = true;
                             }
                     }
                 if (!playerfound)
-                    player.SendToSelf(Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
 
             }
         }

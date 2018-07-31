@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class UnRetain : EssentialsVariablesPlugin
+    class UnRestrain : EssentialsVariablesPlugin
     {
         public static void Run(SvPlayer player)
         {
             try
             {
-                typeof(SvPlayer).GetMethod(nameof(UnRetain), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(player, new object[] { });
+                typeof(SvPlayer).GetMethod(nameof(UnRestrain), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(player, new object[] { });
             }
             catch (Exception ex)
             {

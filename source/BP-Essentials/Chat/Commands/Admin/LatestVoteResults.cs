@@ -13,11 +13,11 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player)
         {
             if (!LatestVotePeople.Any())
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>The list seems empty.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>The list seems empty.</color>");
             else
             {
                 string content = string.Join("\r\n", LatestVotePeople.ToArray());
-                player.SendToSelf(Channel.Unsequenced, ClPacket.ServerInfo, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.ServerInfo, "\r\nPlayers that voted 'yes' on the latest votekick: \r\n\r\n" + content);
             }
         }
     }

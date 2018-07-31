@@ -12,12 +12,12 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-            string arg1 = GetArgument.Run(1, false, true, message).Trim();
+            string arg1 = GetArgument.Run(1, false, true, message);
             string msg = $"<color={infoColor}>Healed </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
             if (String.IsNullOrEmpty(arg1))
             {
                 player.Heal(100);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
             }
             else
             {
@@ -27,11 +27,11 @@ namespace BP_Essentials.Commands
                         if (!shPlayer.svPlayer.IsServerside())
                         {
                             shPlayer.svPlayer.Heal(100);
-                            player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
+                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
                             found = true;
                         }
                 if (!found)
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
             }
         }
     }

@@ -4,6 +4,7 @@
     BP:Essentials
 
     Created by UserR00T, DBK, and BP.
+    Currently only being worked on by UserR00T unfortunately. :(
 
     License: GPLv3.
 
@@ -20,7 +21,8 @@ using UnityEngine;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
-    public class EssentialsCorePlugin {
+    public class EssentialsCorePlugin
+    {
 
         //Initialization
         [Hook("SvManager.StartServer")]
@@ -30,6 +32,7 @@ namespace BP_Essentials
             {
                 SvMan = svManager;
                 Reload.Run(true);
+                CheckAutoReloadFile.Run(AutoReloader);
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
                     Debug.Log("[ERROR] Essentials - Versions do not match!");

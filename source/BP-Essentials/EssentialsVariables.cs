@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using UnityEngine;
 
 namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.2";
-        public const bool isPreRelease = false;
+        public const string Version = "2.5.3";
+        public static bool isPreRelease;
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
-        public const string LogDirectory = FileDirectory + "logs/";
+
+        public static string LogDirectory = Path.Combine(FileDirectory, "logs/");
+        public static string KitDirectory = Path.Combine(FileDirectory, "kits/");
 
         public const string SettingsFile = FileDirectory + "essentials_settings.txt";
         public const string LanguageBlockFile = FileDirectory + "languageblock.txt";
@@ -25,18 +27,21 @@ namespace BP_Essentials
         public const string ExceptionFile = FileDirectory + "exceptions.txt";
         public const string CustomCommandsFile = FileDirectory + "CustomCommands.txt";
         public const string CustomGroupsFile = FileDirectory + "CustomGroups.txt";
-        public const string IdListFile = FileDirectory + "ID_list.txt";
+        public const string IdListItemsFile = FileDirectory + "ID_list-Items.txt";
+        public const string IdListVehicleFile = FileDirectory + "ID_list-Vehicles.txt";
+
+        public const string AutoReloader = FileDirectory + "autoReloader.txt";
 
         public const string AdminListFile = "admin_list.txt";
         public const string RulesFile = "server_info.txt";
         public const string BansFile = "ban_list.txt";
-
-        public const string LogFile = LogDirectory + "all.txt";
-        public const string ChatLogFile = LogDirectory + "chat.txt";
-        public const string CommandLogFile = LogDirectory + "commands.txt";
+        public static readonly string LogFile = Path.Combine(LogDirectory, "all.txt");
+        public static readonly string ChatLogFile = Path.Combine(LogDirectory, "chat.txt");
+        public static readonly string CommandLogFile = Path.Combine(LogDirectory, "commands.txt");
 
         // Bools
         public static bool MsgUnknownCommand;
+
         public static bool ChatBlock;
         public static bool LanguageBlock;
         public static bool CheckAlt;
@@ -49,12 +54,15 @@ namespace BP_Essentials
         public static bool ShowDMGMessage;
         public static bool VoteKickDisabled;
         public static bool DownloadIdList;
-        public static bool EnableDiscordWebhook;
+        public static bool EnableDiscordWebhook_Ban;
+        public static bool EnableDiscordWebhook_Report;
         public static bool BlockBanButtonTabMenu;
         public static bool CheckBannedEnabled;
+        public static bool blockLicenseRemoved;
 
         // Lists
         public static List<string> CustomCommands = new List<string>();
+
         public static List<string> Responses = new List<string>();
         public static List<string> ChatBlockWords = new List<string>();
         public static List<string> LanguageBlockWords = new List<string>();
@@ -65,13 +73,31 @@ namespace BP_Essentials
         public static List<string> LatestVotePeople = new List<string>();
 
         public static List<int> BlockedItems = new List<int>();
+        public static List<Kits_Json.Kits_RootObj> listKits = new List<Kits_Json.Kits_RootObj>();
 
         // Arrays
         public static string[] Announcements;
-        public static readonly string[] Jobs = { "Citizen", "Criminal", "Prisoner", "Police", "Paramedic", "Firefighter", "Gangster: Red", "Gangster: Green", "Gangster: Blue", "Mayor", "DeliveryDriver", "TaxiDriver", "Special Forces" };
+
+        public static string[] Jobs = {
+            // default values
+            "Citizen",
+            "Criminal",
+            "Prisoner",
+            "Police",
+            "Paramedic",
+            "Firefighter",
+            "Gangster: Red",
+            "Gangster: Green",
+            "Gangster: Blue",
+            "Mayor",
+            "DeliveryDriver",
+            "TaxiDriver",
+            "Special Forces"
+        };
 
         // Messages
         public static string MsgSayPrefix;
+
         public static string MsgNoPerm;
         public static string MsgNoPermJob;
         public static string MsgDiscord;
@@ -88,8 +114,10 @@ namespace BP_Essentials
         public static string BlockedItemMessage;
 
         public static string infoColor, errorColor, warningColor, argColor;
+
         // Strings
         public static string Rules;
+
         public static string DisabledSpawnBots;
         public static string LocalVersion;
         public static string MsgSayColor;
@@ -102,17 +130,21 @@ namespace BP_Essentials
         public static string CmdStaffChatExecutableBy;
         public static string CmdConfirm;
         public static string CmdToggleChat;
-        public static string DiscordWebhook;
+        public static string DiscordWebhook_Ban;
+        public static string DiscordWebhook_Report;
 
         // Ints
         public const int SaveTime = 5 * 60;
+
         public static int AnnounceIndex;
         public static int TimeBetweenAnnounce;
         public static int[] BlockedSpawnIds;
         public static int DebugLevel;
         public static int GodModeLevel;
+
         // Misc.
         public static string _msg;
+
         public static string username;
         public static string TimestampFormat;
         public const string CensoredText = "******";
@@ -123,6 +155,33 @@ namespace BP_Essentials
         public static Dictionary<int, string> WhitelistedJobs = new Dictionary<int, string>();
         public static System.Timers.Timer _Timer = new System.Timers.Timer();
         public static SvManager SvMan;
+
+        public static Dictionary<string[], Vector3> PlaceDictionary = new Dictionary<string[], Vector3>
+        {
+            { new[] { "1", "PoliceStation", "Police Station" }, new Vector3(-17.0F, 0.0F, 46.0F) },
+            { new[] { "2", "FireStation", "Fire Station" }, new Vector3(173.0F, 0.0F,  237.0F)},
+            { new[] { "3", "Hospital", "Ambulance Station" }, new Vector3(111.0F, 0.0F, 148.0F)},
+            { new[] { "4", "GunShop", "Gun Shop", "ammunition" }, new Vector3(55.0F, 0.0F, 112.0F) },
+            { new[] { "5", "ElectronicsShop", "Electronics Shop" }, new Vector3(567.0F, 0.0F, -92.0F) },
+            { new[] { "6", "PawnShop", "Pawn Shop" }, new Vector3(448.0F, 0.0F, -203.0F) },
+            { new[] { "7", "FastFoodShop", "Fast Food Shop" }, new Vector3(645.0F, 0.0F, -168.0F) },
+            { new[] { "8", "CoffeeShop", "Coffee Shop" }, new Vector3(618.0F, 0.0F, 148.0F) },
+            { new[] { "9", "ClothingShop", "Clothing Shop" }, new Vector3(595.0F, 0.0F, 81.0F) },
+            { new[] { "10", "GreenGang", "Green St. Fam Boss" }, new Vector3(32.0F, 0.0F, -202.0F) },
+            { new[] { "11", "BlueGang", "Borgata Blue Boss" }, new Vector3(504.0F, 0.0F, 23.0F) },
+            { new[] { "12", "RedGang", "Rojo Loco Boss" }, new Vector3(521.0F, 0.0F, 199.0F) },
+            { new[] { "13", "10k", "Large Apartment" }, new Vector3(2.0F, 0.0F, -92.0F) },
+            { new[] { "14", "5k", "Medium Apartment" }, new Vector3(519.0F, 0.0F, -125.0F) },
+            { new[] { "15", "1.2k", "Small Apartment" }, new Vector3(643.0F, 0.0F, -61.0F) },
+            { new[] { "16", "DeliveryJob", "Delivery Job" }, new Vector3(64.0F, 0.0F, -92.0F) },
+            { new[] { "17", "TaxiJob", "Taxi Job" }, new Vector3(-232.0F, 0.0F, 87.0F) },
+            { new[] { "18", "TownHall", "Town Hall", "Mayor", "MayorOffice" }, new Vector3(127.0F, 0.0F, -56.0F) },
+            { new[] { "19", "Bank" }, new Vector3(447.0F, 0.0F, -23.0F) },
+            { new[] { "20", "DrugDealer", "Drug Dealer" }, new Vector3(288.0F, 0.0F, -236.0F) },
+            { new[] { "21", "SpecOps", "Spec Ops Job", "MilitaryBase", "Military Base" }, new Vector3(654.0F, 0.0F, 278.0F) },
+            { new[] { "22", "Bomb", "BombLocation", "Bomb Location" }, new Vector3(1010.0F, 0.0F, 401.0F) }
+        };
+
         public static string[] ReportReasons =
         {
             // default values
@@ -136,6 +195,7 @@ namespace BP_Essentials
             "Bullying, Harrasing, or Discriminating someone",
             "Alternative account's (alts)"
         };
+
         public static int[] CommonIDs =
         {
             // need a better way of doing this
@@ -147,8 +207,51 @@ namespace BP_Essentials
             499504400, //License Gun
             607710552 //License Pilots
         };
+
         #region ID LIST
-        public static int[] IDs = {
+        public static int[] IDs_Vehicles = {
+0, // you don't want to use ID 0
+-161239262, //Apache1
+1869282968, //Apache2
+409849358, //Apache3
+-1511445516, //SmallHelo1
+1021344334, //SmallHelo2
+1273449176, //SmallHelo3
+-724826434, //Boat1
+1304778500, //Boat2
+985819026, //Boat3
+1510028342, //ArmyFuel1
+-1022859892, //ArmyFuel2
+-1274063590, //ArmyFuel3
+-1389915498, //Car1
+875479852, //Car2
+1126822842, //Car3
+1629858698, //CarPizza
+-1372418684, //Hatchback1
+926669886, //Hatchback2
+1077734568, //Hatchback3
+-1892890957, //Pickup1
+371562249, //Pickup2
+1629661087, //Pickup3
+-1852539457, //SportsCar1
+144518149, //SportsCar2
+2140806291, //SportsCar3
+-1840453330, //StairTruck
+800352739, //SUV1
+-1229113255, //SUV2
+-1044772657, //SUV3
+-4797188, //Taxi
+1696421938, //TowTractor
+-701513985, //TroopCar1
+1327951685, //TroopCar2
+941744083, //TroopCar3
+748120166, //Van1
+-1247921700, //Van2
+-1030158006, //Van3
+        };
+
+
+        public static int[] IDs_Items = {
 0, // you don't want to use ID 0
 -2081117539, //FireExtinguisher
 -1490613521, //FireHose
@@ -912,7 +1015,28 @@ namespace BP_Essentials
 -890140811, //TopSheriff
 };
 
-        #endregion
+        #endregion ID LIST
+    }
+    public class Kits_Json
+    {
+        public class Kits_Item
+        {
+            public int Id { get; set; }
+            public int Amount { get; set; }
+        }
+        public class Kits_RootObj
+        {
+            public Kits_RootObj() {
+                Items = new List<Kits_Item>();
+                CurrentlyInCooldown = new Dictionary<string, int>();
+            }
+            public string Name { get; set; }
+            public int Delay { get; set; }
+            public string ExecutableBy { get; set; }
+            public bool Disabled { get; set; }
+            public List<Kits_Item> Items { get; set; }
+            public Dictionary<string, int> CurrentlyInCooldown { get; set; }
+        }
     }
     public class _CommandList
     {
@@ -922,6 +1046,7 @@ namespace BP_Essentials
         public string commandGroup;
         public string commandName;
     }
+
     public class _PlayerList
     {
         public ShPlayer shplayer { get; set; }

@@ -17,9 +17,9 @@ namespace BP_Essentials
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
                     if (amount != null && ShowDMGMessage)
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color=#b7b5b5>{amount} DMG Blocked!</color>");
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color=#b7b5b5>{amount} DMG Blocked!</color>");
                     if (customMessage != null)
-                        player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, customMessage);
+                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, customMessage);
                     return true;
                 }
             }

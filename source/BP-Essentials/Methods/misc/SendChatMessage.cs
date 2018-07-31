@@ -16,7 +16,7 @@ namespace BP_Essentials
         public static void Run(string message)
         {
             foreach (var player in playerList.Where(x => x.Value.chatEnabled))
-                player.Value.shplayer.svPlayer.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, message);
+                player.Value.shplayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
         }
     }
 }

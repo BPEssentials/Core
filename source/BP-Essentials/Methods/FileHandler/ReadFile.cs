@@ -27,9 +27,12 @@ namespace BP_Essentials
         public bool VoteKickDisabled { get; set; }
         public bool ShowDMGMessage { get; set; }
         public int DebugLevel { get; set; }
-        public string DiscordWebhook { get; set; }
-        public bool EnableDiscordWebhook { get; set; }
+        public string DiscordWebhook_Ban { get; set; }
+        public bool EnableDiscordWebhook_Ban { get; set; }
+        public string DiscordWebhook_Report { get; set; }
+        public bool EnableDiscordWebhook_Report { get; set; }
         public bool BlockBanButtonTabMenu { get; set; }
+        public bool BlockLicenseRemoved { get; set; }
     }
     [Serializable]
     public class _Messages
@@ -81,6 +84,23 @@ namespace BP_Essentials
         public string F10 { get; set; }
     }
     [Serializable]
+    public class JobIndexArray
+    {
+        public string Citizen { get; set; }
+        public string Criminal { get; set; }
+        public string Prisoner { get; set; }
+        public string Police { get; set; }
+        public string Paramedic { get; set; }
+        public string Firefighter { get; set; }
+        public string Rojo_Loco { get; set; }
+        public string Green_St_Fam { get; set; }
+        public string Borgata_Blue { get; set; }
+        public string Mayor { get; set; }
+        public string DeliveryDriver { get; set; }
+        public string TaxiDriver { get; set; }
+        public string SpecOps { get; set; }
+    }
+    [Serializable]
     public class _Misc
     {
         public bool enableChatBlock { get; set; }
@@ -115,6 +135,7 @@ namespace BP_Essentials
         public MessageColors MessageColors { get; set; }
         public FunctionUI FunctionUI { get; set; }
         public ReportOptions ReportOptions { get; set; }
+        public JobIndexArray JobIndexArray { get; set; }
         public _Misc Misc { get; set; }
         public List<int> BlockedItems { get; set; }
         public List<WhitelistedJob> WhitelistedJobs { get; set; }
@@ -139,10 +160,13 @@ namespace BP_Essentials
         {
             try
             {
+                IdListObject idlist;
                 switch (fileName)
                 {
                     case SettingsFile:
                         __RootObject m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
+
+
                         LocalVersion = m.General.version;
                         CmdCommandCharacter = m.General.CommandCharacter;
                         DownloadIdList = m.General.DownloadIDList;
@@ -152,15 +176,24 @@ namespace BP_Essentials
                         VoteKickDisabled = m.General.VoteKickDisabled;
                         ShowDMGMessage = m.General.ShowDMGMessage;
                         DebugLevel = m.General.DebugLevel;
-                        EnableDiscordWebhook = m.General.EnableDiscordWebhook;
-                        if (EnableDiscordWebhook && string.IsNullOrEmpty(m.General.DiscordWebhook.Trim()))
+                        EnableDiscordWebhook_Ban = m.General.EnableDiscordWebhook_Ban;
+                        if (EnableDiscordWebhook_Ban && string.IsNullOrEmpty(m.General.DiscordWebhook_Ban.Trim()))
                         {
-                            Debug.Log("[ERROR] Discord webhook is empty but EnableDiscordWebhook is true! Disabling webhook.");
-                            EnableDiscordWebhook = false;
+                            Debug.Log("[ERROR] Discord webhook_Ban is empty but EnableDiscordWebhook_Ban is true! Disabling webhook_Ban.");
+                            EnableDiscordWebhook_Ban = false;
                         }
                         else
-                            DiscordWebhook = m.General.DiscordWebhook;
+                            DiscordWebhook_Ban = m.General.DiscordWebhook_Ban;
+                        EnableDiscordWebhook_Report = m.General.EnableDiscordWebhook_Report;
+                        if (EnableDiscordWebhook_Report && string.IsNullOrEmpty(m.General.DiscordWebhook_Report.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook_Report is empty but EnableDiscordWebhook_Report is true! Disabling webhook_Report.");
+                            EnableDiscordWebhook_Report = false;
+                        }
+                        else
+                            DiscordWebhook_Report = m.General.DiscordWebhook_Report;
                         BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
+                        blockLicenseRemoved = m.General.BlockLicenseRemoved;
 
                         infoColor = m.MessageColors.info;
                         errorColor = m.MessageColors.error;
@@ -191,6 +224,9 @@ namespace BP_Essentials
 
                         ReportReasons = new string[] { m.ReportOptions.F2, m.ReportOptions.F3, m.ReportOptions.F4, m.ReportOptions.F5, m.ReportOptions.F6, m.ReportOptions.F7, m.ReportOptions.F8, m.ReportOptions.F9, m.ReportOptions.F10 };
 
+                        // Softcode this someday
+                        Jobs = new string[] { m.JobIndexArray.Citizen, m.JobIndexArray.Criminal, m.JobIndexArray.Prisoner, m.JobIndexArray.Police, m.JobIndexArray.Paramedic, m.JobIndexArray.Firefighter, m.JobIndexArray.Rojo_Loco, m.JobIndexArray.Green_St_Fam, m.JobIndexArray.Borgata_Blue, m.JobIndexArray.Mayor, m.JobIndexArray.DeliveryDriver, m.JobIndexArray.TaxiDriver, m.JobIndexArray.SpecOps };
+
                         BlockedItems = m.BlockedItems;
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
@@ -202,7 +238,7 @@ namespace BP_Essentials
                         if (_Timer.Enabled)
                         {
                             _Timer.Enabled = false;
-                            _Timer.Interval = m.Misc.TimeBetweenAnnounce * 1000;
+                            _Timer.Interval = TimeBetweenAnnounce * 1000;
                             _Timer.Enabled = true;
                         }
                         BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
@@ -217,11 +253,14 @@ namespace BP_Essentials
                         }
                         RegisterCommands.Run(m.Commands);
                         break;
-                    case IdListFile:
-                        var idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListFile));
-                        IDs = idlist.items.Select(x => x.gameid).ToArray();
+                    case IdListItemsFile:
+                        idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListItemsFile));
+                        IDs_Items = idlist.items.Select(x => x.gameid).ToArray();
                         break;
-
+                    case IdListVehicleFile:
+                        idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListVehicleFile));
+                        IDs_Vehicles = idlist.items.Select(x => x.gameid).ToArray();
+                        break;
                     case AnnouncementsFile:
                         Announcements = File.ReadAllLines(fileName);
                         break;

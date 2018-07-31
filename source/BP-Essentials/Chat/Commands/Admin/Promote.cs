@@ -13,19 +13,19 @@ namespace BP_Essentials.Commands
                 var shPlayer = GetShByStr.Run(arg1);
                 if (shPlayer == null)
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                     return;
                 }
                 if (shPlayer.rank >= 2)
                 {
-                    player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={errorColor}>Already has the highest rank!</color>");
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={errorColor}>Already has the highest rank!</color>");
                     return;
                 }
                 shPlayer.svPlayer.Reward(shPlayer.maxExperience - shPlayer.experience + 1, 0);
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Promoted</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>to rank</color> <color={argColor}>{shPlayer.rank +1}</color><color={infoColor}>.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Promoted</color> <color={argColor}>{shPlayer.username}</color> <color={infoColor}>to rank</color> <color={argColor}>{shPlayer.rank +1}</color><color={infoColor}>.</color>");
             }
             else
-                player.SendToSelf(Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
         }
     }
 }
