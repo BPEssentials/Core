@@ -11,7 +11,7 @@ namespace BP_Essentials
 {
     class Reload : EssentialsChatPlugin
     {
-        public static void Run(bool silentExecution, SvPlayer player = null)
+        public static void Run(bool silentExecution, SvPlayer player = null, bool IsFirstReload = false)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BP_Essentials
                     ReadStream.Run(AdminListFile, AdminsListPlayers);
                     ReadCustomCommands.Run();
                     ReadGroups.Run();
-                    Kits.LoadAllKits();
+                    Kits.LoadAllKits(IsFirstReload);
                     LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                     ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
                     if (DownloadIdList)

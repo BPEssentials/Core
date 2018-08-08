@@ -25,6 +25,11 @@ namespace BP_Essentials.Commands
                 return;
             }
             var obj = listKits.FirstOrDefault(x => x.Name == arg1);
+            if (!HasPermission.Run(player, obj.ExecutableBy, false, player.player.job.jobIndex))
+            {
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You do not have access to that kit.</color>");
+                return;
+            }
             if (obj.Disabled)
             {
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>That kit is currently disabled.</color>");
@@ -39,7 +44,8 @@ namespace BP_Essentials.Commands
             {
                 player.player.TransferItem(DeltaInv.AddToMe, item.Id, item.Amount, true);
             }
-            player.StartCoroutine(Kits.KitCooldown(player, obj));
+            if (obj.Delay > 0)
+                player.StartCoroutine(Kits.KitCooldown(player.player.username, obj));
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've been given the kit</color> <color={argColor}>{arg1}</color><color={infoColor}>.</color>");
         }
     }

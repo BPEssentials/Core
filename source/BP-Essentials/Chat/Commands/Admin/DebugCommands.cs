@@ -93,6 +93,10 @@ namespace BP_Essentials.Commands {
                 foreach (var currPlayer in FindObjectsOfType<SvPlayer>())
                     currPlayer.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
             }
+            else if (arg == "addcrimes")
+            {
+                player.SvAddCrime(CrimeIndex.Murder, null);
+            }
             else
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "/debug location/getplayerhash/getspaceindex/createidlist/jobarray");
         }
