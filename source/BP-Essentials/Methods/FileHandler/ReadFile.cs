@@ -241,7 +241,8 @@ namespace BP_Essentials
                             _Timer.Interval = TimeBetweenAnnounce * 1000;
                             _Timer.Enabled = true;
                         }
-                        BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
+                        if (m.Misc.EnableBlockSpawnBot)
+                            BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
                         GodModeLevel = m.Misc.GodModeLevel;
 
                         foreach (var currJob in m.WhitelistedJobs)

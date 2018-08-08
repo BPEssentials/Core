@@ -16,7 +16,7 @@ namespace BP_Essentials.Commands {
                     return;
                 }
                 LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username} (Reason: {arg2}");
-                player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color> <color={warningColor}>(Reason: <color={argColor}>{arg2}</color><color={warningColor}>)</color>");
+                player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color> <color={warningColor}>(Reason: </color><color={argColor}>{arg2}</color><color={warningColor}>)</color>");
                 SendDiscordMessage.BanMessage(shPlayer.username, player.playerData.username, arg2);
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Banned</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>. (Reason: {arg2})</color>");
                 player.svManager.AddBanned(shPlayer);

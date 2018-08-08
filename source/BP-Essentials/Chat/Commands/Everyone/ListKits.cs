@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player)
         {
-            var kits = listKits.Where(x => !x.Disabled && HasPermission.Run(player, x.ExecutableBy)).Select(n=>n.Name).ToArray();
+            var kits = listKits.Where(x => !x.Disabled && HasPermission.Run(player, x.ExecutableBy, false, player.player.job.jobIndex)).Select(n=>n.Name).ToArray();
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kits you can obtain ({kits.Length}):</color> <color={argColor}>{(kits == null || kits.Length == 0 ? "none" : string.Join(", ", kits))}</color>");
         }
     }

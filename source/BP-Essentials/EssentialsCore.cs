@@ -31,7 +31,8 @@ namespace BP_Essentials
             try
             {
                 SvMan = svManager;
-                Reload.Run(true);
+                Kits.StartKitTimer();
+                Reload.Run(true, null, true);
                 CheckAutoReloadFile.Run(AutoReloader);
                 if (EssentialsVariablesPlugin.Version != LocalVersion)
                 {
@@ -69,8 +70,7 @@ namespace BP_Essentials
             }
             if (Announcements.Length != 0)
             {
-                var thread = new Thread(new ParameterizedThreadStart(Chat.Announce.Run));
-                thread.Start(svManager);
+                Chat.Announce.Run();
                 Debug.Log(SetTimeStamp.Run() + "[INFO] Announcer started successfully!");
             }
             else

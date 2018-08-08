@@ -23,6 +23,11 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot convert {arg1} to a integer.</color>");
                 return;
             }
+            if (arg1i < 0)
+            {
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>The delay must be a positive number (0 to disable)</color>");
+                return;
+            }
             var file = Path.Combine(KitDirectory, $"{arg2}.json");
             if (File.Exists(file))
             {
