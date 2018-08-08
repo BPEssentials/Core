@@ -12,7 +12,7 @@ namespace BP_Essentials
 {
     public class Kits
     {
-        public static void LoadAllKits()
+        public static void LoadAllKits(bool firstLoad = false)
         {
             if (DebugLevel >= 1)
                 Debug.Log($"{SetTimeStamp.Run()}[INFO] Loading kits..");
@@ -26,6 +26,9 @@ namespace BP_Essentials
                     continue;
                 }
                 listKits.Add(obj);
+                if (firstLoad)
+                    foreach (var player in obj.CurrentlyInCooldown)
+                        SvMan.StartCoroutine(KitCooldown(player.Key, obj));
                 if (DebugLevel >= 1)
                     Debug.Log($"{SetTimeStamp.Run()}[INFO] Loaded kit: {obj.Name}");
             }
@@ -46,20 +49,43 @@ namespace BP_Essentials
             File.WriteAllText(fileName, JsonConvert.SerializeObject(obj, Formatting.Indented));
             listKits.Add(obj);
         }
-
-        public static IEnumerator KitCooldown(SvPlayer player, Kits_Json.Kits_RootObj kit)
+        public static void StartKitTimer()
         {
-            if (!kit.CurrentlyInCooldown.ContainsKey(player.player.username))
-                kit.CurrentlyInCooldown.Add(player.player.username, kit.Delay);
-            var passedTime = 0f;
-            while (passedTime < kit.Delay)
+            try
             {
-                yield return new WaitForSeconds(1);
-                ++passedTime;
-                --kit.CurrentlyInCooldown[player.player.username];
+                _Timer.Elapsed += (sender, e) => {
+                    foreach (var kit in listKits)
+                    {
+                        var path = Path.Combine(KitDirectory, $"{kit.Name}.json");
+                        if (File.Exists(path))
+                            File.WriteAllText(path, JsonConvert.SerializeObject(kit, Formatting.Indented));
+                    }
+                };
+                _Timer.Interval = 30 * 60 * 1000; // Save every 30 minutes
+                _Timer.Enabled = true;
             }
-            if (kit.CurrentlyInCooldown.ContainsKey(player.player.username))
-                kit.CurrentlyInCooldown.Remove(player.player.username);
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+            }
+        }
+        public static IEnumerator KitCooldown(string username, Kits_Json.Kits_RootObj kit)
+        {
+            if (!kit.CurrentlyInCooldown.ContainsKey(username))
+                kit.CurrentlyInCooldown.Add(username, kit.Delay);
+            var path = Path.Combine(KitDirectory, $"{kit.Name}.json");
+            File.WriteAllText(path, JsonConvert.SerializeObject(kit, Formatting.Indented));
+            var passedTime = 0;
+            while (passedTime <= kit.Delay)
+            {
+                ++passedTime;
+                --kit.CurrentlyInCooldown[username];
+                yield return new WaitForSeconds(1);
+            }
+            if (kit.CurrentlyInCooldown.ContainsKey(username))
+                kit.CurrentlyInCooldown.Remove(username);
+            if (File.Exists(path))
+                File.WriteAllText(path, JsonConvert.SerializeObject(kit, Formatting.Indented));
         }
     }
 }

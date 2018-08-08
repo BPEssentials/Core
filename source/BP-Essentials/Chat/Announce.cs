@@ -11,12 +11,11 @@ namespace BP_Essentials.Chat
 {
     class Announce : EssentialsCorePlugin
     {
-        public static void Run(object man)
+        public static void Run()
         {
             try
             {
-                var svManager = (SvManager)man;
-                _Timer.Elapsed += (sender, e) => OnTime(svManager);
+                _Timer.Elapsed += (sender, e) => OnTime();
                 _Timer.Interval = TimeBetweenAnnounce * 1000;
                 _Timer.Enabled = true;
             }
@@ -26,10 +25,9 @@ namespace BP_Essentials.Chat
             }
         }
 
-        private static void OnTime(object onetMan)
+        private static void OnTime()
         {
-            var svManager = (SvManager)onetMan;
-            foreach (var player in svManager.players)
+            foreach (var player in SvMan.players)
                 foreach (var line in Announcements[AnnounceIndex].Split(new[] { "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None))
                     player.Value.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, line);
             Debug.Log($"{SetTimeStamp.Run()}[INFO] Announcement made...");
