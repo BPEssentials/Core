@@ -26,9 +26,9 @@ namespace BP_Essentials
                     continue;
                 }
                 listKits.Add(obj);
-                if (firstLoad)
-                    foreach (var player in obj.CurrentlyInCooldown)
-                        SvMan.StartCoroutine(KitCooldown(player.Key, obj));
+                if (firstLoad && obj.CurrentlyInCooldown != null)
+                    foreach (var player in obj.CurrentlyInCooldown.ToList())
+                        SvMan.StartCoroutine(KitCooldown(player.Key, obj, player.Value));
                 if (DebugLevel >= 1)
                     Debug.Log($"{SetTimeStamp.Run()}[INFO] Loaded kit: {obj.Name}");
             }
@@ -69,13 +69,13 @@ namespace BP_Essentials
                 ErrorLogging.Run(ex);
             }
         }
-        public static IEnumerator KitCooldown(string username, Kits_Json.Kits_RootObj kit)
+        public static IEnumerator KitCooldown(string username, Kits_Json.Kits_RootObj kit, int PassedTime = 0)
         {
             if (!kit.CurrentlyInCooldown.ContainsKey(username))
                 kit.CurrentlyInCooldown.Add(username, kit.Delay);
             var path = Path.Combine(KitDirectory, $"{kit.Name}.json");
             File.WriteAllText(path, JsonConvert.SerializeObject(kit, Formatting.Indented));
-            var passedTime = 0;
+            var passedTime = PassedTime;
             while (passedTime <= kit.Delay)
             {
                 ++passedTime;

@@ -62,7 +62,20 @@ namespace BP_Essentials.Commands {
                         if (arg2 == "item")
                         {
                             // Jesus o.O
-                            if (v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShGun) || v.GetType() == typeof(ShWeapon) || v.GetType() == typeof(ShFurniture) || v.GetType() == typeof(ShWearable) || v.GetType() == typeof(ShConsumable) || v.GetType() == typeof(ShDrugMaterial) || v.GetType() == typeof(ShExtinguisher) || v.GetType() == typeof(ShHealer) || v.GetType() == typeof(ShRestraint) || v.GetType() == typeof(ShSeed) || v.GetType() == typeof(ShProjectile))
+                            if (v.GetType() == typeof(ShPlaceable)
+                                || v.GetType() == typeof(ShPlaceable)
+                                || v.GetType() == typeof(ShGun)
+                                || v.GetType() == typeof(ShWeapon)
+                                || v.GetType() == typeof(ShFurniture)
+                                || v.GetType() == typeof(ShWearable)
+                                || v.GetType() == typeof(ShConsumable)
+                                || v.GetType() == typeof(ShDrugMaterial)
+                                || v.GetType() == typeof(ShExtinguisher)
+                                || v.GetType() == typeof(ShHealer)
+                                || v.GetType() == typeof(ShRestraint)
+                                || v.GetType() == typeof(ShSeed)
+                                || v.GetType() == typeof(ShProjectile)
+                                || v.GetType() == typeof(ShDetonator))
                             {
                                 sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
                                 ++currIndex;

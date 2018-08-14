@@ -12,10 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player)
         {
-            if (player.player.admin)
-                BP_Essentials.Reload.Run(false, player);
-            else
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, MsgNoPerm);
+            BP_Essentials.Reload.Run(false, player);
         }
     }
 }
