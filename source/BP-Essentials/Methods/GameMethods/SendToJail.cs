@@ -20,7 +20,7 @@ namespace BP_Essentials
             shPlayer.StartCoroutine(shPlayer.svPlayer.JailTimer(time));
             shPlayer.svPlayer.SvClearCrimes();
             shPlayer.RemoveItemsJail();
-            shPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.Timer, time);
+            shPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, time);
             return true;
         }
     }

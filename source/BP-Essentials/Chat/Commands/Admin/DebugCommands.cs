@@ -46,7 +46,7 @@ namespace BP_Essentials.Commands {
             else if (arg == "createidlist")
             {
                 string arg2 = GetArgument.Run(2, false, true, message).Trim().ToLower();
-                if (!String.IsNullOrEmpty(arg2) && (arg2 == "item" || arg2 == "vehicle"))
+                if (!String.IsNullOrEmpty(arg2) && (arg2 == "item" || arg2 == "vehicle" || arg2 == "skinid"))
                 {
                     player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
                     var location = $"{FileDirectory}IDLists/{arg2}/IDLIST_{DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss")}.txt";
@@ -56,24 +56,50 @@ namespace BP_Essentials.Commands {
                     int currIndex = 1;
                     sb.Append("{\"items\": [");
                     IndexCollection<ShEntity> ECol = (IndexCollection<ShEntity>)typeof(ShManager).GetField("entityCollection", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(shPlayer.manager);
-                    foreach (ShEntity v in ECol)
+                    if (arg2 == "skinid")
                     {
-                        // dry coding, improve
-                        if (arg2 == "item")
+                        for (int i = 0; i < shPlayer.manager.skinPrefabs.Length; i++)
                         {
-                            // Jesus o.O
-                            if (v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShPlaceable) || v.GetType() == typeof(ShGun) || v.GetType() == typeof(ShWeapon) || v.GetType() == typeof(ShFurniture) || v.GetType() == typeof(ShWearable) || v.GetType() == typeof(ShConsumable) || v.GetType() == typeof(ShDrugMaterial) || v.GetType() == typeof(ShExtinguisher) || v.GetType() == typeof(ShHealer) || v.GetType() == typeof(ShRestraint) || v.GetType() == typeof(ShSeed) || v.GetType() == typeof(ShProjectile))
-                            {
-                                sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
-                                ++currIndex;
-                            }
+                            sb.Append($"{{\"name\": \"{shPlayer.manager.skinPrefabs[i].name}\",\"id\": {currIndex},\"gameid\": {Animator.StringToHash(shPlayer.manager.skinPrefabs[i].name)}}},\n");
+                            ++currIndex;
                         }
-                        else if (arg2 == "vehicle")
+                    }
+                    else
+                    {
+                        foreach (var v in ECol)
                         {
-                            if (v.GetType() == typeof(ShVehicle) || v.GetType() == typeof(ShBoat) || v.GetType() == typeof(ShHelo) || v.GetType() == typeof(ShTransport))
+                            // dry coding, improve
+                            switch (arg2)
                             {
-                                sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
-                                ++currIndex;
+                                case "item":
+                                    // Jesus o.O
+                                    if (
+                                           v.GetType() == typeof(ShPlaceable)
+                                        || v.GetType() == typeof(ShGun)
+                                        || v.GetType() == typeof(ShWeapon)
+                                        || v.GetType() == typeof(ShFurniture)
+                                        || v.GetType() == typeof(ShWearable)
+                                        || v.GetType() == typeof(ShConsumable)
+                                        || v.GetType() == typeof(ShDrugMaterial)
+                                        || v.GetType() == typeof(ShExtinguisher)
+                                        || v.GetType() == typeof(ShHealer)
+                                        || v.GetType() == typeof(ShRestraint)
+                                        || v.GetType() == typeof(ShSeed)
+                                        || v.GetType() == typeof(ShProjectile)
+                                        || v.GetType() == typeof(ShDetonator)
+                                        || v.GetType() == typeof(ShShield))
+                                    {
+                                        sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
+                                        ++currIndex;
+                                    }
+                                    break;
+                                case "vehicle":
+                                    if (v.GetType() == typeof(ShVehicle) || v.GetType() == typeof(ShBoat) || v.GetType() == typeof(ShHelo) || v.GetType() == typeof(ShTransport))
+                                    {
+                                        sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
+                                        ++currIndex;
+                                    }
+                                    break;
                             }
                         }
                     }
