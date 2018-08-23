@@ -141,6 +141,7 @@ namespace BP_Essentials
         public static int[] BlockedSpawnIds;
         public static int DebugLevel;
         public static int GodModeLevel;
+        public static int MessagesAllowedPerSecond;
 
         // Misc.
         public static string _msg;
@@ -1057,6 +1058,8 @@ namespace BP_Essentials
         public bool staffChatEnabled;
         public bool receiveStaffChat = true;
         public bool spyEnabled;
+        public int messagesSent;
+        public bool isCurrentlyAwaiting;
     }
 
     public class _Group

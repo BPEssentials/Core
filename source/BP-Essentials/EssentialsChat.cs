@@ -5,6 +5,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using static BP_Essentials.EssentialsMethodsPlugin;
 using static BP_Essentials.EssentialsVariablesPlugin;
@@ -18,6 +19,43 @@ namespace BP_Essentials
         {
             try
             {
+                try
+                {
+                    if (MessagesAllowedPerSecond != -1 && MessagesAllowedPerSecond < 50)
+                    {
+                        if (playerList.TryGetValue(player.player.ID, out var currObj))
+                        {
+                            if (currObj.messagesSent >= MessagesAllowedPerSecond)
+                            {
+                                Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} got kicked for spamming! {currObj.messagesSent}/s (max: {MessagesAllowedPerSecond}) messages sent.");
+                                player.svManager.Kick(player.connection);
+                                return true;
+                            }
+                            else
+                            {
+                                playerList[player.player.ID].messagesSent++;
+                                if (!currObj.isCurrentlyAwaiting)
+                                {
+                                    playerList[player.player.ID].isCurrentlyAwaiting = true;
+                                    Task.Factory.StartNew(async () =>
+                                    {
+                                        await Task.Delay(1000);
+                                        if (playerList.ContainsKey(player.player.ID))
+                                        {
+                                            playerList[player.player.ID].messagesSent = 0;
+                                            playerList[player.player.ID].isCurrentlyAwaiting = false;
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                // If it for whatever reason fails, ignore it
+                catch
+                {
+
+                }
                 //Message Logging
                 if (!(MutePlayers.Contains(player.playerData.username)))
                     LogMessage.Run(player, message);

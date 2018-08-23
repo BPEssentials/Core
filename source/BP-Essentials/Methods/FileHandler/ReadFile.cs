@@ -33,6 +33,7 @@ namespace BP_Essentials
         public bool EnableDiscordWebhook_Report { get; set; }
         public bool BlockBanButtonTabMenu { get; set; }
         public bool BlockLicenseRemoved { get; set; }
+        public int MessagesAllowedPerSecond { get; set; }
     }
     [Serializable]
     public class _Messages
@@ -194,6 +195,7 @@ namespace BP_Essentials
                             DiscordWebhook_Report = m.General.DiscordWebhook_Report;
                         BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
                         blockLicenseRemoved = m.General.BlockLicenseRemoved;
+                        MessagesAllowedPerSecond = m.General.MessagesAllowedPerSecond;
 
                         infoColor = m.MessageColors.info;
                         errorColor = m.MessageColors.error;

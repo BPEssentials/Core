@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.IO;
 
-namespace BP_Essentials.Commands {
+namespace BP_Essentials.Commands
+{
     public class DebugCommands : EssentialsChatPlugin
     {
         public static void Run(SvPlayer player, string message)
