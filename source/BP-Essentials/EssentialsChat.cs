@@ -106,21 +106,21 @@ namespace BP_Essentials
                 }
                 if (playerList[shplayer.ID].staffChatEnabled)
                 {
-                    SendChatMessageToAdmins.Run(FillPlaceholders.Run(shplayer, AdminChatMessage));
+                    SendChatMessageToAdmins.Run(FillPlaceholders.Run(shplayer, AdminChatMessage, message));
                     return true;
                 }
                 foreach (var curr in Groups)
                     if (curr.Value.Users.Contains(player.playerData.username))
                     {
-                        SendChatMessage.Run(FillPlaceholders.Run(shplayer, curr.Value.Message));
+                        SendChatMessage.Run(FillPlaceholders.Run(shplayer, curr.Value.Message, message));
                         return true;
                     }
                 if (player.player.admin)
                 {
-                    SendChatMessage.Run(FillPlaceholders.Run(shplayer, AdminMessage));
+                    SendChatMessage.Run(FillPlaceholders.Run(shplayer, AdminMessage, message));
                     return true;
                 }
-                SendChatMessage.Run(FillPlaceholders.Run(shplayer, PlayerMessage));
+                SendChatMessage.Run(FillPlaceholders.Run(shplayer, PlayerMessage, message));
             }
             catch (Exception ex)
             {

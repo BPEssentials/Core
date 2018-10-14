@@ -13,7 +13,7 @@ namespace BP_Essentials
 {
     class FillPlaceholders
     {
-        public static string Run(ShPlayer shplayer, string message)
+        public static string Run(ShPlayer shplayer, string message, string playerMessage)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace BP_Essentials
                               .Replace("{id}", $"{shplayer.ID}")
                               .Replace("{jobindex}", $"{shplayer.job.jobIndex}")
                               .Replace("{jobname}", $"{Jobs[shplayer.job.jobIndex]}")
-                              .Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(message), "<<b></b>"));
+                              .Replace("{message}", new Regex("(<)").Replace(Chat.LangAndChatBlock.Run(playerMessage), "<<b></b>"));
             }
             catch (Exception ex)
             {
