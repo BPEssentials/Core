@@ -9,18 +9,18 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class GetIdList : EssentialsChatPlugin
+    class GetIdList
     {
         public static bool Run(bool silent)
         {
             // yeah eh redo
             if (!silent)
                 Debug.Log("Downloading newest ID list's and reloading them...");
-            DownloadAndWriteToFile.Run(IdListItemsFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_items.txt", new Action<bool>((success) =>
+            GetWebsiteContent.WriteToFile(IdListItemsFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_items.txt", new Action<bool>((success) =>
             {
                 if (success)
                     ReadFile.Run(IdListItemsFile);
-                DownloadAndWriteToFile.Run(IdListVehicleFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_vehicles.txt", new Action<bool>((success2) =>
+                GetWebsiteContent.WriteToFile(IdListVehicleFile, "http://www.UserR00T.com/dev/BPEssentials/idlist_vehicles.txt", new Action<bool>((success2) =>
                 {
                     if (success2)
                         ReadFile.Run(IdListVehicleFile);

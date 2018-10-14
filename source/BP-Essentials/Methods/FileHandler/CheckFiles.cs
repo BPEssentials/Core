@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class CheckFiles : EssentialsChatPlugin
+    class CheckFiles
     {
         public static void Run()
         {

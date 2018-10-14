@@ -11,6 +11,7 @@ namespace BP_Essentials
 {
     class GetArgument : EssentialsCorePlugin
     {
+        // redo?
         public static string Run(int nr, bool UseRegex, bool IncludeSpaces, string message)
         {
             try
@@ -21,7 +22,7 @@ namespace BP_Essentials
                         .Cast<Match>()
                         .Select(m => m.Value)
                         .ToList();
-                    return args[nr];
+                    return args[nr].TrimStart('"').TrimEnd('"');
                 }
                 else
                 {

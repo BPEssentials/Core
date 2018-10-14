@@ -8,13 +8,13 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials
 {
-    class SendToJail : EssentialsChatPlugin
+    class SendToJail
     {
         public static bool Run(ShPlayer shPlayer, float time)
         {
             if (shPlayer.IsDead())
                 return false;
-            Transform jailSpawn = shPlayer.manager.jail.jailSpawn;
+            var jailSpawn = shPlayer.manager.jail.transform;
             SetJob.Run(shPlayer, 2, true, false);
             shPlayer.svEntity.SvReset(jailSpawn.position, jailSpawn.rotation, 0);
             shPlayer.StartCoroutine(shPlayer.svPlayer.JailTimer(time));

@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials.Commands
 {
-    public class GetKit : EssentialsChatPlugin
+    public class GetKit
     {
         public static void Run(SvPlayer player, string message)
         {

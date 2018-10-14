@@ -57,7 +57,7 @@ namespace BP_Essentials
         {
             yield return www;
             if (DebugLevel >= 2)
-                Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request response received: {(www.error ?? $"[HTTP-ERROR] {www.text}")}");
+                Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request response received: {(www.text ?? $"[HTTP-ERROR] {www.error}")}");
             www.Dispose();
         }
     }

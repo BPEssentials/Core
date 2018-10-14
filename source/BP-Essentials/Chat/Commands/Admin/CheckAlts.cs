@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials.Commands
 {
-    class CheckAlts : EssentialsChatPlugin
+    class CheckAlts
     {
         public static void Run(SvPlayer player, string message)
         {

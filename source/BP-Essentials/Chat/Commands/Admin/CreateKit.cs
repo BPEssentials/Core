@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace BP_Essentials.Commands
 {
-    public class CreateKit : EssentialsChatPlugin
+    public class CreateKit
     {
         public static void Run(SvPlayer player, string message)
         {

@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class ErrorLogging : EssentialsChatPlugin
+    class ErrorLogging
     {
         public static void Run(Exception ex)
         {

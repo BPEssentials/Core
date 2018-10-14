@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials.Commands
 {
-    class Mute : EssentialsChatPlugin
+    class Mute
     {
         public static void Run(SvPlayer player, string message)
         {

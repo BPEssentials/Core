@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials.Commands
 {
-    public class Promote : EssentialsChatPlugin
+    public class Promote
     {
         public static void Run(SvPlayer player, string message)
         {

@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class ReadStream : EssentialsChatPlugin
+    class ReadStream
     {
         public static void Run(string fileName, List<string> output)
         {

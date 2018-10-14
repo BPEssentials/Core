@@ -7,7 +7,7 @@ using static BP_Essentials.EssentialsVariablesPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Report : EssentialsChatPlugin
+    class Report
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -15,14 +15,14 @@ namespace BP_Essentials.Commands
             if (!String.IsNullOrEmpty(arg1))
             {
                 foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                    if (item.Value.shplayer.svPlayer == player)
+                    if (item.Value.Shplayer.svPlayer == player)
                     {
-                        if (item.Value.shplayer.username != arg1)
+                        if (item.Value.Shplayer.username != arg1)
                         {
-                            if (!item.Value.shplayer.admin)
+                            if (!item.Value.Shplayer.admin)
                             {
                                 bool playerfound = false;
-                                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                                     if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                                     {
                                         playerfound = true;
@@ -34,7 +34,7 @@ namespace BP_Essentials.Commands
                                                 builder.Append("<color=#00ffffff>F" + (i + 2) + ":</color> " + ReportReasons[i] + "\n");
                                             player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
                                             item.Value.LastMenu = CurrentMenu.Report;
-                                            item.Value.reportedPlayer = shPlayer;
+                                            item.Value.ReportedPlayer = shPlayer;
                                         }
                                         else
                                             player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={errorColor}>Hey! You cannot report an admin.</color>");

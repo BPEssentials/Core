@@ -10,7 +10,7 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class FilterComments : EssentialsChatPlugin
+    class FilterComments
     {
 
         public static string Run(string path)

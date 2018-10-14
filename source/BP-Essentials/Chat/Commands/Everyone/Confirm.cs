@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Confirm : EssentialsChatPlugin
+    class Confirm
     {
         public static bool Run(SvPlayer player)
         {

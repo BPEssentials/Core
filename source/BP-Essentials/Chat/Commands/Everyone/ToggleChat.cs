@@ -8,13 +8,13 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class ToggleChat : EssentialsChatPlugin
+    class ToggleChat
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             foreach (var player2 in playerList.Values)
             {
-                if (player2.shplayer.svPlayer == player)
+                if (player2.Shplayer.svPlayer == player)
                 {
                     if (player2.chatEnabled)
                     {

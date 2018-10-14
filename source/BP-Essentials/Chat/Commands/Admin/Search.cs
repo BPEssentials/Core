@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Search : EssentialsChatPlugin
+    class Search
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -17,10 +17,10 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
             else
             {
-                foreach (var shPlayer2 in FindObjectsOfType<ShPlayer>())
+                foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer2.username == arg1 && !shPlayer2.svPlayer.IsServerside() || shPlayer2.ID.ToString() == arg1 && !shPlayer2.svPlayer.IsServerside())
                     {
-                        foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                             if (shPlayer.svPlayer == player && !shPlayer.svPlayer.IsServerside())
                             {
                                 if (!shPlayer2.IsDead())

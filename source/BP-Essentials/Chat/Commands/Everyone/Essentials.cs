@@ -1,7 +1,7 @@
 ﻿using System;
 using static BP_Essentials.EssentialsMethodsPlugin;
 namespace BP_Essentials.Commands {
-    public class Essentials : EssentialsChatPlugin {
+    public class Essentials {
         public static void Run(SvPlayer player, string message)
         {
             string arg = GetArgument.Run(1, false, false, message).Trim().ToLower();

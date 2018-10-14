@@ -2,7 +2,7 @@
 using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials
 {
-    class IsOnline : EssentialsChatPlugin
+    class IsOnline
     {
         public static bool Run(ShPlayer player)
         {

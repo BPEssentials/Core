@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BP_Essentials.Commands
 {
-    public class Pay : EssentialsChatPlugin
+    public class Pay
     {
         public static void Run(SvPlayer player, string message)
         {

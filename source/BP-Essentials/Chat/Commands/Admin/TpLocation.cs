@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BP_Essentials.Commands
 {
-    public class TpLocation : EssentialsChatPlugin
+    public class TpLocation
     {
         public static void Run(SvPlayer player, string message)
         {

@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace BP_Essentials
 {
-    class Reload : EssentialsChatPlugin
+    class Reload
     {
         public static void Run(bool silentExecution, SvPlayer player = null, bool IsFirstReload = false)
         {

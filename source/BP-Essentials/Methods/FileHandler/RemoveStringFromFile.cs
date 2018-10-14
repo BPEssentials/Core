@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class RemoveStringFromFile : EssentialsChatPlugin
+    class RemoveStringFromFile
     {
         public static void Run(string FileName, string RemoveString)
         {

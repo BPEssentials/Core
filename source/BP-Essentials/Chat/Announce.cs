@@ -27,12 +27,14 @@ namespace BP_Essentials.Chat
 
         private static void OnTime()
         {
-            foreach (var player in SvMan.players)
-                foreach (var line in Announcements[AnnounceIndex].Split(new[] { "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None))
-                    player.Value.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, line);
-            Debug.Log($"{SetTimeStamp.Run()}[INFO] Announcement made...");
-            AnnounceIndex += 1;
-            if (AnnounceIndex > Announcements.Length - 1)
+            if (!string.IsNullOrWhiteSpace(Announcements[AnnounceIndex]))
+            {
+                foreach (var player in SvMan.players)
+                    foreach (var line in Announcements[AnnounceIndex].Split(new[] { "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None))
+                        player.Value.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, line);
+                Debug.Log($"{SetTimeStamp.Run()}[INFO] Announcement made...");
+            }
+            if (++AnnounceIndex > Announcements.Length - 1)
                 AnnounceIndex = 0;
         }
     }

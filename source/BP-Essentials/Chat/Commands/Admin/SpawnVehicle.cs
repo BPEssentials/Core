@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class SpawnVehicle : EssentialsChatPlugin
+    class SpawnVehicle
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -31,9 +31,9 @@ namespace BP_Essentials.Commands
                         return;
                     }
                     if (arg1.Length > 4)
-                        SvMan.AddNewEntity(shPlayer.manager.GetEntity(arg1int).gameObject, shPlayer.manager.places[0], new Vector3(pos.x, pos.y + 10F, pos.z), shPlayer.GetRotation());
+                        SvMan.AddNewEntity(ShManager.GetEntity(arg1int), shPlayer.manager.places[0], new Vector3(pos.x, pos.y + 10F, pos.z), shPlayer.GetRotation());
                     else
-                        SvMan.AddNewEntity(shPlayer.manager.GetEntity(IDs_Vehicles[arg1int - 1]).gameObject, shPlayer.manager.places[0], new Vector3(pos.x, pos.y + 7F, pos.z), shPlayer.GetRotation());
+                        SvMan.AddNewEntity(ShManager.GetEntity(IDs_Vehicles[arg1int - 1]), shPlayer.manager.places[0], new Vector3(pos.x, pos.y + 7F, pos.z), shPlayer.GetRotation());
                     player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Spawning in vehicle with the ID: </color><color={argColor}>{arg1}</color>");
                 }
                 else

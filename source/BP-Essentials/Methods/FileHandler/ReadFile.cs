@@ -18,7 +18,7 @@ namespace BP_Essentials
     [Serializable]
     public class _General
     {
-        public string version { get; set; }
+        public string Version { get; set; }
         public string CommandCharacter { get; set; }
         public bool DownloadIDList { get; set; }
         public string TimestapFormat { get; set; }
@@ -34,13 +34,14 @@ namespace BP_Essentials
         public bool BlockBanButtonTabMenu { get; set; }
         public bool BlockLicenseRemoved { get; set; }
         public int MessagesAllowedPerSecond { get; set; }
+        public string WipePassword { get; set; }
     }
     [Serializable]
     public class _Messages
     {
-        public string noperm { get; set; }
+        public string NoPerm { get; set; }
         public string DisabledCommand { get; set; }
-        public string msgSayPrefix { get; set; }
+        public string MsgSayPrefix { get; set; }
         public string DiscordLink { get; set; }
         public string PlayerIsAFK { get; set; }
         public string SelfIsMuted { get; set; }
@@ -53,14 +54,15 @@ namespace BP_Essentials
         public string AdminChatMessage { get; set; }
         public string MsgNoPermJob { get; set; }
         public string BlockedItem { get; set; }
+        public string MsgNoWantedAllowed { get; set; }
     }
     [Serializable]
     public class MessageColors
     {
-        public string info { get; set; }
-        public string error { get; set; }
-        public string warning { get; set; }
-        public string arg { get; set; }
+        public string Info { get; set; }
+        public string Error { get; set; }
+        public string Warning { get; set; }
+        public string Arg { get; set; }
     }
     [Serializable]
     public class FunctionUI
@@ -104,14 +106,19 @@ namespace BP_Essentials
     [Serializable]
     public class _Misc
     {
-        public bool enableChatBlock { get; set; }
-        public bool enableLanguageBlock { get; set; }
+        public bool EnableChatBlock { get; set; }
+        public bool EnableLanguageBlock { get; set; }
         public bool CheckForAlts { get; set; }
         public bool CheckBannedEnabled { get; set; }
         public int TimeBetweenAnnounce { get; set; }
         public string BlockSpawnBot { get; set; }
         public bool EnableBlockSpawnBot { get; set; }
         public int GodModeLevel { get; set; }
+        public bool ShowJailMessage { get; set; }
+        public bool BlockSuicide { get; set; }
+        public bool BlockMissions { get; set; }
+        public bool ProximityChat { get; set; }
+        public bool LocalChatMute { get; set; }
     }
     [Serializable]
     public class WhitelistedJob
@@ -126,7 +133,7 @@ namespace BP_Essentials
         public List<string> Commands { get; set; }
         public string ExecutableBy { get; set; }
         public bool? Disabled { get; set; }
-        public string c { get; set; }
+        public bool? AllowWithCrimes { get; set; }
     }
     [Serializable]
     public class __RootObject
@@ -154,7 +161,7 @@ namespace BP_Essentials
     {
         public List<Item> items { get; set; }
     }
-    class ReadFile : EssentialsChatPlugin
+    class ReadFile
     {
 
         public static void Run(string fileName)
@@ -168,7 +175,7 @@ namespace BP_Essentials
                         __RootObject m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
 
 
-                        LocalVersion = m.General.version;
+                        LocalVersion = m.General.Version;
                         CmdCommandCharacter = m.General.CommandCharacter;
                         DownloadIdList = m.General.DownloadIDList;
                         TimestampFormat = m.General.TimestapFormat;
@@ -196,15 +203,16 @@ namespace BP_Essentials
                         BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
                         blockLicenseRemoved = m.General.BlockLicenseRemoved;
                         MessagesAllowedPerSecond = m.General.MessagesAllowedPerSecond;
+                        WipePassword = m.General.WipePassword;
 
-                        infoColor = m.MessageColors.info;
-                        errorColor = m.MessageColors.error;
-                        warningColor = m.MessageColors.warning;
-                        argColor = m.MessageColors.arg;
+                        infoColor = m.MessageColors.Info;
+                        errorColor = m.MessageColors.Error;
+                        warningColor = m.MessageColors.Warning;
+                        argColor = m.MessageColors.Arg;
 
-                        MsgNoPerm = m.Messages.noperm;
+                        MsgNoPerm = m.Messages.NoPerm;
                         MsgDiscord = m.Messages.DiscordLink;
-                        MsgSayPrefix = m.Messages.msgSayPrefix;
+                        MsgSayPrefix = m.Messages.MsgSayPrefix;
                         DisabledCommand = $"<color={errorColor}>{m.Messages.DisabledCommand}</color>";
                         PlayerIsAFK = $"<color={warningColor}>{m.Messages.PlayerIsAFK}</color>";
                         SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
@@ -217,6 +225,7 @@ namespace BP_Essentials
                         AdminChatMessage = m.Messages.AdminChatMessage;
                         MsgNoPermJob = $"<color={errorColor}>{m.Messages.MsgNoPermJob}</color>";
                         BlockedItemMessage = $"<color={errorColor}>{m.Messages.BlockedItem}</color>";
+                        MsgNoWantedAllowed = $"<color={errorColor}>{m.Messages.MsgNoWantedAllowed}</color>";
 
                         AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
                         AccessItemMenu = m.FunctionUI.AccessItemMenu;
@@ -232,8 +241,8 @@ namespace BP_Essentials
                         BlockedItems = m.BlockedItems;
 
                         EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
-                        LanguageBlock = m.Misc.enableLanguageBlock;
-                        ChatBlock = m.Misc.enableChatBlock;
+                        LanguageBlock = m.Misc.EnableLanguageBlock;
+                        ChatBlock = m.Misc.EnableChatBlock;
                         CheckAlt = m.Misc.CheckForAlts;
                         CheckBannedEnabled = m.Misc.CheckBannedEnabled;
                         TimeBetweenAnnounce = m.Misc.TimeBetweenAnnounce;
@@ -246,6 +255,11 @@ namespace BP_Essentials
                         if (m.Misc.EnableBlockSpawnBot)
                             BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
                         GodModeLevel = m.Misc.GodModeLevel;
+                        ShowJailMessage = m.Misc.ShowJailMessage;
+                        BlockSuicide = m.Misc.BlockSuicide;
+                        BlockMissions = m.Misc.BlockMissions;
+                        ProximityChat = m.Misc.ProximityChat;
+                        LocalChatMute = m.Misc.LocalChatMute;
 
                         foreach (var currJob in m.WhitelistedJobs)
                         {

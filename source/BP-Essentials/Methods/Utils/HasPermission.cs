@@ -8,11 +8,11 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials
 {
-    class HasPermission : EssentialsChatPlugin
+    class HasPermission
     {
         public static bool Run(SvPlayer player, string ExeBy, bool ShowNoPermMessage = false, byte? jobIndex = null)
         {
-            if (AdminsListPlayers.Contains(player.playerData.username) && ExeBy.Contains("admins") || ExeBy.Contains("everyone"))
+            if (player.player.admin && ExeBy.Contains("admins") || ExeBy.Contains("everyone"))
                 return true;
             string[] GroupsSplit = ExeBy.Split(',');
             foreach (string name in GroupsSplit)

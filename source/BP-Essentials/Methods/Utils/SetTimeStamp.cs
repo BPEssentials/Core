@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials
 {
-    class SetTimeStamp : EssentialsChatPlugin
+    class SetTimeStamp
     {
         public static string Run()
         {
@@ -39,7 +39,7 @@ namespace BP_Essentials
                 if (TimestampFormat.Contains("{S}") || TimestampFormat.Contains("{s}"))
                     placeHolderText = placeHolderText.Replace("{S}", seconds.ToString());
                 if (TimestampFormat.Contains("{T}"))
-                    placeHolderText = placeHolderText.Replace("{T}", hm.ToString("tt"));
+                    placeHolderText = placeHolderText.Replace("{T}", hm.ToString("t"));
                 placeHolderText = placeHolderText + " ";
                 return placeHolderText;
             }

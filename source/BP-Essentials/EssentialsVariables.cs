@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.8";
+        public const string Version = "2.5.9";
         public static bool isPreRelease;
 
         // Generic Constants
@@ -59,9 +59,14 @@ namespace BP_Essentials
         public static bool BlockBanButtonTabMenu;
         public static bool CheckBannedEnabled;
         public static bool blockLicenseRemoved;
+        public static bool ShowJailMessage;
+        public static bool BlockSuicide;
+        public static bool BlockMissions;
+        public static bool ProximityChat;
+        public static bool LocalChatMute;
 
         // Lists
-        public static List<string> CustomCommands = new List<string>();
+        public static List<CustomCommand> CustomCommands = new List<CustomCommand>();
 
         public static List<string> Responses = new List<string>();
         public static List<string> ChatBlockWords = new List<string>();
@@ -112,6 +117,7 @@ namespace BP_Essentials
         public static string AdminMessage;
         public static string AdminChatMessage;
         public static string BlockedItemMessage;
+        public static string MsgNoWantedAllowed;
 
         public static string infoColor, errorColor, warningColor, argColor;
 
@@ -127,12 +133,17 @@ namespace BP_Essentials
         public static string AccessSetHPMenu;
         public static string AccessSetStatsMenu;
         public static string CmdCommandCharacter;
+
+        // Commands, still a few needed for easy access
         public static string CmdStaffChatExecutableBy;
         public static string CmdConfirm;
         public static string CmdToggleChat;
+        public static string CmdTpaaccept;
+
+
         public static string DiscordWebhook_Ban;
         public static string DiscordWebhook_Report;
-
+        public static string WipePassword;
         // Ints
         public const int SaveTime = 5 * 60;
 
@@ -1043,16 +1054,17 @@ namespace BP_Essentials
     {
         public Action<SvPlayer, string> RunMethod;
         public List<string> commandCmds;
-        public bool? commandDisabled;
+        public bool commandDisabled;
         public string commandGroup;
         public string commandName;
+        public bool commandWantedAllowed;
     }
 
     public class _PlayerList
     {
-        public ShPlayer shplayer { get; set; }
+        public ShPlayer Shplayer { get; set; }
         public CurrentMenu LastMenu;
-        public ShPlayer reportedPlayer { get; set; }
+        public ShPlayer ReportedPlayer { get; set; }
         public string reportedReason;
         public bool chatEnabled = true;
         public bool staffChatEnabled;
@@ -1060,6 +1072,8 @@ namespace BP_Essentials
         public bool spyEnabled;
         public int messagesSent;
         public bool isCurrentlyAwaiting;
+        public ShPlayer ReplyToUser { get; set; }
+        public ShPlayer TpaUser { get; set; }
     }
 
     public class _Group

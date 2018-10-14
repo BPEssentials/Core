@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Kick
+    class Disconnect
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -24,8 +24,8 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                 return;
             }
-            player.svManager.Kick(shPlayer.svPlayer.connection);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kicked</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+            player.svManager.Disconnect(shPlayer.svPlayer.connection);
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Disconnected</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
         }
     }
 }

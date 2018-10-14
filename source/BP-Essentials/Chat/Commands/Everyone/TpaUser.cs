@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Kick
+    class TpaUser
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -24,8 +24,9 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
                 return;
             }
-            player.svManager.Kick(shPlayer.svPlayer.connection);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kicked</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
+            playerList[shPlayer.ID].TpaUser = player.player;
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Sent a TPA request to</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
+            shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.player.username}</color> <color={infoColor}>sent you a tpa request. Type</color> <color={argColor}>{CmdCommandCharacter}{CmdTpaaccept}</color> <color={infoColor}>to accept it.</color>");
         }
     }
 }

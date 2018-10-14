@@ -8,11 +8,11 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class OnlinePlayers : EssentialsChatPlugin
+    class OnlinePlayers
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
-            var realPlayers = FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.IsServerside());
+            var realPlayers = UnityEngine.Object.FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.IsServerside());
             switch (realPlayers)
             {
                 case 1:

@@ -10,13 +10,17 @@ using System.Threading;
 
 namespace BP_Essentials
 {
-    class LogMessage : EssentialsChatPlugin
+    class LogMessage
     {
-        public static void Run(SvPlayer player, string message)
+        public static void LocalMessage(SvPlayer player, string message)
+        {
+            Run(player, message, "[LOCAL-CHAT] ");
+        }
+        public static void Run(SvPlayer player, string message, string prefix = "")
         {
             try
             {
-                var mssge = $"{SetTimeStamp.Run()}[{(message.StartsWith(CmdCommandCharacter) ? "COMMAND" : "MESSAGE")}] {player.playerData.username}: {message}";
+                var mssge = $"{SetTimeStamp.Run()}{prefix}[{(message.StartsWith(CmdCommandCharacter) ? "COMMAND" : "MESSAGE")}] {player.playerData.username}: {message}";
                 Debug.Log(mssge);
                 int tries = 0;
                 while (tries < 2)

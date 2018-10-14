@@ -4,7 +4,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    public class TpHere : EssentialsChatPlugin
+    public class TpHere
     {
         public static void Run(SvPlayer player, string message)
         {

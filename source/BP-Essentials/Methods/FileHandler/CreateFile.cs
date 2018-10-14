@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials
 {
-    class CreateFile : EssentialsChatPlugin
+    class CreateFile
     {
         public static void Run(string fileName)
         {
@@ -20,9 +20,9 @@ namespace BP_Essentials
                     case SettingsFile:
                         {
                             if (isPreRelease)
-                                DownloadAndWriteToFile.Run(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings_test.txt");
+                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings_test.txt");
                             else
-                                DownloadAndWriteToFile.Run(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings.txt");
+                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings.txt");
                             break;
                         }
                     case ChatBlockFile:
@@ -39,14 +39,17 @@ namespace BP_Essentials
                         }
                     case CustomCommandsFile:
                         {
-                            DownloadAndWriteToFile.Run(CustomCommandsFile, "http://www.UserR00T.com/dev/BPEssentials/customcommands.txt");
+                            GetWebsiteContent.WriteToFile(CustomCommandsFile, "http://www.UserR00T.com/dev/BPEssentials/customcommands.txt");
                             break;
                         }
                     case CustomGroupsFile:
                         {
-                            DownloadAndWriteToFile.Run(CustomGroupsFile, "http://www.UserR00T.com/dev/BPEssentials/customgroups.txt");
+                            GetWebsiteContent.WriteToFile(CustomGroupsFile, "http://www.UserR00T.com/dev/BPEssentials/customgroups.txt");
                             break;
                         }
+
+                    default:
+                        break;
                 }
             }
             catch (Exception ex)

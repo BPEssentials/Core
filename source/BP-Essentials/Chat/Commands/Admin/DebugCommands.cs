@@ -8,7 +8,7 @@ using System.IO;
 
 namespace BP_Essentials.Commands
 {
-    public class DebugCommands : EssentialsChatPlugin
+    public class DebugCommands
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -101,6 +101,8 @@ namespace BP_Essentials.Commands
                                         ++currIndex;
                                     }
                                     break;
+                                default:
+                                    break;
                             }
                         }
                     }
@@ -117,7 +119,7 @@ namespace BP_Essentials.Commands
             }
             else if (arg == "tpall")
             {
-                foreach (var currPlayer in FindObjectsOfType<SvPlayer>())
+                foreach (var currPlayer in UnityEngine.Object.FindObjectsOfType<SvPlayer>())
                     currPlayer.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
             }
             else if (arg == "addcrimes")

@@ -4,9 +4,9 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    public class TpAll : EssentialsChatPlugin
+    public class TpAll
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             var pos = player.player.GetPosition();
             var rot = player.player.GetRotation();

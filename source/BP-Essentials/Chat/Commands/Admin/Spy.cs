@@ -1,9 +1,9 @@
 ﻿using static BP_Essentials.EssentialsVariablesPlugin;
 namespace BP_Essentials.Commands
 {
-    public class Spy : EssentialsChatPlugin
+    public class Spy
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             var shPlayer = player.player;
             playerList[shPlayer.ID].spyEnabled = !playerList[shPlayer.ID].spyEnabled;

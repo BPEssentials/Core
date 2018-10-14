@@ -2,8 +2,8 @@
 using static BP_Essentials.EssentialsVariablesPlugin;
 using System.IO;
 namespace BP_Essentials.Commands {
-    public class Afk : EssentialsChatPlugin {
-        public static void Run(SvPlayer player)
+    public class Afk {
+        public static void Run(SvPlayer player, string message)
         {
             ReadFile.Run(AfkListFile);
             if (AfkPlayers.Contains(player.playerData.username))

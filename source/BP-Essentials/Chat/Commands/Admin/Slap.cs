@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Slap : EssentialsChatPlugin
+    class Slap
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -18,10 +18,10 @@ namespace BP_Essentials.Commands
             else
             {
                 bool playerfound = false;
-                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
                     {
-                        foreach (var shPlayer2 in FindObjectsOfType<ShPlayer>())
+                        foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                             if (shPlayer2.svPlayer == player && !shPlayer2.svPlayer.IsServerside())
                             {
                                 int amount = new System.Random().Next(4, 15);

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace BP_Essentials
 {
-    class CheckAltAcc : EssentialsChatPlugin
+    class CheckAltAcc
     {
         public static void Run(SvPlayer player)
         {
