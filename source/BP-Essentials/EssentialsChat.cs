@@ -57,7 +57,7 @@ namespace BP_Essentials
                 if (message.StartsWith(CmdCommandCharacter))
                 {
                     // CustomCommands
-                    var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.StartsWith(x.Command));
+                    var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.StartsWith(CmdCommandCharacter + x.Command));
                     if (customCommand != null)
                     {
                         foreach (string line in customCommand.Response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))

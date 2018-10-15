@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
-            player.Send(SvSendType.Self, Channel.Reliable, 40, player.bankBalance);
+            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowATMMenu, player.bankBalance);
         }
     }
 }
