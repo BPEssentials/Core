@@ -21,7 +21,7 @@ namespace BP_Essentials
                     Thread.Sleep(3000);
                     if (!player.player.admin && !string.IsNullOrEmpty(player.svManager.GetAddress(player.connection).Trim()))
                         foreach (var line in File.ReadAllLines(BansFile))
-                            if (line.StartsWith(player.playerData.username))
+                            if (line.StartsWith("# "+player.playerData.username))
                             {
                                 Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} Joined while banned! IP: {player.svManager.GetAddress(player.connection)}");
                                 player.svManager.AddBanned(player.player);
