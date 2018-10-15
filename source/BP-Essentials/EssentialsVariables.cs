@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.12";
+        public const string Version = "2.5.13";
         public static bool isPreRelease;
 
         // Generic Constants
