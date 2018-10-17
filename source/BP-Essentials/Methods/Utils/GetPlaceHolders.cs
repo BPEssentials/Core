@@ -34,7 +34,7 @@ namespace BP_Essentials
                 if (str.Contains("{H}"))
                     placeHolderText = placeHolderText.Replace("{H}", hm.ToString("HH"));
                 if (str.Contains("{h}"))
-                    placeHolderText = placeHolderText.Replace("{h}", hm.ToString("h"));
+                    placeHolderText = placeHolderText.Replace("{h}", hm.ToString("hh"));
                 if (str.Contains("{M}") || str.Contains("{m}"))
                     placeHolderText = placeHolderText.Replace("{M}", minutes);
                 if (str.Contains("{S}") || str.Contains("{s}"))
