@@ -55,6 +55,7 @@ namespace BP_Essentials
         public string MsgNoPermJob { get; set; }
         public string BlockedItem { get; set; }
         public string MsgNoWantedAllowed { get; set; }
+        public string MsgNoCuffedAllowed { get; set; }
     }
     [Serializable]
     public class MessageColors
@@ -134,6 +135,7 @@ namespace BP_Essentials
         public string ExecutableBy { get; set; }
         public bool? Disabled { get; set; }
         public bool? AllowWithCrimes { get; set; }
+        public bool? AllowWhileCuffed { get; set; }
     }
     [Serializable]
     public class __RootObject
@@ -226,6 +228,7 @@ namespace BP_Essentials
                         MsgNoPermJob = $"<color={errorColor}>{m.Messages.MsgNoPermJob}</color>";
                         BlockedItemMessage = $"<color={errorColor}>{m.Messages.BlockedItem}</color>";
                         MsgNoWantedAllowed = $"<color={errorColor}>{m.Messages.MsgNoWantedAllowed}</color>";
+                        MsgNoCuffedAllowed = $"<color={errorColor}>{m.Messages.MsgNoCuffedAllowed}</color>";
 
                         AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
                         AccessItemMenu = m.FunctionUI.AccessItemMenu;

@@ -9,6 +9,7 @@ namespace BP_Essentials.Commands
 {
     public class TpLocation
     {
+        [Obsolete]
         public static void Run(SvPlayer player, string message)
         {
             var arg1 = GetArgument.Run(1, false, true, message);

@@ -73,7 +73,7 @@ namespace BP_Essentials
                                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, DisabledCommand);
                                 return true;
                             }
-                            if (HasPermission.Run(player, cmd.commandGroup, true, player.player.job.jobIndex) && HasWantedLevel.Run(player, cmd.commandWantedAllowed))
+                            if (HasPermission.Run(player, cmd.commandGroup, true, player.player.job.jobIndex) && HasWantedLevel.Run(player, cmd.commandWantedAllowed) && IsCuffed.Run(player, cmd.commandHandcuffedAllowed))
                             {
                                 playerList.Where(x => x.Value.spyEnabled && x.Value.Shplayer.svPlayer != player).ToList().ForEach(x => x.Value.Shplayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {tempMessage}"));
                                 cmd.RunMethod.Invoke(player, message);

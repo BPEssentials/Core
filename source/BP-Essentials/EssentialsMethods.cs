@@ -465,12 +465,12 @@ namespace BP_Essentials
         public static void SvPlaceInJail(SvPlayer player, ref int criminalID)
         {
             var shPlayer = player.player;
-            if (shPlayer.job is Police)
+            if (shPlayer.manager.jail && shPlayer.job is Police)
             {
-                ShPlayer crimShPlayer = player.entity.manager.FindByID<ShPlayer>(criminalID);
-                if (!shPlayer)
+                var crimShPlayer = player.entity.manager.FindByID<ShPlayer>(criminalID);
+                if (!crimShPlayer)
                     return;
-                if (player.IsServerside() || crimShPlayer.Distance(shPlayer.manager.jail) < crimShPlayer.manager.jailDistance)
+                if (player.IsServerside() || crimShPlayer.DistanceSqr(player.player.manager.jail) < 14400f)
                 {
                     var jailTime = 0f;
                     var Fine = 0;

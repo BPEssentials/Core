@@ -46,7 +46,8 @@ namespace BP_Essentials
                     commandName = command.CommandName,
                     commandCmds = command.Commands.Select(x=>$"{CmdCommandCharacter}{x}").ToList(),
                     commandDisabled = command.Disabled ?? false,
-                    commandWantedAllowed = command.AllowWithCrimes ?? true
+                    commandWantedAllowed = command.AllowWithCrimes ?? true,
+                    commandHandcuffedAllowed = command.AllowWhileCuffed ?? true
                 });
             }
             Debug.Log($"{SetTimeStamp.Run()}[INFO] Registered commands! ({CommandList.Count} commands loaded in.)");

@@ -32,7 +32,6 @@ namespace BP_Essentials
                 foreach (var shPlayer in SvMan.players.Values)
                     if (!shPlayer.svPlayer.IsServerside())
                     {
-                        if (shPlayer.GetPlaceIndex() >= 13) continue;
                         shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "<color=#DCDADA>Saving game.. This can take up to 5 seconds.</color>");
                         shPlayer.svPlayer.Save();
                     }

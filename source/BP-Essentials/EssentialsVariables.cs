@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.13";
+        public const string Version = "2.5.15";
         public static bool isPreRelease;
 
         // Generic Constants
@@ -118,6 +118,7 @@ namespace BP_Essentials
         public static string AdminChatMessage;
         public static string BlockedItemMessage;
         public static string MsgNoWantedAllowed;
+        public static string MsgNoCuffedAllowed;
 
         public static string infoColor, errorColor, warningColor, argColor;
 
@@ -168,6 +169,7 @@ namespace BP_Essentials
         public static System.Timers.Timer _Timer = new System.Timers.Timer();
         public static SvManager SvMan;
 
+        [Obsolete("Maps can be custom now, so should be removed in future update or manually added by server owners.")]
         public static Dictionary<string[], Vector3> PlaceDictionary = new Dictionary<string[], Vector3>
         {
             { new[] { "1", "PoliceStation", "Police Station" }, new Vector3(-17.0F, 0.0F, 46.0F) },
@@ -1058,6 +1060,7 @@ namespace BP_Essentials
         public string commandGroup;
         public string commandName;
         public bool commandWantedAllowed;
+        public bool commandHandcuffedAllowed;
     }
 
     public class _PlayerList
