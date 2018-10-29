@@ -12,7 +12,7 @@ namespace BP_Essentials
     {
         public static bool Run(SvPlayer player, bool allow = true)
         {
-            if (allow || player.player.IsRestrained())
+            if (allow || !player.player.IsRestrained())
                 return true;
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"{MsgNoCuffedAllowed}");
             return false;

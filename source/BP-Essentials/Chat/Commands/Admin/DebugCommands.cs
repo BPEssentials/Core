@@ -20,98 +20,81 @@ namespace BP_Essentials.Commands
             else if (arg == "getplayerhash" || arg == "gethash")
             {
                 string arg2 = GetArgument.Run(2, false, true, message);
-                if (!String.IsNullOrEmpty(arg2))
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2));
-                else
+                if (string.IsNullOrEmpty(arg2))
+                {
+
                     player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments. /debug get(player)hash [username]");
+                    return;
+                }
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Hash of " + arg2 + " : " + Animator.StringToHash(arg2));
             }
             else if (arg == "spaceindex" || arg == "getspaceindex")
             {
                 string arg2 = GetArgument.Run(2, false, true, message);
-                if (!String.IsNullOrEmpty(arg2))
+                if (string.IsNullOrEmpty(arg2))
                 {
-                    bool found = false;
-                    foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                        if (shPlayer2.svPlayer.playerData.username == arg2 || shPlayer2.ID.ToString() == arg2)
-                            if (!shPlayer2.svPlayer.IsServerside())
-                            {
-                                found = true;
-                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + shPlayer2.svPlayer.playerData.username + "': " + shPlayer2.GetPlaceIndex());
-                            }
-                    if (!found)
-                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Invalid arguments (Or user is not found online.) /debug (get)spaceindex [username] ");
-                }
-                else
                     player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Your SpaceIndex: " + shPlayer.GetPlaceIndex());
+                    return;
+                }
+                var argshPlayer = GetShByStr.Run(arg2);
+                if (argshPlayer == null)
+                {
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                    return;
+                }
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "SpaceIndex of '" + argshPlayer.svPlayer.playerData.username + "': " + argshPlayer.GetPlaceIndex());
             }
             else if (arg == "createidlist")
             {
-                string arg2 = GetArgument.Run(2, false, true, message).Trim().ToLower();
-                if (!String.IsNullOrEmpty(arg2) && (arg2 == "item" || arg2 == "vehicle" || arg2 == "skinid"))
+                string arg2 = GetArgument.Run(2, false, true, message);
+                if (string.IsNullOrEmpty(arg2))
                 {
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
-                    var location = $"{FileDirectory}IDLists/{arg2}/IDLIST_{DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss")}.txt";
-                    if (!Directory.Exists($"{FileDirectory}IDLists/{arg2}"))
-                        Directory.CreateDirectory($"{FileDirectory}IDLists/{arg2}");
-                    var sb = new StringBuilder();
-                    int currIndex = 1;
-                    sb.Append("{\"items\": [");
-                    IndexCollection<ShEntity> ECol = (IndexCollection<ShEntity>)typeof(ShManager).GetField("entityCollection", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(shPlayer.manager);
-                    if (arg2 == "skinid")
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Please select idlist type: /debug createidlist item/vehicle/skinid");
+                    return;
+                }
+                arg2 = arg2.Trim().ToLower();
+                if (arg2 != "item" && arg2 != "vehicle" && arg2 != "skinid")
+                {
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Please select idlist type: /debug createidlist item/vehicle/skinid (Invalid value given as second arument)");
+                    return;
+                }
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Creating ID list.. please wait");
+                var location = $"{FileDirectory}IDLists/{arg2}/IDLIST_{DateTime.Now.ToString("yyyy_mm_dd_hh_mm_ss")}.txt";
+                if (!Directory.Exists($"{FileDirectory}IDLists/{arg2}"))
+                    Directory.CreateDirectory($"{FileDirectory}IDLists/{arg2}");
+                var sb = new StringBuilder();
+                int currIndex = 1;
+                sb.Append("{\"items\": [");
+                if (arg2 == "skinid")
+                {
+                    for (int i = 0; i < shPlayer.manager.skinPrefabs.Length; i++)
                     {
-                        for (int i = 0; i < shPlayer.manager.skinPrefabs.Length; i++)
-                        {
-                            sb.Append($"{{\"name\": \"{shPlayer.manager.skinPrefabs[i].name}\",\"id\": {currIndex},\"gameid\": {Animator.StringToHash(shPlayer.manager.skinPrefabs[i].name)}}},\n");
-                            ++currIndex;
-                        }
+                        sb.Append($"{{\"name\": \"{shPlayer.manager.skinPrefabs[i].name}\",\"id\": {currIndex},\"gameid\": {Animator.StringToHash(shPlayer.manager.skinPrefabs[i].name)}}},\n");
+                        ++currIndex;
                     }
-                    else
-                    {
-                        foreach (var v in ECol)
-                        {
-                            // dry coding, improve
-                            switch (arg2)
-                            {
-                                case "item":
-                                    // Jesus o.O
-                                    if (
-                                           v.GetType() == typeof(ShPlaceable)
-                                        || v.GetType() == typeof(ShGun)
-                                        || v.GetType() == typeof(ShWeapon)
-                                        || v.GetType() == typeof(ShFurniture)
-                                        || v.GetType() == typeof(ShWearable)
-                                        || v.GetType() == typeof(ShConsumable)
-                                        || v.GetType() == typeof(ShDrugMaterial)
-                                        || v.GetType() == typeof(ShExtinguisher)
-                                        || v.GetType() == typeof(ShHealer)
-                                        || v.GetType() == typeof(ShRestraint)
-                                        || v.GetType() == typeof(ShSeed)
-                                        || v.GetType() == typeof(ShProjectile)
-                                        || v.GetType() == typeof(ShDetonator)
-                                        || v.GetType() == typeof(ShShield))
-                                    {
-                                        sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
-                                        ++currIndex;
-                                    }
-                                    break;
-                                case "vehicle":
-                                    if (v.GetType() == typeof(ShVehicle) || v.GetType() == typeof(ShBoat) || v.GetType() == typeof(ShHelo) || v.GetType() == typeof(ShTransport))
-                                    {
-                                        sb.Append($"{{\"name\": \"{v.name}\",\"id\": {currIndex},\"gameid\": {v.index}}},\n");
-                                        ++currIndex;
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                    File.WriteAllText(location, $"{sb.Remove(sb.Length - 2, 1)}]}}");
-
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"Success! ID List has been saved in {location}. ({currIndex} entries.)");
                 }
                 else
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Please select idlist type: /debug createidlist item/vehicle");
+                {
+                    foreach (var entity in shPlayer.manager.entities)
+                    {
+                        switch (arg2)
+                        {
+                            case "item":
+                                if (entity != null && entity is ShItem)
+                                    sb.Append($"{{\"name\": \"{entity.name}\",\"id\": {++currIndex},\"gameid\": {entity.index}}},\n");
+                                break;
+                            case "vehicle":
+                                if (entity != null && entity is ShVehicle)
+                                    sb.Append($"{{\"name\": \"{entity.name}\",\"id\": {++currIndex},\"gameid\": {entity.index}}},\n");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                File.WriteAllText(location, $"{sb.Remove(sb.Length - 2, 1)}]}}");
+
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"Success! ID List has been saved in {location}. ({currIndex} entries.)");
             }
             else if (arg == "jobarray")
             {

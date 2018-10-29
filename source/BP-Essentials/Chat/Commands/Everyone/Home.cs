@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to teleport to!</color>");
                 return;
             }
-            player.SvReset(shPlayer.ownedApartment.svDoor.gameObject.transform.position, UnityEngine.Quaternion.identity, 0);
+            player.SvReset(shPlayer.ownedApartment.svDoor.other.spawnPoint.position, shPlayer.ownedApartment.svDoor.other.spawnPoint.rotation, 0);
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to your apartment.</color>");
         }
     }
