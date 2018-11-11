@@ -264,7 +264,7 @@
                 <td>Marks you as AFK. When someone types your name they will get a message saying that you're afk.</td>
               </tr>
               <tr>
-                <td>/createkit [DelayInSeconds] [KitName]</td>
+                <td>/createkit [DelayInSeconds] [Price] [KitName]</td>
                 <td>/ck</td>
                 <td>Creates a new kit if it doesn't already exist.</td>
               </tr>
@@ -327,6 +327,62 @@
                 <td>/t</td>
                 <td>/tchat</td>
                 <td>Toggles chat.</td>
+              </tr>
+              <tr>
+                <td>/createwarp [DelayInSeconds] [Price] [WarpName]</td>
+                <td>/ck</td>
+                <td>Creates a new warp if it doesn't already exist.</td>
+              </tr>
+              <tr>
+                <td>/warps</td>
+                <td>/allwarps</td>
+                <td>Lists all the warps you have access to and aren't disabled.</td>
+              </tr>
+              <tr>
+                <td>/warp [Name]</td>
+                <td>/gotowarp</td>
+                <td>Teleports you to that warp as long as you have permission to it and it isn't disabled.</td>
+              </tr>
+              
+              <tr>
+                <td>/tpa [Username/ID]</td>
+                <td>/tprequest</td>
+                <td>Sends a teleport request to a user. If that user accepts the request you'll be teleported to them.</td>
+              </tr>
+              <tr>
+                <td>/tpaccept</td>
+                <td>/tpaa</td>
+                <td>Accepts last teleport request.</td>
+              </tr>
+              <tr>
+                <td>/tpadeny</td>
+                <td>/tpad</td>
+                <td>Denies last teleport request.</td>
+              </tr>
+              <tr>
+                <td>/pm [ID] [Message]</td>
+                <td>/pmuser</td>
+                <td>Sends a direct message to a user.</td>
+              </tr>
+              <tr>
+                <td>/r [Message]</td>
+                <td>/ruser</td>
+                <td>Responds to the last direct message.</td>
+              </tr>
+              <tr>
+                <td>/disconnect [Username/ID]</td>
+                <td>/dconnect</td>
+                <td>Disconnects someone from the server but does <b>not</b> temp ban them.</td>
+              </tr>
+              <tr>
+                <td>/home</td>
+                <td>/h</td>
+                <td>Teleports you to your apartment.</td>
+              </tr>
+              <tr>
+                <td>/wipeserver [Password]</td>
+                <td>/unleashallchaos</td>
+                <td>Deletes all user data. (Password can be set in config.)</td>
               </tr>
             </tbody>
           </table>
