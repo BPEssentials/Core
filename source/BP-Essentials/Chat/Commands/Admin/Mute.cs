@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BP_Essentials.Commands
 {
-    class Mute : EssentialsChatPlugin
+    class Mute
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands
             muteuser = GetArgument.Run(1, false, true, message);
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.username == muteuser.ToString() || shPlayer.ID.ToString() == muteuser.ToString())
-                    if (!shPlayer.svPlayer.IsServerside())
+                    if (!shPlayer.svPlayer.serverside)
                     {
                         muteuser = shPlayer.username;
                         found = true;

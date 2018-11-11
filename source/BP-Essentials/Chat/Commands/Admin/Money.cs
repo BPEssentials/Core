@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Money : EssentialsChatPlugin
+    class Money
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -30,8 +30,8 @@ namespace BP_Essentials.Commands
             if (isNumeric)
             {
                 bool found = false;
-                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
+                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.serverside)
                     {
                         shPlayer.TransferMoney(DeltaInv.AddToMe, arg2int, true);
                         player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Successfully gave</color><color={argColor}> " + shPlayer.username + " " + arg2int + $"</color><color={infoColor}>$</color>");

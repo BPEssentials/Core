@@ -8,9 +8,9 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Reload : EssentialsChatPlugin
+    class Reload
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             BP_Essentials.Reload.Run(false, player);
         }

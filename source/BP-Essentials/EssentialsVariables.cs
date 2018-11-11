@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.6";
+        public const string Version = "2.6.0";
         public static bool isPreRelease;
 
         // Generic Constants
@@ -15,6 +15,7 @@ namespace BP_Essentials
 
         public static string LogDirectory = Path.Combine(FileDirectory, "logs/");
         public static string KitDirectory = Path.Combine(FileDirectory, "kits/");
+        public static string WarpDirectory = Path.Combine(FileDirectory, "warps/");
 
         public const string SettingsFile = FileDirectory + "essentials_settings.txt";
         public const string LanguageBlockFile = FileDirectory + "languageblock.txt";
@@ -59,9 +60,14 @@ namespace BP_Essentials
         public static bool BlockBanButtonTabMenu;
         public static bool CheckBannedEnabled;
         public static bool blockLicenseRemoved;
+        public static bool ShowJailMessage;
+        public static bool BlockSuicide;
+        public static bool BlockMissions;
+        public static bool ProximityChat;
+        public static bool LocalChatMute;
 
         // Lists
-        public static List<string> CustomCommands = new List<string>();
+        public static List<CustomCommand> CustomCommands = new List<CustomCommand>();
 
         public static List<string> Responses = new List<string>();
         public static List<string> ChatBlockWords = new List<string>();
@@ -74,6 +80,7 @@ namespace BP_Essentials
 
         public static List<int> BlockedItems = new List<int>();
         public static List<Kits_Json.Kits_RootObj> listKits = new List<Kits_Json.Kits_RootObj>();
+        public static List<Warps_Json.Warps_RootObj> listWarps = new List<Warps_Json.Warps_RootObj>();
 
         // Arrays
         public static string[] Announcements;
@@ -112,6 +119,8 @@ namespace BP_Essentials
         public static string AdminMessage;
         public static string AdminChatMessage;
         public static string BlockedItemMessage;
+        public static string MsgNoWantedAllowed;
+        public static string MsgNoCuffedAllowed;
 
         public static string infoColor, errorColor, warningColor, argColor;
 
@@ -127,12 +136,17 @@ namespace BP_Essentials
         public static string AccessSetHPMenu;
         public static string AccessSetStatsMenu;
         public static string CmdCommandCharacter;
+
+        // Commands, still a few needed for easy access
         public static string CmdStaffChatExecutableBy;
         public static string CmdConfirm;
         public static string CmdToggleChat;
+        public static string CmdTpaaccept;
+
+
         public static string DiscordWebhook_Ban;
         public static string DiscordWebhook_Report;
-
+        public static string WipePassword;
         // Ints
         public const int SaveTime = 5 * 60;
 
@@ -141,6 +155,7 @@ namespace BP_Essentials
         public static int[] BlockedSpawnIds;
         public static int DebugLevel;
         public static int GodModeLevel;
+        public static int MessagesAllowedPerSecond;
 
         // Misc.
         public static string _msg;
@@ -156,6 +171,7 @@ namespace BP_Essentials
         public static System.Timers.Timer _Timer = new System.Timers.Timer();
         public static SvManager SvMan;
 
+        [Obsolete("Maps can be custom now, so should be removed in future update or manually added by server owners.")]
         public static Dictionary<string[], Vector3> PlaceDictionary = new Dictionary<string[], Vector3>
         {
             { new[] { "1", "PoliceStation", "Police Station" }, new Vector3(-17.0F, 0.0F, 46.0F) },
@@ -1032,9 +1048,43 @@ namespace BP_Essentials
             }
             public string Name { get; set; }
             public int Delay { get; set; }
+            public int Price { get; set; }
             public string ExecutableBy { get; set; }
             public bool Disabled { get; set; }
             public List<Kits_Item> Items { get; set; }
+            public Dictionary<string, int> CurrentlyInCooldown { get; set; }
+        }
+    }
+    public class Warps_Json
+    {
+        public class Position
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float Z { get; set; }
+        }
+
+        public class Rotation
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float Z { get; set; }
+            public float W { get; set; }
+        }
+
+        public class Warps_RootObj
+        {
+            public Warps_RootObj()
+            {
+                CurrentlyInCooldown = new Dictionary<string, int>();
+            }
+            public string Name { get; set; }
+            public int Delay { get; set; }
+            public int Price { get; set; }
+            public string ExecutableBy { get; set; }
+            public bool Disabled { get; set; }
+            public Position Position { get; set; }
+            public Rotation Rotation { get; set; }
             public Dictionary<string, int> CurrentlyInCooldown { get; set; }
         }
     }
@@ -1042,21 +1092,27 @@ namespace BP_Essentials
     {
         public Action<SvPlayer, string> RunMethod;
         public List<string> commandCmds;
-        public bool? commandDisabled;
+        public bool commandDisabled;
         public string commandGroup;
         public string commandName;
+        public bool commandWantedAllowed;
+        public bool commandHandcuffedAllowed;
     }
 
     public class _PlayerList
     {
-        public ShPlayer shplayer { get; set; }
+        public ShPlayer Shplayer { get; set; }
         public CurrentMenu LastMenu;
-        public ShPlayer reportedPlayer { get; set; }
+        public ShPlayer ReportedPlayer { get; set; }
         public string reportedReason;
         public bool chatEnabled = true;
         public bool staffChatEnabled;
         public bool receiveStaffChat = true;
         public bool spyEnabled;
+        public int messagesSent;
+        public bool isCurrentlyAwaiting;
+        public ShPlayer ReplyToUser { get; set; }
+        public ShPlayer TpaUser { get; set; }
     }
 
     public class _Group

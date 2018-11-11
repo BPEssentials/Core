@@ -25,12 +25,12 @@ namespace BP_Essentials
         public static void Initialize(SvPlayer player)
         {
             var shPlayer = player.player;
-            if (!player.IsServerside())
+            if (!player.serverside)
             {
                 new Thread(() => WriteIpToFile.Run(player)).Start();
                 new Thread(() => CheckBanned.Run(player)).Start();
                 new Thread(() => CheckAltAcc.Run(player)).Start();
-                playerList.Add(shPlayer.ID, new _PlayerList { shplayer = shPlayer });
+                playerList.Add(shPlayer.ID, new _PlayerList { Shplayer = shPlayer });
             }
         }
 
@@ -38,9 +38,9 @@ namespace BP_Essentials
         public static void Destroy(SvPlayer player)
         {
             foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                if (item.Value.shplayer.svPlayer == player && !item.Value.shplayer.svPlayer.IsServerside())
+                if (item.Value.Shplayer.svPlayer == player && !item.Value.Shplayer.svPlayer.serverside)
                 {
-                    Debug.Log(SetTimeStamp.Run() + "[INFO] [LEAVE] " + item.Value.shplayer.username);
+                    Debug.Log(SetTimeStamp.Run() + "[INFO] [LEAVE] " + item.Value.Shplayer.username);
                     playerList.Remove(item.Key);
                     break;
                 }
@@ -53,7 +53,7 @@ namespace BP_Essentials
         }
 
         [Hook("SvPlayer.SpawnBot")]
-        public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref WaypointNode node, ref ShPlayer spawner, ref ShTransport transport, ref ShPlayer enemy)
+        public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref Waypoint node, ref ShPlayer spawner, ref ShTransport transport, ref ShPlayer enemy)
         {
             var shPlayer = player.player;
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(shPlayer.spawnJobIndex);
@@ -63,7 +63,7 @@ namespace BP_Essentials
         public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (!shPlayer.svPlayer.IsServerside())
+                if (!shPlayer.svPlayer.serverside)
                 {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.username)) continue;
@@ -83,7 +83,7 @@ namespace BP_Essentials
             }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
-                    if (!shPlayer.svPlayer.IsServerside() && !shPlayer.svPlayer.IsServerside())
+                    if (!shPlayer.svPlayer.serverside && !shPlayer.svPlayer.serverside)
                     {
                         LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
@@ -95,7 +95,7 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvStartVote")]
         public static bool SvStartVote(SvPlayer player, ref byte voteIndex, ref int ID)
         {
-            if (voteIndex == 1)
+            if (voteIndex == VoteIndex.Kick)
             {
                 if (!VoteKickDisabled)
                 {
@@ -124,6 +124,14 @@ namespace BP_Essentials
                     player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Vote kicking has been disabled on this server.</color>");
                 return true;
             }
+            else if (voteIndex == VoteIndex.Mission)
+            {
+                if (BlockMissions)
+                {
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>All missions have been disabled on this server.</color>");
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -142,19 +150,19 @@ namespace BP_Essentials
                 {
                     foreach (KeyValuePair<int, _PlayerList> item in playerList)
                     {
-                        if (item.Value.shplayer.svPlayer == player)
+                        if (item.Value.Shplayer.svPlayer == player)
                         {
-                            ShPlayer shPlayer = item.Value.shplayer;
+                            ShPlayer shPlayer = item.Value.Shplayer;
 
                             #region Report
                             if (item.Value.LastMenu == CurrentMenu.Report && key > 1 && key < 11)
                             {
                                 player.Send(SvSendType.Self, Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Reported \"</color><color={warningColor}>{item.Value.reportedPlayer.username}</color><color={infoColor}>\" With the reason \"</color><color={warningColor}>{ReportReasons[key - 2]}</color><color={infoColor}>\".</color>");
+                                player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Reported \"</color><color={warningColor}>{item.Value.ReportedPlayer.username}</color><color={infoColor}>\" With the reason \"</color><color={warningColor}>{ReportReasons[key - 2]}</color><color={infoColor}>\".</color>");
                                 item.Value.reportedReason = ReportReasons[key - 2];
                                 item.Value.LastMenu = CurrentMenu.Main;
-                                SendDiscordMessage.ReportMessage(item.Value.reportedPlayer.username, player.player.username, ReportReasons[key - 2]);
-                                ReportPlayer.Run(player.player.username, ReportReasons[key - 2], item.Value.reportedPlayer);
+                                SendDiscordMessage.ReportMessage(item.Value.ReportedPlayer.username, player.player.username, ReportReasons[key - 2]);
+                                ReportPlayer.Run(player.player.username, ReportReasons[key - 2], item.Value.ReportedPlayer);
                                 return true;
                             }
                             #endregion
@@ -199,14 +207,14 @@ namespace BP_Essentials
                                     else if (item.Value.LastMenu == CurrentMenu.AdminReport && shPlayer.admin)
                                     {
                                         player.Send(SvSendType.Self, Channel.Reliable, ClPacket.CloseFunctionMenu);
-                                        if (IsOnline.Run(item.Value.reportedPlayer))
+                                        if (IsOnline.Run(item.Value.ReportedPlayer))
                                         {
-                                            shPlayer.SetPosition(item.Value.reportedPlayer.GetPosition());
-                                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Teleported to \"</color><color=#ea8220>{item.Value.reportedPlayer.username}</color><color={infoColor}>\".</color>");
+                                            shPlayer.SetPosition(item.Value.ReportedPlayer.GetPosition());
+                                            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>Teleported to \"</color><color=#ea8220>{item.Value.ReportedPlayer.username}</color><color={infoColor}>\".</color>");
                                         }
                                         else
                                             player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, "<color=#ff0000ff>Player not online anymore.</color>");
-                                        item.Value.reportedPlayer = null;
+                                        item.Value.ReportedPlayer = null;
                                         item.Value.LastMenu = CurrentMenu.Main;
                                     }
 
@@ -263,7 +271,7 @@ namespace BP_Essentials
                                 case 4:
                                     if (item.Value.LastMenu == CurrentMenu.GiveMoney)
                                     {
-                                        item.Value.shplayer.TransferMoney(DeltaInv.AddToMe, 100000, true);
+                                        item.Value.Shplayer.TransferMoney(DeltaInv.AddToMe, 100000, true);
                                         player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, $"<color={infoColor}>You have given yourself 100.000 dollars.</color>");
                                         Debug.Log(SetTimeStamp.Run() + "[INFO] " + player.playerData.username + " Spawned in 100.000 dollars through the functionUI");
                                         item.Value.LastMenu = CurrentMenu.Main;
@@ -335,13 +343,15 @@ namespace BP_Essentials
                                         item.Value.LastMenu = CurrentMenu.Staff;
                                     }
                                     break;
+                                default:
+                                    break;
                             }
                         }
                     }
                     return true;
                 }
                 foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                    if (item.Value.shplayer.svPlayer == player)
+                    if (item.Value.Shplayer.svPlayer == player)
                         item.Value.LastMenu = CurrentMenu.Main;
                 player.Send(SvSendType.Self, Channel.Reliable, ClPacket.CloseFunctionMenu);
             }
@@ -355,17 +365,13 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvSuicide")]
         public static bool SvSuicide(SvPlayer player)
         {
-            if (player.IsServerside())
-                return true;
-
             var shPlayer = player.player;
-
-            if (shPlayer.IsDead())
+            if (BlockSuicide)
+            {
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You cannot suicide on this server because the server owner disabled it.</color>");
                 return true;
-
-            shPlayer.ShDie();
-            player.Send(SvSendType.Local, Channel.Reliable, ClPacket.UpdateHealth, shPlayer.ID, shPlayer.health);
-            return true;
+            }
+            return false;
         }
         [Hook("SvPlayer.SvGetJob")]
         public static bool SvGetJob(SvPlayer player, ref int employerID)
@@ -454,6 +460,34 @@ namespace BP_Essentials
                     shMoveable.Destroy();
                 else
                     shMoveable.StartCoroutine(shMoveable.svMovable.RespawnDelay());
+        }
+        [Hook("SvPlayer.SvPlaceInJail")]
+        public static void SvPlaceInJail(SvPlayer player, ref int criminalID)
+        {
+            var shPlayer = player.player;
+            if (shPlayer.manager.jail && shPlayer.job is Police)
+            {
+                var crimShPlayer = player.entity.manager.FindByID<ShPlayer>(criminalID);
+                if (!crimShPlayer)
+                    return;
+                if (player.serverside || crimShPlayer.DistanceSqr(player.player.manager.jail) < 14400f)
+                {
+                    var jailTime = 0f;
+                    var Fine = 0;
+                    foreach (var offense in crimShPlayer.offenses)
+                    {
+                        jailTime += offense.GetCrime().jailtime;
+                        Fine += offense.GetCrime().fine;
+                    }
+                    SendToJail.Run(crimShPlayer, jailTime);
+                    if (Fine > 0)
+                        player.Reward(3, Fine);
+                    if (ShowJailMessage)
+                        player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.player.username}</color> <color={infoColor}>sent</color> <color={argColor}>{crimShPlayer.username}</color> <color={infoColor}>to jail{(Fine > 0 ? $" for a fine of</color> <color={argColor}>${Fine}</color>" : ".</color>")}");
+                    return;
+                }
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Confirm criminal is cuffed and near jail");
+            }
         }
     }
 }

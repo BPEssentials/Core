@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BP_Essentials
 {
-    class CheckAutoReloadFile : EssentialsChatPlugin
+    class CheckAutoReloadFile
     {
         public static void Run(string file)
         {

@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace BP_Essentials.Commands
 {
-    public class TpToApartment : EssentialsChatPlugin
+    public class TpToApartment
     {
         public static void Run(SvPlayer player, string message)
         {

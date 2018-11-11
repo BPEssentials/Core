@@ -3,7 +3,7 @@ using System;
 using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands {
-    public class Tp : EssentialsChatPlugin {
+    public class Tp {
         public static void Run(SvPlayer player, string message)
         {
             string arg1 = GetArgument.Run(1, false, true, message);

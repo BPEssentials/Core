@@ -8,9 +8,9 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class LatestVoteResults : EssentialsChatPlugin
+    class LatestVoteResults
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             if (!LatestVotePeople.Any())
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>The list seems empty.</color>");

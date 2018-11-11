@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Heal : EssentialsChatPlugin
+    class Heal
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -22,9 +22,9 @@ namespace BP_Essentials.Commands
             else
             {
                 bool found = false;
-                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
+                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (!shPlayer.svPlayer.IsServerside())
+                        if (!shPlayer.svPlayer.serverside)
                         {
                             shPlayer.svPlayer.Heal(100);
                             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));

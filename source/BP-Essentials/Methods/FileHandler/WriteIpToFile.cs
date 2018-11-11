@@ -17,13 +17,13 @@ namespace BP_Essentials
             try
             {
                 Thread.Sleep(500);
-                Debug.Log($"{SetTimeStamp.Run()}[INFO] [JOIN] {player.playerData.username} IP is: {player.svManager.GetAddress(player.connection)}");
+                Debug.Log($"{SetTimeStamp.Run()}[INFO] [JOIN] {player.playerData.username} IP is: {player.connection.IP}");
                 int tries = 0;
                 while (tries < 2)
                     try
                     {
-                        if (!File.ReadAllText(IpListFile).Contains(player.playerData.username + ": " + player.svManager.GetAddress(player.connection)))
-                            File.AppendAllText(IpListFile, player.playerData.username + ": " + player.svManager.GetAddress(player.connection) + Environment.NewLine);
+                        if (!File.ReadAllText(IpListFile).Contains(player.playerData.username + ": " + player.connection.IP))
+                            File.AppendAllText(IpListFile, player.playerData.username + ": " + player.connection.IP + Environment.NewLine);
                         break;
                     }
                     catch (IOException)

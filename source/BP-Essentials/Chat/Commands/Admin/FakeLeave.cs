@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class FakeLeave : EssentialsChatPlugin
+    class FakeLeave
     {
         public static void Run(SvPlayer player, string message)
         {

@@ -8,20 +8,12 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Atm : EssentialsChatPlugin
+    class Atm
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
-            foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                if (shPlayer.svPlayer == player)
-                    if (!shPlayer.svPlayer.IsServerside())
-                        if (shPlayer.wantedLevel == 0)
-                        {
-                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
-                            player.Send(SvSendType.Self, Channel.Reliable, 40, player.bankBalance);
-                        }
-                        else if (shPlayer.wantedLevel != 0)
-                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Criminal Activity: Account Locked</color>");
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Opening ATM menu..</color>");
+            player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowATMMenu, player.bankBalance);
         }
     }
 }

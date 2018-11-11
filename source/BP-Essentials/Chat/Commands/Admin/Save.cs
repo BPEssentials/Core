@@ -1,14 +1,15 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
-using System;
-using System.Threading;
-using static BP_Essentials.EssentialsCorePlugin;
+﻿using System.Threading;
 
-namespace BP_Essentials.Commands {
-    public class Save : EssentialsChatPlugin {
-        public static void Run()
+namespace BP_Essentials.Commands
+{
+    public class Save
+    {
+        public static void Run(SvPlayer player, string message)
         {
-            var thread = new Thread(SaveNow.Run);
-            thread.Start();
+            new Thread(BP_Essentials.Save.Run)
+            {
+                IsBackground = true
+            }.Start();
         }
     }
 }

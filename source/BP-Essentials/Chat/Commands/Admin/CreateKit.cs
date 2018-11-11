@@ -7,20 +7,21 @@ using Newtonsoft.Json;
 
 namespace BP_Essentials.Commands
 {
-    public class CreateKit : EssentialsChatPlugin
+    public class CreateKit
     {
         public static void Run(SvPlayer player, string message)
         {
             var arg1 = GetArgument.Run(1, false, false, message);
-            var arg2 = GetArgument.Run(2, false, true, message);
-            if (string.IsNullOrEmpty(arg1.Trim()) || string.IsNullOrEmpty(arg2.Trim()))
+            var arg2 = GetArgument.Run(2, false, false, message);
+            var arg3 = GetArgument.Run(3, false, true, message);
+            if (string.IsNullOrEmpty(arg1.Trim()) || string.IsNullOrEmpty(arg2.Trim()) || string.IsNullOrEmpty(arg3.Trim()))
             {
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
                 return;
             }
-            if (!int.TryParse(arg1, out int arg1i))
+            if (!int.TryParse(arg1, out int arg1i) || !int.TryParse(arg2, out int arg2i))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot convert {arg1} to a integer.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Cannot convert {arg1} or {arg2} to a integer.</color>");
                 return;
             }
             if (arg1i < 0)
@@ -34,7 +35,7 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>A kit already exists with that name.</color>");
                 return;
             }
-            Kits.CreateKit(player, arg2, arg1i, file);
+            Kits.CreateKit(player, arg3, arg1i, arg2i, file);
             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kit created. Please edit </color><color={argColor}>{file}</color> <color={infoColor}>to add ExecuteableBy.</color>");
         }
     }

@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class RegisterCommands : EssentialsChatPlugin
+    class RegisterCommands
     {
         public static void Run(List<_Command> cmdlist)
         {
@@ -37,13 +37,17 @@ namespace BP_Essentials
                     CmdConfirm = command.Commands[0];
                 if (command.CommandName == "ToggleChat")
                     CmdToggleChat = command.Commands[0];
+                if (command.CommandName == "TpaAccept")
+                    CmdTpaaccept = command.Commands[0];
                 CommandList.Add(CommandList.Count + 1, new _CommandList {
                     RunMethod = rMethod,
 
                     commandGroup = command.ExecutableBy ?? "everyone",
                     commandName = command.CommandName,
                     commandCmds = command.Commands.Select(x=>$"{CmdCommandCharacter}{x}").ToList(),
-                    commandDisabled = command.Disabled ?? false
+                    commandDisabled = command.Disabled ?? false,
+                    commandWantedAllowed = command.AllowWithCrimes ?? true,
+                    commandHandcuffedAllowed = command.AllowWhileCuffed ?? true
                 });
             }
             Debug.Log($"{SetTimeStamp.Run()}[INFO] Registered commands! ({CommandList.Count} commands loaded in.)");

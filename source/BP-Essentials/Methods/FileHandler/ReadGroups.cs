@@ -20,7 +20,7 @@ namespace BP_Essentials
     {
         public List<Group> Groups { get; set; }
     }
-    class ReadGroups : EssentialsChatPlugin
+    class ReadGroups
     {
         public static void Run()
         {
