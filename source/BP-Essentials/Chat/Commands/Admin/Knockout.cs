@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Knockout : EssentialsChatPlugin
+    class Knockout
     {
         public static void Run(SvPlayer player, string message)
         {

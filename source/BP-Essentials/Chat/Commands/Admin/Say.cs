@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace BP_Essentials.Commands
 {
-    class Say : EssentialsChatPlugin
+    class Say
     {
         public static void Run(SvPlayer player, string message)
         {

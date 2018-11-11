@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BP_Essentials.Commands
 {
-    class GetLogs : EssentialsChatPlugin
+    class GetLogs
     {
         public static void Run(SvPlayer player, string logFile)
         {

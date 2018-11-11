@@ -35,12 +35,13 @@ namespace BP_Essentials
             if (DebugLevel >= 1)
                 Debug.Log($"{SetTimeStamp.Run()}[INFO] Loaded in {listKits.Count} kit(s).");
         }
-        public static void CreateKit(SvPlayer player, string name, int delay, string fileName)
+        public static void CreateKit(SvPlayer player, string name, int delay, int price, string fileName)
         {
             var obj = new Kits_Json.Kits_RootObj
             {
                 Name = name,
                 Delay = delay,
+                Price = price < 0 ? 0 : price,
                 Disabled = false,
                 ExecutableBy = "everyone"
             };
@@ -48,6 +49,11 @@ namespace BP_Essentials
                 obj.Items.Add(new Kits_Json.Kits_Item { Amount = item.count, Id = item.item.index });
             File.WriteAllText(fileName, JsonConvert.SerializeObject(obj, Formatting.Indented));
             listKits.Add(obj);
+        }
+        public static void DeleteKit(SvPlayer player, string fileName, string name)
+        {
+            File.Delete(fileName);
+            listKits = listKits.Where(x => x.Name != name).ToList();
         }
         public static void StartKitTimer()
         {

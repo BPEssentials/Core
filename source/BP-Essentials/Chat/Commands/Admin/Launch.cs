@@ -8,7 +8,7 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Launch : EssentialsChatPlugin
+    class Launch
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -18,8 +18,8 @@ namespace BP_Essentials.Commands
             else
             {
                 bool playerfound = false;
-                foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
+                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.serverside)
                     {
                         shPlayer.svPlayer.SvForce(new Vector3(0f, 6500f, 0f));
                         shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Off you go!</color>");

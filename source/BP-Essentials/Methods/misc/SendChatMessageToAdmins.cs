@@ -11,12 +11,12 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class SendChatMessageToAdmins : EssentialsChatPlugin
+    class SendChatMessageToAdmins
     {
         public static void Run(string message)
         {
-            foreach (var player in playerList.Where(x =>x.Value.receiveStaffChat && HasPermission.Run(x.Value.shplayer.svPlayer, CmdStaffChatExecutableBy)))
-                player.Value.shplayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
+            foreach (var player in playerList.Where(x =>x.Value.receiveStaffChat && HasPermission.Run(x.Value.Shplayer.svPlayer, CmdStaffChatExecutableBy)))
+                player.Value.Shplayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
         }
     }
 }

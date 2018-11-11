@@ -49,8 +49,7 @@ namespace BP_Essentials
                     Reload.Run(true);
 
                 }
-                var thread = new Thread(SavePeriodically.Run);
-                thread.Start(svManager);
+                Save.StartSaveTimer();
                 Debug.Log("-------------------------------------------------------------------------------");
                 Debug.Log($"[INFO] Essentials - version: {LocalVersion} {(isPreRelease ? "[PRE-RELEASE]" : "")} Loaded in successfully!");
                 Debug.Log("-------------------------------------------------------------------------------");

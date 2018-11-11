@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace BP_Essentials.Chat
 {
-    class LangAndChatBlock : EssentialsChatPlugin
+    class LangAndChatBlock
     {
         public static string Run(string message)
         {

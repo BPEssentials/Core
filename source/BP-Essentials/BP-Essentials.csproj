@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BP_Essentials</RootNamespace>
     <AssemblyName>BP_Essentials</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -45,7 +45,11 @@
     <Compile Include="Chat\Commands\Admin\CheckAlts.cs" />
     <Compile Include="Chat\Commands\Admin\Clear.cs" />
     <Compile Include="Chat\Commands\Admin\ClearWanted.cs" />
+    <Compile Include="Chat\Commands\Admin\DeleteKit.cs" />
+    <Compile Include="Chat\Commands\Admin\DeleteWarp.cs" />
+    <Compile Include="Chat\Commands\Admin\CreateWarp.cs" />
     <Compile Include="Chat\Commands\Admin\CreateKit.cs" />
+    <Compile Include="Chat\Commands\Admin\Disconnect.cs" />
     <Compile Include="Chat\Commands\Admin\FakeJoin.cs" />
     <Compile Include="Chat\Commands\Admin\FakeLeave.cs" />
     <Compile Include="Chat\Commands\Admin\Feed.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="Chat\Commands\Admin\TpHere.cs" />
     <Compile Include="Chat\Commands\Admin\TpLocation.cs" />
     <Compile Include="Chat\Commands\Admin\TpToApartment.cs" />
+    <Compile Include="Chat\Commands\Admin\Wipe.cs" />
     <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
     <Compile Include="Chat\Commands\Admin\Strip.cs" />
@@ -85,14 +90,22 @@
     <Compile Include="Chat\Commands\Admin\GodMode.cs" />
     <Compile Include="Chat\Commands\Admin\Mute.cs" />
     <Compile Include="Chat\Commands\Everyone\GetKit.cs" />
+    <Compile Include="Chat\Commands\Everyone\GoToWarp.cs" />
+    <Compile Include="Chat\Commands\Everyone\Home.cs" />
     <Compile Include="Chat\Commands\Everyone\ListKits.cs" />
+    <Compile Include="Chat\Commands\Everyone\ListWarps.cs" />
     <Compile Include="Chat\Commands\Everyone\OnlinePlayers.cs" />
     <Compile Include="Chat\Commands\Everyone\Pay.cs" />
     <Compile Include="Chat\Commands\Admin\Reload.cs" />
     <Compile Include="Chat\Commands\Admin\Save.cs" />
     <Compile Include="Chat\Commands\Admin\Tp.cs" />
+    <Compile Include="Chat\Commands\Everyone\PmUser.cs" />
+    <Compile Include="Chat\Commands\Everyone\ReplyUser.cs" />
     <Compile Include="Chat\Commands\Everyone\Report.cs" />
     <Compile Include="Chat\Commands\Everyone\ToggleChat.cs" />
+    <Compile Include="Chat\Commands\Everyone\TpaDeny.cs" />
+    <Compile Include="Chat\Commands\Everyone\TpaAccept.cs" />
+    <Compile Include="Chat\Commands\Everyone\TpaUser.cs" />
     <Compile Include="Chat\LangAndChatBlock.cs" />
     <Compile Include="EssentialsChat.cs" />
     <Compile Include="EssentialsCore.cs" />
@@ -100,12 +113,15 @@
     <Compile Include="EssentialsVariables.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Chat\Announce.cs" />
-    <Compile Include="Methods\API\DownloadAndWriteToFile.cs" />
-    <Compile Include="Methods\API\DownloadFile.cs" />
-    <Compile Include="Methods\API\FilterComments.cs" />
-    <Compile Include="Methods\API\GetShByStr.cs" />
-    <Compile Include="Methods\API\HasPermission.cs" />
-    <Compile Include="Methods\API\SendDiscordMessage.cs" />
+    <Compile Include="Methods\FileHandler\Warps.cs" />
+    <Compile Include="Methods\Utils\FillPlaceholders.cs" />
+    <Compile Include="Methods\Utils\FilterComments.cs" />
+    <Compile Include="Methods\Utils\GetShByStr.cs" />
+    <Compile Include="Methods\Utils\GetWebsiteContent.cs" />
+    <Compile Include="Methods\Utils\HasPermission.cs" />
+    <Compile Include="Methods\Utils\IsCuffed.cs" />
+    <Compile Include="Methods\Utils\HasWantedLevel.cs" />
+    <Compile Include="Methods\Utils\SendDiscordMessage.cs" />
     <Compile Include="Methods\Check\CheckAltAcc.cs" />
     <Compile Include="Methods\Check\CheckBanned.cs" />
     <Compile Include="Methods\FileHandler\CheckAutoReloadFile.cs" />
@@ -119,25 +135,24 @@
     <Compile Include="Methods\GameMethods\GetExtraCount.cs" />
     <Compile Include="Methods\GameMethods\SetJob.cs" />
     <Compile Include="Methods\GameMethods\UnRestrain.cs" />
-    <Compile Include="Methods\misc\ErrorLogging.cs" />
-    <Compile Include="Methods\API\GetArgument.cs" />
+    <Compile Include="Methods\Utils\ErrorLogging.cs" />
+    <Compile Include="Methods\Utils\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />
-    <Compile Include="Methods\API\GetPlaceHolders.cs" />
+    <Compile Include="Methods\Utils\GetPlaceHolders.cs" />
     <Compile Include="Methods\misc\GetIdList.cs" />
     <Compile Include="Methods\misc\IsOnline.cs" />
-    <Compile Include="Methods\misc\LogMessage.cs" />
+    <Compile Include="Methods\Utils\LogMessage.cs" />
     <Compile Include="Methods\FileHandler\ReadCustomCommands.cs" />
     <Compile Include="Methods\FileHandler\ReadFile.cs" />
     <Compile Include="Methods\FileHandler\ReadFileStream.cs" />
     <Compile Include="Methods\misc\Reload.cs" />
     <Compile Include="Methods\FileHandler\RemoveStringFromFile.cs" />
     <Compile Include="Methods\misc\ReportPlayer.cs" />
-    <Compile Include="Methods\misc\SaveNow.cs" />
-    <Compile Include="Methods\misc\SavePeriodically.cs" />
+    <Compile Include="Methods\misc\Save.cs" />
     <Compile Include="Methods\GameMethods\SendToJail.cs" />
     <Compile Include="Methods\misc\SendChatMessage.cs" />
     <Compile Include="Methods\misc\SendChatMessageToAdmins.cs" />
-    <Compile Include="Methods\misc\SetTimeStamp.cs" />
+    <Compile Include="Methods\Utils\SetTimeStamp.cs" />
     <Compile Include="Methods\FileHandler\WriteIpToFile.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +161,11 @@
     </Reference>
     <Reference Include="HookAttribute, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\BrokeProtocol_Data\Managed\HookAttribute.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponents, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BrokeProtocol_Data\Managed\NavMeshComponents.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

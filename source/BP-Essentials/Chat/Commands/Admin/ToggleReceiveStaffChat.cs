@@ -8,9 +8,9 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class ToggleReceiveStaffChat : EssentialsChatPlugin
+    class ToggleReceiveStaffChat
     {
-        public static void Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             var shplayer = player.player;
             if (playerList[shplayer.ID].receiveStaffChat)

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BP_Essentials.Commands
 {
-    public class Pay : EssentialsChatPlugin
+    public class Pay
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -32,9 +32,9 @@ namespace BP_Essentials.Commands
                     return;
                 }
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1.ToString() && !shPlayer.svPlayer.IsServerside())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1.ToString() && !shPlayer.svPlayer.serverside)
                         foreach (var _shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (_shPlayer.svPlayer == player && !_shPlayer.svPlayer.IsServerside())
+                            if (_shPlayer.svPlayer == player && !_shPlayer.svPlayer.serverside)
                             {
                                 if (_shPlayer.MyMoneyCount() >= arg2Int)
                                 {

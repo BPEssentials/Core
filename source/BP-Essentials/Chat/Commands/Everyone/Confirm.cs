@@ -8,19 +8,18 @@ using static BP_Essentials.EssentialsMethodsPlugin;
 
 namespace BP_Essentials.Commands
 {
-    class Confirm : EssentialsChatPlugin
+    class Confirm
     {
-        public static bool Run(SvPlayer player)
+        public static void Run(SvPlayer player, string message)
         {
             var shPlayer = player.player;
-            if (shPlayer.ownedApartment)
+            if (!shPlayer.ownedApartment)
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
-                SellApartment(shPlayer);
-            }
-            else
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to sell!</color>");
-            return true;
+                return;
+            }
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
+            SellApartment(shPlayer);
         }
         public static void SellApartment(ShPlayer shPlayer)
         {

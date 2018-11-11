@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 
 namespace BP_Essentials.Commands {
-    public class GodMode : EssentialsChatPlugin{
+    public class GodMode{
         public static void Run(SvPlayer player, string message) {
             {
                 ReadFile.Run(GodListFile);
@@ -18,8 +18,8 @@ namespace BP_Essentials.Commands {
                     msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}>.</color>";
                 }
                 else
-                    foreach (var shPlayer in FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.username == name && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == name && !shPlayer.svPlayer.IsServerside())
+                    foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
+                        if (shPlayer.username == name && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == name && !shPlayer.svPlayer.serverside)
                         {
                             name = shPlayer.username;
                             msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'{name}'</color><color={infoColor}>.</color>";

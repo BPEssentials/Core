@@ -12,27 +12,22 @@ namespace BP_Essentials
 {
     public class CustomCommand
     {
-        public string command { get; set; }
-        public string response { get; set; }
+        public string Command { get; set; }
+        public string Response { get; set; }
     }
-
     class RootObject
     {
         public List<CustomCommand> CustomCommands { get; set; }
     }
-    class ReadCustomCommands : EssentialsChatPlugin
+    class ReadCustomCommands
     {
 
         public static void Run()
         {
             try
             {
-                RootObject m = JsonConvert.DeserializeObject<RootObject>(FilterComments.Run(CustomCommandsFile));
-                foreach (var command in m.CustomCommands)
-                {
-                    CustomCommands.Add(CmdCommandCharacter + command.command);
-                    Responses.Add(command.response);
-                }
+                var m = JsonConvert.DeserializeObject<RootObject>(FilterComments.Run(CustomCommandsFile));
+                CustomCommands = m.CustomCommands;
             }
             catch (Exception ex)
             {
