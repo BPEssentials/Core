@@ -20,9 +20,9 @@ namespace BP_Essentials
                 {
                     Thread.Sleep(3000);
                     if (!string.IsNullOrEmpty(player.playerData.username.Trim()))
-                        if (!player.player.admin && File.ReadAllText(IpListFile).Contains(player.svManager.GetAddress(player.connection)))
+                        if (!player.player.admin && File.ReadAllText(IpListFile).Contains(player.connection.IP))
                         {
-                            Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} Joined with a possible alt! IP: {player.svManager.GetAddress(player.connection)}");
+                            Debug.Log($"{SetTimeStamp.Run()}[WARNING] {player.player.username} Joined with a possible alt! IP: {player.connection.IP}");
                             player.svManager.AddBanned(player.player);
                             player.svManager.Disconnect(player.connection);
                         }

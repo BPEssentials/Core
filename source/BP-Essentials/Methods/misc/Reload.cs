@@ -23,6 +23,7 @@ namespace BP_Essentials
                     ReadCustomCommands.Run();
                     ReadGroups.Run();
                     Kits.LoadAllKits();
+                    Warps.LoadAllWarps();
                     ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
                     ReadStream.Run(ChatBlockFile, ChatBlockWords);
                     ReadStream.Run(AdminListFile, AdminsListPlayers);
@@ -47,6 +48,7 @@ namespace BP_Essentials
                     ReadCustomCommands.Run();
                     ReadGroups.Run();
                     Kits.LoadAllKits(IsFirstReload);
+                    Warps.LoadAllWarps(IsFirstReload);
                     LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
                     ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
                     if (DownloadIdList)

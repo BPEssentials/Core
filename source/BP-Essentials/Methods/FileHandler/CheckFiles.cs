@@ -17,6 +17,7 @@ namespace BP_Essentials
             {
                 // this really needs some improvement
                 // I don't know when I added that comment but seriously I should really redo this method.. whenever I have time
+                // Every time I have to change something in this file it reminds me again that I should change this somehow.. I just don't know how.
                 if (!Directory.Exists(FileDirectory))
                 {
                     Directory.CreateDirectory(FileDirectory);
@@ -31,6 +32,11 @@ namespace BP_Essentials
                 {
                     Directory.CreateDirectory(KitDirectory);
                     Debug.Log(KitDirectory + " Does not exist! Creating one.");
+                }
+                if (!Directory.Exists(WarpDirectory))
+                {
+                    Directory.CreateDirectory(WarpDirectory);
+                    Debug.Log(WarpDirectory + " Does not exist! Creating one.");
                 }
                 if (!File.Exists(AutoReloader))
                 {

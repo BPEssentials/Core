@@ -40,6 +40,15 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You already used this kit. Please wait</color> <color={argColor}>{obj.CurrentlyInCooldown[player.player.username]}</color> <color={errorColor}>second(s) before executing this command again.</color>");
                 return;
             }
+            if (obj.Price > 0)
+            {
+                if (player.player.MyMoneyCount() < obj.Price)
+                {
+                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>You do not have enough money to get this kit. (You have: {player.player.MyMoneyCount()} | Needed: {obj.Price})</color>");
+                    return;
+                }
+                player.player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
+            }
             foreach (var item in obj.Items)
             {
                 player.player.TransferItem(DeltaInv.AddToMe, item.Id, item.Amount, true);

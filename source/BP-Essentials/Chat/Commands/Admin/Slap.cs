@@ -19,10 +19,10 @@ namespace BP_Essentials.Commands
             {
                 bool playerfound = false;
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.serverside)
                     {
                         foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer2.svPlayer == player && !shPlayer2.svPlayer.IsServerside())
+                            if (shPlayer2.svPlayer == player && !shPlayer2.svPlayer.serverside)
                             {
                                 int amount = new System.Random().Next(4, 15);
                                 shPlayer.svPlayer.Damage(DamageIndex.Null, amount, null, null);

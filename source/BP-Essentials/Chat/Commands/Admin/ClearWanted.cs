@@ -21,7 +21,7 @@ namespace BP_Essentials.Commands
                 msg = "yourself";
             }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1.ToString() && !shPlayer.svPlayer.IsServerside())
+                if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1.ToString() && !shPlayer.svPlayer.serverside)
                 {
                     msg = shPlayer.username;
                     shPlayer.ClearCrimes();

@@ -24,7 +24,7 @@ namespace BP_Essentials.Commands
                 bool found = false;
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (!shPlayer.svPlayer.IsServerside())
+                        if (!shPlayer.svPlayer.serverside)
                         {
                             shPlayer.svPlayer.Heal(100);
                             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));

@@ -18,7 +18,7 @@ namespace BP_Essentials.Commands
             {
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                     if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (!shPlayer.svPlayer.IsServerside())
+                        if (!shPlayer.svPlayer.serverside)
                         {
                             player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "Info about: '" + shPlayer.username + "'.");
                             string[] contentarray = {
@@ -33,7 +33,7 @@ namespace BP_Essentials.Commands
                                     "IsAdmin:                 " + shPlayer.admin,
                                     "BankBalance:         " + shPlayer.svPlayer.bankBalance,
                                     "ChatEnabled:         " + playerList[shPlayer.ID].chatEnabled,
-                                    "IP:                            " + shPlayer.svPlayer.svManager.GetAddress(shPlayer.svPlayer.connection)
+                                    "IP:                            " + shPlayer.svPlayer.connection.IP
                                 };
 
                             var content = string.Join("\r\n", contentarray);

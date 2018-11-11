@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands {
                 }
                 else
                     foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                        if (shPlayer.username == name && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == name && !shPlayer.svPlayer.IsServerside())
+                        if (shPlayer.username == name && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == name && !shPlayer.svPlayer.serverside)
                         {
                             name = shPlayer.username;
                             msg = $"<color={infoColor}>Godmode </color><color={argColor}>{{0}}</color><color={infoColor}> for </color><color={argColor}>'{name}'</color><color={infoColor}>.</color>";

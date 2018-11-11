@@ -25,7 +25,7 @@ namespace BP_Essentials
         public static void Initialize(SvPlayer player)
         {
             var shPlayer = player.player;
-            if (!player.IsServerside())
+            if (!player.serverside)
             {
                 new Thread(() => WriteIpToFile.Run(player)).Start();
                 new Thread(() => CheckBanned.Run(player)).Start();
@@ -38,7 +38,7 @@ namespace BP_Essentials
         public static void Destroy(SvPlayer player)
         {
             foreach (KeyValuePair<int, _PlayerList> item in playerList)
-                if (item.Value.Shplayer.svPlayer == player && !item.Value.Shplayer.svPlayer.IsServerside())
+                if (item.Value.Shplayer.svPlayer == player && !item.Value.Shplayer.svPlayer.serverside)
                 {
                     Debug.Log(SetTimeStamp.Run() + "[INFO] [LEAVE] " + item.Value.Shplayer.username);
                     playerList.Remove(item.Key);
@@ -63,7 +63,7 @@ namespace BP_Essentials
         public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
         {
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                if (!shPlayer.svPlayer.IsServerside())
+                if (!shPlayer.svPlayer.serverside)
                 {
                     if (shPlayer != hitTarget) continue;
                     if (!GodListPlayers.Contains(shPlayer.username)) continue;
@@ -83,7 +83,7 @@ namespace BP_Essentials
             }
             foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
                 if (shPlayer.ID == otherID)
-                    if (!shPlayer.svPlayer.IsServerside() && !shPlayer.svPlayer.IsServerside())
+                    if (!shPlayer.svPlayer.serverside && !shPlayer.svPlayer.serverside)
                     {
                         LogMessage.LogOther($"{SetTimeStamp.Run()}[INFO] {shPlayer.username} Got banned by {player.playerData.username}");
                         player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{shPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.playerData.username}</color>");
@@ -470,7 +470,7 @@ namespace BP_Essentials
                 var crimShPlayer = player.entity.manager.FindByID<ShPlayer>(criminalID);
                 if (!crimShPlayer)
                     return;
-                if (player.IsServerside() || crimShPlayer.DistanceSqr(player.player.manager.jail) < 14400f)
+                if (player.serverside || crimShPlayer.DistanceSqr(player.player.manager.jail) < 14400f)
                 {
                     var jailTime = 0f;
                     var Fine = 0;

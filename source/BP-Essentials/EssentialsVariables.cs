@@ -7,7 +7,7 @@ namespace BP_Essentials
 {
     public class EssentialsVariablesPlugin : EssentialsCorePlugin
     {
-        public const string Version = "2.5.15";
+        public const string Version = "2.6.0";
         public static bool isPreRelease;
 
         // Generic Constants
@@ -15,6 +15,7 @@ namespace BP_Essentials
 
         public static string LogDirectory = Path.Combine(FileDirectory, "logs/");
         public static string KitDirectory = Path.Combine(FileDirectory, "kits/");
+        public static string WarpDirectory = Path.Combine(FileDirectory, "warps/");
 
         public const string SettingsFile = FileDirectory + "essentials_settings.txt";
         public const string LanguageBlockFile = FileDirectory + "languageblock.txt";
@@ -79,6 +80,7 @@ namespace BP_Essentials
 
         public static List<int> BlockedItems = new List<int>();
         public static List<Kits_Json.Kits_RootObj> listKits = new List<Kits_Json.Kits_RootObj>();
+        public static List<Warps_Json.Warps_RootObj> listWarps = new List<Warps_Json.Warps_RootObj>();
 
         // Arrays
         public static string[] Announcements;
@@ -1046,9 +1048,43 @@ namespace BP_Essentials
             }
             public string Name { get; set; }
             public int Delay { get; set; }
+            public int Price { get; set; }
             public string ExecutableBy { get; set; }
             public bool Disabled { get; set; }
             public List<Kits_Item> Items { get; set; }
+            public Dictionary<string, int> CurrentlyInCooldown { get; set; }
+        }
+    }
+    public class Warps_Json
+    {
+        public class Position
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float Z { get; set; }
+        }
+
+        public class Rotation
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float Z { get; set; }
+            public float W { get; set; }
+        }
+
+        public class Warps_RootObj
+        {
+            public Warps_RootObj()
+            {
+                CurrentlyInCooldown = new Dictionary<string, int>();
+            }
+            public string Name { get; set; }
+            public int Delay { get; set; }
+            public int Price { get; set; }
+            public string ExecutableBy { get; set; }
+            public bool Disabled { get; set; }
+            public Position Position { get; set; }
+            public Rotation Rotation { get; set; }
             public Dictionary<string, int> CurrentlyInCooldown { get; set; }
         }
     }

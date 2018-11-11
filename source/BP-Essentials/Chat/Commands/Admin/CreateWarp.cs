@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace BP_Essentials.Commands
 {
-    public class CreateKit
+    public class CreateWarp
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -29,14 +29,14 @@ namespace BP_Essentials.Commands
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>The delay must be a positive number (0 to disable)</color>");
                 return;
             }
-            var file = Path.Combine(KitDirectory, $"{arg2}.json");
+            var file = Path.Combine(WarpDirectory, $"{arg3}.json");
             if (File.Exists(file))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>A kit already exists with that name.</color>");
+                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>A warp already exists with that name.</color>");
                 return;
             }
-            Kits.CreateKit(player, arg3, arg1i, arg2i, file);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Kit created. Please edit </color><color={argColor}>{file}</color> <color={infoColor}>to add ExecuteableBy.</color>");
+            Warps.CreateWarp(player, arg3, arg1i, arg2i, file);
+            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Warp created. Please edit </color><color={argColor}>{file}</color> <color={infoColor}>to add ExecuteableBy and Price.</color>");
         }
     }
 }

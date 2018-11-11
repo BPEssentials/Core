@@ -24,7 +24,7 @@ namespace BP_Essentials.Commands
                 shPlayer.svPlayer.Restrain(shPlayer.manager.handcuffed);
                 var shRetained = shPlayer.curEquipable as ShRestrained;
                 shPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
-                if (!shPlayer.svPlayer.IsServerside())
+                if (!shPlayer.svPlayer.serverside)
                     shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, "You've been restrained");
                 player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Restrained</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
             }

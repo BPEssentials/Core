@@ -12,7 +12,7 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-            var realPlayers = UnityEngine.Object.FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.IsServerside());
+            var realPlayers = UnityEngine.Object.FindObjectsOfType<ShPlayer>().Count(shPlayer => !shPlayer.svPlayer.serverside);
             switch (realPlayers)
             {
                 case 1:

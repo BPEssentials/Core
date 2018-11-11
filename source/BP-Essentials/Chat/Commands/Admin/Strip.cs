@@ -19,7 +19,7 @@ namespace BP_Essentials.Commands
             {
                 bool playerfound = false;
                 foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.IsServerside() || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.IsServerside())
+                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.serverside)
                     {
                         // To be improved
                         shPlayer.svPlayer.SvSetWearable(-1626497894);  //NullArmor

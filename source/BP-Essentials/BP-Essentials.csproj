@@ -45,6 +45,9 @@
     <Compile Include="Chat\Commands\Admin\CheckAlts.cs" />
     <Compile Include="Chat\Commands\Admin\Clear.cs" />
     <Compile Include="Chat\Commands\Admin\ClearWanted.cs" />
+    <Compile Include="Chat\Commands\Admin\DeleteKit.cs" />
+    <Compile Include="Chat\Commands\Admin\DeleteWarp.cs" />
+    <Compile Include="Chat\Commands\Admin\CreateWarp.cs" />
     <Compile Include="Chat\Commands\Admin\CreateKit.cs" />
     <Compile Include="Chat\Commands\Admin\Disconnect.cs" />
     <Compile Include="Chat\Commands\Admin\FakeJoin.cs" />
@@ -87,8 +90,10 @@
     <Compile Include="Chat\Commands\Admin\GodMode.cs" />
     <Compile Include="Chat\Commands\Admin\Mute.cs" />
     <Compile Include="Chat\Commands\Everyone\GetKit.cs" />
+    <Compile Include="Chat\Commands\Everyone\GoToWarp.cs" />
     <Compile Include="Chat\Commands\Everyone\Home.cs" />
     <Compile Include="Chat\Commands\Everyone\ListKits.cs" />
+    <Compile Include="Chat\Commands\Everyone\ListWarps.cs" />
     <Compile Include="Chat\Commands\Everyone\OnlinePlayers.cs" />
     <Compile Include="Chat\Commands\Everyone\Pay.cs" />
     <Compile Include="Chat\Commands\Admin\Reload.cs" />
@@ -108,6 +113,7 @@
     <Compile Include="EssentialsVariables.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Chat\Announce.cs" />
+    <Compile Include="Methods\FileHandler\Warps.cs" />
     <Compile Include="Methods\Utils\FillPlaceholders.cs" />
     <Compile Include="Methods\Utils\FilterComments.cs" />
     <Compile Include="Methods\Utils\GetShByStr.cs" />
