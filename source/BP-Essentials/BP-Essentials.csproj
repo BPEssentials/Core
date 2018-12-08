@@ -330,4 +330,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetFileName)" "..\..\..\..\Plugins\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
