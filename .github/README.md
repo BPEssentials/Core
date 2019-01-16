@@ -26,8 +26,8 @@ DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/D
 * Browser + Version
 - **>** User Agents automatically gets sent when a web request is made. The website is used to fetch the following data:
 * http://userr00t.com/dev/BPEssentials/settings.txt - ``essentials_settings.txt`` file.
-* https://www.userr00t.com/dev/BPEssentials/idlist_items.txt - IDList for ``/give``.
-* https://www.userr00t.com/dev/BPEssentials/idlist_vehicles.txt - IDList for ``/vehicle``.
+* http://www.userr00t.com/dev/BPEssentials/idlist_items.txt - IDList for ``/give``.
+* http://www.userr00t.com/dev/BPEssentials/idlist_vehicles.txt - IDList for ``/vehicle``.
 * http://userr00t.com/dev/BPEssentials/customgroups.txt - ``CustomGroups.txt`` file.
 * http://userr00t.com/dev/BPEssentials/customcommands.txt ``CustomCommands.txt`` file.
 
