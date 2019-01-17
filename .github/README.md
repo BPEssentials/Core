@@ -26,7 +26,8 @@ DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/D
 * Browser + Version
 - **>** User Agents automatically gets sent when a web request is made. The website is used to fetch the following data:
 * http://userr00t.com/dev/BPEssentials/settings.txt - ``essentials_settings.txt`` file.
-* http://userr00t.com/dev/BPEssentials/idlist.txt - IDList for ``/give``.
+* http://www.userr00t.com/dev/BPEssentials/idlist_items.txt - IDList for ``/give``.
+* http://www.userr00t.com/dev/BPEssentials/idlist_vehicles.txt - IDList for ``/vehicle``.
 * http://userr00t.com/dev/BPEssentials/customgroups.txt - ``CustomGroups.txt`` file.
 * http://userr00t.com/dev/BPEssentials/customcommands.txt ``CustomCommands.txt`` file.
 
@@ -38,7 +39,7 @@ DeathByKorea: [Website](https://DeathByKorea.uk) | [GitHub](https://github.com/D
 - **>** When you type a command or message it will be logged in ``output_log.txt`` and ``Essentials/logs/all.txt`` and ``Essentials/Chat/chat.txt`` or ``Essentials/Chat/commands.txt``
 
 
-**NOTE:** BP-Essentials does **NOT** store data from clients (eg players) on BP-Essentials servers ([UserR00T.com](http://userr00t.com), [Github.IO](https://userr00t.github.io)). The only servers that have access to that data is the server you're currently playing on.
+**NOTE:** BP-Essentials does **NOT** store data from clients (eg players) on BP-Essentials related servers ([UserR00T.com](http://userr00t.com), [Github.io](https://userr00t.github.io)). The only servers that have access to that data is the server you're currently playing on.
 
 ## License
 
