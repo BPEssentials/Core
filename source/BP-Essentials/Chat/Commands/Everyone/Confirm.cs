@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -15,10 +15,10 @@ namespace BP_Essentials.Commands
             var shPlayer = player.player;
             if (!shPlayer.ownedApartment)
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You don't have a apartment to sell!</color>");
+                player.SendChatMessage($"<color={warningColor}>You don't have a apartment to sell!</color>");
                 return;
             }
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Selling apartment...</color>");
+            player.SendChatMessage($"<color={infoColor}>Selling apartment...</color>");
             SellApartment(shPlayer);
         }
         public static void SellApartment(ShPlayer shPlayer)

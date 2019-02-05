@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static BP_Essentials.EssentialsVariablesPlugin;
+using static BP_Essentials.Variables;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
@@ -39,9 +39,9 @@ namespace BP_Essentials.Commands
                         {"[MESSAGE]","</color>"},
                         {"<", "<<b></b>"/* Escape Rich Text tags*/ }
                     };
-            content = "<color=#00ffffff>" + new Regex(string.Join("|", replace.Keys.Select(k => Regex.Escape(k)))).Replace(content, m => replace[m.Value]) + "</color>";
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>WARNING: This is a very unstable command and doesn't work all of the times.</color>");
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>Limited to last <color={argColor}>100</color> messages.</color>");
+            content = "<color=#00ffffff>" + new Regex(string.Join("|", replace.Keys.Select(Regex.Escape))).Replace(content, m => replace[m.Value]) + "</color>";
+            player.SendChatMessage($"<color={warningColor}>WARNING: This is a very unstable command and doesn't work all of the times.</color>");
+            player.SendChatMessage($"<color={warningColor}>Limited to last <color={argColor}>100</color> messages.</color>");
             player.Send(SvSendType.Self, Channel.Fragmented, ClPacket.ServerInfo, content);
         }
     }

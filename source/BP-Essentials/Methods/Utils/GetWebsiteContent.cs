@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
+using static BP_Essentials.Variables;
 
 namespace BP_Essentials
 {
@@ -44,7 +44,7 @@ namespace BP_Essentials
                 yield return www;
                 if (www.error != null)
                 {
-                    Debug.Log($"{SetTimeStamp.Run()}[ERROR] {link} responded with HTTP error code: {www.error}!");
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [ERROR] {link} responded with HTTP error code: {www.error}!");
                     callback?.Invoke(null);
                     yield break;
                 }

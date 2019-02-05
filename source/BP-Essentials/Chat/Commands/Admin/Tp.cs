@@ -1,25 +1,27 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
+﻿using static BP_Essentials.Variables;
 using System;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.HookMethods;
 
-namespace BP_Essentials.Commands {
-    public class Tp {
-        public static void Run(SvPlayer player, string message)
-        {
-            string arg1 = GetArgument.Run(1, false, true, message);
-            if (!string.IsNullOrEmpty(arg1))
-            {
-                var shPlayer = GetShByStr.Run(arg1);
-                if (shPlayer == null)
-                {
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
-                    return;
-                }
-                player.SvReset(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported to</color> <color={argColor}>" + shPlayer.username + $"</color><color={infoColor}>.</color>");
-            }
-            else
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
-        }
-    }
+namespace BP_Essentials.Commands
+{
+	public class Tp
+	{
+		public static void Run(SvPlayer player, string message)
+		{
+			string arg1 = GetArgument.Run(1, false, true, message);
+			if (string.IsNullOrEmpty(arg1))
+			{
+				player.SendChatMessage(ArgRequired);
+				return;
+			}
+			var shPlayer = GetShByStr.Run(arg1);
+			if (shPlayer == null)
+			{
+				player.SendChatMessage(NotFoundOnline);
+				return;
+			}
+			player.ResetAndSavePosition(shPlayer.GetPosition(), shPlayer.GetRotation(), shPlayer.GetPlaceIndex());
+			player.SendChatMessage($"<color={infoColor}>Teleported to</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
+		}
+	}
 }

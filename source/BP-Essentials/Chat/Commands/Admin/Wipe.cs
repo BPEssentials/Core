@@ -1,6 +1,6 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
+﻿using static BP_Essentials.Variables;
 using System;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.HookMethods;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -15,26 +15,27 @@ namespace BP_Essentials.Commands
             string arg1 = GetArgument.Run(1, false, true, message);
             if (string.IsNullOrEmpty(arg1))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.SendChatMessage(ArgRequired);
                 return;
             }
             if (WipePassword == "default")
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Password was not changed yet, cannot use this command.</color>");
+                player.SendChatMessage($"<color={errorColor}>Password was not changed yet, cannot use this command.</color>");
                 return;
             }
             if (arg1 != WipePassword)
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Invalid password.</color>");
+                player.SendChatMessage($"<color={errorColor}>Invalid password.</color>");
                 return;
             }
-            Debug.Log($"{SetTimeStamp.Run()}[INFO] Wipe command ran by {player.player.username}, password matched, deleting all save files.");
-            foreach (var currPlayer in playerList.Values)
-                player.svManager.Disconnect(currPlayer.Shplayer.svPlayer.connection);
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Wipe command ran by {player.player.username}, password matched, deleting all save files.");
+            foreach (var currPlayer in PlayerList.Values.ToList())
+                player.svManager.Disconnect(currPlayer.ShPlayer.svPlayer.connection, DisconnectTypes.Problem);
             Thread.Sleep(500);
-            foreach (string file in Directory.GetFiles(Path.Combine(Application.persistentDataPath, "PlayerData/"), "*.json").Where(item => item.EndsWith(".json")))
-                File.Delete(file);
-            Debug.Log($"{SetTimeStamp.Run()}[INFO] All user data deleted!");
+			var files = Directory.GetFiles(Path.Combine(Application.persistentDataPath, "PlayerData/"), "*.json").Where(item => item.EndsWith(".json", StringComparison.CurrentCulture));
+			foreach (var file in files.ToList())
+				File.Delete(file);
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] All user data deleted!");
         }
     }
 }

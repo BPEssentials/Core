@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -13,26 +13,16 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             string arg1 = GetArgument.Run(1, false, true, message);
-            string msg = $"<color={infoColor}>Maxed stats for </color><color={argColor}>" + "{0}</color>" + $"<color={infoColor}>.</color>";
-            if (String.IsNullOrEmpty(arg1))
-            {
-                    player.UpdateStats(100F, 100F, 100F, 100F);
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, "yourself"));
-            }
-            else
-            {
-                bool found = false;
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 || shPlayer.ID.ToString() == arg1.ToString())
-                        if (!shPlayer.svPlayer.serverside)
-                        {
-                            shPlayer.svPlayer.UpdateStats(100F, 100F, 100F, 100F);
-                            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, String.Format(msg, shPlayer.username));
-                            found = true;
-                        }
-                if (!found)
-                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
-            }
+			if (string.IsNullOrEmpty(arg1))
+				arg1 = player.player.username;
+			var currPlayer = GetShByStr.Run(arg1);
+			if (currPlayer == null)
+			{
+				player.SendChatMessage(NotFoundOnline);
+				return;
+			}
+			currPlayer.RestoreStats();
+			player.SendChatMessage($"<color={infoColor}>Maxed stats for</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
         }
     }
 }

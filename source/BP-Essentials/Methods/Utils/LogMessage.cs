@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 using System.Threading;
 
@@ -20,13 +20,13 @@ namespace BP_Essentials
         {
             try
             {
-                var mssge = $"{SetTimeStamp.Run()}{prefix}[{(message.StartsWith(CmdCommandCharacter) ? "COMMAND" : "MESSAGE")}] {player.playerData.username}: {message}";
+                var mssge = $"{PlaceholderParser.ParseTimeStamp()} {prefix}[{(message.StartsWith(CmdCommandCharacter, StringComparison.CurrentCulture) ? "COMMAND" : "MESSAGE")}] {player.playerData.username}: {message}";
                 Debug.Log(mssge);
                 int tries = 0;
                 while (tries < 2)
                     try
                     {
-                        if (!message.StartsWith(CmdCommandCharacter))
+                        if (!message.StartsWith(CmdCommandCharacter, StringComparison.CurrentCulture))
                             File.AppendAllText(ChatLogFile, mssge + Environment.NewLine);
                         else
                             File.AppendAllText(CommandLogFile, mssge + Environment.NewLine);

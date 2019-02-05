@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials
 {
-    class CheckGodMode : EssentialsCorePlugin
+    class CheckGodMode : Core
     {
         public static bool Run(SvPlayer player, float? amount = null, string customMessage = null)
         {
@@ -17,9 +17,9 @@ namespace BP_Essentials
                 if (GodListPlayers.Contains(player.playerData.username))
                 {
                     if (amount != null && ShowDMGMessage)
-                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color=#b7b5b5>{amount} DMG Blocked!</color>");
+                        player.SendChatMessage($"<color=#b7b5b5>{amount} DMG Blocked!</color>");
                     if (customMessage != null)
-                        player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, customMessage);
+                        player.SendChatMessage(customMessage);
                     return true;
                 }
             }

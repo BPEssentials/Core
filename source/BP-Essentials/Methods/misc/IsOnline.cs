@@ -1,5 +1,5 @@
 ﻿using System;
-using static BP_Essentials.EssentialsVariablesPlugin;
+using static BP_Essentials.Variables;
 namespace BP_Essentials
 {
     class IsOnline

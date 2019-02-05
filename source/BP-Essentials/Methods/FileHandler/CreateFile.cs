@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 
 namespace BP_Essentials
@@ -19,32 +19,30 @@ namespace BP_Essentials
                 {
                     case SettingsFile:
                         {
-                            if (isPreRelease)
-                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings_test.txt");
+                            if (IsPreRelease)
+                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings_test.json");
                             else
-                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings.txt");
+                                GetWebsiteContent.WriteToFile(SettingsFile, "http://www.UserR00T.com/dev/BPEssentials/settings.json");
                             break;
                         }
                     case ChatBlockFile:
                         {
-                            string[] content = { "nigger", "nigga", "nigg3r", "NIGGER", "NI99ER", "ni99er", "nigger.", "nigga.", "nigg3r.", "N199ER", "n1gger", "N1GGER", "NIGGA", "NIGGA." };
-                            File.WriteAllLines(ChatBlockFile, content);
+                            File.WriteAllText(ChatBlockFile, "");
                             break;
                         }
                     case LanguageBlockFile:
                         {
-                            string[] content = { "bombas", "hola", "alguien", "habla", "espanol", "español", "estoy", "banco", "voy", "consegi", "donde", "quedamos", "banko", "afuera", "estas", "alguem", "donde", "nos", "vemos", "soy ", "vueno", "como", "carro", "cabros", "miren", "hacha", "laar", "corri", "sacame", "aqui", "policia", "trajo", "encerro", "bomba", "beuno", "pantalones", "dinero", "porque", "tengo", "escopetaa", "escopeta" };
-                            File.WriteAllLines(LanguageBlockFile, content);
+                            File.WriteAllText(LanguageBlockFile, "");
                             break;
                         }
                     case CustomCommandsFile:
                         {
-                            GetWebsiteContent.WriteToFile(CustomCommandsFile, "http://www.UserR00T.com/dev/BPEssentials/customcommands.txt");
+                            GetWebsiteContent.WriteToFile(CustomCommandsFile, "http://www.UserR00T.com/dev/BPEssentials/customcommands.json");
                             break;
                         }
                     case CustomGroupsFile:
                         {
-                            GetWebsiteContent.WriteToFile(CustomGroupsFile, "http://www.UserR00T.com/dev/BPEssentials/customgroups.txt");
+                            GetWebsiteContent.WriteToFile(CustomGroupsFile, "http://www.UserR00T.com/dev/BPEssentials/customgroups.json");
                             break;
                         }
 
