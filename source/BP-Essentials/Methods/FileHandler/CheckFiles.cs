@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 
 namespace BP_Essentials
@@ -15,10 +15,11 @@ namespace BP_Essentials
         {
             try
             {
-                // this really needs some improvement
-                // I don't know when I added that comment but seriously I should really redo this method.. whenever I have time
-                // Every time I have to change something in this file it reminds me again that I should change this somehow.. I just don't know how.
-                if (!Directory.Exists(FileDirectory))
+				// this really needs some improvement
+				// I don't know when I added that comment but seriously I should really redo this method.. whenever I have time
+				// Every time I have to change something in this file it reminds me again that I should change this somehow.. I just don't know how.
+				// lol yup still here.. fuck.
+				if (!Directory.Exists(FileDirectory))
                 {
                     Directory.CreateDirectory(FileDirectory);
                     Debug.Log(FileDirectory + " Does not exist! Creating one.");

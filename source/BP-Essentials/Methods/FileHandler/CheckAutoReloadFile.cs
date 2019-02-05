@@ -21,12 +21,12 @@ namespace BP_Essentials
                    | NotifyFilters.FileName | NotifyFilters.DirectoryName,
                     EnableRaisingEvents = true
                 };
-                watcher.Changed += new FileSystemEventHandler((sender, e) =>
-                {
-                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Found a change in file {file}, reloading all files...");
-                    Debug.Log("    ");
-                    Reload.Run(true);
-                });
+                watcher.Changed += (sender, e) =>
+				{
+					Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Found a change in file {file}, reloading all files...");
+					Debug.Log("    ");
+					Reload.Run(true);
+				};
             }
             catch (Exception ex)
             {

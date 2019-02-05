@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.Reflection;
 
 namespace BP_Essentials
@@ -13,12 +13,12 @@ namespace BP_Essentials
     {
         public static void Run(List<_Command> cmdlist)
         {
-            Debug.Log($"{SetTimeStamp.Run()}[INFO] Registering commands..");
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Registering commands..");
             CommandList.Clear();
             foreach (var command in cmdlist)
             {
                 if (DebugLevel >= 1)
-                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Registering command: {command.CommandName}..");
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Registering command: {command.CommandName}..");
                 Action<SvPlayer, string> rMethod = null;
                 try
                 {
@@ -47,10 +47,11 @@ namespace BP_Essentials
                     commandCmds = command.Commands.Select(x=>$"{CmdCommandCharacter}{x}").ToList(),
                     commandDisabled = command.Disabled ?? false,
                     commandWantedAllowed = command.AllowWithCrimes ?? true,
-                    commandHandcuffedAllowed = command.AllowWhileCuffed ?? true
+                    commandHandcuffedAllowed = command.AllowWhileCuffed ?? true,
+					commandWhileJailedAllowed = command.AllowWhileJailed ?? true
                 });
             }
-            Debug.Log($"{SetTimeStamp.Run()}[INFO] Registered commands! ({CommandList.Count} commands loaded in.)");
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Registered commands! ({CommandList.Count} commands loaded in.)");
         }
     }
 }

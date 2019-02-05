@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.Text.RegularExpressions;
 
 namespace BP_Essentials
 {
-    class GetArgument : EssentialsCorePlugin
+    class GetArgument : Core
     {
         // redo?
         public static string Run(int nr, bool UseRegex, bool IncludeSpaces, string message)

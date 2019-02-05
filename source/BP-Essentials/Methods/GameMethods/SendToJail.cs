@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials
 {
@@ -16,7 +16,7 @@ namespace BP_Essentials
                 return false;
             var jailSpawn = shPlayer.manager.jail.transform;
             SetJob.Run(shPlayer, 2, true, false);
-            shPlayer.svEntity.SvReset(jailSpawn.position, jailSpawn.rotation, 0);
+            shPlayer.svPlayer.ResetAndSavePosition(jailSpawn.position, jailSpawn.rotation, 0);
             shPlayer.StartCoroutine(shPlayer.svPlayer.JailTimer(time));
             shPlayer.svPlayer.SvClearCrimes();
             shPlayer.RemoveItemsJail();

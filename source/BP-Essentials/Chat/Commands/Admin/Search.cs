@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -12,34 +12,37 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-            string arg1 = GetArgument.Run(1, false, true, message);
-            if (String.IsNullOrEmpty(arg1))
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
-            else
-            {
-                foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer2.username == arg1 && !shPlayer2.svPlayer.serverside || shPlayer2.ID.ToString() == arg1 && !shPlayer2.svPlayer.serverside)
-                    {
-                        foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer.svPlayer == player && !shPlayer.svPlayer.serverside)
-                            {
-                                if (!shPlayer2.IsDead())
-                                {
-                                    if (shPlayer2.otherEntity)
-                                        shPlayer2.svPlayer.SvStopInventory(true);
-                                    shPlayer2.viewers.Add(shPlayer);
-                                    shPlayer.otherEntity = shPlayer2;
-                                    player.Send(SvSendType.Self, Channel.Fragmented, 13, shPlayer.otherEntity.ID, shPlayer.otherEntity.SerializeMyItems());
-                                    if (!shPlayer2.svPlayer.serverside && shPlayer2.viewers.Count == 1)
-                                        shPlayer2.svPlayer.Send(SvSendType.Self, Channel.Reliable, 16, new System.Object[] { });
-                                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Viewing inventory of</color> <color={argColor}>{shPlayer2.username}</color>");
-                                    shPlayer2.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"{AdminSearchingInv}");
-                                }
-                                else
-                                    player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>Player is dead.</color>");
-                            }
-                    }
-            }
+			string arg1 = GetArgument.Run(1, false, true, message);
+			if (string.IsNullOrEmpty(arg1))
+			{
+				player.SendChatMessage(ArgRequired);
+				return;
+			}
+			var currPlayer = GetShByStr.Run(arg1);
+			if (currPlayer == null)
+			{
+				player.SendChatMessage(NotFoundOnline);
+				return;
+			}
+			if (currPlayer == player.player)
+			{
+				player.SendChatMessage($"<color={errorColor}>You cannot search yourself.</color>");
+				return;
+			}
+			if (currPlayer.IsDead())
+			{
+				player.SendChatMessage($"<color={errorColor}>You cannot search this player because he or she is dead.</color>");
+				return;
+			}
+			if (currPlayer.otherEntity)
+				currPlayer.svPlayer.SvStopInventory(true);
+			currPlayer.viewers.Add(player.player);
+			player.player.otherEntity = currPlayer;
+			player.Send(SvSendType.Self, Channel.Fragmented, ClPacket.Searching, player.player.otherEntity.ID, player.player.otherEntity.SerializeMyItems());
+			if (!currPlayer.svPlayer.serverside && currPlayer.viewers.Count == 1)
+				currPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowSearchedInventory, new object[] { });
+			player.SendChatMessage($"<color={infoColor}>Viewing inventory of</color> <color={argColor}>{currPlayer.username}</color>");
+			currPlayer.svPlayer.SendChatMessage(AdminSearchingInv);
         }
     }
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 
 namespace BP_Essentials
@@ -16,11 +16,12 @@ namespace BP_Essentials
             try
             {
                 output.Clear();
-                foreach (var line in File.ReadAllLines(fileName))
-                    if (line.StartsWith("#"))
-                        continue;
-                    else
-                        output.Add(line);
+				foreach (var line in File.ReadAllLines(fileName))
+				{
+					if (line.StartsWith("#", StringComparison.CurrentCulture))
+						continue;
+					output.Add(line);
+				}
             }
             catch (Exception ex)
             {

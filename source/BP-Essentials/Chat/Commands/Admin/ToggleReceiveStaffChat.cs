@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -13,15 +13,15 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             var shplayer = player.player;
-            if (playerList[shplayer.ID].receiveStaffChat)
+            if (PlayerList[shplayer.ID].ReceiveStaffChat)
             {
-                playerList[shplayer.ID].receiveStaffChat = false;
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat messages disabled. You'll not receive any staff chat messages anymore.</color>");
+                PlayerList[shplayer.ID].ReceiveStaffChat = false;
+                player.SendChatMessage($"<color={infoColor}>Staff chat messages disabled. You'll not receive any staff chat messages anymore.</color>");
             }
             else
             {
-                playerList[shplayer.ID].receiveStaffChat = true;
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Staff chat message enabled. You'll now receive staff messages.</color>");
+                PlayerList[shplayer.ID].ReceiveStaffChat = true;
+                player.SendChatMessage($"<color={infoColor}>Staff chat messages enabled. You'll now receive staff messages.</color>");
             }
         }
     }

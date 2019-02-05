@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -15,17 +15,17 @@ namespace BP_Essentials.Commands
             string arg1 = GetArgument.Run(1, false, true, message);
             if (string.IsNullOrEmpty(arg1))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.SendChatMessage(ArgRequired);
                 return;
             }
-            var shPlayer = GetShByStr.Run(arg1);
-            if (shPlayer == null)
+            var currPlayer = GetShByStr.Run(arg1);
+            if (currPlayer == null)
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, NotFoundOnline);
+                player.SendChatMessage(NotFoundOnline);
                 return;
             }
-            player.svManager.Disconnect(shPlayer.svPlayer.connection);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Disconnected</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
+            player.svManager.Disconnect(currPlayer.svPlayer.connection, DisconnectTypes.Normal);
+            player.SendChatMessage($"<color={infoColor}>Disconnected</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
         }
     }
 }

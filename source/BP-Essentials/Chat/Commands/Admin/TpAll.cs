@@ -1,6 +1,6 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
+﻿using static BP_Essentials.Variables;
 using System;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
@@ -10,10 +10,9 @@ namespace BP_Essentials.Commands
         {
             var pos = player.player.GetPosition();
             var rot = player.player.GetRotation();
-            var pIndex = player.player.GetPlaceIndex();
             foreach (var currPlayer in SvMan.players.Values)
-                currPlayer.svPlayer.SvReset(pos, rot, pIndex);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Teleported</color> <color={argColor}>everyone</color> <color={infoColor}>to your location.</color>");
+                currPlayer.svPlayer.ResetAndSavePosition(pos, rot, player.player.GetPlaceIndex());
+            player.SendChatMessage($"<color={infoColor}>Teleported</color> <color={argColor}>everyone</color> <color={infoColor}>to your location.</color>");
         }
     }
 }

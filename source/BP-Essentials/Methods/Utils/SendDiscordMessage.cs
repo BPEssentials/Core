@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net;
@@ -23,12 +23,12 @@ namespace BP_Essentials
                 if (!enabled)
                     return;
                 if (DebugLevel >= 2)
-                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Creating POST request to {link}");
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Creating POST request to {link}");
                 var formData = Encoding.UTF8.GetBytes(json);
                 var www = new WWW(link, formData);
                 SvMan.StartCoroutine(WaitForRequest(www));
                 if (DebugLevel >= 2)
-                    Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request sent!");
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Post request sent!");
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace BP_Essentials
         {
             yield return www;
             if (DebugLevel >= 2)
-                Debug.Log($"{SetTimeStamp.Run()}[INFO] Post request response received: {(www.text ?? $"[HTTP-ERROR] {www.error}")}");
+                Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Post request response received: {(www.text ?? $"[HTTP-ERROR] {www.error}")}");
             www.Dispose();
         }
     }

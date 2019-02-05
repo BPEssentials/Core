@@ -1,6 +1,6 @@
-﻿using static BP_Essentials.EssentialsVariablesPlugin;
+﻿using static BP_Essentials.Variables;
 using System;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.HookMethods;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -14,17 +14,17 @@ namespace BP_Essentials.Commands
             var arg1 = GetArgument.Run(1, false, true, message);
             if (string.IsNullOrEmpty(arg1.Trim()))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
+                player.SendChatMessage(ArgRequired);
                 return;
             }
             var file = Path.Combine(WarpDirectory, $"{arg1}.json");
             if (!File.Exists(file))
             {
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>No warps exist with that name.</color>");
+                player.SendChatMessage($"<color={errorColor}>No warps exist with that name.</color>");
                 return;
             }
-            Warps.DeleteWarp(player, file, arg1);
-            player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>Warp deleted.</color>");
+            Variables.WarpHandler.DeleteExisting(arg1);
+            player.SendChatMessage($"<color={infoColor}>Warp deleted.</color>");
         }
     }
 }

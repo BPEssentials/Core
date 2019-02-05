@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 using System.IO;
 using System.Threading;
 using System.Reflection;
@@ -15,8 +15,8 @@ namespace BP_Essentials
     {
         public static void Run(string message)
         {
-            foreach (var player in playerList.Where(x =>x.Value.receiveStaffChat && HasPermission.Run(x.Value.Shplayer.svPlayer, CmdStaffChatExecutableBy)))
-                player.Value.Shplayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
+            foreach (var player in PlayerList.Where(x =>x.Value.ReceiveStaffChat && HasPermission.Run(x.Value.ShPlayer.svPlayer, CmdStaffChatExecutableBy)))
+                player.Value.ShPlayer.svPlayer.SendChatMessage(message);
         }
     }
 }

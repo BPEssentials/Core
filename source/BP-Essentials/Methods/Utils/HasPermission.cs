@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials
 {
@@ -12,7 +12,7 @@ namespace BP_Essentials
     {
         public static bool Run(SvPlayer player, string ExeBy, bool ShowNoPermMessage = false, byte? jobIndex = null)
         {
-            if (player.player.admin && ExeBy.Contains("admins") || ExeBy.Contains("everyone"))
+            if ((player.player.admin && ExeBy.Contains("admins")) || ExeBy.Contains("everyone") || ExeBy.Contains($"username:{player.player.username}"))
                 return true;
             string[] GroupsSplit = ExeBy.Split(',');
             foreach (string name in GroupsSplit)
@@ -25,7 +25,7 @@ namespace BP_Essentials
                     if (Groups.Any(curr => $"group:{curr.Value.Name}".Equals(name.Trim()) && curr.Value.Users.Contains(player.playerData.username)))
                         return true;
             if (ShowNoPermMessage)
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={errorColor}>{MsgNoPerm}</color>");
+                player.SendChatMessage($"<color={errorColor}>{MsgNoPerm}</color>");
             return false;
         }
     }

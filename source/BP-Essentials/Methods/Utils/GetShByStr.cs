@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials
 {
-    class GetShByStr : EssentialsCorePlugin
+    class GetShByStr : Core
     {
         public static ShPlayer Run(string player, bool idOnly = false)
         {

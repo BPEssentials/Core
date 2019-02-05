@@ -3,39 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static BP_Essentials.EssentialsVariablesPlugin;
-using static BP_Essentials.EssentialsMethodsPlugin;
+using static BP_Essentials.Variables;
+using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials.Commands
 {
     class Slap
     {
-        public static void Run(SvPlayer player, string message)
-        {
-            string arg1 = GetArgument.Run(1, false, true, message);
-            if (String.IsNullOrEmpty(arg1))
-                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, ArgRequired);
-            else
-            {
-                bool playerfound = false;
-                foreach (var shPlayer in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                    if (shPlayer.username == arg1 && !shPlayer.svPlayer.serverside || shPlayer.ID.ToString() == arg1 && !shPlayer.svPlayer.serverside)
-                    {
-                        foreach (var shPlayer2 in UnityEngine.Object.FindObjectsOfType<ShPlayer>())
-                            if (shPlayer2.svPlayer == player && !shPlayer2.svPlayer.serverside)
-                            {
-                                int amount = new System.Random().Next(4, 15);
-                                shPlayer.svPlayer.Damage(DamageIndex.Null, amount, null, null);
-                                shPlayer.svPlayer.SvForce(new Vector3(500f, 0f, 500f));
-                                shPlayer.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={warningColor}>You got slapped by </color><color={argColor}>{shPlayer2.username}</color><color={warningColor}>! [-{amount} HP]</color>");
-                                player.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, $"<color={infoColor}>You've slapped </color><color={argColor}>{shPlayer.username}</color><color={infoColor}>. [-{amount} HP]</color>");
-                                playerfound = true;
-                            }
-                    }
-                if (!playerfound)
-                    player.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, NotFoundOnline);
-
-            }
-        }
+		public static void Run(SvPlayer player, string message)
+		{
+			string arg1 = GetArgument.Run(1, false, true, message);
+			if (string.IsNullOrEmpty(arg1))
+			{
+				player.SendChatMessage(ArgRequired);
+				return;
+			}
+			var currPlayer = GetShByStr.Run(arg1);
+			if (currPlayer == null)
+			{
+				player.SendChatMessage(NotFoundOnline);
+				return;
+			}
+			int amount = new System.Random().Next(4, 15);
+			currPlayer.svPlayer.Damage(DamageIndex.Null, amount, null, null);
+			currPlayer.svPlayer.SvForce(new Vector3(500f, 0f, 500f));
+			currPlayer.svPlayer.SendChatMessage($"<color={warningColor}>You got slapped by </color><color={argColor}>{player.player.username}</color><color={warningColor}>! [-{amount} HP]</color>");
+			player.SendChatMessage($"<color={infoColor}>You've slapped </color><color={argColor}>{currPlayer.username}</color><color={infoColor}>. [-{amount} HP]</color>");
+		}
     }
 }
