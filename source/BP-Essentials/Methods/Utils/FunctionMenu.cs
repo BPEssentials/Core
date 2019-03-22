@@ -51,6 +51,11 @@ namespace BP_Essentials.Methods.Utils
 		#region Key | Any
 		public static CurrentMenu ReportMenu(SvPlayer player, byte key)
 		{
+			if (string.IsNullOrWhiteSpace(ReportReasons[key - 2]))
+			{
+				player.SendChatMessage($"<color={errorColor}>This report reason is empty.</color>");
+				return CurrentMenu.Report;
+			}
 			player.CloseFunctionMenu();
 			if (!PlayerList.TryGetValue(player.player.ID, out var playerListItem))
 				return CurrentMenu.None;

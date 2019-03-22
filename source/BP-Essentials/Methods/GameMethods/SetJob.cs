@@ -9,12 +9,14 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class SetJob : Variables
+    class SetJob
     {
         public static void Run(ShPlayer shPlayer, byte jobIndex, bool AddItems, bool CollectCost)
         {
             try
             {
+				if (shPlayer == null)
+					return;
                 typeof(SvPlayer).GetMethod("SvTrySetJob", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { jobIndex, AddItems, CollectCost });
             }
             catch (Exception ex)

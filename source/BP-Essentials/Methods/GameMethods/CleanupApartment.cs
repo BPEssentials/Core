@@ -9,12 +9,14 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class CleanupApartment : Variables
+    class CleanupApartment
     {
         public static void Run(ShPlayer shPlayer)
         {
             try
             {
+				if (shPlayer == null)
+					return;
                 typeof(SvPlayer).GetMethod(nameof(CleanupApartment), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { });
             }
             catch (Exception ex)

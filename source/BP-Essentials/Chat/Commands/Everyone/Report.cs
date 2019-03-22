@@ -41,7 +41,11 @@ namespace BP_Essentials.Commands
 			var builder = new StringBuilder();
 			builder.Append("<color=#00ffffff>Reporting</color> <color=#ea8220>" + arg1 + "</color>\n<color=#00ffffff>Reason:</color>\n\n");
 			for (int i = 0; i < ReportReasons.Length; i++)
+			{
+				if (string.IsNullOrWhiteSpace(ReportReasons[i]))
+					continue;
 				builder.Append("<color=#00ffffff>F" + (i + 2) + ":</color> " + ReportReasons[i] + "\n");
+			}
 			player.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowFunctionMenu, builder + "\n<color=#00ffffff>Press</color> <color=#ea8220>F11</color> <color=#00ffffff>To close this (G)UI</color>");
 			PlayerList[player.player.ID].LastMenu = CurrentMenu.Report;
 			PlayerList[player.player.ID].ReportedPlayer = currPlayer;
