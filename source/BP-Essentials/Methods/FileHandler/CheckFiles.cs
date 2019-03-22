@@ -19,6 +19,7 @@ namespace BP_Essentials
 				// I don't know when I added that comment but seriously I should really redo this method.. whenever I have time
 				// Every time I have to change something in this file it reminds me again that I should change this somehow.. I just don't know how.
 				// lol yup still here.. fuck.
+				// shrugs
 				if (!Directory.Exists(FileDirectory))
                 {
                     Directory.CreateDirectory(FileDirectory);

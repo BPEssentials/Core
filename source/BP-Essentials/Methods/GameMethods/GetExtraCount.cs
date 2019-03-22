@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace BP_Essentials
 {
-    class GetExtraCount : Variables
+    class GetExtraCount
     {
         public static int Run(ShPlayer player, InventoryItem myItem)
         {

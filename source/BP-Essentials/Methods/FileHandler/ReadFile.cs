@@ -180,7 +180,7 @@ namespace BP_Essentials
 				switch (fileName)
 				{
 					case SettingsFile:
-						__RootObject m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
+						var m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
 
 
 						LocalVersion = m.General.Version;
