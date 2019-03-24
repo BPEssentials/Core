@@ -57,6 +57,6 @@ namespace BP_Essentials.Commands
                 SvMan.StartCoroutine(Variables.KitsHandler.StartCooldown(player.player.username, obj));
             player.SendChatMessage($"<color={infoColor}>You've been given the kit</color> <color={argColor}>{arg1}</color><color={infoColor}>.{(obj.Delay > 0 ? $" You can get this kit again in {obj.Delay} seconds." : "")}</color>");
 
-		}
+        }
     }
 }

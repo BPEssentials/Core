@@ -4,11 +4,11 @@ using System;
 
 namespace BP_Essentials.Commands
 {
-	[Obsolete]
-	public class TpToApartment
+    [Obsolete]
+    public class TpToApartment
     {
-		[Obsolete]
-		public static void Run(SvPlayer player, string message)
+        [Obsolete]
+        public static void Run(SvPlayer player, string message)
         {
             var arg1 = GetArgument.Run(1, false, true, message);
             if (string.IsNullOrEmpty(arg1))

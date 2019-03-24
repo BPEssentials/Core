@@ -13,7 +13,7 @@ namespace BP_Essentials.Chat
     {
         public static string Run(string message)
         {
-			// todo
+            // todo
             try
             {
                 if (ChatBlock)

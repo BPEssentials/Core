@@ -10,22 +10,22 @@ namespace BP_Essentials.Commands
 {
     class Knockout
     {
-		public static void Run(SvPlayer player, string message)
-		{
-			string arg1 = GetArgument.Run(1, false, true, message);
-			if (string.IsNullOrEmpty(arg1))
-			{
-				player.SendChatMessage(ArgRequired);
-				return;
-			}
-			var currPlayer = GetShByStr.Run(arg1);
-			if (currPlayer == null)
-			{
-				player.SendChatMessage(NotFoundOnline);
-				return;
-			}
-			currPlayer.svPlayer.SvForceStance(StanceIndex.KnockedOut);
-			player.SendChatMessage($"<color={infoColor}>Knocked out</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
-		}
+        public static void Run(SvPlayer player, string message)
+        {
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (string.IsNullOrEmpty(arg1))
+            {
+                player.SendChatMessage(ArgRequired);
+                return;
+            }
+            var currPlayer = GetShByStr.Run(arg1);
+            if (currPlayer == null)
+            {
+                player.SendChatMessage(NotFoundOnline);
+                return;
+            }
+            currPlayer.svPlayer.SvForceStance(StanceIndex.KnockedOut);
+            player.SendChatMessage($"<color={infoColor}>Knocked out</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
+        }
     }
 }

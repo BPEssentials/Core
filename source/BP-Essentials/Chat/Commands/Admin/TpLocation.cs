@@ -7,8 +7,8 @@ using System.Linq;
 
 namespace BP_Essentials.Commands
 {
-	[Obsolete]
-	public class TpLocation
+    [Obsolete]
+    public class TpLocation
     {
         [Obsolete]
         public static void Run(SvPlayer player, string message)

@@ -28,15 +28,15 @@ namespace BP_Essentials
             {
                 Groups.Clear();
                 _RootObject m = JsonConvert.DeserializeObject<_RootObject>(FilterComments.Run(CustomGroupsFile));
-				foreach (var group in m.Groups)
-				{
-					if (Groups.ContainsKey(group.Name))
-					{
-						Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [ERROR] Cannot add group {group.Name} To dictionary because it already exists!");
-						continue;
-					}
-					Groups.Add(group.Name, new _Group { Message = group.Message, Name = group.Name, Users = group.Usernames });
-				}
+                foreach (var group in m.Groups)
+                {
+                    if (Groups.ContainsKey(group.Name))
+                    {
+                        Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [ERROR] Cannot add group {group.Name} To dictionary because it already exists!");
+                        continue;
+                    }
+                    Groups.Add(group.Name, new _Group { Message = group.Message, Name = group.Name, Users = group.Usernames });
+                }
             }
             catch (Exception ex)
             {

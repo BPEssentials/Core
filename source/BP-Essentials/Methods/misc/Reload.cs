@@ -15,31 +15,31 @@ namespace BP_Essentials
         {
             try
             {
-				if (!silentExecution && player != null)
-					player.SendChatMessage("[WAIT] Reloading all files..");
-				CheckFiles.Run();
-				ReadFile.Run(SettingsFile);
-				ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
-				ReadStream.Run(ChatBlockFile, ChatBlockWords);
-				ReadStream.Run(AdminListFile, AdminsListPlayers);
-				ReadCustomCommands.Run();
-				ReadGroups.Run();
-				LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
-				ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
-				if (DownloadIdList && player == null) // do not download every time a player /reloads
-					GetIdList.Run(false);
-				else
-				{
-					ReadFile.Run(IdListItemsFile);
-					ReadFile.Run(IdListVehicleFile);
-				}
-				ReadFile.Run(AnnouncementsFile);
-				ReadFile.Run(GodListFile);
-				ReadFile.Run(MuteListFile);
-				ReadFile.Run(AfkListFile);
-				ReadFile.Run(RulesFile);
-				if (!silentExecution && player != null)
-					player.SendChatMessage("[OK] Critical config files reloaded");
+                if (!silentExecution && player != null)
+                    player.SendChatMessage("[WAIT] Reloading all files..");
+                CheckFiles.Run();
+                ReadFile.Run(SettingsFile);
+                ReadStream.Run(LanguageBlockFile, LanguageBlockWords);
+                ReadStream.Run(ChatBlockFile, ChatBlockWords);
+                ReadStream.Run(AdminListFile, AdminsListPlayers);
+                ReadCustomCommands.Run();
+                ReadGroups.Run();
+                LanguageBlockWords = LanguageBlockWords.ConvertAll(d => d.ToLower());
+                ChatBlockWords = ChatBlockWords.ConvertAll(d => d.ToLower());
+                if (DownloadIdList && player == null) // do not download every time a player /reloads
+                    GetIdList.Run(false);
+                else
+                {
+                    ReadFile.Run(IdListItemsFile);
+                    ReadFile.Run(IdListVehicleFile);
+                }
+                ReadFile.Run(AnnouncementsFile);
+                ReadFile.Run(GodListFile);
+                ReadFile.Run(MuteListFile);
+                ReadFile.Run(AfkListFile);
+                ReadFile.Run(RulesFile);
+                if (!silentExecution && player != null)
+                    player.SendChatMessage("[OK] Critical config files reloaded");
             }
             catch (Exception ex)
             {

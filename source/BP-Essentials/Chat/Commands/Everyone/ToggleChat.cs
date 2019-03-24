@@ -12,8 +12,8 @@ namespace BP_Essentials.Commands
     {
         public static void Run(SvPlayer player, string message)
         {
-			PlayerList[player.player.ID].ChatEnabled = !PlayerList[player.player.ID].ChatEnabled;
-			player.SendChatMessage($"<color={infoColor}>Chat</color> <color={argColor}>{(PlayerList[player.player.ID].ChatEnabled ? "enabled" : "disabled")}</color><color={infoColor}>.</color>");
+            PlayerList[player.player.ID].ChatEnabled = !PlayerList[player.player.ID].ChatEnabled;
+            player.SendChatMessage($"<color={infoColor}>Chat</color> <color={argColor}>{(PlayerList[player.player.ID].ChatEnabled ? "enabled" : "disabled")}</color><color={infoColor}>.</color>");
         }
     }
 }

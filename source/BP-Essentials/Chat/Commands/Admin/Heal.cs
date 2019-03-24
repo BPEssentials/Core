@@ -13,16 +13,16 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             string arg1 = GetArgument.Run(1, false, true, message);
-			if (string.IsNullOrEmpty(arg1))
-				arg1 = player.player.username;
-			var currPlayer = GetShByStr.Run(arg1);
-			if (currPlayer == null)
-			{
-				player.SendChatMessage(NotFoundOnline);
-				return;
-			}
-			currPlayer.svPlayer.Heal(100);
-			player.SendChatMessage($"<color={infoColor}>Healed</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
+            if (string.IsNullOrEmpty(arg1))
+                arg1 = player.player.username;
+            var currPlayer = GetShByStr.Run(arg1);
+            if (currPlayer == null)
+            {
+                player.SendChatMessage(NotFoundOnline);
+                return;
+            }
+            currPlayer.svPlayer.Heal(100);
+            player.SendChatMessage($"<color={infoColor}>Healed</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
         }
     }
 }

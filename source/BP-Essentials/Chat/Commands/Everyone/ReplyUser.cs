@@ -24,8 +24,8 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage(ArgRequired);
                 return;
             }
-			PlayerList[replyUser.ID].ReplyToUser = player.player;
-			player.SendChatMessage($"<color={infoColor}>[PM]</color> <color={argColor}>{replyUser.username}</color> <color={warningColor}>></color> <color={infoColor}>{arg1}</color>");
+            PlayerList[replyUser.ID].ReplyToUser = player.player;
+            player.SendChatMessage($"<color={infoColor}>[PM]</color> <color={argColor}>{replyUser.username}</color> <color={warningColor}>></color> <color={infoColor}>{arg1}</color>");
             replyUser.svPlayer.SendChatMessage($"<color={infoColor}>[PM]</color> <color={argColor}>{player.player.username}</color> <color={warningColor}><</color> <color={infoColor}>{arg1}</color>");
         }
     }

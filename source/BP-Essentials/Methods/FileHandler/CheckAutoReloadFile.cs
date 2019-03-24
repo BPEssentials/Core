@@ -22,11 +22,11 @@ namespace BP_Essentials
                     EnableRaisingEvents = true
                 };
                 watcher.Changed += (sender, e) =>
-				{
-					Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Found a change in file {file}, reloading all files...");
-					Debug.Log("    ");
-					Reload.Run(true);
-				};
+                {
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Found a change in file {file}, reloading all files...");
+                    Debug.Log("    ");
+                    Reload.Run(true);
+                };
             }
             catch (Exception ex)
             {

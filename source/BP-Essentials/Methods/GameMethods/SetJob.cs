@@ -15,8 +15,8 @@ namespace BP_Essentials
         {
             try
             {
-				if (shPlayer == null)
-					return;
+                if (shPlayer == null)
+                    return;
                 typeof(SvPlayer).GetMethod("SvTrySetJob", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { jobIndex, AddItems, CollectCost });
             }
             catch (Exception ex)

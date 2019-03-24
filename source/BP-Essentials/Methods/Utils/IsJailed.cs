@@ -9,11 +9,11 @@ using static BP_Essentials.HookMethods;
 namespace BP_Essentials
 {
     class IsJailed
-	{
+    {
         public static bool Run(SvPlayer player, bool allow = true)
         {
             if (allow || !(player.player.job is Prisoner))
-				return true;
+                return true;
             player.SendChatMessage($"{MsgNoJailAllowed}");
             return false;
         }

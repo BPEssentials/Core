@@ -18,6 +18,11 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage($"<color={warningColor}>You don't have a apartment to sell!</color>");
                 return;
             }
+            if (shPlayer.InOwnApartment())
+            {
+                player.SendChatMessage($"<color={warningColor}>You cannot sell your apartment while you're in it.</color>");
+                return;
+            }
             player.SendChatMessage($"<color={infoColor}>Selling apartment...</color>");
             SellApartment(shPlayer);
         }

@@ -48,7 +48,7 @@ namespace BP_Essentials
                     commandDisabled = command.Disabled ?? false,
                     commandWantedAllowed = command.AllowWithCrimes ?? true,
                     commandHandcuffedAllowed = command.AllowWhileCuffed ?? true,
-					commandWhileJailedAllowed = command.AllowWhileJailed ?? true
+                    commandWhileJailedAllowed = command.AllowWhileJailed ?? true
                 });
             }
             Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] Registered commands! ({CommandList.Count} commands loaded in.)");

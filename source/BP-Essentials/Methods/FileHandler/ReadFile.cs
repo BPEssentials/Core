@@ -35,31 +35,31 @@ namespace BP_Essentials
         public bool BlockBanButtonTabMenu { get; set; }
         public bool BlockLicenseRemoved { get; set; }
         public int MessagesAllowedPerSecond { get; set; }
-		public int TimeBetweenDelay { get; set; }
-		public string WipePassword { get; set; }
+        public int TimeBetweenDelay { get; set; }
+        public string WipePassword { get; set; }
     }
-	[Serializable]
-	public class _Messages
-	{
-		public string NoPerm { get; set; }
-		public string DisabledCommand { get; set; }
-		public string MsgSayPrefix { get; set; }
-		public string DiscordLink { get; set; }
-		public string PlayerIsAFK { get; set; }
-		public string SelfIsMuted { get; set; }
-		public string ArgRequired { get; set; }
-		public string NotFoundOnline { get; set; }
-		public string NotFoundOnlineIdOnly { get; set; }
-		public string AdminSearchingInv { get; set; }
-		public string PlayerMessage { get; set; }
-		public string AdminMessage { get; set; }
-		public string AdminChatMessage { get; set; }
-		public string MsgNoPermJob { get; set; }
-		public string BlockedItem { get; set; }
-		public string MsgNoWantedAllowed { get; set; }
-		public string MsgNoCuffedAllowed { get; set; }
-		public string MsgNoJailAllowed { get; set; }
-		public string MeMessage { get; set; }
+    [Serializable]
+    public class _Messages
+    {
+        public string NoPerm { get; set; }
+        public string DisabledCommand { get; set; }
+        public string MsgSayPrefix { get; set; }
+        public string DiscordLink { get; set; }
+        public string PlayerIsAFK { get; set; }
+        public string SelfIsMuted { get; set; }
+        public string ArgRequired { get; set; }
+        public string NotFoundOnline { get; set; }
+        public string NotFoundOnlineIdOnly { get; set; }
+        public string AdminSearchingInv { get; set; }
+        public string PlayerMessage { get; set; }
+        public string AdminMessage { get; set; }
+        public string AdminChatMessage { get; set; }
+        public string MsgNoPermJob { get; set; }
+        public string BlockedItem { get; set; }
+        public string MsgNoWantedAllowed { get; set; }
+        public string MsgNoCuffedAllowed { get; set; }
+        public string MsgNoJailAllowed { get; set; }
+        public string MeMessage { get; set; }
     }
     [Serializable]
     public class MessageColors
@@ -123,9 +123,9 @@ namespace BP_Essentials
         public bool BlockMissions { get; set; }
         public bool ProximityChat { get; set; }
         public bool LocalChatMute { get; set; }
-		public bool LocalChatMe { get; set; }
-		public bool TimescaleDisabled { get; set; }
-	}
+        public bool LocalChatMe { get; set; }
+        public bool TimescaleDisabled { get; set; }
+    }
     [Serializable]
     public class WhitelistedJob
     {
@@ -141,8 +141,8 @@ namespace BP_Essentials
         public bool? Disabled { get; set; }
         public bool? AllowWithCrimes { get; set; }
         public bool? AllowWhileCuffed { get; set; }
-		public bool? AllowWhileJailed { get; set; }
-	}
+        public bool? AllowWhileJailed { get; set; }
+    }
     [Serializable]
     public class __RootObject
     {
@@ -177,137 +177,137 @@ namespace BP_Essentials
             try
             {
                 IdListObject idlist;
-				switch (fileName)
-				{
-					case SettingsFile:
-						var m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
+                switch (fileName)
+                {
+                    case SettingsFile:
+                        var m = JsonConvert.DeserializeObject<__RootObject>(FilterComments.Run(SettingsFile));
 
 
-						LocalVersion = m.General.Version;
-						CmdCommandCharacter = m.General.CommandCharacter;
-						DownloadIdList = m.General.DownloadIDList;
-						TimestampFormat = m.General.TimestapFormat;
-						MsgSayColor = m.General.MsgSayColor;
-						MsgUnknownCommand = m.General.DisplayUnknownCommandMessage;
-						VoteKickDisabled = m.General.VoteKickDisabled;
-						ShowDMGMessage = m.General.ShowDMGMessage;
-						DebugLevel = m.General.DebugLevel;
-						EnableDiscordWebhook_Ban = m.General.EnableDiscordWebhook_Ban;
-						if (EnableDiscordWebhook_Ban && string.IsNullOrEmpty(m.General.DiscordWebhook_Ban.Trim()))
-						{
-							Debug.Log("[ERROR] Discord webhook_Ban is empty but EnableDiscordWebhook_Ban is true! Disabling webhook_Ban.");
-							EnableDiscordWebhook_Ban = false;
-						}
-						else
-							DiscordWebhook_Ban = m.General.DiscordWebhook_Ban;
-						EnableDiscordWebhook_Report = m.General.EnableDiscordWebhook_Report;
-						if (EnableDiscordWebhook_Report && string.IsNullOrEmpty(m.General.DiscordWebhook_Report.Trim()))
-						{
-							Debug.Log("[ERROR] Discord webhook_Report is empty but EnableDiscordWebhook_Report is true! Disabling webhook_Report.");
-							EnableDiscordWebhook_Report = false;
-						}
-						else
-							DiscordWebhook_Report = m.General.DiscordWebhook_Report;
-						BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
-						blockLicenseRemoved = m.General.BlockLicenseRemoved;
-						MessagesAllowedPerSecond = m.General.MessagesAllowedPerSecond;
-						TimeBetweenDelay = m.General.TimeBetweenDelay;
-						WipePassword = m.General.WipePassword;
+                        LocalVersion = m.General.Version;
+                        CmdCommandCharacter = m.General.CommandCharacter;
+                        DownloadIdList = m.General.DownloadIDList;
+                        TimestampFormat = m.General.TimestapFormat;
+                        MsgSayColor = m.General.MsgSayColor;
+                        MsgUnknownCommand = m.General.DisplayUnknownCommandMessage;
+                        VoteKickDisabled = m.General.VoteKickDisabled;
+                        ShowDMGMessage = m.General.ShowDMGMessage;
+                        DebugLevel = m.General.DebugLevel;
+                        EnableDiscordWebhook_Ban = m.General.EnableDiscordWebhook_Ban;
+                        if (EnableDiscordWebhook_Ban && string.IsNullOrEmpty(m.General.DiscordWebhook_Ban.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook_Ban is empty but EnableDiscordWebhook_Ban is true! Disabling webhook_Ban.");
+                            EnableDiscordWebhook_Ban = false;
+                        }
+                        else
+                            DiscordWebhook_Ban = m.General.DiscordWebhook_Ban;
+                        EnableDiscordWebhook_Report = m.General.EnableDiscordWebhook_Report;
+                        if (EnableDiscordWebhook_Report && string.IsNullOrEmpty(m.General.DiscordWebhook_Report.Trim()))
+                        {
+                            Debug.Log("[ERROR] Discord webhook_Report is empty but EnableDiscordWebhook_Report is true! Disabling webhook_Report.");
+                            EnableDiscordWebhook_Report = false;
+                        }
+                        else
+                            DiscordWebhook_Report = m.General.DiscordWebhook_Report;
+                        BlockBanButtonTabMenu = m.General.BlockBanButtonTabMenu;
+                        blockLicenseRemoved = m.General.BlockLicenseRemoved;
+                        MessagesAllowedPerSecond = m.General.MessagesAllowedPerSecond;
+                        TimeBetweenDelay = m.General.TimeBetweenDelay;
+                        WipePassword = m.General.WipePassword;
 
-						infoColor = m.MessageColors.Info;
-						errorColor = m.MessageColors.Error;
-						warningColor = m.MessageColors.Warning;
-						argColor = m.MessageColors.Arg;
+                        infoColor = m.MessageColors.Info;
+                        errorColor = m.MessageColors.Error;
+                        warningColor = m.MessageColors.Warning;
+                        argColor = m.MessageColors.Arg;
 
-						MsgNoPerm = m.Messages.NoPerm;
-						MsgDiscord = m.Messages.DiscordLink;
-						MsgSayPrefix = m.Messages.MsgSayPrefix;
-						DisabledCommand = $"<color={errorColor}>{m.Messages.DisabledCommand}</color>";
-						PlayerIsAFK = $"<color={warningColor}>{m.Messages.PlayerIsAFK}</color>";
-						SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
-						ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
-						NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
-						NotFoundOnlineIdOnly = $"<color={errorColor}>{m.Messages.NotFoundOnlineIdOnly}</color>";
-						AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
-						PlayerMessage = m.Messages.PlayerMessage;
-						AdminMessage = m.Messages.AdminMessage;
-						AdminChatMessage = m.Messages.AdminChatMessage;
-						MsgNoPermJob = $"<color={errorColor}>{m.Messages.MsgNoPermJob}</color>";
-						BlockedItemMessage = $"<color={errorColor}>{m.Messages.BlockedItem}</color>";
-						MsgNoWantedAllowed = $"<color={errorColor}>{m.Messages.MsgNoWantedAllowed}</color>";
-						MsgNoCuffedAllowed = $"<color={errorColor}>{m.Messages.MsgNoCuffedAllowed}</color>";
-						MsgNoJailAllowed = $"<color={errorColor}>{m.Messages.MsgNoJailAllowed}</color>";
-						MeMessage = m.Messages.MeMessage;
+                        MsgNoPerm = m.Messages.NoPerm;
+                        MsgDiscord = m.Messages.DiscordLink;
+                        MsgSayPrefix = m.Messages.MsgSayPrefix;
+                        DisabledCommand = $"<color={errorColor}>{m.Messages.DisabledCommand}</color>";
+                        PlayerIsAFK = $"<color={warningColor}>{m.Messages.PlayerIsAFK}</color>";
+                        SelfIsMuted = $"<color={errorColor}>{m.Messages.SelfIsMuted}</color>";
+                        ArgRequired = $"<color={errorColor}>{m.Messages.ArgRequired}</color>";
+                        NotFoundOnline = $"<color={errorColor}>{m.Messages.NotFoundOnline}</color>";
+                        NotFoundOnlineIdOnly = $"<color={errorColor}>{m.Messages.NotFoundOnlineIdOnly}</color>";
+                        AdminSearchingInv = $"<color={errorColor}>{m.Messages.AdminSearchingInv}</color>";
+                        PlayerMessage = m.Messages.PlayerMessage;
+                        AdminMessage = m.Messages.AdminMessage;
+                        AdminChatMessage = m.Messages.AdminChatMessage;
+                        MsgNoPermJob = $"<color={errorColor}>{m.Messages.MsgNoPermJob}</color>";
+                        BlockedItemMessage = $"<color={errorColor}>{m.Messages.BlockedItem}</color>";
+                        MsgNoWantedAllowed = $"<color={errorColor}>{m.Messages.MsgNoWantedAllowed}</color>";
+                        MsgNoCuffedAllowed = $"<color={errorColor}>{m.Messages.MsgNoCuffedAllowed}</color>";
+                        MsgNoJailAllowed = $"<color={errorColor}>{m.Messages.MsgNoJailAllowed}</color>";
+                        MeMessage = m.Messages.MeMessage;
 
-						AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
-						AccessItemMenu = m.FunctionUI.AccessItemMenu;
-						AccessSetHPMenu = m.FunctionUI.AccessSetHPMenu;
-						AccessSetStatsMenu = m.FunctionUI.AccessSetStatsMenu;
-						AccessCWMenu = m.FunctionUI.AccessCWMenu;
+                        AccessMoneyMenu = m.FunctionUI.AccessMoneyMenu;
+                        AccessItemMenu = m.FunctionUI.AccessItemMenu;
+                        AccessSetHPMenu = m.FunctionUI.AccessSetHPMenu;
+                        AccessSetStatsMenu = m.FunctionUI.AccessSetStatsMenu;
+                        AccessCWMenu = m.FunctionUI.AccessCWMenu;
 
-						ReportReasons = new string[] { m.ReportOptions.F2, m.ReportOptions.F3, m.ReportOptions.F4, m.ReportOptions.F5, m.ReportOptions.F6, m.ReportOptions.F7, m.ReportOptions.F8, m.ReportOptions.F9, m.ReportOptions.F10 };
+                        ReportReasons = new string[] { m.ReportOptions.F2, m.ReportOptions.F3, m.ReportOptions.F4, m.ReportOptions.F5, m.ReportOptions.F6, m.ReportOptions.F7, m.ReportOptions.F8, m.ReportOptions.F9, m.ReportOptions.F10 };
 
-						// Softcode this someday
-						Jobs = new string[] { m.JobIndexArray.Citizen, m.JobIndexArray.Criminal, m.JobIndexArray.Prisoner, m.JobIndexArray.Police, m.JobIndexArray.Paramedic, m.JobIndexArray.Firefighter, m.JobIndexArray.Rojo_Loco, m.JobIndexArray.Green_St_Fam, m.JobIndexArray.Borgata_Blue, m.JobIndexArray.Mayor, m.JobIndexArray.DeliveryDriver, m.JobIndexArray.TaxiDriver, m.JobIndexArray.SpecOps };
+                        // Softcode this someday
+                        Jobs = new string[] { m.JobIndexArray.Citizen, m.JobIndexArray.Criminal, m.JobIndexArray.Prisoner, m.JobIndexArray.Police, m.JobIndexArray.Paramedic, m.JobIndexArray.Firefighter, m.JobIndexArray.Rojo_Loco, m.JobIndexArray.Green_St_Fam, m.JobIndexArray.Borgata_Blue, m.JobIndexArray.Mayor, m.JobIndexArray.DeliveryDriver, m.JobIndexArray.TaxiDriver, m.JobIndexArray.SpecOps };
 
-						BlockedItems = m.BlockedItems;
+                        BlockedItems = m.BlockedItems;
 
-						EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
-						LanguageBlock = m.Misc.EnableLanguageBlock;
-						ChatBlock = m.Misc.EnableChatBlock;
-						CheckBannedEnabled = m.Misc.CheckBannedEnabled;
-						TimeBetweenAnnounce = m.Misc.TimeBetweenAnnounce;
-						Variables.Announcer.Interval = TimeBetweenAnnounce;
-						TimescaleDisabled = m.Misc.TimescaleDisabled;
+                        EnableBlockSpawnBot = m.Misc.EnableBlockSpawnBot;
+                        LanguageBlock = m.Misc.EnableLanguageBlock;
+                        ChatBlock = m.Misc.EnableChatBlock;
+                        CheckBannedEnabled = m.Misc.CheckBannedEnabled;
+                        TimeBetweenAnnounce = m.Misc.TimeBetweenAnnounce;
+                        Variables.Announcer.Interval = TimeBetweenAnnounce;
+                        TimescaleDisabled = m.Misc.TimescaleDisabled;
 
-						if (m.Misc.EnableBlockSpawnBot)
-							BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
-						GodModeLevel = m.Misc.GodModeLevel;
-						ShowJailMessage = m.Misc.ShowJailMessage;
-						BlockSuicide = m.Misc.BlockSuicide;
-						BlockMissions = m.Misc.BlockMissions;
-						ProximityChat = m.Misc.ProximityChat;
-						LocalChatMute = m.Misc.LocalChatMute;
-						LocalChatMe = m.Misc.LocalChatMe;
+                        if (m.Misc.EnableBlockSpawnBot)
+                            BlockedSpawnIds = m.Misc.BlockSpawnBot.Split(',').Select(int.Parse).ToArray();
+                        GodModeLevel = m.Misc.GodModeLevel;
+                        ShowJailMessage = m.Misc.ShowJailMessage;
+                        BlockSuicide = m.Misc.BlockSuicide;
+                        BlockMissions = m.Misc.BlockMissions;
+                        ProximityChat = m.Misc.ProximityChat;
+                        LocalChatMute = m.Misc.LocalChatMute;
+                        LocalChatMe = m.Misc.LocalChatMe;
 
-						foreach (var currJob in m.WhitelistedJobs)
-						{
-							if (WhitelistedJobs.ContainsKey(currJob.JobIndex))
-							{
-								Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [WARNING] WhitelistedJobs already contains a item with the key '{currJob.JobIndex}'! (Did you make two objects with the same JobIndex?)");
-								continue;
-							}
-							WhitelistedJobs.Add(currJob.JobIndex, currJob.Whitelisted);
-						}
-						RegisterCommands.Run(m.Commands);
-						break;
-					case IdListItemsFile:
-						idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListItemsFile));
-						IDs_Items = idlist.items.Select(x => x.gameid).ToArray();
-						break;
-					case IdListVehicleFile:
-						idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListVehicleFile));
-						IDs_Vehicles = idlist.items.Select(x => x.gameid).ToArray();
-						break;
-					case AnnouncementsFile:
-						Variables.Announcer.Announcements = File.ReadAllLines(fileName).ToList();
-						break;
-					case RulesFile:
-						Rules = File.ReadAllText(fileName);
-						break;
-					case GodListFile:
-						GodListPlayers = File.ReadAllLines(fileName).ToList();
-						break;
-					case AfkListFile:
-						AfkPlayers = File.ReadAllLines(fileName).ToList();
-						break;
-					case MuteListFile:
-						MutePlayers = File.ReadAllLines(fileName).ToList();
-						break;
-					default:
-						break;
-				}
-			}
+                        foreach (var currJob in m.WhitelistedJobs)
+                        {
+                            if (WhitelistedJobs.ContainsKey(currJob.JobIndex))
+                            {
+                                Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [WARNING] WhitelistedJobs already contains a item with the key '{currJob.JobIndex}'! (Did you make two objects with the same JobIndex?)");
+                                continue;
+                            }
+                            WhitelistedJobs.Add(currJob.JobIndex, currJob.Whitelisted);
+                        }
+                        RegisterCommands.Run(m.Commands);
+                        break;
+                    case IdListItemsFile:
+                        idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListItemsFile));
+                        IDs_Items = idlist.items.Select(x => x.gameid).ToArray();
+                        break;
+                    case IdListVehicleFile:
+                        idlist = JsonConvert.DeserializeObject<IdListObject>(FilterComments.Run(IdListVehicleFile));
+                        IDs_Vehicles = idlist.items.Select(x => x.gameid).ToArray();
+                        break;
+                    case AnnouncementsFile:
+                        Variables.Announcer.Announcements = File.ReadAllLines(fileName).ToList();
+                        break;
+                    case RulesFile:
+                        Rules = File.ReadAllText(fileName);
+                        break;
+                    case GodListFile:
+                        GodListPlayers = File.ReadAllLines(fileName).ToList();
+                        break;
+                    case AfkListFile:
+                        AfkPlayers = File.ReadAllLines(fileName).ToList();
+                        break;
+                    case MuteListFile:
+                        MutePlayers = File.ReadAllLines(fileName).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
             catch (Exception ex)
             {
                 ErrorLogging.Run(ex);
