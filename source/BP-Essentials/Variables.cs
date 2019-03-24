@@ -9,8 +9,8 @@ namespace BP_Essentials
 {
     public class Variables : Core
     {
-		public static string Version { get; private set; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-		public static bool IsPreRelease => Version.Contains("pre");
+        public static string Version { get; private set; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+        public static bool IsPreRelease => Version.Contains("pre");
 
         // Generic Constants
         public const string FileDirectory = "Essentials/";
@@ -42,13 +42,13 @@ namespace BP_Essentials
         public static readonly string ChatLogFile = Path.Combine(LogDirectory, "chat.txt");
         public static readonly string CommandLogFile = Path.Combine(LogDirectory, "commands.txt");
 
-		// Singletons
-		public static WarpHandler WarpHandler { get; set; }
-		public static KitsHandler KitsHandler { get; set; }
-		public static Announcer Announcer { get; set; } = new Announcer();
+        // Singletons
+        public static WarpHandler WarpHandler { get; set; }
+        public static KitsHandler KitsHandler { get; set; }
+        public static Announcer Announcer { get; set; } = new Announcer();
 
-		// Bools
-		public static bool MsgUnknownCommand;
+        // Bools
+        public static bool MsgUnknownCommand;
 
         public static bool ChatBlock;
         public static bool LanguageBlock;
@@ -71,11 +71,11 @@ namespace BP_Essentials
         public static bool BlockMissions;
         public static bool ProximityChat;
         public static bool LocalChatMute;
-		public static bool LocalChatMe;
-		public static bool TimescaleDisabled;
+        public static bool LocalChatMe;
+        public static bool TimescaleDisabled;
 
-		// Lists
-		public static List<CustomCommand> CustomCommands = new List<CustomCommand>();
+        // Lists
+        public static List<CustomCommand> CustomCommands = new List<CustomCommand>();
 
         public static List<string> Responses = new List<string>();
         public static List<string> ChatBlockWords = new List<string>();
@@ -88,16 +88,16 @@ namespace BP_Essentials
 
         public static List<int> BlockedItems = new List<int>();
 
-		// Dictionary
-		public static Dictionary<int, PlayerListItem> PlayerList { get; set; } = new Dictionary<int, PlayerListItem>();
-		public static Dictionary<string, _Group> Groups { get; set; } = new Dictionary<string, _Group>();
-		public static Dictionary<int, _CommandList> CommandList { get; set; } = new Dictionary<int, _CommandList>();
-		public static Dictionary<int, string> WhitelistedJobs { get; set; } = new Dictionary<int, string>();
+        // Dictionary
+        public static Dictionary<int, PlayerListItem> PlayerList { get; set; } = new Dictionary<int, PlayerListItem>();
+        public static Dictionary<string, _Group> Groups { get; set; } = new Dictionary<string, _Group>();
+        public static Dictionary<int, _CommandList> CommandList { get; set; } = new Dictionary<int, _CommandList>();
+        public static Dictionary<int, string> WhitelistedJobs { get; set; } = new Dictionary<int, string>();
 
-		// MultiDictonary
-		public static Methods.Utils.MultiDictionary<byte, CurrentMenu, Func<SvPlayer, CurrentMenu>> FunctionMenuKeys { get; set; } = new Methods.Utils.MultiDictionary<byte, CurrentMenu, Func<SvPlayer, CurrentMenu>>();
+        // MultiDictonary
+        public static Methods.Utils.MultiDictionary<byte, CurrentMenu, Func<SvPlayer, CurrentMenu>> FunctionMenuKeys { get; set; } = new Methods.Utils.MultiDictionary<byte, CurrentMenu, Func<SvPlayer, CurrentMenu>>();
 
-		// Arrays
+        // Arrays
         public static string[] Jobs = {
             // default values
             "Citizen",
@@ -134,10 +134,10 @@ namespace BP_Essentials
         public static string BlockedItemMessage;
         public static string MsgNoWantedAllowed;
         public static string MsgNoCuffedAllowed;
-		public static string MsgNoJailAllowed;
-		public static string MeMessage;
+        public static string MsgNoJailAllowed;
+        public static string MeMessage;
 
-		public static string infoColor, errorColor, warningColor, argColor;
+        public static string infoColor, errorColor, warningColor, argColor;
 
         // Strings
         public static string Rules;
@@ -163,9 +163,9 @@ namespace BP_Essentials
         public static string DiscordWebhook_Report;
         public static string WipePassword;
 
-		public static string NotValidArg = $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>";
-		// Ints
-		public const int SaveTime = 5 * 60;
+        public static string NotValidArg = $"<color={errorColor}>Error: Is that a valid number you provided as argument?</color>";
+        // Ints
+        public const int SaveTime = 5 * 60;
 
         public static int AnnounceIndex;
         public static int TimeBetweenAnnounce;
@@ -173,7 +173,7 @@ namespace BP_Essentials
         public static int DebugLevel;
         public static int GodModeLevel;
         public static int MessagesAllowedPerSecond;
-		public static int TimeBetweenDelay;
+        public static int TimeBetweenDelay;
 
         // Misc.
         public static string _msg;
@@ -237,33 +237,33 @@ namespace BP_Essentials
             499504400, //License Gun
             607710552 //License Pilots
         };
-		public static int[] IDs_Vehicles;
+        public static int[] IDs_Vehicles;
         public static int[] IDs_Items;
     }
-	public class LastLocation
-	{
-		public Vector3 Position { get; private set; }
-		public Quaternion Rotation { get; private set; }
-		public int PlaceIndex { get; private set; }
-		public void Update(Vector3 position, Quaternion rotation, int index)
-		{
-			Position = position;
-			Rotation = rotation;
-			PlaceIndex = index;
-		}
-		public bool HasPositionSet()
-		{
-			return Position != default(Vector3) && Rotation != default(Quaternion);
-		}
-		public LastLocation(Vector3 position, Quaternion rotation, int index)
-		{
-			Update(position, rotation, index);
-		}
-		public LastLocation()
-		{
+    public class LastLocation
+    {
+        public Vector3 Position { get; private set; }
+        public Quaternion Rotation { get; private set; }
+        public int PlaceIndex { get; private set; }
+        public void Update(Vector3 position, Quaternion rotation, int index)
+        {
+            Position = position;
+            Rotation = rotation;
+            PlaceIndex = index;
+        }
+        public bool HasPositionSet()
+        {
+            return Position != default(Vector3) && Rotation != default(Quaternion);
+        }
+        public LastLocation(Vector3 position, Quaternion rotation, int index)
+        {
+            Update(position, rotation, index);
+        }
+        public LastLocation()
+        {
 
-		}
-	}
+        }
+    }
     public class _CommandList
     {
         public Action<SvPlayer, string> RunMethod;
@@ -273,15 +273,15 @@ namespace BP_Essentials
         public string commandName;
         public bool commandWantedAllowed;
         public bool commandHandcuffedAllowed;
-		public bool commandWhileJailedAllowed;
+        public bool commandWhileJailedAllowed;
     }
 
     public class PlayerListItem
     {
-		public PlayerListItem(ShPlayer player)
-		{
-			ShPlayer = player;
-		}
+        public PlayerListItem(ShPlayer player)
+        {
+            ShPlayer = player;
+        }
         public ShPlayer ShPlayer { get; set; }
         public CurrentMenu LastMenu { get; set; }
         public ShPlayer ReportedPlayer { get; set; }
@@ -294,7 +294,7 @@ namespace BP_Essentials
         public bool IsCurrentlyAwaiting { get; set; }
         public ShPlayer ReplyToUser { get; set; }
         public ShPlayer TpaUser { get; set; }
-		public LastLocation LastLocation { get; set; } = new LastLocation();
+        public LastLocation LastLocation { get; set; } = new LastLocation();
     }
 
     public class _Group
@@ -306,7 +306,7 @@ namespace BP_Essentials
 
     public enum CurrentMenu
     {
-		None,
+        None,
         Main,
         Help,
         Staff,

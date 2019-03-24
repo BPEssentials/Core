@@ -10,15 +10,15 @@ namespace BP_Essentials.Commands
 {
     class FakeLeave
     {
-		public static void Run(SvPlayer player, string message)
-		{
-			string arg1 = GetArgument.Run(1, false, true, message);
-			if (string.IsNullOrEmpty(arg1))
-			{
-				player.SendChatMessage(ArgRequired);
-				return;
-			}
-			player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, arg1 + " disconnected");
-		}
+        public static void Run(SvPlayer player, string message)
+        {
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (string.IsNullOrEmpty(arg1))
+            {
+                player.SendChatMessage(ArgRequired);
+                return;
+            }
+            player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, arg1 + " disconnected");
+        }
     }
 }

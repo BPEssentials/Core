@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage($"<color={warningColor}>You don't have a apartment to teleport to!</color>");
                 return;
             }
-			player.ResetAndSavePosition(shPlayer.ownedApartment.svDoor.transform.position, shPlayer.ownedApartment.svDoor.transform.rotation, 0);
+            player.ResetAndSavePosition(shPlayer.ownedApartment.svDoor.transform.position, shPlayer.ownedApartment.svDoor.transform.rotation, 0);
             player.SendChatMessage($"<color={infoColor}>Teleported to your apartment.</color>");
         }
     }

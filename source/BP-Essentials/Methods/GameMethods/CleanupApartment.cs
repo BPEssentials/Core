@@ -15,8 +15,8 @@ namespace BP_Essentials
         {
             try
             {
-				if (shPlayer == null)
-					return;
+                if (shPlayer == null)
+                    return;
                 typeof(SvPlayer).GetMethod(nameof(CleanupApartment), BindingFlags.NonPublic | BindingFlags.Instance).Invoke(shPlayer.svPlayer, new object[] { });
             }
             catch (Exception ex)

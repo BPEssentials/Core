@@ -14,126 +14,126 @@ namespace BP_Essentials
 {
     public class HookMethods : Core
     {
-		[Hook("SvPlayer.SvSellApartment")]
+        [Hook("SvPlayer.SvSellApartment")]
         public static bool SvSellApartment(SvPlayer player)
         {
             player.SendChatMessage($"<color={warningColor}>Are you sure you want to sell your apartment? Type '</color><color={argColor}>{CmdCommandCharacter}{CmdConfirm}</color><color={warningColor}>' to confirm.</color>"); //softcode command
             return true;
         }
 
-		[Hook("SvEntity.Initialize", true)]
-		public static void Initialize(SvEntity player)
-		{
-			if (player.serverside)
-				return;
-			var svPlayer = player as SvPlayer;
-			if (svPlayer == null)
-				return;
-			PlayerList.Add(svPlayer.player.ID, new PlayerListItem(svPlayer.player));
-			Task.Run(() =>
-			{
-				WriteIpToFile.Run(svPlayer);
-				CheckBanned.Run(svPlayer);
-			});
-		}
+        [Hook("SvEntity.Initialize", true)]
+        public static void Initialize(SvEntity player)
+        {
+            if (player.serverside)
+                return;
+            var svPlayer = player as SvPlayer;
+            if (svPlayer == null)
+                return;
+            PlayerList.Add(svPlayer.player.ID, new PlayerListItem(svPlayer.player));
+            Task.Run(() =>
+            {
+                WriteIpToFile.Run(svPlayer);
+                CheckBanned.Run(svPlayer);
+            });
+        }
 
-		[Hook("SvPlayer.Destroy")]
-		public static void Destroy(SvPlayer player)
-		{
-			Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] [LEAVE] {player.player.username}");
-			if (!PlayerList.ContainsKey(player.player.ID))
-				return;
-			PlayerList.Remove(player.player.ID);
-		}
+        [Hook("SvPlayer.Destroy")]
+        public static void Destroy(SvPlayer player)
+        {
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] [LEAVE] {player.player.username}");
+            if (!PlayerList.ContainsKey(player.player.ID))
+                return;
+            PlayerList.Remove(player.player.ID);
+        }
 
-		[Hook("SvPlayer.Damage")]
-		public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
-		{
-			if (CheckGodMode.Run(player, amount))
-				return true;
-			if (player.WillDieByDamage(amount))
-				OnDeath(player, ref type, ref amount, ref attacker, ref collider);
-			return false;
-		}
-		public static void OnDeath(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
-		{
-			player.SavePosition();
-		}
+        [Hook("SvPlayer.Damage")]
+        public static bool Damage(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
+        {
+            if (CheckGodMode.Run(player, amount))
+                return true;
+            if (player.WillDieByDamage(amount))
+                OnDeath(player, ref type, ref amount, ref attacker, ref collider);
+            return false;
+        }
+        public static void OnDeath(SvPlayer player, ref DamageIndex type, ref float amount, ref ShPlayer attacker, ref Collider collider)
+        {
+            player.SavePosition();
+        }
 
         [Hook("SvPlayer.SpawnBot")]
         public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref Waypoint node, ref ShPlayer spawner, ref ShEntity mount, ref ShPlayer enemy)
-		{
+        {
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(player.player.spawnJobIndex);
         }
 
-		[Hook("ShRestraint.HitEffect")]
-		public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
-		{
-			if (!PlayerList.TryGetValue(hitTarget.ID, out var hitPlayer))
-				return false;
-			if (!GodListPlayers.Contains(hitPlayer.ShPlayer.username))
-				return false;
-			hitPlayer.ShPlayer.svPlayer.SendChatMessage("<color=#b7b5b5>Being handcuffed Blocked!</color>");
-			return true;
-		}
+        [Hook("ShRestraint.HitEffect")]
+        public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
+        {
+            if (!PlayerList.TryGetValue(hitTarget.ID, out var hitPlayer))
+                return false;
+            if (!GodListPlayers.Contains(hitPlayer.ShPlayer.username))
+                return false;
+            hitPlayer.ShPlayer.svPlayer.SendChatMessage("<color=#b7b5b5>Being handcuffed Blocked!</color>");
+            return true;
+        }
 
-		[Hook("SvPlayer.SvBan")]
-		public static bool SvBan(SvPlayer player, ref int otherID)
-		{
-			if (player.player.admin)
-				return true;
-			if (BlockBanButtonTabMenu)
-			{
-				player.SendChatMessage($"<color={errorColor}>This button has been disabled. Please use the ban commands. ID: {otherID}</color>");
-				return true;
-			}
-			var targetPlayer = player.entity.manager.FindByID<ShPlayer>(otherID);
-			if (!targetPlayer || targetPlayer.svPlayer.serverside)
-			{
-				player.SendChatMessage("Cannot ban NPC");
-				return true;
-			}
-			LogMessage.LogOther($"{PlaceholderParser.ParseTimeStamp()} [INFO] {targetPlayer.username} Got banned by {player.playerData.username}");
-			player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{targetPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.player.username}</color>");
-			SendDiscordMessage.BanMessage(targetPlayer.username, player.playerData.username);
-			player.svManager.AddBanned(targetPlayer);
-			player.svManager.Disconnect(targetPlayer.svPlayer.connection, DisconnectTypes.Banned);
-			return true;
-		}
+        [Hook("SvPlayer.SvBan")]
+        public static bool SvBan(SvPlayer player, ref int otherID)
+        {
+            if (player.player.admin)
+                return true;
+            if (BlockBanButtonTabMenu)
+            {
+                player.SendChatMessage($"<color={errorColor}>This button has been disabled. Please use the ban commands. ID: {otherID}</color>");
+                return true;
+            }
+            var targetPlayer = player.entity.manager.FindByID<ShPlayer>(otherID);
+            if (!targetPlayer || targetPlayer.svPlayer.serverside)
+            {
+                player.SendChatMessage("Cannot ban NPC");
+                return true;
+            }
+            LogMessage.LogOther($"{PlaceholderParser.ParseTimeStamp()} [INFO] {targetPlayer.username} Got banned by {player.playerData.username}");
+            player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{targetPlayer.username}</color> <color={warningColor}>Just got banned by</color> <color={argColor}>{player.player.username}</color>");
+            SendDiscordMessage.BanMessage(targetPlayer.username, player.playerData.username);
+            player.svManager.AddBanned(targetPlayer);
+            player.svManager.Disconnect(targetPlayer.svPlayer.connection, DisconnectTypes.Banned);
+            return true;
+        }
 
         [Hook("SvPlayer.SvStartVote")]
         public static bool SvStartVote(SvPlayer player, ref byte voteIndex, ref int ID)
         {
-			switch (voteIndex)
-			{
-				case VoteIndex.Mission:
-					if (!BlockMissions)
-						return false;
-					player.SendChatMessage($"<color={errorColor}>All missions have been disabled on this server.</color>");
-					return true;
-				case VoteIndex.Kick:
-					if (VoteKickDisabled)
-					{
-						player.SendChatMessage($"<color={errorColor}>Vote kicking has been disabled on this server.</color>");
-						return true;
-					}
-					if (!PlayerList.TryGetValue(ID, out var shPlayer))
-						return true;
-					if (player.svManager.vote != null || voteIndex >= player.player.manager.votes.Length || player.svManager.startedVote.OverLimit(player.player))
-						return true;
-					player.svManager.startedVote.Add(player.player);
-					player.svManager.vote = player.player.manager.votes[voteIndex];
-					if (!player.svManager.vote.CheckVote(ID))
-						player.svManager.vote = null;
-					player.Send(SvSendType.All, Channel.Reliable, 60, voteIndex, ID);
-					player.svManager.StartCoroutine(player.svManager.StartVote());
-					Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.playerData.username} Has issued a votekick against {player.player.username}");
-					player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.ShPlayer.username}</color>");
-					LatestVotePeople.Clear();
-					return true;
-				default:
-					return false;
-			}
+            switch (voteIndex)
+            {
+                case VoteIndex.Mission:
+                    if (!BlockMissions)
+                        return false;
+                    player.SendChatMessage($"<color={errorColor}>All missions have been disabled on this server.</color>");
+                    return true;
+                case VoteIndex.Kick:
+                    if (VoteKickDisabled)
+                    {
+                        player.SendChatMessage($"<color={errorColor}>Vote kicking has been disabled on this server.</color>");
+                        return true;
+                    }
+                    if (!PlayerList.TryGetValue(ID, out var shPlayer))
+                        return true;
+                    if (player.svManager.vote != null || voteIndex >= player.player.manager.votes.Length || player.svManager.startedVote.OverLimit(player.player))
+                        return true;
+                    player.svManager.startedVote.Add(player.player);
+                    player.svManager.vote = player.player.manager.votes[voteIndex];
+                    if (!player.svManager.vote.CheckVote(ID))
+                        player.svManager.vote = null;
+                    player.Send(SvSendType.All, Channel.Reliable, 60, voteIndex, ID);
+                    player.svManager.StartCoroutine(player.svManager.StartVote());
+                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.playerData.username} Has issued a votekick against {player.player.username}");
+                    player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.ShPlayer.username}</color>");
+                    LatestVotePeople.Clear();
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         [Hook("SvPlayer.SvVoteYes", true)]
@@ -145,52 +145,52 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvFunctionKey")]
         public static bool SvFunctionKey(SvPlayer player, ref byte key)
         {
-			var lastMenu = PlayerList[player.player.ID].LastMenu;
-			if (lastMenu == CurrentMenu.Report && key > 1 && key < 11)
-			{
-				PlayerList[player.player.ID].LastMenu = Methods.Utils.FunctionMenu.ReportMenu(player, key);
-				return true;
-			}
-			if (key == 11)
-			{
-				player.CloseFunctionMenu();
-				PlayerList[player.player.ID].LastMenu = CurrentMenu.None;
-				return true;
-			}
-			if (!FunctionMenuKeys.TryGetValue(key, lastMenu, out var method))
-				return true;
-			PlayerList[player.player.ID].LastMenu = method.Invoke(player);
+            var lastMenu = PlayerList[player.player.ID].LastMenu;
+            if (lastMenu == CurrentMenu.Report && key > 1 && key < 11)
+            {
+                PlayerList[player.player.ID].LastMenu = Methods.Utils.FunctionMenu.ReportMenu(player, key);
+                return true;
+            }
+            if (key == 11)
+            {
+                player.CloseFunctionMenu();
+                PlayerList[player.player.ID].LastMenu = CurrentMenu.None;
+                return true;
+            }
+            if (!FunctionMenuKeys.TryGetValue(key, lastMenu, out var method))
+                return true;
+            PlayerList[player.player.ID].LastMenu = method.Invoke(player);
             return true;
         }
 
-		[Hook("SvPlayer.SvSuicide")]
-		public static bool SvSuicide(SvPlayer player)
-		{
-			var shPlayer = player.player;
-			if (!BlockSuicide)
-				return false;
-			player.SendChatMessage($"<color={errorColor}>You cannot suicide on this server because the server owner disabled it.</color>");
-			return true;
-		}
+        [Hook("SvPlayer.SvSuicide")]
+        public static bool SvSuicide(SvPlayer player)
+        {
+            var shPlayer = player.player;
+            if (!BlockSuicide)
+                return false;
+            player.SendChatMessage($"<color={errorColor}>You cannot suicide on this server because the server owner disabled it.</color>");
+            return true;
+        }
         [Hook("SvPlayer.SvGetJob")]
         public static bool SvGetJob(SvPlayer player, ref int employerID)
         {
-			try
-			{
-				var shPlayer = player.player;
-				var shEmployer = shPlayer.manager.FindByID<ShPlayer>(employerID);
-				if (!WhitelistedJobs.ContainsKey(shEmployer.job.jobIndex))
-					return false;
-				if (HasPermission.Run(player, WhitelistedJobs[shEmployer.job.jobIndex], false, shPlayer.job.jobIndex))
-					return false;
-				player.SendChatMessage(MsgNoPermJob);
-				return true;
-			}
-			catch (Exception ex)
-			{
-				ErrorLogging.Run(ex);
-				return false;
-			}
+            try
+            {
+                var shPlayer = player.player;
+                var shEmployer = shPlayer.manager.FindByID<ShPlayer>(employerID);
+                if (!WhitelistedJobs.ContainsKey(shEmployer.job.jobIndex))
+                    return false;
+                if (HasPermission.Run(player, WhitelistedJobs[shEmployer.job.jobIndex], false, shPlayer.job.jobIndex))
+                    return false;
+                player.SendChatMessage(MsgNoPermJob);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogging.Run(ex);
+                return false;
+            }
         }
         [Hook("SvPlayer.SvAddCrime")]
         public static bool SvAddCrime(SvPlayer player, ref byte crimeIndex, ref ShEntity victim)
@@ -256,7 +256,7 @@ namespace BP_Essentials
                 if (!crimShPlayer)
                     return true;
                 if ((player.serverside || crimShPlayer.DistanceSqr(player.player.manager.jail) < 14400f) &&
-					crimShPlayer.IsRestrained() && !crimShPlayer.IsDead() && !(crimShPlayer.job is Prisoner))
+                    crimShPlayer.IsRestrained() && !crimShPlayer.IsDead() && !(crimShPlayer.job is Prisoner))
                 {
                     var jailTime = 0f;
                     var fine = 0;
@@ -274,35 +274,35 @@ namespace BP_Essentials
                 }
                 player.SendChatMessage("Confirm criminal is cuffed and near jail");
             }
-			return true;
+            return true;
         }
-		[Hook("SvPlayer.SvTimescale")]
-		public static bool SvTimescale(SvPlayer player, ref float timescale)
-		{
-			if (!player.player.admin)
-				return true;
-			if (TimescaleDisabled)
-			{
-				player.SendChatMessage($"<color={errorColor}>You cannot set the timescale because the server owner disabled this.</color>");
-				return true;
-			}
-			Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.player.username} set the timescale to {timescale}");
-			return false;
-		}
-		/*
-		[Hook("ShFurniture.HitCheck")]
-		public static void HitCheck(ShFurniture shFurniture, ref RaycastHit hit)
-		{
-			if (!shFurniture.player.InOwnApartment())
-			{
-				if (shFurniture.player.IsClientMain())
-				{
-					shFurniture.manager.clManager.ShowGameMessage("Must place in your apartment lol sike");
-				}
-				//return false;
-			}
-			//return shFurniture.HitCheck(ref hit);
-		}
-		*/
-	}
+        [Hook("SvPlayer.SvTimescale")]
+        public static bool SvTimescale(SvPlayer player, ref float timescale)
+        {
+            if (!player.player.admin)
+                return true;
+            if (TimescaleDisabled)
+            {
+                player.SendChatMessage($"<color={errorColor}>You cannot set the timescale because the server owner disabled this.</color>");
+                return true;
+            }
+            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.player.username} set the timescale to {timescale}");
+            return false;
+        }
+        /*
+        [Hook("ShFurniture.HitCheck")]
+        public static void HitCheck(ShFurniture shFurniture, ref RaycastHit hit)
+        {
+            if (!shFurniture.player.InOwnApartment())
+            {
+                if (shFurniture.player.IsClientMain())
+                {
+                    shFurniture.manager.clManager.ShowGameMessage("Must place in your apartment lol sike");
+                }
+                //return false;
+            }
+            //return shFurniture.HitCheck(ref hit);
+        }
+        */
+    }
 }

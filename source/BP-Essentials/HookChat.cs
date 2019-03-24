@@ -21,15 +21,15 @@ namespace BP_Essentials
             try
             {
                 var tempMessage = message;
-				if (HandleSpam.Run(player, tempMessage))
-					return true;
+                if (HandleSpam.Run(player, tempMessage))
+                    return true;
                 //Message Logging
                 if (!MutePlayers.Contains(player.playerData.username))
                     LogMessage.Run(player, message);
 
                 if (message.StartsWith(CmdCommandCharacter, StringComparison.CurrentCulture))
-					if (OnCommand(player, ref message))
-						return true;
+                    if (OnCommand(player, ref message))
+                        return true;
 
                 //Checks if the player is muted.
                 if (MutePlayers.Contains(player.playerData.username))
@@ -71,54 +71,54 @@ namespace BP_Essentials
             }
             return true;
         }
-		#endregion
+        #endregion
 
-		#region Event OnCommand | Global
-		public static bool OnCommand(SvPlayer player, ref string message)
-		{
-			var tempMessage = message;
-			var command = GetArgument.Run(0, false, false, message);
-			// CustomCommands
-			var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.StartsWith(CmdCommandCharacter + x.Command, StringComparison.CurrentCulture));
-			if (customCommand != null)
-			{
-				foreach (string line in customCommand.Response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
-					player.SendChatMessage(PlaceholderParser.ParseUserMessage(player.player, line, message));
-				PlayerList.Where(x => x.Value.SpyEnabled && x.Value.ShPlayer.svPlayer != player).ToList().ForEach(x => x.Value.ShPlayer.svPlayer.SendChatMessage($"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {tempMessage}"));
-				return true;
-			}
-			// Go through all registered commands and check if the command that the user entered matches
-			foreach (var cmd in CommandList.Values)
-				if (cmd.commandCmds.Contains(command))
-				{
-					if (cmd.commandDisabled)
-					{
-						player.SendChatMessage(DisabledCommand);
-						return true;
-					}
-					if (HasPermission.Run(player, cmd.commandGroup, true, player.player.job.jobIndex)
-						&& HasWantedLevel.Run(player, cmd.commandWantedAllowed)
-						&& IsCuffed.Run(player, cmd.commandHandcuffedAllowed)
-						&& IsJailed.Run(player, cmd.commandWhileJailedAllowed))
-					{
-						PlayerList.Where(x => x.Value.SpyEnabled && x.Value.ShPlayer.svPlayer != player).ToList().ForEach(x => x.Value.ShPlayer.svPlayer.SendChatMessage($"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {tempMessage}"));
-						cmd.RunMethod.Invoke(player, message);
-					}
-					return true;
-				}
-			if (AfkPlayers.Contains(player.playerData.username))
-				Commands.Afk.Run(player, message);
-			if (MsgUnknownCommand)
-			{
-				player.SendChatMessage($"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");
-				return true;
-			}
-			return false;
-		}
-		#endregion
+        #region Event OnCommand | Global
+        public static bool OnCommand(SvPlayer player, ref string message)
+        {
+            var tempMessage = message;
+            var command = GetArgument.Run(0, false, false, message);
+            // CustomCommands
+            var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.StartsWith(CmdCommandCharacter + x.Command, StringComparison.CurrentCulture));
+            if (customCommand != null)
+            {
+                foreach (string line in customCommand.Response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+                    player.SendChatMessage(PlaceholderParser.ParseUserMessage(player.player, line, message));
+                PlayerList.Where(x => x.Value.SpyEnabled && x.Value.ShPlayer.svPlayer != player).ToList().ForEach(x => x.Value.ShPlayer.svPlayer.SendChatMessage($"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {tempMessage}"));
+                return true;
+            }
+            // Go through all registered commands and check if the command that the user entered matches
+            foreach (var cmd in CommandList.Values)
+                if (cmd.commandCmds.Contains(command))
+                {
+                    if (cmd.commandDisabled)
+                    {
+                        player.SendChatMessage(DisabledCommand);
+                        return true;
+                    }
+                    if (HasPermission.Run(player, cmd.commandGroup, true, player.player.job.jobIndex)
+                        && HasWantedLevel.Run(player, cmd.commandWantedAllowed)
+                        && IsCuffed.Run(player, cmd.commandHandcuffedAllowed)
+                        && IsJailed.Run(player, cmd.commandWhileJailedAllowed))
+                    {
+                        PlayerList.Where(x => x.Value.SpyEnabled && x.Value.ShPlayer.svPlayer != player).ToList().ForEach(x => x.Value.ShPlayer.svPlayer.SendChatMessage($"<color=#f4c242>[SPYCHAT]</color> {player.playerData.username}: {tempMessage}"));
+                        cmd.RunMethod.Invoke(player, message);
+                    }
+                    return true;
+                }
+            if (AfkPlayers.Contains(player.playerData.username))
+                Commands.Afk.Run(player, message);
+            if (MsgUnknownCommand)
+            {
+                player.SendChatMessage($"<color={errorColor}>Unknown command. Type</color><color={argColor}> {CmdCommandCharacter}essentials cmds </color><color={errorColor}>for more info.</color>");
+                return true;
+            }
+            return false;
+        }
+        #endregion
 
-		#region Event: ChatMessage | Local
-		[Hook("SvPlayer.SvLocalChatMessage")]
+        #region Event: ChatMessage | Local
+        [Hook("SvPlayer.SvLocalChatMessage")]
         public static bool SvLocalChatMessage(SvPlayer player, ref string message)
         {
             if (LocalChatMute && MutePlayers.Contains(player.playerData.username))

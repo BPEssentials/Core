@@ -32,9 +32,9 @@ namespace BP_Essentials.Commands
             foreach (var currPlayer in PlayerList.Values.ToList())
                 player.svManager.Disconnect(currPlayer.ShPlayer.svPlayer.connection, DisconnectTypes.Problem);
             Thread.Sleep(500);
-			var files = Directory.GetFiles(Path.Combine(Application.persistentDataPath, "PlayerData/"), "*.json").Where(item => item.EndsWith(".json", StringComparison.CurrentCulture));
-			foreach (var file in files.ToList())
-				File.Delete(file);
+            var files = Directory.GetFiles(Path.Combine(Application.persistentDataPath, "PlayerData/"), "*.json").Where(item => item.EndsWith(".json", StringComparison.CurrentCulture));
+            foreach (var file in files.ToList())
+                File.Delete(file);
             Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] All user data deleted!");
         }
     }

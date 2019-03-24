@@ -9,17 +9,17 @@ using System.Text.RegularExpressions;
 
 namespace BP_Essentials.Commands
 {
-	class Say
-	{
-		public static void Run(SvPlayer player, string message)
-		{
-			string arg1 = GetArgument.Run(1, false, true, message);
-			if (string.IsNullOrEmpty(arg1))
-			{
-				player.SendChatMessage(ArgRequired);
-				return;
-			}
-			player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1.FilterString()}</color>");
-		}
-	}
+    class Say
+    {
+        public static void Run(SvPlayer player, string message)
+        {
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (string.IsNullOrEmpty(arg1))
+            {
+                player.SendChatMessage(ArgRequired);
+                return;
+            }
+            player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={MsgSayColor}>{MsgSayPrefix} {player.playerData.username}: {arg1.FilterString()}</color>");
+        }
+    }
 }

@@ -24,11 +24,11 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage(NotFoundOnline);
                 return;
             }
-			if (shPlayer == player.player)
-			{
-				player.SendChatMessage($"<color={errorColor}>You cannot teleport to yourself.</color>");
-				return;
-			}
+            if (shPlayer == player.player)
+            {
+                player.SendChatMessage($"<color={errorColor}>You cannot teleport to yourself.</color>");
+                return;
+            }
             PlayerList[shPlayer.ID].TpaUser = player.player;
             player.SendChatMessage($"<color={infoColor}>Sent a TPA request to</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
             shPlayer.svPlayer.SendChatMessage($"<color={argColor}>{player.player.username}</color> <color={infoColor}>sent you a tpa request. Type</color> <color={argColor}>{CmdCommandCharacter}{CmdTpaaccept}</color> <color={infoColor}>to accept it.</color>");

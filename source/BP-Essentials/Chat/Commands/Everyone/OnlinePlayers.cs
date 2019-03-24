@@ -10,9 +10,9 @@ namespace BP_Essentials.Commands
 {
     class OnlinePlayers
     {
-		public static void Run(SvPlayer player, string message)
-		{
-			player.SendChatMessage($"<color={infoColor}>There are/is </color><color={argColor}>{PlayerList.Count}</color><color={infoColor}> player(s) online</color>");
-		}
+        public static void Run(SvPlayer player, string message)
+        {
+            player.SendChatMessage($"<color={infoColor}>There are/is </color><color={argColor}>{PlayerList.Count}</color><color={infoColor}> player(s) online</color>");
+        }
     }
 }

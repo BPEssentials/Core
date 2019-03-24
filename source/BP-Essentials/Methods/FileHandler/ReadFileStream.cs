@@ -16,12 +16,12 @@ namespace BP_Essentials
             try
             {
                 output.Clear();
-				foreach (var line in File.ReadAllLines(fileName))
-				{
-					if (line.StartsWith("#", StringComparison.CurrentCulture))
-						continue;
-					output.Add(line);
-				}
+                foreach (var line in File.ReadAllLines(fileName))
+                {
+                    if (line.StartsWith("#", StringComparison.CurrentCulture))
+                        continue;
+                    output.Add(line);
+                }
             }
             catch (Exception ex)
             {

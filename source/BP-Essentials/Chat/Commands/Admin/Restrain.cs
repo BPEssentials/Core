@@ -10,26 +10,26 @@ namespace BP_Essentials.Commands
 {
     class Restrain
     {
-		public static void Run(SvPlayer player, string message)
-		{
-			string arg1 = GetArgument.Run(1, false, true, message);
-			if (string.IsNullOrEmpty(arg1))
-			{
-				player.SendChatMessage(ArgRequired);
-				return;
-			}
-			var currPlayer = GetShByStr.Run(arg1);
-			if (currPlayer == null)
-			{
-				player.SendChatMessage(NotFoundOnline);
-				return;
-			}
-			currPlayer.svPlayer.Restrain(currPlayer.manager.handcuffed);
-			var shRetained = currPlayer.curEquipable as ShRestrained;
-			currPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
-			if (!currPlayer.svPlayer.serverside)
-				currPlayer.svPlayer.SendChatMessage("You've been restrained");
-			player.SendChatMessage($"<color={infoColor}>Restrained</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
-		}
+        public static void Run(SvPlayer player, string message)
+        {
+            string arg1 = GetArgument.Run(1, false, true, message);
+            if (string.IsNullOrEmpty(arg1))
+            {
+                player.SendChatMessage(ArgRequired);
+                return;
+            }
+            var currPlayer = GetShByStr.Run(arg1);
+            if (currPlayer == null)
+            {
+                player.SendChatMessage(NotFoundOnline);
+                return;
+            }
+            currPlayer.svPlayer.Restrain(currPlayer.manager.handcuffed);
+            var shRetained = currPlayer.curEquipable as ShRestrained;
+            currPlayer.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
+            if (!currPlayer.svPlayer.serverside)
+                currPlayer.svPlayer.SendChatMessage("You've been restrained");
+            player.SendChatMessage($"<color={infoColor}>Restrained</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
+        }
     }
 }

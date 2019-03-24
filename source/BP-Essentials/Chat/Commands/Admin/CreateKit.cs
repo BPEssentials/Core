@@ -35,16 +35,16 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage($"<color={errorColor}>A kit already exists with that name.</color>");
                 return;
             }
-			var obj = new KitsHandler.JsonModel
-			{
-				Delay = arg1i,
-				Price = arg2i < 0 ? 0 : arg2i,
-				Name = arg3,
-				ExecutableBy = "everyone"
-			};
-			foreach (var item in player.player.myItems.Values)
-				obj.Items.Add(new KitsHandler.Kits_Item { Amount = item.count, Id = item.item.index });
-			Variables.KitsHandler.CreateNew(obj, arg3);
+            var obj = new KitsHandler.JsonModel
+            {
+                Delay = arg1i,
+                Price = arg2i < 0 ? 0 : arg2i,
+                Name = arg3,
+                ExecutableBy = "everyone"
+            };
+            foreach (var item in player.player.myItems.Values)
+                obj.Items.Add(new KitsHandler.Kits_Item { Amount = item.count, Id = item.item.index });
+            Variables.KitsHandler.CreateNew(obj, arg3);
             player.SendChatMessage($"<color={infoColor}>Kit created. Please edit </color><color={argColor}>{file}</color> <color={infoColor}>to add ExecuteableBy.</color>");
         }
     }
