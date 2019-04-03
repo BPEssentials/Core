@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 
 
 // Change BPE Version here
-[assembly: AssemblyFileVersion("2.6.4")]
+[assembly: AssemblyFileVersion("2.6.5")]
