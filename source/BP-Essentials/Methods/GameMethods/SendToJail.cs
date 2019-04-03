@@ -15,7 +15,7 @@ namespace BP_Essentials
             if (shPlayer.IsDead())
                 return false;
             var jailSpawn = shPlayer.manager.jail.transform;
-            SetJob.Run(shPlayer, 2, true, false);
+            shPlayer.svPlayer.SvSetJob(shPlayer.jobs[2], true, false);
             shPlayer.svPlayer.ResetAndSavePosition(jailSpawn.position, jailSpawn.rotation, 0);
             shPlayer.StartCoroutine(shPlayer.svPlayer.JailTimer(time));
             shPlayer.svPlayer.SvClearCrimes();

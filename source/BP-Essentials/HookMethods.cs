@@ -61,7 +61,14 @@ namespace BP_Essentials
         }
 
         [Hook("SvPlayer.SpawnBot")]
-        public static bool SpawnBot(SvPlayer player, ref Vector3 position, ref Quaternion rotation, ref Place place, ref Waypoint node, ref ShPlayer spawner, ref ShEntity mount, ref ShPlayer enemy)
+        public static bool SpawnBot(SvPlayer player,
+            ref Vector3 position,
+            ref Quaternion rotation,
+            ref Place place,
+            ref Waypoint node,
+            ref ShPlayer spawner,
+            ref ShMountable mount,
+            ref ShPlayer enemy)
         {
             return EnableBlockSpawnBot == true && BlockedSpawnIds.Contains(player.player.spawnJobIndex);
         }
@@ -289,20 +296,5 @@ namespace BP_Essentials
             Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.player.username} set the timescale to {timescale}");
             return false;
         }
-        /*
-        [Hook("ShFurniture.HitCheck")]
-        public static void HitCheck(ShFurniture shFurniture, ref RaycastHit hit)
-        {
-            if (!shFurniture.player.InOwnApartment())
-            {
-                if (shFurniture.player.IsClientMain())
-                {
-                    shFurniture.manager.clManager.ShowGameMessage("Must place in your apartment lol sike");
-                }
-                //return false;
-            }
-            //return shFurniture.HitCheck(ref hit);
-        }
-        */
     }
 }

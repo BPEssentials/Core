@@ -146,10 +146,7 @@
     <Compile Include="Methods\FileHandler\ReadGroups.cs" />
     <Compile Include="Methods\FileHandler\KitsHandler.cs" />
     <Compile Include="Methods\FileHandler\RegisterCommands.cs" />
-    <Compile Include="Methods\GameMethods\CleanupApartment.cs" />
     <Compile Include="Methods\GameMethods\GetExtraCount.cs" />
-    <Compile Include="Methods\GameMethods\SetJob.cs" />
-    <Compile Include="Methods\GameMethods\UnRestrain.cs" />
     <Compile Include="Methods\Utils\ErrorLogging.cs" />
     <Compile Include="Methods\Utils\GetArgument.cs" />
     <Compile Include="Chat\Commands\Admin\GetLogs.cs" />

@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace BP_Essentials.Commands
 {
-    class _SetJob : SvPlayer
+    class Setjob : SvPlayer
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -34,9 +34,9 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage(NotValidArg);
                 return;
             }
-            if (arg1Parsed > Jobs.Length || arg1Parsed < 0)
+            if (arg1Parsed > player.player.jobs.Length || arg1Parsed < 0)
             {
-                player.SendChatMessage($"<color={errorColor}>Error: The value must be between 0 and {Jobs.Length}.</color>");
+                player.SendChatMessage($"<color={errorColor}>Error: The value must be between 0 and {player.player.jobs.Length}.</color>");
                 return;
             }
             var currPlayer = GetShByStr.Run(arg2);
@@ -46,7 +46,7 @@ namespace BP_Essentials.Commands
                 return;
             }
             player.SendChatMessage(string.Format(msg, currPlayer.username, Jobs[arg1Parsed]));
-            SetJob.Run(currPlayer, arg1Parsed, true, false);
+            player.SvSetJob(player.player.jobs[arg1Parsed], true, false);
         }
     }
 }
