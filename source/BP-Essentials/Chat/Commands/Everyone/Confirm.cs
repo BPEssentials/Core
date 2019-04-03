@@ -13,7 +13,7 @@ namespace BP_Essentials.Commands
         public static void Run(SvPlayer player, string message)
         {
             var shPlayer = player.player;
-            if (!shPlayer.ownedApartment)
+            if (shPlayer.ownedApartment == null)
             {
                 player.SendChatMessage($"<color={warningColor}>You don't have a apartment to sell!</color>");
                 return;
@@ -30,7 +30,7 @@ namespace BP_Essentials.Commands
         {
             shPlayer.TransferMoney(DeltaInv.AddToMe, shPlayer.ownedApartment.value / 2, true);
             shPlayer.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ApartmentOwner, new object[]{0,0});
-            CleanupApartment.Run(shPlayer);
+            shPlayer.svPlayer.CleanupApartment();
         }
     }
 }

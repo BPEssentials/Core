@@ -24,7 +24,7 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage(NotFoundOnline);
                 return;
             }
-            UnRestrain.Run(currPlayer.svPlayer);
+            currPlayer.svPlayer.UnRestrain();
             player.SendChatMessage($"<color={infoColor}>Freed</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}>.</color>");
         }
     }
