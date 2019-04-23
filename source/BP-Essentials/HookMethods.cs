@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
+using UniversalUnityHooks;
 
 namespace BP_Essentials
 {
@@ -74,8 +75,12 @@ namespace BP_Essentials
         }
 
         [Hook("ShRestraint.HitEffect")]
-        public static bool HitEffect(ShRestraint player, ref ShEntity hitTarget, ref ShPlayer source, ref Collider collider)
+        public static bool HitEffect(ShRestraint restraint, ref ShDestroyable hitTarget, ref ShPlayer source, ref Collider collider)
         {
+            var shPlayer = hitTarget as ShPlayer;
+            if (!shPlayer || shPlayer.IsDead())
+                return true;
+
             if (!PlayerList.TryGetValue(hitTarget.ID, out var hitPlayer))
                 return false;
             if (!GodListPlayers.Contains(hitPlayer.ShPlayer.username))

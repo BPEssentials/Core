@@ -1,8 +1,10 @@
 ﻿using System;
 using static BP_Essentials.Variables;
 using System.IO;
-namespace BP_Essentials.Commands {
-    public class Afk {
+namespace BP_Essentials.Commands
+{
+    public class Afk
+    {
         public static void Run(SvPlayer player, string message)
         {
             ReadFile.Run(AfkListFile);

@@ -7,8 +7,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UniversalUnityHooks;
 using static BP_Essentials.HookMethods;
 using static BP_Essentials.Variables;
+
 namespace BP_Essentials
 {
     public class HookChat
