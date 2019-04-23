@@ -1,7 +1,8 @@
 ﻿using System;
 using static BP_Essentials.Variables;
-namespace BP_Essentials.Commands {
-    public class Ban
+namespace BP_Essentials.Commands
+{
+    class Ban
     {
         public static void Run(SvPlayer player, string message)
         {

@@ -23,7 +23,7 @@ namespace BP_Essentials.Commands
             foreach (var item in shPlayer.myItems.Values)
                 tempList.Add(item);
             for (int i = 0; i < tempList.Count; i++)
-                shPlayer.TransferItem(2, tempList[i].item.index, shPlayer.MyItemCount(tempList[i].item.index), true);
+                shPlayer.TransferItem(DeltaInv.RemoveFromMe, tempList[i].item.index, shPlayer.MyItemCount(tempList[i].item.index), true);
             player.SendChatMessage($"<color={infoColor}>You cleared the inventory of</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}>.</color>");
             shPlayer.svPlayer.SendChatMessage($"<color={warningColor}>Your inventory has been cleared by</color> <color={argColor}>{player.playerData.username}</color><color={warningColor}>.</color>");
         }

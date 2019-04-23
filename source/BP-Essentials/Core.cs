@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using UnityEngine;
+using UniversalUnityHooks;
 using static BP_Essentials.Variables;
 namespace BP_Essentials
 {

@@ -14,16 +14,16 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage(ArgRequired);
                 return;
             }
-            var shPlayer = GetShByStr.Run(arg1);
+            var currPlayer = GetShByStr.Run(arg1);
             var shPlayer1 = player.player;
-            if (shPlayer == null)
+            if (currPlayer == null)
             {
                 player.SendChatMessage(NotFoundOnline);
                 return;
             }
-            shPlayer.svPlayer.ResetAndSavePosition(shPlayer1.GetPosition(), shPlayer1.GetRotation(), shPlayer1.GetPlaceIndex());
-            shPlayer.svPlayer.SendChatMessage($"<color={argColor}>{shPlayer1.username}</color><color={infoColor}> Teleported you to him.</color>");
-            player.SendChatMessage($"<color={infoColor}>Teleported</color> <color={argColor}>{shPlayer.username}</color><color={infoColor}> To you.</color>");
+            currPlayer.svPlayer.ResetAndSavePosition(shPlayer1.GetPosition(), shPlayer1.GetRotation(), shPlayer1.GetPlaceIndex());
+            currPlayer.svPlayer.SendChatMessage($"<color={argColor}>{shPlayer1.username}</color><color={infoColor}> Teleported you to him.</color>");
+            player.SendChatMessage($"<color={infoColor}>Teleported</color> <color={argColor}>{currPlayer.username}</color><color={infoColor}> To you.</color>");
         }
     }
 }

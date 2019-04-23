@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace BP_Essentials.Commands
 {
-    class Setjob : SvPlayer
+    class SetJob : SvPlayer
     {
         public static void Run(SvPlayer player, string message)
         {
@@ -46,7 +46,7 @@ namespace BP_Essentials.Commands
                 return;
             }
             player.SendChatMessage(string.Format(msg, currPlayer.username, Jobs[arg1Parsed]));
-            player.SvSetJob(player.player.jobs[arg1Parsed], true, false);
+            currPlayer.svPlayer.SvSetJob(player.player.jobs[arg1Parsed], true, false);
         }
     }
 }

@@ -85,7 +85,7 @@
     <Compile Include="Chat\Commands\Admin\TpLocation.cs" />
     <Compile Include="Chat\Commands\Admin\TpToApartment.cs" />
     <Compile Include="Chat\Commands\Admin\Wipe.cs" />
-    <Compile Include="Chat\Commands\Admin\_SetJob.cs" />
+    <Compile Include="Chat\Commands\Admin\SetJob.cs" />
     <Compile Include="Chat\Commands\Admin\Slap.cs" />
     <Compile Include="Chat\Commands\Admin\Strip.cs" />
     <Compile Include="Chat\Commands\Everyone\Afk.cs" />
@@ -119,6 +119,7 @@
     <Compile Include="HookChat.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="HookMethods.cs" />
+    <Compile Include="Methods\FileHandler\Translations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables.cs" />
     <Compile Include="ExtensionMethods.cs" />
