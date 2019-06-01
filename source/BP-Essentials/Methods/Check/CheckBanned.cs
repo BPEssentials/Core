@@ -18,14 +18,20 @@ namespace BP_Essentials
             {
                 try
                 {
-                    if (player.player.admin || string.IsNullOrEmpty(player.connection.IP.Trim()))
+                    if (player.player.admin || String.IsNullOrEmpty(player.connection.IP.Trim()))
+                    {
                         return;
+                    }
                     foreach (var line in File.ReadAllLines(BansFile))
-                        if (string.IsNullOrEmpty(line) || !line.StartsWith("# " + player.player.username, StringComparison.CurrentCulture))
-                            continue;
-                    Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [WARNING] {player.player.username} Joined while banned! IP: {player.connection.IP}");
-                    player.svManager.AddBanned(player.player);
-                    player.svManager.Disconnect(player.connection, DisconnectTypes.Banned);
+                    {
+                        if (line.Trim() == $"# {player.player.username}".Trim()) || line == player.connection.IP.Trim())
+                        {
+                            Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [WARNING] {player.player.username} Joined while banned! IP: {player.connection.IP}");
+                            player.svManager.AddBanned(player.player);
+                            player.svManager.Disconnect(player.connection, DisconnectTypes.Banned);
+                            break;
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

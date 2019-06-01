@@ -31,6 +31,12 @@ namespace BP_Essentials
             if (svPlayer == null)
                 return;
             PlayerList.Add(svPlayer.player.ID, new PlayerListItem(svPlayer.player));
+        }
+}
+        [Hook("SvManager.HKMLGBDPOEP")]
+        public static void HKMLGBDPOEP(SvManager svman, ref MyReader BFCOJLMIDMF, ref ShPlayer JAJBOLNPNME)
+        {
+            var svPlayer = JAJBOLNPNME.svPlayer;
             Task.Run(() =>
             {
                 WriteIpToFile.Run(svPlayer);
