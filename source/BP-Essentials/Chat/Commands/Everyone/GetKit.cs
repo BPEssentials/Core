@@ -35,7 +35,7 @@ namespace BP_Essentials.Commands
                 player.SendChatMessage($"<color={errorColor}>That kit is currently disabled.</color>");
                 return;
             }
-            if (obj.CurrentlyInCooldown.ContainsKey(player.player.username))
+            if (obj.CurrentlyInCooldown.ContainsKey(player.player.username && obj.CurrentlyInCooldown[player.player.username] > 0)
             {
                 player.SendChatMessage($"<color={errorColor}>You already used this kit. Please wait</color> <color={argColor}>{obj.CurrentlyInCooldown[player.player.username]}</color> <color={errorColor}>second(s) before executing this command again.</color>");
                 return;
