@@ -1,3 +1,8 @@
+# BP-Essentials³ - Coming Soon
+> BPE will be recoded from the ground up when BP-API gets released. This version will be called BP-Essentials 3.0.0.
+
+
+
 # Website
 
 Check our [Website](https://userr00t.github.io/BP-Essentials/) for features, commands, installation, and more!
