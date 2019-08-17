@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace BP_Essentials
 {
-    class GetArgument : Core
+    public class GetArgument : Core
     {
         // redo?
         public static string Run(int nr, bool UseRegex, bool IncludeSpaces, string message)
