@@ -8,7 +8,7 @@ using static BP_Essentials.HookMethods;
 
 namespace BP_Essentials
 {
-    class GetShByStr : Core
+    public class GetShByStr : Core
     {
         public static ShPlayer Run(string player, bool idOnly = false)
         {
