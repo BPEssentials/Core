@@ -103,7 +103,10 @@ namespace BP_Essentials.Methods.FileHandler
             foreach (var player in objDelayable.CurrentlyInCooldown.ToList())
             {
                 if (player.Value <= 0)
+                {
+                    objDelayable.CurrentlyInCooldown.Remove(player.Key);
                     continue;
+                }
                 SvMan.StartCoroutine(StartCooldown(player.Key, obj, player.Value));
             }
         }
