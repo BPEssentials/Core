@@ -123,6 +123,10 @@ namespace BP_Essentials
         [Hook("SvPlayer.SvLocalChatMessage")]
         public static bool SvLocalChatMessage(SvPlayer player, ref string message)
         {
+            if (message.StartsWith(CmdCommandCharacter, StringComparison.CurrentCulture))
+                if (OnCommand(player, ref message))
+                    return true;
+
             if (LocalChatMute && MutePlayers.Contains(player.playerData.username))
             {
                 player.SendChatMessage(SelfIsMuted);
