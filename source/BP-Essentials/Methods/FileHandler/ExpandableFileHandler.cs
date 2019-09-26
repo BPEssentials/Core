@@ -84,7 +84,7 @@ namespace BP_Essentials.Methods.FileHandler
                 objDelayable.CurrentlyInCooldown.Add(username, objDelayable.Delay);
             var path = Path.Combine(WarpDirectory, $"{obj.Name}.json");
             var passedTime = _passedTime;
-            while (passedTime < objDelayable.Delay)
+            while (passedTime < objDelayable.Delay && passedTime >= 0)
             {
                 ++passedTime;
                 --objDelayable.CurrentlyInCooldown[username];
