@@ -79,7 +79,7 @@ namespace BP_Essentials
         public static bool OnCommand(SvPlayer player, ref string message)
         {
             var tempMessage = message;
-            var command = GetArgument.Run(0, false, false, message).ToLower();
+            var command = GetArgument.Run(0, false, false, message);
             // CustomCommands
             var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.ToLower().StartsWith(CmdCommandCharacter + x.Command.ToLower(), StringComparison.CurrentCulture));
             if (customCommand != null)
