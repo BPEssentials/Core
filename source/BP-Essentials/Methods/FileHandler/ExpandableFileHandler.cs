@@ -84,7 +84,7 @@ namespace BP_Essentials.Methods.FileHandler
                 objDelayable.CurrentlyInCooldown.Add(username, objDelayable.Delay);
             var path = Path.Combine(WarpDirectory, $"{obj.Name}.json");
             var passedTime = _passedTime;
-            while (passedTime < objDelayable.Delay)
+            while (passedTime < objDelayable.Delay && passedTime >= 0)
             {
                 ++passedTime;
                 --objDelayable.CurrentlyInCooldown[username];
@@ -103,7 +103,10 @@ namespace BP_Essentials.Methods.FileHandler
             foreach (var player in objDelayable.CurrentlyInCooldown.ToList())
             {
                 if (player.Value <= 0)
+                {
+                    objDelayable.CurrentlyInCooldown.Remove(player.Key);
                     continue;
+                }
                 SvMan.StartCoroutine(StartCooldown(player.Key, obj, player.Value));
             }
         }
