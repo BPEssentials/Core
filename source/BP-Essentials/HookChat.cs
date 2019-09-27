@@ -81,7 +81,7 @@ namespace BP_Essentials
             var tempMessage = message;
             var command = GetArgument.Run(0, false, false, message);
             // CustomCommands
-            var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.ToLower().StartsWith(CmdCommandCharacter + x.Command.ToLower(), StringComparison.CurrentCulture));
+            var customCommand = CustomCommands.FirstOrDefault(x => tempMessage.StartsWith(CmdCommandCharacter + x.Command, StringComparison.CurrentCultureIgnoreCase));
             if (customCommand != null)
             {
                 foreach (string line in customCommand.Response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
