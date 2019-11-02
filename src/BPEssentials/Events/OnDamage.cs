@@ -17,6 +17,8 @@ namespace BPEssentials.RegisteredEvents
 
         public void OnEvent(ShPlayer player, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider)
         {
+            if (player.svEntity.serverside)
+                return;
             if (player.GetExtendedPlayer().HasGodmode)
             {
                 player.SendChatMessage($"Damage blocked: {amount}HP. (Attacker: {attacker.ID}: {attacker.username.SanitizeString()})");
