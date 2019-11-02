@@ -2,7 +2,9 @@
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.ExportScripts.Required;
 using System;
+using UnityEngine;
 
 namespace BPEssentials.RegisteredEvents
 {
@@ -10,10 +12,10 @@ namespace BPEssentials.RegisteredEvents
     {
         public OnDamage()
         {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnDamage, new Action<ShPlayer, ShPlayer, float>(OnEvent));
+            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnDamage, new Action<ShPlayer, DamageIndex, float, ShPlayer, Collider>(OnEvent));
         }
 
-        public void OnEvent(ShPlayer player, ShPlayer attacker, float amount)
+        public void OnEvent(ShPlayer player, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider)
         {
             if (player.GetExtendedPlayer().HasGodmode)
             {
