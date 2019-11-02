@@ -1,6 +1,7 @@
 ﻿using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.ExtendedPlayer;
 
 namespace BPEssentials.Interfaces
 {
@@ -12,6 +13,6 @@ namespace BPEssentials.Interfaces
 
         Settings Settings { get; set; }
 
-        ExtendedPlayerFactory PlayerFactory { get; set; }
+        ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API;
@@ -76,7 +77,7 @@ namespace BPEssentials
             }
         }
 
-        public static ICommand InjectDependenciesIntoCommand(ICommand command, ILogger logger, Settings settings, ExtendedPlayerFactory extendedPlayerFactory)
+        public static ICommand InjectDependenciesIntoCommand(ICommand command, ILogger logger, Settings settings, ExtendedPlayerFactory<PlayerItem> extendedPlayerFactory)
         {
             command.Logger = logger;
             command.Settings = settings;

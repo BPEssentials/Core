@@ -2,6 +2,7 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.ExtendedPlayer;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using System;
@@ -16,7 +17,7 @@ namespace BPEssentials
         public static string Version { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
         // TODO: This can get confusing real fast, need a new name for this.
-        public BPCoreLib.PlayerFactory.ExtendedPlayerFactory PlayerHandler { get; internal set; } = new ExtendedPlayer.ExtendedPlayerFactory();
+        public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
 
         public ILogger Logger { get; } = new Logger();
 
