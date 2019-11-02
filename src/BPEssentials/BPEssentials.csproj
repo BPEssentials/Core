@@ -286,6 +286,7 @@
     <Compile Include="ChatHandlers\GlobalCommand.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
+    <Compile Include="Commands\Free.cs" />
     <Compile Include="Commands\Arrest.cs" />
     <Compile Include="Commands\Disconnect.cs" />
     <Compile Include="Commands\Info.cs" />
