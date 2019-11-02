@@ -15,6 +15,8 @@ namespace BPEssentials.ChatHandlers
 
         public void OnEvent(ShPlayer player, string message)
         {
+            if (message.StartsWith(CommandHandler.Prefix))
+                return;
             Core.Instance.Logger.LogInfo($"[LOCAL] {player.username.SanitizeString()}: {message.SanitizeString()}");
         }
     }
