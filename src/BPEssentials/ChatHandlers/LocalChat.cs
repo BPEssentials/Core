@@ -10,13 +10,12 @@ namespace BPEssentials.ChatHandlers
     {
         public LocalChat()
         {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnLocalChatMessage, new Func<ShPlayer, string, bool>(OnEvent));
+            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnLocalChatMessage, new Action<ShPlayer, string>(OnEvent));
         }
 
-        public bool OnEvent(ShPlayer player, string message)
+        public void OnEvent(ShPlayer player, string message)
         {
             Core.Instance.Logger.LogInfo($"[LOCAL] {player.username.SanitizeString()}: {message.SanitizeString()}");
-            return false;
         }
     }
 }
