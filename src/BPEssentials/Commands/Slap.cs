@@ -8,7 +8,6 @@ using BrokeProtocol.ExportScripts.Required;
 using BrokeProtocol.Utility.Networking;
 using System.Linq;
 
-
 namespace BPEssentials.Commands
 {
     public class Slap : ICommand
