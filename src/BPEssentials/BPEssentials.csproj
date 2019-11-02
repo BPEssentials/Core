@@ -287,6 +287,7 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Promote.cs" />
+    <Compile Include="Commands\Kill.cs" />
     <Compile Include="Commands\Knockout.cs" />
     <Compile Include="Commands\Slap.cs" />
     <Compile Include="Commands\Restrain.cs" />
