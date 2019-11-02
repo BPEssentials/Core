@@ -36,7 +36,7 @@ namespace BPEssentials
         public Core()
         {
             Instance = this;
-            Info = new ResourceInfo("BPEssentials", "BPE", new ResourceAuthor("UserR00T"))
+            Info = new ResourceInfo("BPEssentials", "BPE", new List<ResourceAuthor> {new ResourceAuthor("UserR00T"), new ResourceAuthor("PLASMA_chicken")})
             {
                 Description = "Basic commands for powerful moderation.",
                 Github = "https://github.com/UserR00T/BP-Essentials/",
