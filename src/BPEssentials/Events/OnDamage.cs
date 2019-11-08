@@ -17,7 +17,7 @@ namespace BPEssentials.RegisteredEvents
 
         public void OnEvent(ShPlayer player, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider)
         {
-            if (player.svEntity.serverside)
+            if (!player.isHuman)
                 return;
             if (player.GetExtendedPlayer().HasGodmode)
             {
