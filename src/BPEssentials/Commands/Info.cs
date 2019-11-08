@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-            if (PoolHandler.Players.TryGetByNameOrId(targetStr, out ShPlayer target))
+            if (Collections.TryGetPlayerByNameOrId(targetStr, out ShPlayer target))
             {
                 sb = GetOnlineInfo(target);
             }

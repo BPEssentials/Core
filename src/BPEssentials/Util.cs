@@ -20,7 +20,7 @@ namespace BPEssentials
     {
         public static void SendStaffChatMessage(ShPlayer player, string message)
         {
-            foreach (var currPlayer in PoolHandler.Players.All())
+            foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer == player || !currPlayer.GetExtendedPlayer().CanRecieveStaffChat)
                     continue;
@@ -30,7 +30,7 @@ namespace BPEssentials
 
         public static void SendToAllEnabledChat(string message)
         {
-            foreach (var currPlayer in PoolHandler.Players.All())
+            foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
                     continue;
@@ -40,7 +40,7 @@ namespace BPEssentials
 
         public static void SendToAllEnabledChat(string[] messages)
         {
-            foreach (var currPlayer in PoolHandler.Players.All())
+            foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
                     continue;

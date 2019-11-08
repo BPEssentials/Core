@@ -15,7 +15,7 @@ namespace BPEssentials.ChatHandlers
         public void OnEvent(ShPlayer player, string message)
         {
             Core.Instance.Logger.LogInfo($"[COMMAND] {player.username}: {message}");
-            foreach (var currPlayer in PoolHandler.Players.All())
+            foreach (var currPlayer in Collections.Humans)
             {
                 ExtendedPlayer.PlayerItem extendedPlayer = null;
                 if (currPlayer == player || !(extendedPlayer = currPlayer.GetExtendedPlayer()).EnabledSpychat)
