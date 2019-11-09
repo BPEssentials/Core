@@ -45,10 +45,10 @@
       <HintPath>lib\BP-CoreLib.dll</HintPath>
     </Reference>
     <Reference Include="EmbedIO">
-      <HintPath>lib\EmbedIO.dll</HintPath>
+      <HintPath>lib\Managed\EmbedIO.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB">
-      <HintPath>lib\LiteDB.dll</HintPath>
+      <HintPath>lib\Managed\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -59,20 +59,21 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>lib\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestClient">
-      <HintPath>lib\RestClient.dll</HintPath>
+      <HintPath>lib\Managed\RestClient.dll</HintPath>
     </Reference>
-    <Reference Include="Scripts">
-      <HintPath>lib\Scripts.dll</HintPath>
+    <Reference Include="Scripts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Managed\Scripts.dll</HintPath>
     </Reference>
     <Reference Include="SharedMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\SharedMemory.dll</HintPath>
+      <HintPath>lib\Managed\SharedMemory.dll</HintPath>
     </Reference>
     <Reference Include="Swan.Lite">
-      <HintPath>lib\Swan.Lite.dll</HintPath>
+      <HintPath>lib\Managed\Swan.Lite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
