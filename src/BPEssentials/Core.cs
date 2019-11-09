@@ -43,9 +43,9 @@ namespace BPEssentials
                 Website = "https://userr00t.github.io/BP-Essentials/"
             };
 
-            OnReloadRequest();
+            OnReloadRequestAsync();
 
-            EventsHandler.Add("bpe:reload", new Action(OnReloadRequest));
+            EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
@@ -119,9 +119,10 @@ namespace BPEssentials
             CustomCommandsReader.ReadAndParse();
         }
 
-        public void OnReloadRequest()
+        public async void OnReloadRequestAsync()
         {
             SetConfigurationFilePaths();
+            await FileChecker.CheckFiles();
             ReadConfigurationFiles();
             RegisterCustomCommands();
             RegisterCommands();

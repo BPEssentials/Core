@@ -41,7 +41,7 @@ namespace BPEssentials.Commands
                         return;
                     }
                     player.SendChatMessage("Reloading..");
-                    Core.Instance.OnReloadRequest();
+                    Core.Instance.OnReloadRequestAsync();
                     player.SendChatMessage("Reloaded.");
                     break;
 
