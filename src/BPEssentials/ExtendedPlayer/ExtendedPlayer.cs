@@ -1,4 +1,5 @@
-﻿using BrokeProtocol.API.ExtensionMethods;
+﻿using BPEssentials.Enums;
+using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.ExtendedPlayer

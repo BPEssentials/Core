@@ -10,9 +10,7 @@ using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
-using BrokeProtocol.API.Types;
 using BrokeProtocol.Entities;
-using static BPEssentials.ExtendedPlayer.PlayerItem;
 
 namespace BPEssentials
 {

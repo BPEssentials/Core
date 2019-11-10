@@ -5,8 +5,6 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility.Networking;
-using System.Linq;
 
 namespace BPEssentials.Commands
 {
