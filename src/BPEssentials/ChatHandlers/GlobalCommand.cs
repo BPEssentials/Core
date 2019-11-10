@@ -17,8 +17,8 @@ namespace BPEssentials.ChatHandlers
             Core.Instance.Logger.LogInfo($"[COMMAND] {player.username}: {message}");
             foreach (var currPlayer in Collections.Humans)
             {
-                ExtendedPlayer.PlayerItem extendedPlayer = null;
-                if (currPlayer == player || !(extendedPlayer = currPlayer.GetExtendedPlayer()).EnabledSpychat)
+                ExtendedPlayer.PlayerItem extendedPlayer = currPlayer.GetExtendedPlayer();
+                if (currPlayer == player || !extendedPlayer.EnabledSpychat)
                 {
                     continue;
                 }
