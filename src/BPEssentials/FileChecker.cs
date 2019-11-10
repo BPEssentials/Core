@@ -7,7 +7,7 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        private static Dictionary<string, string> RequiredFilesDictionary { get; } = new Dictionary<string, string>
+        private static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
@@ -23,7 +23,7 @@ namespace BPEssentials
                 Directory.CreateDirectory(Paths.EssentialsFolder);
                 Core.Instance.Logger.LogInfo("Created Essentials Folder.");
             }
-            foreach (var file in RequiredFilesDictionary)
+            foreach (var file in RequiredFiles)
             {
                 if (File.Exists(file.Value))
                 {
