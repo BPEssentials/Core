@@ -23,7 +23,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public ShPlayer TpaUser { get; set; }
 
-        public LastLocation LastLocation { get; set; } = new LastLocation();
+        public LastLocation LastLocation { get; } = new LastLocation();
 
         public void SendPmMessage(ShPlayer target, string message)
         {
