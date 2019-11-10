@@ -30,8 +30,11 @@ namespace BPEssentials.ChatHandlers
                 case Chat.Disabled:
                     player.SendChatMessage("Chat disabled");
                     return;
+
+                default:
+                    Util.SendToAllEnabledChat($"{player.username.SanitizeString()}: {message.SanitizeString()}");
+                    return;
             }
-            Util.SendToAllEnabledChat($"{player.username.SanitizeString()}: {message.SanitizeString()}");
         }
     }
 }
