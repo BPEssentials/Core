@@ -42,7 +42,9 @@ namespace BPEssentials
             foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
+                {
                     continue;
+                }
                 foreach (var message in messages)
                 {
                     currPlayer.SendChatMessage(message);

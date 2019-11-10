@@ -92,9 +92,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>lib\Managed\Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>lib\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -182,9 +179,6 @@
     <Reference Include="UnityEngine.ProfilerModule">
       <HintPath>lib\Managed\UnityEngine.ProfilerModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>lib\Managed\UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
       <HintPath>lib\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
@@ -199,9 +193,6 @@
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
       <HintPath>lib\Managed\UnityEngine.StreamingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StyleSheetsModule">
-      <HintPath>lib\Managed\UnityEngine.StyleSheetsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
       <HintPath>lib\Managed\UnityEngine.SubstanceModule.dll</HintPath>
