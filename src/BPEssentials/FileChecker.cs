@@ -20,7 +20,7 @@ namespace BPEssentials
             }
             foreach (var file in RequiredFilesDictionary)
             {
-                if (File.Exists(file.Value)) continue;
+                if (File.Exists(file.Value)) { continue; }
                 try
                 {
                     Core.Instance.Logger.LogWarning($"{file.Key} not found.");
@@ -37,7 +37,7 @@ namespace BPEssentials
             }
         }
 
-        private static Dictionary<string, string> RequiredFilesDictionary = new Dictionary<string, string>()
+        private static Dictionary<string, string> RequiredFilesDictionary = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
