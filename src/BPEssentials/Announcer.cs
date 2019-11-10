@@ -29,7 +29,9 @@ namespace BPEssentials
             Timer.Elapsed += (sender, e) => OnElapsed();
             Timer.Enabled = false;
             if (interval <= 0)
+            {
                 return;
+            }
             Timer.Interval = interval;
             Timer.Enabled = true;
         }
@@ -42,11 +44,17 @@ namespace BPEssentials
         public void OnElapsed()
         {
             if (Announcements?.Count == 0)
+            {
                 return;
+            }
             if (++Index > Announcements.Count - 1)
+            {
                 Index = 0;
+            }
             if (string.IsNullOrWhiteSpace(Announcements[Index]))
+            {
                 return;
+            }
             var lines = Announcements[Index].Split(new[] { "\r\n", "\r", "\n", "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None);
             Util.SendToAllEnabledChat(lines);
             Core.Instance.Logger.LogInfo("Announcement made...");

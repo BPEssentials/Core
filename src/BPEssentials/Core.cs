@@ -132,7 +132,9 @@ namespace BPEssentials
         public void OnVersionRequest(string callback)
         {
             if (callback.StartsWith("bpe:"))
+            {
                 return;
+            }
             EventsHandler.Call(callback, Version, IsDevelopmentBuild());
         }
     }

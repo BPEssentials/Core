@@ -22,7 +22,9 @@ namespace BPEssentials
             foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer == player || !currPlayer.GetExtendedPlayer().CanRecieveStaffChat)
+                {
                     continue;
+                }
                 currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.SanitizeString()}: {message}"); // to Username
             }
         }
@@ -32,7 +34,9 @@ namespace BPEssentials
             foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
+                {
                     continue;
+                }
                 currPlayer.SendChatMessage(message);
             }
         }
