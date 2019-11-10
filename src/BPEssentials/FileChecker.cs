@@ -17,7 +17,6 @@ namespace BPEssentials
 
         public static async Task CheckFiles()
         {
-
             if (!Directory.Exists(Paths.EssentialsFolder))
             {
                 Core.Instance.Logger.LogWarning("Essentials Folder not found.");
