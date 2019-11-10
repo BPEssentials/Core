@@ -32,12 +32,5 @@ namespace BPEssentials.ExtendedPlayer
         {
             Client.SendChatMessage($"[SPYCHAT] {target.username.SanitizeString()}: {command.SanitizeString()}");
         }
-
-        public enum Chat
-        {
-            Disabled,
-            Global,
-            StaffChat
-        }
     }
 }

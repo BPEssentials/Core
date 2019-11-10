@@ -1,6 +1,7 @@
 ﻿using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Enums;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
@@ -21,7 +22,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target, string message)
         {
             var eTarget = target.GetExtendedPlayer();
-            if (eTarget.CurrentChat == ExtendedPlayer.PlayerItem.Chat.Disabled)
+            if (eTarget.CurrentChat == Chat.Disabled)
             {
                 player.SendChatMessage("This user disabled their chat. Your message will not be sent.");
                 return;
