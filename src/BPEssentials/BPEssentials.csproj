@@ -301,6 +301,7 @@
     <Compile Include="Commands\Heal.cs" />
     <Compile Include="Commands\Save.cs" />
     <Compile Include="Commands\Atm.cs" />
+    <Compile Include="Commands\Back.cs" />
     <Compile Include="Commands\TpaAccept.cs" />
     <Compile Include="Commands\TpaDeny.cs" />
     <Compile Include="Commands\ClearWanted.cs" />
