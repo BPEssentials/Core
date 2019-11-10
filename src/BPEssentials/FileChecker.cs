@@ -7,7 +7,7 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        public static readonly HttpClient client = new HttpClient();
+        public static HttpClient Client { get; }= new HttpClient();
 
         public static async Task CheckFiles()
         {
@@ -20,19 +20,20 @@ namespace BPEssentials
             }
             foreach (var file in RequiredFilesDictionary)
             {
-                if (File.Exists(file.Value)) { continue; }
+                if (File.Exists(file.Value))
+                {
+                    continue;
+                }
                 try
                 {
-                    Core.Instance.Logger.LogWarning($"{file.Key} not found.");
+                    Core.Instance.Logger.LogWarning($"{file.Key} was not found; downloading.");
                     var content = await client.GetStringAsync($"{Core.Instance.Info.Github}/raw/{(Core.IsDevelopmentBuild() ? "development" : "master")}/dist/{file.Key}");
                     File.WriteAllText(file.Value, content);
                     Core.Instance.Logger.Log($"{file.Key} was downloaded.");
-                    client.Dispose();
                 }
                 catch (HttpRequestException e)
                 {
                     Core.Instance.Logger.LogError($"{file.Key} could not be donwloaded because of: {e.Message}.");
-
                 }
             }
         }
