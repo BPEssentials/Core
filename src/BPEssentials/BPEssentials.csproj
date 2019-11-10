@@ -318,6 +318,7 @@
     <Compile Include="Events\OnLogin.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayer.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayerFactory.cs" />
+    <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Paths.cs" />
