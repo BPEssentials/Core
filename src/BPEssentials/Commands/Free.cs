@@ -20,8 +20,12 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            if (target == null)
+            {
+                target = player;
+            }
             target.svPlayer.UnRestrain();
             player.SendChatMessage($"Freed {target.username.SanitizeString()}.");
         }

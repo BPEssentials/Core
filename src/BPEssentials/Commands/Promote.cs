@@ -19,8 +19,12 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            if (target == null)
+            {
+                target = player;
+            }
             if (target.job.info.rankItems.Length == 0)  // Check if Target's Job even has Ranks
             {
                 player.SendChatMessage($"{target.username.SanitizeString()}'s Job does not have ranks!");
