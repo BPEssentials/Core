@@ -25,7 +25,6 @@ namespace BPEssentials.Commands
             target.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
             target.SendChatMessage("You've been restrained");
             player.SendChatMessage($"Restrained {target.username.SanitizeString()}.");
-
         }
     }
 }

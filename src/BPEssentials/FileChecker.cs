@@ -13,7 +13,7 @@ namespace BPEssentials
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
         };
 
-        public static HttpClient Client { get; }= new HttpClient();
+        public static HttpClient Client { get; } = new HttpClient();
 
         public static async Task CheckFiles()
         {
