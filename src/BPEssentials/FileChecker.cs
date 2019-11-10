@@ -7,6 +7,12 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
+        private static Dictionary<string, string> requiredFilesDictionary { get; } = new Dictionary<string, string>
+        {
+            {"settings.json", Core.Instance.Paths.SettingsFile},
+            {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
+        };
+
         public static HttpClient Client { get; }= new HttpClient();
 
         public static async Task CheckFiles()
@@ -18,7 +24,7 @@ namespace BPEssentials
                 Directory.CreateDirectory(Paths.EssentialsFolder);
                 Core.Instance.Logger.LogInfo("Created Essentials Folder.");
             }
-            foreach (var file in RequiredFilesDictionary)
+            foreach (var file in requiredFilesDictionary)
             {
                 if (File.Exists(file.Value))
                 {
@@ -27,7 +33,7 @@ namespace BPEssentials
                 try
                 {
                     Core.Instance.Logger.LogWarning($"{file.Key} was not found; downloading.");
-                    var content = await client.GetStringAsync($"{Core.Instance.Info.Github}/raw/{(Core.IsDevelopmentBuild() ? "development" : "master")}/dist/{file.Key}");
+                    var content = await Client.GetStringAsync($"{Core.Instance.Info.Github}/raw/{(Core.IsDevelopmentBuild() ? "development" : "master")}/dist/{file.Key}");
                     File.WriteAllText(file.Value, content);
                     Core.Instance.Logger.Log($"{file.Key} was downloaded.");
                 }
@@ -37,12 +43,5 @@ namespace BPEssentials
                 }
             }
         }
-
-        private static Dictionary<string, string> RequiredFilesDictionary = new Dictionary<string, string>
-        {
-            {"settings.json", Core.Instance.Paths.SettingsFile},
-            {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
-        };
-
     }
 }
