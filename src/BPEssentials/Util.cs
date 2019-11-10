@@ -89,8 +89,7 @@ namespace BPEssentials
             instance = null;
             try
             {
-                var success = TryInstanciateAndInjectDependencies(typeName, out instance, out var type);
-                if (!success)
+                if (!TryInstanciateAndInjectDependencies(typeName, out instance, out var type))
                 {
                     return null;
                 }
