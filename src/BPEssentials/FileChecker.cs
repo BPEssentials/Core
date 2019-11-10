@@ -7,7 +7,7 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        private static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
+        public static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
