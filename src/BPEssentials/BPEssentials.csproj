@@ -293,8 +293,8 @@
     <Compile Include="Commands\Knockout.cs" />
     <Compile Include="Commands\Slap.cs" />
     <Compile Include="Commands\Restrain.cs" />
-    <Compile Include="Commands\Free.cs" />
     <Compile Include="Commands\Arrest.cs" />
+    <Compile Include="Commands\Free.cs" />
     <Compile Include="Commands\Disconnect.cs" />
     <Compile Include="Commands\Info.cs" />
     <Compile Include="Commands\Feed.cs" />
