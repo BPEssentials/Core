@@ -21,10 +21,7 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target == null)
-            {
-                target = player;
-            }
+            target = target ?? player;
             target.svPlayer.Heal(target.maxStat);
             player.SendChatMessage($"Healed '{target.username.SanitizeString()}'.");
         }

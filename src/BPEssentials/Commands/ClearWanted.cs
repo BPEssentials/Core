@@ -21,10 +21,7 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target == null)
-            {
-                target = player;
-            }
+            target = target ?? player;
             target.ClearCrimes();
             target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ClearCrimes, target.ID);
             player.SendChatMessage($"Cleared crimes of '{target.username.SanitizeString()}'.");

@@ -20,10 +20,7 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target == null)
-            {
-                target = player;
-            }
+            target = target ?? player;
             target.svPlayer.UnRestrain();
             player.SendChatMessage($"Freed {target.username.SanitizeString()}.");
         }
