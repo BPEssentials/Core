@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
         {
             var eTarget = target.GetExtendedPlayer();
             eTarget.TpaUser = player;
-            player.SendChatMessage($"Sent a TPA request to {target.username.SanitizeString()}.{(eTarget.CurrentChat == ExtendedPlayer.PlayerItem.Chat.Disabled ? " Their chat is currently disabled, they will not recieve any message about your request." : "")}");
+            player.SendChatMessage($"Sent a TPA request to {target.username.SanitizeString()}.{(eTarget.CurrentChat == Chat.Disabled ? " Their chat is currently disabled, they will not recieve any message about your request." : "")}");
             if (eTarget.CurrentChat == Chat.Disabled)
             {
                 return;
