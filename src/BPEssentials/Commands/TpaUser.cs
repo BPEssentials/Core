@@ -1,6 +1,7 @@
 ﻿using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Enums;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
@@ -24,7 +25,7 @@ namespace BPEssentials.Commands
             var eTarget = target.GetExtendedPlayer();
             eTarget.TpaUser = player;
             player.SendChatMessage($"Sent a TPA request to {target.username.SanitizeString()}.{(eTarget.CurrentChat == ExtendedPlayer.PlayerItem.Chat.Disabled ? " Their chat is currently disabled, they will not recieve any message about your request." : "")}");
-            if (eTarget.CurrentChat == ExtendedPlayer.PlayerItem.Chat.Disabled)
+            if (eTarget.CurrentChat == Chat.Disabled)
                 return;
             // TODO: Softcode value
             target.SendChatMessage($"{player.username.SanitizeString()} sent you a TPA request! Type /tpaccept to accept it.");

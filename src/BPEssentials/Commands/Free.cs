@@ -5,12 +5,10 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility.Networking;
-using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class Arrest : ICommand
+    public class Free : ICommand
     {
         public bool LastArgSpaces { get; }
 
@@ -20,10 +18,11 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            target.svPlayer.Restrain(target.manager.handcuffed);
-            player.SendChatMessage($"Arrested {target.username.SanitizeString()}.");
+            target = target ?? player;
+            target.svPlayer.UnRestrain();
+            player.SendChatMessage($"Freed {target.username.SanitizeString()}.");
         }
     }
 }

@@ -5,14 +5,13 @@ using System.Linq.Expressions;
 using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Enums;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
-using BrokeProtocol.API.Types;
 using BrokeProtocol.Entities;
-using static BPEssentials.ExtendedPlayer.PlayerItem;
 
 namespace BPEssentials
 {
@@ -43,7 +42,9 @@ namespace BPEssentials
             foreach (var currPlayer in Collections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
+                {
                     continue;
+                }
                 foreach (var message in messages)
                 {
                     currPlayer.SendChatMessage(message);
@@ -90,8 +91,7 @@ namespace BPEssentials
             instance = null;
             try
             {
-                var success = TryInstanciateAndInjectDependencies(typeName, out instance, out var type);
-                if (!success)
+                if (!TryInstanciateAndInjectDependencies(typeName, out instance, out var type))
                 {
                     return null;
                 }

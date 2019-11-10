@@ -19,8 +19,9 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            target = target ?? player;
             target.svPlayer.Heal(target.maxStat);
             player.SendChatMessage($"Healed '{target.username.SanitizeString()}'.");
         }

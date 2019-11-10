@@ -19,12 +19,12 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            target = target ?? player;
             target.svPlayer.SvForce(new UnityEngine.Vector3(0f, 6500f, 0f));
             target.SendChatMessage($"Off you go!");
             player.SendChatMessage($"You've launched {target.username.SanitizeString()} into space!");
-
         }
     }
 }

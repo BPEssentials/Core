@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Models;
+﻿using BPEssentials.Enums;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 using UnityEngine;
@@ -34,13 +35,6 @@ namespace BPEssentials.ExtendedPlayer
         public void SendSpyChatMessage(ShPlayer target, string command)
         {
             Client.SendChatMessage($"[SPYCHAT] {target.username.SanitizeString()}: {command.SanitizeString()}");
-        }
-
-        public enum Chat
-        {
-            Disabled,
-            Global,
-            StaffChat
         }
     }
 }

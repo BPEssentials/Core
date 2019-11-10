@@ -19,8 +19,9 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            target = target ?? player;
             target.ClearCrimes();
             target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ClearCrimes, target.ID);
             player.SendChatMessage($"Cleared crimes of '{target.username.SanitizeString()}'.");

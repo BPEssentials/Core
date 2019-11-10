@@ -1,11 +1,11 @@
 ﻿using BPCoreLib.Interfaces;
 using BPCoreLib.PlayerFactory;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Enums;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Interfaces;
 using BrokeProtocol.Entities;
-using static BPEssentials.ExtendedPlayer.PlayerItem;
 
 namespace BPEssentials.Commands
 {

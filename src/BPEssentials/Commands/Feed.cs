@@ -5,7 +5,6 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
 {
@@ -19,8 +18,9 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            target = target ?? player;
             target.RestoreStats();
             player.SendChatMessage($"Replenished stats for '{target.username.SanitizeString()}'.");
         }

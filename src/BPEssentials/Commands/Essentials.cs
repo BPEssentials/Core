@@ -18,7 +18,7 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, string arg1)
+        public void Invoke(ShPlayer player, string arg1 = "")
         {
             player.SendChatMessage($"BP Essentials v{Core.Version}.");
             var info = Core.Instance.Info;

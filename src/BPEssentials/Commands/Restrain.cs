@@ -5,8 +5,6 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility.Networking;
-using System.Linq;
 
 namespace BPEssentials.Commands
 {
@@ -27,7 +25,6 @@ namespace BPEssentials.Commands
             target.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
             target.SendChatMessage("You've been restrained");
             player.SendChatMessage($"Restrained {target.username.SanitizeString()}.");
-
         }
     }
 }

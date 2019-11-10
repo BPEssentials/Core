@@ -7,24 +7,23 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        private static Dictionary<string, string> requiredFilesDictionary { get; } = new Dictionary<string, string>
+        public static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
         };
 
-        public static HttpClient Client { get; }= new HttpClient();
+        public static HttpClient Client { get; } = new HttpClient();
 
         public static async Task CheckFiles()
         {
-
             if (!Directory.Exists(Paths.EssentialsFolder))
             {
                 Core.Instance.Logger.LogWarning("Essentials Folder not found.");
                 Directory.CreateDirectory(Paths.EssentialsFolder);
                 Core.Instance.Logger.LogInfo("Created Essentials Folder.");
             }
-            foreach (var file in requiredFilesDictionary)
+            foreach (var file in RequiredFiles)
             {
                 if (File.Exists(file.Value))
                 {

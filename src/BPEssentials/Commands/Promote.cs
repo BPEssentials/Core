@@ -5,7 +5,6 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
 {
@@ -19,14 +18,15 @@ namespace BPEssentials.Commands
 
         public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
 
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target.job.info.rankItems.Length == 0)  // Check if Target's Job even has Ranks
+            target = target ?? player;
+            if (target.job.info.rankItems.Length == 0) // Check if Target's Job even has Ranks
             {
                 player.SendChatMessage($"{target.username.SanitizeString()}'s Job does not have ranks!");
                 return;
             }
-            if (target.rank == target.job.info.rankItems.Length - 1)    // Check if Target is max rank
+            if (target.rank == target.job.info.rankItems.Length - 1) // Check if Target is max rank
             {
                 player.SendChatMessage($"{target.username.SanitizeString()} already has the highest rank!");
                 return;
