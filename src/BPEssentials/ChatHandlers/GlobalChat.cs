@@ -17,7 +17,9 @@ namespace BPEssentials.ChatHandlers
         public void OnEvent(ShPlayer player, string message)
         {
             if (message.StartsWith(CommandHandler.Prefix))
+            {
                 return;
+            }
             Core.Instance.Logger.LogInfo($"[GLOBAL] {player.username}: {message}");
             switch (player.GetExtendedPlayer().CurrentChat)
             {

@@ -19,7 +19,9 @@ namespace BPEssentials.ChatHandlers
             {
                 ExtendedPlayer.PlayerItem extendedPlayer = null;
                 if (currPlayer == player || !(extendedPlayer = currPlayer.GetExtendedPlayer()).EnabledSpychat)
+                {
                     continue;
+                }
                 extendedPlayer.SendSpyChatMessage(player, message);
             }
         }
