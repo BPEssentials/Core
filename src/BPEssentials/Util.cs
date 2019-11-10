@@ -90,23 +90,25 @@ namespace BPEssentials
             return command;
         }
 
-        public static Delegate GetCommandMethodDelegateByTypeName(string typeName, out ICommand instance)
+        public static bool TryGetCommandMethodDelegateByTypeName(string typeName, out Delegate del, out ICommand instance)
         {
             instance = null;
+            del = null;
             try
             {
                 if (!TryInstanciateAndInjectDependencies(typeName, out instance, out var type))
                 {
-                    return null;
+                    return false;
                 }
                 var method = type.GetMethod("Invoke");
                 var types = method.GetParameters().Select(p => p.ParameterType);
-                return Delegate.CreateDelegate(Expression.GetActionType(types.ToArray()), instance, method.Name);
+                del = Delegate.CreateDelegate(Expression.GetActionType(types.ToArray()), instance, method.Name);
+                return true;
             }
             catch (Exception ex)
             {
                 Core.Instance.Logger.LogException(ex);
-                return null;
+                return false;
             }
         }
     }
