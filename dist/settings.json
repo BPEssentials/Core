@@ -1,0 +1,178 @@
+{
+    "General": {},
+    "MessageColors": {},
+    "FunctionUI": {},
+    "ReportOptions": {},
+    "JobIndexArray": {},
+    "WhitelistedJobs": [],
+    "BlockedItems": [],
+    "Misc": {},
+    "Commands": [
+        {
+            "CommandName": "Essentials",
+            "Commands": [
+                "essentials",
+                "ess"
+            ]
+        },
+        {
+            "CommandName": "Info",
+            "Commands": [
+                "info",
+                "stats"
+            ],
+        },
+        {
+            "CommandName": "OnlinePlayers",
+            "Commands": [
+                "players",
+                "online"
+            ],
+        },
+        {
+            "CommandName": "Atm",
+            "Commands": [
+                "atm",
+                "bank",
+                "bal",
+                "balance"
+            ],
+        },
+        {
+            "CommandName": "Feed",
+            "Commands": [
+                "feed",
+                "maxstats",
+                "ms"
+            ],
+        },
+        {
+            "CommandName": "Heal",
+            "Commands": [
+                "heal",
+                "hp"
+            ],
+        },
+        {
+            "CommandName": "Save",
+            "Commands": [
+                "save",
+                "savegame"
+            ],
+        },
+        {
+            "CommandName": "Free",
+            "Commands": [
+                "free"
+            ],
+        },
+        {
+            "CommandName": "Kill",
+            "Commands": [
+                "kill"
+            ],
+        },
+        {
+            "CommandName": "Arrest",
+            "Commands": [
+                "arrest"
+            ],
+        },
+        {
+            "CommandName": "Restrain",
+            "Commands": [
+                "restrain"
+            ],
+        },
+        {
+            "CommandName": "ClearWanted",
+            "Commands": [
+                "clearwanted",
+                "cw"
+            ],
+        },
+        {
+            "CommandName": "Launch",
+            "Commands": [
+                "launch",
+                "takeoff"
+            ],
+        },
+        {
+            "CommandName": "Slap",
+            "Commands": [
+                "slap",
+                "slp"
+            ],
+        },
+        {
+            "CommandName": "Knockout",
+            "Commands": [
+                "knockout",
+                "ko"
+            ],
+        },
+        {
+            "CommandName": "ToggleChat",
+            "Commands": [
+                "t",
+                "tchat"
+            ],
+        },
+        {
+            "CommandName": "Promote",
+            "Commands": [
+                "promote",
+                "rankup"
+            ],
+        },
+        {
+            "CommandName": "Disconnect",
+            "Commands": [
+                "disconnect",
+                "dconnect"
+            ],
+        },
+        {
+            "CommandName": "PmUser",
+            "Commands": [
+                "pm",
+                "pmuser"
+            ],
+        },
+        {
+            "CommandName": "ReplyUser",
+            "Commands": [
+                "r",
+                "ruser",
+                "replyuser"
+            ],
+        },
+        {
+            "CommandName": "TpaUser",
+            "Commands": [
+                "tpa",
+                "tprequest",
+                "teleportrequest"
+            ],
+        },
+        {
+            "CommandName": "TpaAccept",
+            "Commands": [
+                "tpaccept",
+                "tpaaccept",
+                "tpaa",
+                "accept"
+            ],
+        },
+        {
+            "CommandName": "TpaDeny",
+            "Commands": [
+                "tpdeny",
+                "tpadeny",
+                "tpad",
+                "deny"
+            ],
+        },
+    ]
+}
