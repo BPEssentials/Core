@@ -29,8 +29,7 @@ namespace BPEssentials.Commands
             }
             ePlayer.TpaUser.SendChatMessage($"{player.username.SanitizeString()} Accepted your TPA request.");
             player.SendChatMessage($"You accepted the TPA request of {ePlayer.TpaUser.username.SanitizeString()}.");
-            // TODO: Implement TPing
-
+            ePlayer.TpaUser.GetExtendedPlayer().ResetAndSavePosition(player);
             ePlayer.TpaUser = null;
         }
     }

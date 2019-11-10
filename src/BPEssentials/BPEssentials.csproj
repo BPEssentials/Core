@@ -278,6 +278,8 @@
     <Compile Include="ChatHandlers\GlobalCommand.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
+    <Compile Include="Commands\TeleportHere.cs" />
+    <Compile Include="Commands\Teleport.cs" />
     <Compile Include="Commands\Launch.cs" />
     <Compile Include="Commands\Promote.cs" />
     <Compile Include="Commands\Kill.cs" />
@@ -292,6 +294,7 @@
     <Compile Include="Commands\Heal.cs" />
     <Compile Include="Commands\Save.cs" />
     <Compile Include="Commands\Atm.cs" />
+    <Compile Include="Commands\Back.cs" />
     <Compile Include="Commands\TpaAccept.cs" />
     <Compile Include="Commands\TpaDeny.cs" />
     <Compile Include="Commands\ClearWanted.cs" />
@@ -310,6 +313,7 @@
     <Compile Include="Events\OnLogin.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayer.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayerFactory.cs" />
+    <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Paths.cs" />

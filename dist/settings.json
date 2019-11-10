@@ -174,5 +174,25 @@
                 "deny"
             ],
         },
+        {
+            "CommandName": "Back",
+            "Commands": [
+                "back",
+                "return"
+            ],
+        },
+        {
+            "CommandName": "Teleport",
+            "Commands": [
+                "tp"
+            ],
+        },
+        {
+            "CommandName": "TeleportHere",
+            "Commands": [
+                "tph",
+                "tphere"
+            ],
+        },
     ]
 }
