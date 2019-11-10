@@ -12,7 +12,7 @@ namespace BPEssentials.ExtensionMethods
         }
         public static void SavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
-            player.lastLocation.Update(position, rotation, index);
+            player.LastLocation.Update(position, rotation, index);
         }
         public static void ResetAndSavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
