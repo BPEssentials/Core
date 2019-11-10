@@ -288,6 +288,7 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\TeleportHere.cs" />
+    <Compile Include="Commands\Teleport.cs" />
     <Compile Include="Commands\Launch.cs" />
     <Compile Include="Commands\Promote.cs" />
     <Compile Include="Commands\Kill.cs" />
