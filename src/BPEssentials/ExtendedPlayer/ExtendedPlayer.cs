@@ -1,6 +1,8 @@
+﻿using BPEssentials.Models;
 ﻿using BPEssentials.Enums;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using UnityEngine;
 
 namespace BPEssentials.ExtendedPlayer
 {
@@ -21,6 +23,8 @@ namespace BPEssentials.ExtendedPlayer
         public ShPlayer ReplyToUser { get; set; }
 
         public ShPlayer TpaUser { get; set; }
+
+        public LastLocation LastLocation { get; } = new LastLocation();
 
         public void SendPmMessage(ShPlayer target, string message)
         {
