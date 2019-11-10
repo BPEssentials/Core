@@ -9,7 +9,7 @@ namespace BPEssentials
 {
     public class Paths
     {
-        public const string EssentialsFolder = "Essentials";
+        public static string EssentialsFolder { get; } = "Essentials";
 
         public string SettingsFile { get; } = Path.Combine(EssentialsFolder, "settings.json");
 
