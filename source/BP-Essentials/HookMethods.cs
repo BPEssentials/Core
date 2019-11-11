@@ -136,11 +136,15 @@ namespace BP_Essentials
                     player.svManager.startedVote.Add(player.player);
                     player.svManager.vote = player.player.manager.votes[voteIndex];
                     if (!player.svManager.vote.CheckVote(ID))
+                    {
                         player.svManager.vote = null;
-                    player.Send(SvSendType.All, Channel.Reliable, 60, voteIndex, ID);
+                        return true;
+                    }
+                    player.Send(SvSendType.All, Channel.Reliable, ClPacket.StartVote, voteIndex, ID);
                     player.svManager.StartCoroutine(player.svManager.StartVote());
+
                     Debug.Log($"{PlaceholderParser.ParseTimeStamp()} [INFO] {player.playerData.username} Has issued a votekick against {player.player.username}");
-                    player.Send(SvSendType.All, Channel.Unsequenced, ClPacket.GameMessage, $"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.ShPlayer.username}</color>");
+                    player.SendChatMessageToAll($"<color={argColor}>{player.playerData.username} </color><color={warningColor}>Has issued a vote kick against</color><color={argColor}> {shPlayer.ShPlayer.username}</color>");
                     LatestVotePeople.Clear();
                     return true;
                 default:
