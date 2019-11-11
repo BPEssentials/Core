@@ -119,7 +119,6 @@
     <Compile Include="HookChat.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="HookMethods.cs" />
-    <Compile Include="Methods\FileHandler\Translations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables.cs" />
     <Compile Include="ExtensionMethods.cs" />
