@@ -170,7 +170,7 @@
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\BrokeProtocol_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="HookAttribute, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="HookAttribute">
       <HintPath>..\..\BrokeProtocol_Data\Managed\HookAttribute.dll</HintPath>
     </Reference>
     <Reference Include="NavMeshComponents, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
