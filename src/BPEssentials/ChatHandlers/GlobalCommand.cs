@@ -2,6 +2,7 @@
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using System;
+using BrokeProtocol.Collections;
 
 namespace BPEssentials.ChatHandlers
 {
@@ -15,7 +16,7 @@ namespace BPEssentials.ChatHandlers
         public void OnEvent(ShPlayer player, string message)
         {
             Core.Instance.Logger.LogInfo($"[COMMAND] {player.username}: {message}");
-            foreach (var currPlayer in Collections.Humans)
+            foreach (var currPlayer in EntityCollections.Humans)
             {
                 ExtendedPlayer.PlayerItem extendedPlayer = currPlayer.GetExtendedPlayer();
                 if (currPlayer == player || !extendedPlayer.EnabledSpychat)

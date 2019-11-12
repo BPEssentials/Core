@@ -7,6 +7,7 @@ using BPEssentials.ExtendedPlayer;
 using BPEssentials.Interfaces;
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
+using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -24,7 +25,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-            if (Collections.TryGetPlayerByNameOrId(targetStr, out ShPlayer target))
+            if (EntityCollections.TryGetPlayerByNameOrId(targetStr, out ShPlayer target))
             {
                 sb = GetOnlineInfo(target);
             }

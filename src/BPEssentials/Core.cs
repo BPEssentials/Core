@@ -39,7 +39,7 @@ namespace BPEssentials
             Info = new ResourceInfo("BPEssentials", "BPE", new List<ResourceAuthor> {new ResourceAuthor("UserR00T"), new ResourceAuthor("PLASMA_chicken")})
             {
                 Description = "Basic commands for powerful moderation.",
-                Github = "https://github.com/UserR00T/BP-Essentials/",
+                Git = "https://github.com/UserR00T/BP-Essentials/",
                 Website = "https://userr00t.github.io/BP-Essentials/"
             };
 
