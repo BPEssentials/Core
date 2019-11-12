@@ -100,9 +100,7 @@ namespace BPEssentials
 
         public void SetupAnnouncer()
         {
-            // TODO:
-            // Announcer = new Announcer(Settings.General.AnnounceInterval * 1000, Settings.Announcements);
-            Announcer = new Announcer(10 * 1000, new List<string> { "test", "test2" });
+            Announcer = new Announcer(Settings.General.AnnounceInterval * 1000, Settings.Announcements);
             Logger.LogInfo("Announcer started!");
         }
 

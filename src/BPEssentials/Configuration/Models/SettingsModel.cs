@@ -49,5 +49,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     public class General
     {
         public string Version { get; set; }
+
+        public int AnnounceInterval { get; set; }
     }
 }

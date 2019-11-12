@@ -1,5 +1,8 @@
 {
-    "General": {},
+    "General": {
+		"AnnounceInterval": 120
+	},
+	"Announcements": ["test0", "test1"],
     "MessageColors": {},
     "FunctionUI": {},
     "ReportOptions": {},
