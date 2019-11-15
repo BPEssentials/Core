@@ -44,10 +44,17 @@ namespace BPEssentials
             };
 
             OnReloadRequestAsync();
+            SetCutsomData();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
+        }
+
+        private void SetCutsomData()
+        {
+            CustomData.AddOrUpdate("version", Version);
+            CustomData.AddOrUpdate("devbuild", IsDevelopmentBuild());
         }
 
         public static bool IsDevelopmentBuild()
