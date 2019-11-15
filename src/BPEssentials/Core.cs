@@ -12,8 +12,10 @@ using System.Reflection;
 
 namespace BPEssentials
 {
-    public class Core : Resource
+    public class Core : Plugin
     {
+        public static Core Instance { get; internal set; }
+
         public static string Version { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
         // TODO: This can get confusing real fast, need a new name for this.
@@ -22,8 +24,6 @@ namespace BPEssentials
         public ILogger Logger { get; } = new Logger();
 
         public Paths Paths { get; } = new Paths();
-
-        public static Core Instance { get; internal set; }
 
         public IReader<Settings> SettingsReader { get; } = new Reader<Settings>();
 
@@ -36,7 +36,7 @@ namespace BPEssentials
         public Core()
         {
             Instance = this;
-            Info = new ResourceInfo("BPEssentials", "BPE", new List<ResourceAuthor> {new ResourceAuthor("UserR00T"), new ResourceAuthor("PLASMA_chicken")})
+            Info = new PluginInfo("BPEssentials", "BPE", new List<PluginAuthor> { new PluginAuthor("UserR00T"), new PluginAuthor("PLASMA_chicken") })
             {
                 Description = "Basic commands for powerful moderation.",
                 Git = "https://github.com/UserR00T/BP-Essentials/",
