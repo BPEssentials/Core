@@ -33,6 +33,8 @@ namespace BPEssentials
 
         public Announcer Announcer { get; set; }
 
+        public I18n I18n { get; set; }
+
         public Core()
         {
             Instance = this;
@@ -111,6 +113,13 @@ namespace BPEssentials
             Logger.LogInfo("Announcer started!");
         }
 
+        public void SetupI18n()
+        {
+            I18n = new I18n();
+            I18n.ParseLocalization();
+            Logger.LogInfo("I18n loaded!");
+        }
+
         public void SetConfigurationFilePaths()
         {
             SettingsReader.Path = Paths.SettingsFile;
@@ -131,6 +140,7 @@ namespace BPEssentials
             RegisterCustomCommands();
             RegisterCommands();
             SetupAnnouncer();
+            SetupI18n();
         }
 
         public void OnVersionRequest(string callback)
