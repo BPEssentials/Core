@@ -8,8 +8,6 @@ using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Enums;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
-using BPEssentials.Interfaces;
-using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
@@ -65,12 +63,12 @@ namespace BPEssentials
             Core.Instance.RegisterCustomCommands();
         }
 
-        public static bool TryInstanciateAndInjectDependencies(string typeName, out ICommand instance, out Type type)
+        public static bool TryInstanciateAndInjectDependencies(string typeName, out Abstractions.Command instance, out Type type)
         {
             try
             {
                 type = Type.GetType($"BPEssentials.Commands.{typeName}");
-                instance = (ICommand)Activator.CreateInstance(type);
+                instance = (Abstractions.Command)Activator.CreateInstance(type);
                 instance = InjectDependenciesIntoCommand(instance, Core.Instance.Logger, Core.Instance.Settings, Core.Instance.PlayerHandler);
                 return true;
             }
@@ -83,7 +81,7 @@ namespace BPEssentials
             }
         }
 
-        public static ICommand InjectDependenciesIntoCommand(ICommand command, ILogger logger, Settings settings, ExtendedPlayerFactory<PlayerItem> extendedPlayerFactory)
+        public static Abstractions.Command InjectDependenciesIntoCommand(Abstractions.Command command, ILogger logger, Settings settings, ExtendedPlayerFactory<PlayerItem> extendedPlayerFactory)
         {
             command.Logger = logger;
             command.Settings = settings;
@@ -91,7 +89,7 @@ namespace BPEssentials
             return command;
         }
 
-        public static bool TryGetCommandMethodDelegateByTypeName(string typeName, out Delegate del, out ICommand instance)
+        public static bool TryGetCommandMethodDelegateByTypeName(string typeName, out Delegate del, out Abstractions.Command instance)
         {
             instance = null;
             del = null;

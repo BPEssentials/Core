@@ -274,6 +274,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\Command.cs" />
     <Compile Include="Announcer.cs" />
     <Compile Include="ChatHandlers\GlobalCommand.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
@@ -315,7 +316,6 @@
     <Compile Include="ExtendedPlayer\ExtendedPlayerFactory.cs" />
     <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
-    <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Models\LastLocation.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -323,6 +323,7 @@
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Interfaces\" />
     <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

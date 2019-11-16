@@ -1,23 +1,13 @@
-﻿using BPCoreLib.Interfaces;
-using BPCoreLib.PlayerFactory;
-using BPEssentials.Configuration.Models.SettingsModel;
+﻿using BPEssentials.Abstractions;
 using BPEssentials.Enums;
-using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
-using BPEssentials.Interfaces;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class ReplyUser : ICommand
+    public class ReplyUser : Command
     {
-        public bool LastArgSpaces { get; } = true;
-
-        public ILogger Logger { get; set; }
-
-        public Settings Settings { get; set; }
-
-        public ExtendedPlayerFactory<PlayerItem> PlayerFactory { get; set; }
+        public override bool LastArgSpaces => true;
 
         public void Invoke(ShPlayer player, string message)
         {
