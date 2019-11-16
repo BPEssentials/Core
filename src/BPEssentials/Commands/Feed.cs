@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -10,7 +11,7 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.RestoreStats();
-            player.SendChatMessage($"Replenished stats for '{target.username.SanitizeString()}'.");
+            player.TS("feed", target.username.SanitizeString());
         }
     }
 }

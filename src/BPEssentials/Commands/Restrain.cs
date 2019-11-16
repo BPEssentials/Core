@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -11,8 +12,8 @@ namespace BPEssentials.Commands
             target.svPlayer.Restrain(target.manager.handcuffed);
             var shRetained = target.curEquipable as ShRestrained;
             target.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
-            target.SendChatMessage("You've been restrained");
-            player.SendChatMessage($"Restrained {target.username.SanitizeString()}.");
+            target.TS("target_restrained");
+            player.TS("player_restrained", target.username.SanitizeString());
         }
     }
 }

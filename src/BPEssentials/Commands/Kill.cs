@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -9,7 +10,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target)
         {
             target.svPlayer.SvSuicide();
-            player.SendChatMessage($"Killed {target.username.SanitizeString()}.");
+            player.TS("killed", target.username.SanitizeString());
         }
     }
 }

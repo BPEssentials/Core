@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -11,16 +12,16 @@ namespace BPEssentials.Commands
             target = target ?? player;
             if (target.job.info.rankItems.Length == 0) // Check if Target's Job even has Ranks
             {
-                player.SendChatMessage($"{target.username.SanitizeString()}'s Job does not have ranks!");
+                player.TS("promoted_no_ranks", target.username.SanitizeString());
                 return;
             }
             if (target.rank == target.job.info.rankItems.Length - 1) // Check if Target is max rank
             {
-                player.SendChatMessage($"{target.username.SanitizeString()} already has the highest rank!");
+                player.TS("promoted_max_rank", target.username.SanitizeString());
                 return;
             }
             target.svPlayer.Reward(target.maxExperience - target.experience + 1, 0);
-            player.SendChatMessage($"Promoted {target.username.SanitizeString()} to rank {target.rank + 1}.");
+            player.TS("promoted", target.username.SanitizeString(), (target.rank + 1).ToString());
         }
     }
 }

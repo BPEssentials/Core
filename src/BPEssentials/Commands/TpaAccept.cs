@@ -12,11 +12,11 @@ namespace BPEssentials.Commands
             var ePlayer = player.GetExtendedPlayer();
             if (ePlayer.TpaUser == null)
             {
-                player.SendChatMessage("You have no TPA requests, or the user went offline.");
+                player.TS("no_tpa_requests");
                 return;
             }
-            ePlayer.TpaUser.SendChatMessage($"{player.username.SanitizeString()} Accepted your TPA request.");
-            player.SendChatMessage($"You accepted the TPA request of {ePlayer.TpaUser.username.SanitizeString()}.");
+            ePlayer.TpaUser.TS("TpaUser_tpa_accepted", player.username.SanitizeString());
+            player.TS("player_tpa_accepted", ePlayer.TpaUser.username.SanitizeString());
             ePlayer.TpaUser.GetExtendedPlayer().ResetAndSavePosition(player);
             ePlayer.TpaUser = null;
         }

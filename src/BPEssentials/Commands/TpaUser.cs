@@ -12,13 +12,12 @@ namespace BPEssentials.Commands
         {
             var eTarget = target.GetExtendedPlayer();
             eTarget.TpaUser = player;
-            player.SendChatMessage($"Sent a TPA request to {target.username.SanitizeString()}.{(eTarget.CurrentChat == Chat.Disabled ? " Their chat is currently disabled, they will not recieve any message about your request." : "")}");
+            player.SendChatMessage($"{player.T("player_tpa_sent", target.username.SanitizeString())}  {(eTarget.CurrentChat == Chat.Disabled ? player.T("player_tpa_chat_disabled") : "")}");
             if (eTarget.CurrentChat == Chat.Disabled)
             {
                 return;
             }
-            // TODO: Softcode value
-            target.SendChatMessage($"{player.username.SanitizeString()} sent you a TPA request! Type /tpaccept to accept it.");
+            target.TS("target_tpa_sent", player.username.SanitizeString());
         }
     }
 }

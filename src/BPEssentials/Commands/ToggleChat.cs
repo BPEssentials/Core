@@ -12,7 +12,7 @@ namespace BPEssentials.Commands
         {
             var ePlayer = player.GetExtendedPlayer();
             ePlayer.CurrentChat = ePlayer.CurrentChat == Chat.Disabled ? Chat.Global : Chat.Disabled;
-            player.SendChatMessage($"Your chat is now set to {ePlayer.CurrentChat}.");
+            player.TS("chat_mode_set", ePlayer.CurrentChat.ToString());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -8,7 +9,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player)
         {
-            player.SendChatMessage("Saving game..");
+            player.TS("saving_game");
             player.manager.svManager.SaveAll();
         }
     }
