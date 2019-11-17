@@ -24,6 +24,18 @@ namespace BPEssentials
                 Directory.CreateDirectory(Paths.EssentialsFolder);
                 Core.Instance.Logger.LogInfo("Created Essentials Folder.");
             }
+            if (!Directory.Exists(Core.Instance.Paths.KitsFolder))
+            {
+                Core.Instance.Logger.LogWarning("Kits Folder not found.");
+                Directory.CreateDirectory(Core.Instance.Paths.KitsFolder);
+                Core.Instance.Logger.LogInfo("Created Kits Folder.");
+            }
+            if (!Directory.Exists(Core.Instance.Paths.WarpsFolder))
+            {
+                Core.Instance.Logger.LogWarning("Warps Folder not found.");
+                Directory.CreateDirectory(Core.Instance.Paths.WarpsFolder);
+                Core.Instance.Logger.LogInfo("Created Warps Folder.");
+            }
             foreach (var file in RequiredFiles)
             {
                 if (File.Exists(file.Value))
