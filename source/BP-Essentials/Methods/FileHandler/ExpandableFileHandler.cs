@@ -50,7 +50,7 @@ namespace BP_Essentials.Methods.FileHandler
         }
         public virtual void DeleteExisting(string fileName, string name = null)
         {
-            var filePath = Path.Combine(FileDirectory, $"{fileName}.{FileExtension}");
+            var filePath = Path.Combine(FilesDirectory, $"{fileName}.{FileExtension}");
             File.Delete(filePath);
             List = List.Where(x => x.Name != (name ?? fileName)).ToList();
         }
