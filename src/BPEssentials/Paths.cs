@@ -14,5 +14,8 @@ namespace BPEssentials
         public string SettingsFile { get; } = Path.Combine(EssentialsFolder, "settings.json");
 
         public string CustomCommandsFile { get; } = Path.Combine(EssentialsFolder, "CustomCommands.json");
+
+        public string LocalizationFile { get; } = Path.Combine(EssentialsFolder, "localization.json");
+
     }
 }

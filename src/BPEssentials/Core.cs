@@ -116,7 +116,7 @@ namespace BPEssentials
         public void SetupI18n()
         {
             I18n = new I18n();
-            I18n.ParseLocalization();
+            I18n.ParseLocalization(Paths.LocalizationFile);
             Logger.LogInfo("I18n loaded!");
         }
 
