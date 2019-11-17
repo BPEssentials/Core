@@ -43,6 +43,8 @@ namespace BPEssentials
 
         public WarpHandler WarpHandler { get; set; }
 
+        public KitsHandler KitsHandler { get; set; }
+
         public Core()
         {
             Instance = this;
@@ -58,6 +60,9 @@ namespace BPEssentials
 
             WarpHandler = new WarpHandler();
             WarpHandler.LoadAll(true);
+
+            KitsHandler = new KitsHandler();
+            KitsHandler.LoadAll(true);
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
