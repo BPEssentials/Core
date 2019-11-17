@@ -13,7 +13,7 @@ namespace BPEssentials.ExtensionMethods
         }
 
         public static string T(this SvPlayer player, string node, params string[] formatting) { 
-            return Core.Instance.I18n.Localize(player.language.code, node, formatting) ?? Core.Instance.I18n.Localize("EN", node, formatting) ?? string.Format("{0} [{1}]", node, string.Join(", ", formatting));
+            return Core.Instance.I18n.Localize(player.language.code, node, formatting) ?? Core.Instance.I18n.Localize("EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]";
         }
 
         public static string T(this ShPlayer player, string node, params string[] formatting)
