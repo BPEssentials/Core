@@ -5,9 +5,11 @@ using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.ExtendedPlayer;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace BPEssentials
@@ -34,6 +36,10 @@ namespace BPEssentials
         public Announcer Announcer { get; set; }
 
         public I18n I18n { get; set; }
+        
+        public SvManager SvManager { get; set; }
+
+        public Dictionary<ulong, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<ulong, Dictionary<string, Dictionary<string, int>>>();
 
         public Core()
         {

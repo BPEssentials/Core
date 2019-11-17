@@ -309,6 +309,7 @@
     <Compile Include="Configuration\Models\SettingsModel.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Enums\Chat.cs" />
+    <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnDamage.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="ExtendedPlayer\ExtendedPlayerFactory.cs" />
     <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
+    <Compile Include="FileHandler\ExpandableFileHandler.cs" />
     <Compile Include="Models\LastLocation.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
