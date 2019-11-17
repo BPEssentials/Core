@@ -41,6 +41,8 @@ namespace BPEssentials
 
         public Dictionary<ulong, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<ulong, Dictionary<string, Dictionary<string, int>>>();
 
+        public WarpHandler WarpHandler { get; set; }
+
         public Core()
         {
             Instance = this;
@@ -53,6 +55,9 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCutsomData();
+
+            WarpHandler = new WarpHandler();
+            WarpHandler.LoadAll(true);
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));

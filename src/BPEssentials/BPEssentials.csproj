@@ -319,6 +319,7 @@
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="FileHandler\ExpandableFileHandler.cs" />
     <Compile Include="Models\LastLocation.cs" />
+    <Compile Include="Models\WarpHandler.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileChecker.cs" />
