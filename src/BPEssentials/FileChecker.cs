@@ -10,7 +10,8 @@ namespace BPEssentials
         public static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
-            {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile}
+            {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile},
+            {"localization.json", Core.Instance.Paths.LocalizationFile}
         };
 
         public static HttpClient Client { get; } = new HttpClient();

@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
             var lastlocation = target.GetExtendedPlayer().LastLocation;
             if (!lastlocation.HasPositionSet())
             {
-                player.SendChatMessage($"There is no location to teleport to.");
+                player.TS("no_tp_location");
                 return;
             }
             target.GetExtendedPlayer().ResetAndSavePosition(lastlocation.Position, lastlocation.Rotation, lastlocation.PlaceIndex);

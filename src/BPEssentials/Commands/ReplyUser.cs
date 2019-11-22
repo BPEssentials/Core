@@ -14,13 +14,13 @@ namespace BPEssentials.Commands
             var ePlayer = player.GetExtendedPlayer();
             if (ePlayer.ReplyToUser == null)
             {
-                player.SendChatMessage("There is nobody to respond to, or the user went offline.");
+                player.TS("no_user_found_or_offline");
                 return;
             }
             var eTarget = ePlayer.ReplyToUser.GetExtendedPlayer();
             if (eTarget.CurrentChat == Chat.Disabled)
             {
-                player.SendChatMessage("This user disabled their chat. Your message will not be sent.");
+                player.SendChatMessage($"{player.T("user_has_chat_disabled")} {player.T("message_not_sent")}");
                 return;
             }
             ePlayer.ReplyToUser = eTarget.Client;

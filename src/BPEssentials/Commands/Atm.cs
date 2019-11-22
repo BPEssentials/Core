@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility.Networking;
 
@@ -8,7 +9,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player)
         {
-            player.SendChatMessage("Opening ATM Menu..");
+            player.TS("open_atm");
             player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowATMMenu, player.svPlayer.bankBalance);
         }
     }

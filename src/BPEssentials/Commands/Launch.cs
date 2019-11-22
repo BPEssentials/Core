@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -10,8 +11,8 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.SvForce(new UnityEngine.Vector3(0f, 6500f, 0f));
-            target.SendChatMessage($"Off you go!");
-            player.SendChatMessage($"You've launched {target.username.SanitizeString()} into space!");
+            target.TS("launched_target");
+            player.TS("launched", target.username.SanitizeString());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -10,7 +11,7 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.Heal(target.maxStat);
-            player.SendChatMessage($"Healed '{target.username.SanitizeString()}'.");
+            player.TS("healed", target.username.SanitizeString());
         }
     }
 }

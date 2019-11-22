@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target)
         {
             player.GetExtendedPlayer().ResetAndSavePosition(target);
-            player.SendChatMessage($"You've been teleported to {target.username.SanitizeString()}.");
+            player.TS("tp_to", target.username.SanitizeString());
         }
     }
 }

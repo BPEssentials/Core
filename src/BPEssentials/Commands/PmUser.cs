@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
             var eTarget = target.GetExtendedPlayer();
             if (eTarget.CurrentChat == Chat.Disabled)
             {
-                player.SendChatMessage("This user disabled their chat. Your message will not be sent.");
+                player.SendChatMessage($"{player.T("user_has_chat_disabled")} {player.T("message_not_sent")}");
                 return;
             }
             eTarget.ReplyToUser = player;
