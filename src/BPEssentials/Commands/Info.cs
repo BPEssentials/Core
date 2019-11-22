@@ -29,7 +29,7 @@ namespace BPEssentials.Commands
 
             // TODO: send as server info or CEF (pref server info to limit footprint)
         }
-
+        // TODO: Add i18n for this
         // TODO: There might be a better way to do this, for example using reflection.
         private StringBuilder GetOfflineInfo(ShPlayer player, string targetStr)
         {
