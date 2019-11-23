@@ -14,7 +14,7 @@ namespace BPEssentials.Cooldowns
     {
         public Dictionary<ulong, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<ulong, Dictionary<string, Dictionary<string, int>>>();
 
-        private bool ready = false;
+        private bool ready;
 
         public void Load()
         {
