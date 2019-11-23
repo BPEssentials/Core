@@ -12,7 +12,6 @@ namespace BPEssentials.FileHandler
     public interface IExpandableFile
     {
         string Name { get; set; }
-        string ExecutableBy { get; set; }
         bool Disabled { get; set; }
     }
 
@@ -61,7 +60,7 @@ namespace BPEssentials.FileHandler
             List = List.Where(x => x.Name != (name ?? fileName)).ToList();
         }
 
-        public virtual void LoadAll(bool initCooldown = false)
+        public virtual void LoadAll()
         {
             Core.Instance.Logger.LogInfo($"Loading {Name}s..");
             List.Clear();
@@ -76,57 +75,10 @@ namespace BPEssentials.FileHandler
                     continue;
                 }
                 List.Add(obj);
-                if (initCooldown)
-                    SetupDelayable(obj);
                 Core.Instance.Logger.LogInfo($"Loaded {Name}: {obj.Name}");
             }
 
             Core.Instance.Logger.LogInfo($"Loaded in {List.Count} {Name}(s).");
-        }
-
-        public virtual IEnumerator StartCooldown(ulong ID, JsonType obj)
-        {
-            if (!(obj is IExpandableFileDelayable objDelayable))
-                yield break;
-            if (!Core.Instance.Cooldowns.ContainsKey(ID)) { 
-                Core.Instance.Cooldowns.Add(ID, new Dictionary<string, Dictionary<string, int>>());
-            }
-            if (!Core.Instance.Cooldowns[ID].ContainsKey(Name))
-            {
-                Core.Instance.Cooldowns[ID].Add(Name, new Dictionary<string, int>());
-            }
-            if (!Core.Instance.Cooldowns[ID][Name].ContainsKey(obj.Name))
-            {
-                Core.Instance.Cooldowns[ID][Name].Add(obj.Name, objDelayable.Delay);
-            }
-            while (Core.Instance.Cooldowns[ID][Name][obj.Name] > 0)
-            {
-                --Core.Instance.Cooldowns[ID][Name][obj.Name];
-                yield return new WaitForSecondsRealtime(1);
-            }
-            if (Core.Instance.Cooldowns[ID][Name].ContainsKey(obj.Name))
-            {
-                Core.Instance.Cooldowns[ID][Name].Remove(obj.Name);
-            }
-        }
-
-        void SetupDelayable(JsonType obj)
-        {
-            if (!(obj is IExpandableFileDelayable objDelayable))
-                return;
-            foreach (var player in Core.Instance.Cooldowns)
-            {
-                if (player.Value.TryGetValue(Name, out Dictionary<string, int> value))
-                {
-                    continue;
-                }
-                if (value[obj.Name] <= 0)
-                {
-                    value.Remove(obj.Name);
-                    continue;
-                }
-                Core.Instance.SvManager.StartCoroutine(StartCooldown(player.Key, obj));
-            }
         }
     }
 }

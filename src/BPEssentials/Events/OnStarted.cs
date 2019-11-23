@@ -22,12 +22,7 @@ namespace BPEssentials.RegisteredEvents
         {
             Core.Instance.SvManager = svManager;
 
-            foreach (var player in svManager.Database.Users.FindMany(x => x.Character.CustomData.Data.ContainsKey("bpe:cooldowns")).ToDictionary(x => x.ID, x => x.Character.CustomData))
-            {
-                Core.Instance.Logger.Log("Reading " + player.Key.ToString());
-                var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>("bpe:cooldowns");
-                Core.Instance.Cooldowns.Add(player.Key, cooldownsObj);
-            }
+            Core.Instance.CooldownHandler.Load();
         }
     }
 }

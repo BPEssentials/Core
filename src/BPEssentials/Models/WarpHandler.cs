@@ -13,7 +13,6 @@ namespace BPEssentials
         public class JsonModel : IExpandableFile, IExpandableFileDelayable, IExpandableFileHasPrice
         {
             public string Name { get; set; }
-            public string ExecutableBy { get; set; }
             public bool Disabled { get; set; }
             public int Price { get; set; }
             public int Delay { get; set; }
