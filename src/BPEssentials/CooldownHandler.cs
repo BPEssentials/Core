@@ -16,11 +16,13 @@ namespace BPEssentials.Cooldowns
 
         private bool ready;
 
+        public readonly string CustomDataKey = "bpe:cooldowns";
+
         public void Load()
         {
-            foreach (var player in Core.Instance.SvManager.Database.Users.FindMany(x => x.Character.CustomData.Data.ContainsKey("bpe:cooldowns")).ToDictionary(x => x.ID, x => x.Character.CustomData))
+            foreach (var player in Core.Instance.SvManager.Database.Users.FindMany(x => x.Character.CustomData.Data.ContainsKey(CustomDataKey)).ToDictionary(x => x.ID, x => x.Character.CustomData))
             {
-                var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>("bpe:cooldowns");
+                var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>(CustomDataKey);
                 Cooldowns.Add(player.Key, cooldownsObj);
                 foreach (var cooldownType in cooldownsObj)
                 {
@@ -43,12 +45,12 @@ namespace BPEssentials.Cooldowns
                 var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.svPlayer.steamID == cooldownPlayer.Key);
                 if (onlinePlayer)
                 {
-                    onlinePlayer.svPlayer.CustomData.AddOrUpdate("bpe:cooldowns", cooldownPlayer.Value);
+                    onlinePlayer.svPlayer.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
                 }
                 else
                 {
                     var newUser = Core.Instance.SvManager.Database.Users.FindSingle(x => x.ID == cooldownPlayer.Key);
-                    newUser.Character.CustomData.AddOrUpdate("bpe:cooldowns", cooldownPlayer.Value);
+                    newUser.Character.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
                     Core.Instance.SvManager.Database.Users.UpdateSingle(newUser);
                 }
             }
