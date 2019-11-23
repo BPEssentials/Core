@@ -20,28 +20,17 @@ namespace BPEssentials.Cooldowns
         {
             foreach (var player in Core.Instance.SvManager.Database.Users.FindMany(x => x.Character.CustomData.Data.ContainsKey("bpe:cooldowns")).ToDictionary(x => x.ID, x => x.Character.CustomData))
             {
-                Core.Instance.Logger.Log("Reading " + player.Key.ToString());
                 var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>("bpe:cooldowns");
                 Cooldowns.Add(player.Key, cooldownsObj);
                 foreach (var cooldownType in cooldownsObj)
                 {
-                    Core.Instance.Logger.Log("Reading " + cooldownType.Key);
-
                     foreach (var cooldown in cooldownType.Value)
                     {
-                        Core.Instance.Logger.Log("Reading " + cooldown.Key);
-
                         AddCooldown(player.Key, cooldownType.Key, cooldown.Key);
                     }
-                    Core.Instance.Logger.Log("LOOP CLOSED");
-
                 }
-                Core.Instance.Logger.Log("LOOP CLOSED");
-
             }
-            Core.Instance.Logger.Log("LOOP CLOSED");
             ready = true;
-
         }
 
 
@@ -67,7 +56,6 @@ namespace BPEssentials.Cooldowns
 
         private IEnumerator StartCooldown(ulong ID, string type, string key)
         {
-            Core.Instance.Logger.Log("Starting Cooldown " + key);
             while (!ready)
             {
                 yield return new WaitForSecondsRealtime(1);
@@ -75,7 +63,6 @@ namespace BPEssentials.Cooldowns
 
             while (Cooldowns[ID][type][key] > 0)
             {
-                Core.Instance.Logger.Log(key + "New val " + Cooldowns[ID][type][key].ToString());
                 --Cooldowns[ID][type][key];
                 yield return new WaitForSecondsRealtime(1);
             }
