@@ -279,6 +279,7 @@
     <Compile Include="ChatHandlers\GlobalCommand.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
+    <Compile Include="Commands\KitList.cs" />
     <Compile Include="Commands\TeleportHere.cs" />
     <Compile Include="Commands\Teleport.cs" />
     <Compile Include="Commands\Launch.cs" />
@@ -299,6 +300,11 @@
     <Compile Include="Commands\TpaAccept.cs" />
     <Compile Include="Commands\TpaDeny.cs" />
     <Compile Include="Commands\ClearWanted.cs" />
+    <Compile Include="Commands\Kit.cs" />
+    <Compile Include="Commands\KitCreate.cs" />
+    <Compile Include="Commands\WarpList.cs" />
+    <Compile Include="Commands\WarpCreate.cs" />
+    <Compile Include="Commands\Warp.cs" />
     <Compile Include="Commands\TpaUser.cs" />
     <Compile Include="Commands\ReplyUser.cs" />
     <Compile Include="Commands\PmUser.cs" />

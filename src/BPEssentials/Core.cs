@@ -2,6 +2,7 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
@@ -39,11 +40,11 @@ namespace BPEssentials
         
         public SvManager SvManager { get; set; }
 
-        public Dictionary<ulong, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<ulong, Dictionary<string, Dictionary<string, int>>>();
+        public CooldownHandler CooldownHandler { get; set; }
 
         public WarpHandler WarpHandler { get; set; }
 
-        public KitsHandler KitsHandler { get; set; }
+        public KitHandler KitHandler { get; set; }
 
         public Core()
         {
@@ -58,11 +59,13 @@ namespace BPEssentials
             OnReloadRequestAsync();
             SetCutsomData();
 
-            WarpHandler = new WarpHandler();
-            WarpHandler.LoadAll(true);
+            CooldownHandler = new CooldownHandler();
 
-            KitsHandler = new KitsHandler();
-            KitsHandler.LoadAll(true);
+            WarpHandler = new WarpHandler();
+            WarpHandler.LoadAll();
+
+            KitHandler = new KitHandler();
+            KitHandler.LoadAll();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
