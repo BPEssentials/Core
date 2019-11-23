@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
 {
     public class Warp : Command
     {
-        private string Type = "warp";
+        private readonly string Type = "warp";
 
         public void Invoke(ShPlayer player, string warpName)
         {

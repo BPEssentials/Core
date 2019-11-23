@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
 {
     public class KitList : Command
     {
-        private string Type = "kit";
+        private readonly string Type = "kit";
 
         public void Invoke(ShPlayer player)
         {

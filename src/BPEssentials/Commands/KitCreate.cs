@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
 {
     public class KitCreate : Command
     {
-        private string Type = "kit";
+        private readonly string Type = "kit";
 
         public void Invoke(ShPlayer player, string name, int price = 0, int delay = 0)
         {
