@@ -27,7 +27,7 @@ namespace BPEssentials.Commands
             var file = Path.Combine(Core.Instance.Paths.WarpsFolder, $"{warp}.json");
             if (File.Exists(file))
             {
-                player.TS("expFileHandler_create_error_alreadyExists", player.T(nameof(warp)), warp);
+                player.TS("expFileHandler_create_error_alreadyExists", player.T(Core.Instance.WarpHandler.Name), warp);
                 return;
             }
             var obj = new WarpHandler.JsonModel

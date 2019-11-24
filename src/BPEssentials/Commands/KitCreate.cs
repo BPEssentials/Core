@@ -22,7 +22,7 @@ namespace BPEssentials.Commands
             var file = Path.Combine(Core.Instance.Paths.KitsFolder, $"{kit}.json");
             if (File.Exists(file))
             {
-                player.TS("expFileHandler_create_error_alreadyExists", player.T(nameof(kit)), kit);
+                player.TS("expFileHandler_create_error_alreadyExists", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
             var obj = new KitHandler.JsonModel

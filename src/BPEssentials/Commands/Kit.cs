@@ -13,30 +13,30 @@ namespace BPEssentials.Commands
         {
             if (!Core.Instance.KitHandler.List.Any(x => x.Name == kit))
             {
-                player.TS("expFileHandler_error_notFound", player.T(nameof(kit)), kit);
+                player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
             var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
-            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(kit)}.{kit}"))
+            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{kit}"))
             {
-                player.TS("expFileHandler_error_noPermission", player.T(nameof(kit)), kit);
+                player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
             if (obj.Disabled)
             {
-                player.TS("expFileHandler_error_disabled", player.T(nameof(kit)), kit);
+                player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
-            if (player.IsCooldown(nameof(kit), kit))
+            if (player.IsCooldown(Core.Instance.KitHandler.Name, kit))
             {
-                player.TS("expFileHandler_error_cooldown", player.T(nameof(kit)), player.GetCooldown(nameof(kit), kit).ToString());
+                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), player.GetCooldown(Core.Instance.KitHandler.Name, kit).ToString());
                 return;
             }
             if (obj.Price > 0)
             {
                 if (player.MyMoneyCount() < obj.Price)
                 {
-                    player.TS("expFileHandler_error_price", player.T(nameof(kit)), obj.Price.ToString(), player.MyMoneyCount().ToString());
+                    player.TS("expFileHandler_error_price", player.T(Core.Instance.KitHandler.Name), obj.Price.ToString(), player.MyMoneyCount().ToString());
                     return;
                 }
                 player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
@@ -47,9 +47,9 @@ namespace BPEssentials.Commands
             }
             if (obj.Delay > 0)
             {
-                player.AddCooldown(nameof(kit), kit, obj.Delay);
+                player.AddCooldown(Core.Instance.KitHandler.Name, kit, obj.Delay);
             }
-            player.SendChatMessage(player.T(nameof(kit) + "_received", kit) + (obj.Delay > 0 ? player.T(nameof(kit) + "_received_Price", obj.Price.ToString()) : "") + (obj.Delay > 0 ? player.T(nameof(kit) + "_received_Delay", obj.Delay.ToString()) : ""));
+            player.SendChatMessage(player.T(Core.Instance.KitHandler.Name + "_received", kit) + (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") + (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
         }
     }
 }
