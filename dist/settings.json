@@ -26,14 +26,14 @@
       "Commands": [
         "info",
         "stats"
-      ],
+      ]
     },
     {
       "CommandName": "OnlinePlayers",
       "Commands": [
         "players",
         "online"
-      ],
+      ]
     },
     {
       "CommandName": "Atm",
@@ -42,7 +42,7 @@
         "bank",
         "bal",
         "balance"
-      ],
+      ]
     },
     {
       "CommandName": "Feed",
@@ -50,73 +50,73 @@
         "feed",
         "maxstats",
         "ms"
-      ],
+      ]
     },
     {
       "CommandName": "Heal",
       "Commands": [
         "heal",
         "hp"
-      ],
+      ]
     },
     {
       "CommandName": "Save",
       "Commands": [
         "save",
         "savegame"
-      ],
+      ]
     },
     {
       "CommandName": "Free",
       "Commands": [
         "free"
-      ],
+      ]
     },
     {
       "CommandName": "Kill",
       "Commands": [
         "kill"
-      ],
+      ]
     },
     {
       "CommandName": "Arrest",
       "Commands": [
         "arrest"
-      ],
+      ]
     },
     {
       "CommandName": "Restrain",
       "Commands": [
         "restrain"
-      ],
+      ]
     },
     {
       "CommandName": "ClearWanted",
       "Commands": [
         "clearwanted",
         "cw"
-      ],
+      ]
     },
     {
       "CommandName": "Launch",
       "Commands": [
         "launch",
         "takeoff"
-      ],
+      ]
     },
     {
       "CommandName": "Slap",
       "Commands": [
         "slap",
         "slp"
-      ],
+      ]
     },
     {
       "CommandName": "Knockout",
       "Commands": [
         "knockout",
         "ko"
-      ],
+      ]
     },
     {
       "CommandName": "ToggleChat",
@@ -124,28 +124,28 @@
         "t",
         "tchat",
         "togglechat"
-      ],
+      ]
     },
     {
       "CommandName": "Promote",
       "Commands": [
         "promote",
         "rankup"
-      ],
+      ]
     },
     {
       "CommandName": "Disconnect",
       "Commands": [
         "disconnect",
         "dconnect"
-      ],
+      ]
     },
     {
       "CommandName": "PmUser",
       "Commands": [
         "pm",
         "pmuser"
-      ],
+      ]
     },
     {
       "CommandName": "ReplyUser",
@@ -153,7 +153,7 @@
         "r",
         "ruser",
         "replyuser"
-      ],
+      ]
     },
     {
       "CommandName": "TpaUser",
@@ -161,7 +161,7 @@
         "tpa",
         "tprequest",
         "teleportrequest"
-      ],
+      ]
     },
     {
       "CommandName": "TpaAccept",
@@ -170,7 +170,7 @@
         "tpaaccept",
         "tpaa",
         "accept"
-      ],
+      ]
     },
     {
       "CommandName": "TpaDeny",
@@ -179,71 +179,71 @@
         "tpadeny",
         "tpad",
         "deny"
-      ],
+      ]
     },
     {
       "CommandName": "Back",
       "Commands": [
         "back",
         "return"
-      ],
+      ]
     },
     {
       "CommandName": "Teleport",
       "Commands": [
         "tp"
-      ],
+      ]
     },
     {
       "CommandName": "TeleportHere",
       "Commands": [
         "tph",
         "tphere"
-      ],
+      ]
     },
     {
       "CommandName": "TeleportCordinates",
       "Commands": [
         "tpc"
-      ],
+      ]
     },
     {
       "CommandName": "Warp",
       "Commands": [
         "warp",
-      ],
+      ]
     },
     {
       "CommandName": "WarpCreate",
       "Commands": [
         "createwarp",
-      ],
+      ]
     },
     {
       "CommandName": "WarpList",
       "Commands": [
         "listwarp",
         "warps"
-      ],
+      ]
     },
     {
       "CommandName": "Kit",
       "Commands": [
         "kit",
-      ],
+      ]
     },
     {
       "CommandName": "KitCreate",
       "Commands": [
         "createkit",
-      ],
+      ]
     },
     {
       "CommandName": "KitList",
       "Commands": [
         "listkit",
         "kits"
-      ],
+      ]
     },
   ]
 }
