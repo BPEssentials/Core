@@ -7,9 +7,7 @@ namespace BPEssentials.Commands
 {
     public class KitCreate : Command
     {
-        private readonly string Type = "kit";
-
-        public void Invoke(ShPlayer player, string name, int price = 0, int delay = 0)
+        public void Invoke(ShPlayer player, string kit, int price = 0, int delay = 0)
         {
             if (delay < 0)
             {
@@ -21,24 +19,24 @@ namespace BPEssentials.Commands
                 player.TS("price_error_negative");
                 return;
             }
-            var file = Path.Combine(Core.Instance.Paths.WarpsFolder, $"{name}.json");
+            var file = Path.Combine(Core.Instance.Paths.KitsFolder, $"{kit}.json");
             if (File.Exists(file))
             {
-                player.TS("expFileHandler_create_error_alreadyExists", player.T(Type), name);
+                player.TS("expFileHandler_create_error_alreadyExists", player.T(nameof(kit)), kit);
                 return;
             }
             var obj = new KitHandler.JsonModel
             {
                 Delay = delay < 0 ? 0 : price,
                 Price = price < 0 ? 0 : price,
-                Name = name,
+                Name = kit,
             };
             foreach (var item in player.myItems.Values)
             {
                 obj.Items.Add(new KitHandler.KitsItem { Amount = item.count, Id = item.item.index });
             }
-            Core.Instance.KitHandler.CreateNew(obj, name);
-            player.TS("kitCreate_created", name, price.ToString(), delay.ToString());
+            Core.Instance.KitHandler.CreateNew(obj, kit);
+            player.TS("kitCreate_created", kit, price.ToString(), delay.ToString());
         }
     }
 }
