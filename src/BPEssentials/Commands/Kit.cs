@@ -27,7 +27,7 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
-            if (player.IsCooldown(Core.Instance.KitHandler.Name, kit))
+            if (player.HasCooldown(Core.Instance.KitHandler.Name, kit))
             {
                 player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), player.GetCooldown(Core.Instance.KitHandler.Name, kit).ToString());
                 return;

@@ -27,7 +27,7 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.WarpHandler.Name), warp);
                 return;
             }
-            if (player.IsCooldown(Core.Instance.WarpHandler.Name, warp))
+            if (player.HasCooldown(Core.Instance.WarpHandler.Name, warp))
             {
                 player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.WarpHandler.Name), player.GetCooldown(Core.Instance.WarpHandler.Name, warp).ToString());
                 return;

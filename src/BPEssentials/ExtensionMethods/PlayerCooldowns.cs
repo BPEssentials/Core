@@ -1,6 +1,4 @@
-﻿using BPEssentials.ExtendedPlayer;
-using BrokeProtocol.Entities;
-using UnityEngine;
+﻿using BrokeProtocol.Entities;
 
 namespace BPEssentials.ExtensionMethods.Cooldowns
 {
