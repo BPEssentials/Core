@@ -17,5 +17,9 @@ namespace BPEssentials
 
         public string LocalizationFile { get; } = Path.Combine(EssentialsFolder, "localization.json");
 
+        public string WarpsFolder { get; } = Path.Combine(EssentialsFolder, "Warps");
+
+        public string KitsFolder { get; } = Path.Combine(EssentialsFolder, "Kits");
+
     }
 }

@@ -7,6 +7,13 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
+        public static Dictionary<string, string> RequiredDirectories { get; }= new Dictionary<string, string>
+        {
+            {"Essentials", Paths.EssentialsFolder},
+            {"Warps", Core.Instance.Paths.KitsFolder},
+            {"Kits", Core.Instance.Paths.WarpsFolder}
+        };
+
         public static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
@@ -18,12 +25,17 @@ namespace BPEssentials
 
         public static async Task CheckFiles()
         {
-            if (!Directory.Exists(Paths.EssentialsFolder))
+            foreach (var directory in RequiredDirectories)
             {
-                Core.Instance.Logger.LogWarning("Essentials Folder not found.");
-                Directory.CreateDirectory(Paths.EssentialsFolder);
-                Core.Instance.Logger.LogInfo("Created Essentials Folder.");
+                if (Directory.Exists(directory.Value))
+                {
+                    continue;
+                }
+                Core.Instance.Logger.LogWarning($"{directory.Key} directory was not found; creating");
+                Directory.CreateDirectory(directory.Key);
+                Core.Instance.Logger.Log($"{directory.Key} directory was created.");
             }
+
             foreach (var file in RequiredFiles)
             {
                 if (File.Exists(file.Value))

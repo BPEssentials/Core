@@ -122,7 +122,8 @@
       "CommandName": "ToggleChat",
       "Commands": [
         "t",
-        "tchat"
+        "tchat",
+        "togglechat"
       ]
     },
     {
@@ -198,6 +199,50 @@
       "Commands": [
         "tph",
         "tphere"
+      ]
+    },
+    {
+      "CommandName": "TeleportCordinates",
+      "Commands": [
+        "tpc"
+      ]
+    },
+    {
+      "CommandName": "Warp",
+      "Commands": [
+        "warp"
+      ]
+    },
+    {
+      "CommandName": "WarpCreate",
+      "Commands": [
+        "createwarp"
+      ]
+    },
+    {
+      "CommandName": "WarpList",
+      "Commands": [
+        "listwarp",
+        "warps"
+      ]
+    },
+    {
+      "CommandName": "Kit",
+      "Commands": [
+        "kit"
+      ]
+    },
+    {
+      "CommandName": "KitCreate",
+      "Commands": [
+        "createkit"
+      ]
+    },
+    {
+      "CommandName": "KitList",
+      "Commands": [
+        "listkit",
+        "kits"
       ]
     }
   ]

@@ -2,7 +2,6 @@
 ﻿using BPEssentials.Enums;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
-using UnityEngine;
 
 namespace BPEssentials.ExtendedPlayer
 {

@@ -2,9 +2,11 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
+using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,6 +36,14 @@ namespace BPEssentials
         public Announcer Announcer { get; set; }
 
         public I18n I18n { get; set; }
+        
+        public SvManager SvManager { get; set; }
+
+        public CooldownHandler CooldownHandler { get; set; }
+
+        public WarpHandler WarpHandler { get; set; }
+
+        public KitHandler KitHandler { get; set; }
 
         public Core()
         {
@@ -47,6 +57,14 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCutsomData();
+
+            CooldownHandler = new CooldownHandler();
+
+            WarpHandler = new WarpHandler();
+            WarpHandler.LoadAll();
+
+            KitHandler = new KitHandler();
+            KitHandler.LoadAll();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
