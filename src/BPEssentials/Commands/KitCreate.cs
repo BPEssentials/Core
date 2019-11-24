@@ -1,6 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
+using System;
 using System.IO;
 
 namespace BPEssentials.Commands
@@ -27,8 +28,8 @@ namespace BPEssentials.Commands
             }
             var obj = new KitHandler.JsonModel
             {
-                Delay = delay < 0 ? 0 : price,
-                Price = price < 0 ? 0 : price,
+                Delay = Math.Max(0, delay),
+                Price = Math.Max(0, price),
                 Name = kit,
             };
             foreach (var item in player.myItems.Values)

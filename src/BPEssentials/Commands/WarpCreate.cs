@@ -3,6 +3,7 @@ using BPCoreLib.Serializable;
 using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
+using System;
 using System.IO;
 
 namespace BPEssentials.Commands
@@ -34,8 +35,8 @@ namespace BPEssentials.Commands
             }
             var obj = new WarpHandler.JsonModel
             {
-                Delay = delay < 0 ? 0 : delay,
-                Price = price < 0 ? 0 : price,
+                Delay = Math.Max(0, delay),
+                Price = Math.Max(0, price),
                 Name = warp,
                 Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition()), PlaceIndex = player.GetPlaceIndex() },
                 SerializableQuaternion = new SerializableQuaternion(player.GetRotation())
