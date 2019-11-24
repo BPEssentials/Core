@@ -25,7 +25,7 @@ namespace BPEssentials
 
         public static async Task CheckFiles()
         {
-            foreach (var directory in RequiredDirectorys)
+            foreach (var directory in RequiredDirectories)
             {
                 if (Directory.Exists(directory.Value))
                 {

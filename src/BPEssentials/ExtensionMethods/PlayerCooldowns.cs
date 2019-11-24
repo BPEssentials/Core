@@ -13,7 +13,7 @@ namespace BPEssentials.ExtensionMethods.Cooldowns
 
         public static bool IsCooldown(this ShPlayer player, string type, string key)
         {
-            return player.svPlayer.IsCooldown(type, key);
+            return player.svPlayer.HasCooldown(type, key);
         }
 
         public static void AddCooldown(this SvPlayer player, string type, string key, int time)

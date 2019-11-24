@@ -39,7 +39,7 @@ namespace BPEssentials.Commands
             };
             foreach (var item in player.myItems.Values)
             {
-                obj.Items.Add(new KitHandler.Kits_Item { Amount = item.count, Id = item.item.index });
+                obj.Items.Add(new KitHandler.KitsItem { Amount = item.count, Id = item.item.index });
             }
             Core.Instance.KitHandler.CreateNew(obj, name);
             player.TS("kitCreate_created", name, price.ToString(), delay.ToString());

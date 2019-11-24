@@ -17,7 +17,7 @@ namespace BPEssentials
             public bool Disabled { get; set; }
             public int Price { get; set; }
             public int Delay { get; set; }
-            public List<Kits_Item> Items { get; set; } = new List<Kits_Item>();
+            public List<KitsItem> Items { get; set; } = new List<KitsItem>();
         }
         public class KitsItem
         {
