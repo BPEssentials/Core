@@ -16,9 +16,13 @@ namespace BPEssentials
         public class JsonModel : IExpandableFile, IExpandableFileDelayable, IExpandableFileHasPrice
         {
             public string Name { get; set; }
+
             public bool Disabled { get; set; }
+
             public int Price { get; set; }
+
             public int Delay { get; set; }
+
             public List<KitsItem> Items { get; set; } = new List<KitsItem>();
 
             public void GiveItems(ShPlayer player)
@@ -29,9 +33,11 @@ namespace BPEssentials
                 }
             }
         }
+
         public class KitsItem
         {
             public int Id { get; set; }
+
             public int Amount { get; set; }
         }
     }
