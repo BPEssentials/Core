@@ -1,4 +1,6 @@
 ﻿using BPEssentials.FileHandler;
+using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
 using System.Collections.Generic;
 
 namespace BPEssentials
@@ -18,6 +20,14 @@ namespace BPEssentials
             public int Price { get; set; }
             public int Delay { get; set; }
             public List<KitsItem> Items { get; set; } = new List<KitsItem>();
+
+            public void GiveItems(ShPlayer player)
+            {
+                foreach (var item in Items)
+                {
+                    player.TransferItem(DeltaInv.AddToMe, item.Id, item.Amount, true);
+                }
+            }
         }
         public class KitsItem
         {

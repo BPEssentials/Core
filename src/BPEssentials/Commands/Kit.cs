@@ -41,10 +41,7 @@ namespace BPEssentials.Commands
                 }
                 player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
             }
-            foreach (var item in obj.Items)
-            {
-                player.TransferItem(DeltaInv.AddToMe, item.Id, item.Amount, true);
-            }
+            obj.GiveItems(player);
             if (obj.Delay > 0)
             {
                 player.AddCooldown(Core.Instance.KitHandler.Name, kit, obj.Delay);
