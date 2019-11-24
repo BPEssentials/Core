@@ -210,13 +210,13 @@
     {
       "CommandName": "Warp",
       "Commands": [
-        "warp",
+        "warp"
       ]
     },
     {
       "CommandName": "WarpCreate",
       "Commands": [
-        "createwarp",
+        "createwarp"
       ]
     },
     {
@@ -229,13 +229,13 @@
     {
       "CommandName": "Kit",
       "Commands": [
-        "kit",
+        "kit"
       ]
     },
     {
       "CommandName": "KitCreate",
       "Commands": [
-        "createkit",
+        "createkit"
       ]
     },
     {
@@ -244,6 +244,6 @@
         "listkit",
         "kits"
       ]
-    },
+    }
   ]
 }
