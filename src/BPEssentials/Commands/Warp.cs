@@ -47,7 +47,10 @@ namespace BPEssentials.Commands
             {
                 player.AddCooldown(Core.Instance.WarpHandler.Name, warp, obj.Delay);
             }
-            player.SendChatMessage(player.T(Core.Instance.WarpHandler.Name + "_teleported", warp) + (obj.Delay > 0 ? player.T(Core.Instance.WarpHandler.Name + "_telported_Price", obj.Price.ToString()) : "") + (obj.Delay > 0 ? player.T(Core.Instance.WarpHandler.Name + "_telported_Delay", obj.Delay.ToString()) : ""));
+            player.SendChatMessage(
+                player.T(Core.Instance.WarpHandler.Name + "_teleported", warp) + 
+                (obj.Price > 0 ? player.T(Core.Instance.WarpHandler.Name + "_telported_Price", obj.Price.ToString()) : "") + 
+                (obj.Delay > 0 ? player.T(Core.Instance.WarpHandler.Name + "_telported_Delay", obj.Delay.ToString()) : ""));
         }
     }
 }

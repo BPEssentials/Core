@@ -49,7 +49,10 @@ namespace BPEssentials.Commands
             {
                 player.AddCooldown(Core.Instance.KitHandler.Name, kit, obj.Delay);
             }
-            player.SendChatMessage(player.T(Core.Instance.KitHandler.Name + "_received", kit) + (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") + (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
+            player.SendChatMessage(
+                player.T(Core.Instance.KitHandler.Name + "_received", kit) + 
+                (obj.Price > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") + 
+                (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
         }
     }
 }
