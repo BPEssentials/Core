@@ -42,7 +42,7 @@ namespace BPEssentials.Commands
                 }
                 player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
             }
-            player.GetExtendedPlayer().ResetAndSavePosition(new Vector3(obj.Position.X, obj.Position.Y, obj.Position.Z), new Quaternion(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z, obj.Rotation.W), obj.Position.PlaceIndex);
+            player.GetExtendedPlayer().ResetAndSavePosition(obj.Position.SerializableVector3.ToVector3(), obj.SerializableQuaternion.ToQuaternion(), obj.Position.PlaceIndex);
             if (obj.Delay > 0)
             {
                 player.AddCooldown(Core.Instance.WarpHandler.Name, warp, obj.Delay);

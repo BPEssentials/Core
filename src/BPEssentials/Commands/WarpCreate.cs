@@ -1,4 +1,6 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.Interfaces;
+using BPCoreLib.Serializable;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using System.IO;
@@ -35,8 +37,8 @@ namespace BPEssentials.Commands
                 Delay = delay < 0 ? 0 : delay,
                 Price = price < 0 ? 0 : price,
                 Name = warp,
-                Position = new WarpHandler.Position { X = player.GetPosition().x, Y = player.GetPosition().y, Z = player.GetPosition().z, PlaceIndex = player.GetPlaceIndex() },
-                Rotation = new WarpHandler.Rotation { X = player.GetRotation().x, Y = player.GetRotation().y, Z = player.GetRotation().z, W = player.GetRotation().w }
+                Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition()), PlaceIndex = player.GetPlaceIndex() },
+                SerializableQuaternion = new SerializableQuaternion(player.GetRotation())
             };
             Core.Instance.WarpHandler.CreateNew(obj, warp);
             player.TS("warpCreate_created", warp, price.ToString(), delay.ToString());

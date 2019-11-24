@@ -1,4 +1,5 @@
 ﻿using BPEssentials.FileHandler;
+using BPCoreLib.Serializable;
 
 namespace BPEssentials
 {
@@ -18,22 +19,14 @@ namespace BPEssentials
             public int Delay { get; set; }
 
             public Position Position { get; set; }
-            public Rotation Rotation { get; set; }
+
+            public SerializableQuaternion SerializableQuaternion { get; set; }
         }
         public class Position
         {
-            public float X { get; set; }
-            public float Y { get; set; }
-            public float Z { get; set; }
+            public SerializableVector3 SerializableVector3 { get; set; }
             public int PlaceIndex { get; set; }
         }
 
-        public class Rotation
-        {
-            public float X { get; set; }
-            public float Y { get; set; }
-            public float Z { get; set; }
-            public float W { get; set; }
-        }
     }
 }
