@@ -16,7 +16,7 @@ namespace BPEssentials.Cooldowns
 
         private bool ready;
 
-        private readonly string CustomDataKey = "bpe:cooldowns";
+        public string CustomDataKey { get; } = "bpe:cooldowns";
 
         public void Load()
         {

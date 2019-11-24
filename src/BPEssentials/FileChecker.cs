@@ -7,7 +7,7 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        private static readonly Dictionary<string, string> RequiredDirectorys = new Dictionary<string, string>
+        public static Dictionary<string, string> RequiredDirectories { get; }= new Dictionary<string, string>
         {
             {"Essentials", Paths.EssentialsFolder},
             {"Warps", Core.Instance.Paths.KitsFolder},

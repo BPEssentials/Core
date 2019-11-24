@@ -6,7 +6,7 @@ namespace BPEssentials.ExtensionMethods.Cooldowns
 {
     public static class ExtensionPlayerCooldowns
     {
-        public static bool IsCooldown(this SvPlayer player, string type, string key)
+        public static bool HasCooldown(this SvPlayer player, string type, string key)
         {
             return Core.Instance.CooldownHandler.IsCooldown(player.steamID, type, key);
         }

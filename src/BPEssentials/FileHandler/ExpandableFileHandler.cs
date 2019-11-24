@@ -42,7 +42,6 @@ namespace BPEssentials.FileHandler
 
         public string Name { get; set; }
 
-        public System.Timers.Timer Timer { get; private set; } = new System.Timers.Timer();
 
         public IReader<JsonType> FileReader { get; } = new Reader<JsonType>();
 

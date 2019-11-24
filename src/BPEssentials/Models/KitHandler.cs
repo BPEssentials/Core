@@ -19,7 +19,7 @@ namespace BPEssentials
             public int Delay { get; set; }
             public List<Kits_Item> Items { get; set; } = new List<Kits_Item>();
         }
-        public class Kits_Item
+        public class KitsItem
         {
             public int Id { get; set; }
             public int Amount { get; set; }
