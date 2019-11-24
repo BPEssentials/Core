@@ -12,12 +12,12 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string warp)
         {
-            if (!Core.Instance.WarpHandler.List.Any(x => x.Name == warp))
+            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name == warp);
+            if (obj == null)
             {
                 player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
                 return;
             }
-            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name == warp);
             if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.WarpHandler.Name}.{warp}"))
             {
                 player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.WarpHandler.Name), warp);

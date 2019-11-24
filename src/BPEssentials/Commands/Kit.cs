@@ -11,12 +11,12 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string kit)
         {
-            if (!Core.Instance.KitHandler.List.Any(x => x.Name == kit))
+            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
+            if (obj == null)
             {
                 player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                 return;
             }
-            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
             if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{kit}"))
             {
                 player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.KitHandler.Name), kit);
