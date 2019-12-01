@@ -28,7 +28,7 @@ namespace BPEssentials.ChatHandlers
                     return;
 
                 case Chat.Disabled:
-                    player.SendChatMessage("Chat disabled");
+                    player.TS("chat_disabled");
                     return;
 
                 default:

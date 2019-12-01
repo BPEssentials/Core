@@ -65,6 +65,7 @@
     "all_kick": "{0} kicked {1} for the reason: {2}",
     "all_ban":"{0} banned {1} for the reason: {2}",
     "player_kick" : "You kicked kicked {0} for the reason: {1}",
-    "player_ban" :"You banned {0} for the reason: {1}"
+    "player_ban" :"You banned {0} for the reason: {1}",
+    "chat_disabled": "Your chat has been disabled. You cannot speak in this channel currently."
   }
 }
