@@ -246,6 +246,15 @@
       ]
     },
     {
+      "CommandName": "ToggleGodmode",
+      "Commands": [
+        "god",
+        "godmode",
+        "tg",
+        "tgod"
+      ]
+    },
+    {
       "CommandName": "Ban",
       "Commands": [
         "ban"
