@@ -24,8 +24,6 @@ namespace BPEssentials.RegisteredEvents
             if (player.GetExtendedPlayer().HasGodmode)
             {
                 player.SendChatMessage($"Damage blocked: {amount}HP. (Attacker: {attacker.ID}: {attacker.username.SanitizeString()})");
-                // TODO: Override gamesource
-                return;
             }
         }
     }
