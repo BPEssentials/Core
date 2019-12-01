@@ -8,7 +8,7 @@ namespace BPEssentials.Commands
 {
     public class Ban : Command
     {
-        public void Invoke(ShPlayer player, ShPlayer target, string reason = "none")
+        public void Invoke(ShPlayer player, ShPlayer target, string reason = "No reason provided.")
         {
             Util.SendToAllEnabledChatT("all_ban", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());
             player.TS("player_banned", target.username.SanitizeString(), reason.SanitizeString());
