@@ -244,6 +244,18 @@
         "listkit",
         "kits"
       ]
+    },
+    {
+      "CommandName": "Ban",
+      "Commands": [
+        "ban"
+      ]
+    },
+    {
+      "CommandName": "Kick",
+      "Commands": [
+        "kick"
+      ]
     }
   ]
 }
