@@ -36,8 +36,6 @@ namespace BPEssentials.FileHandler
 
         public string FilesDirectory { get; set; }
 
-        public bool IsInitialized { get; private set; }
-
         public List<JsonType> List { get; private set; } = new List<JsonType>();
 
         public string Name { get; set; }
