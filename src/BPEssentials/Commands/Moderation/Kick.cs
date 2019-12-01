@@ -7,7 +7,7 @@ namespace BPEssentials.Commands
 {
     public class Kick : Command
     {
-        public void Invoke(ShPlayer player, ShPlayer target, string reason = "none")
+        public void Invoke(ShPlayer player, ShPlayer target, string reason = "No reason provided.")
         {
             Util.SendToAllEnabledChatT("all_kick", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());
             player.TS("player_kick", target.username.SanitizeString(), reason.SanitizeString());
