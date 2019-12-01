@@ -17,8 +17,13 @@ namespace BPEssentials.Cooldowns
 
         public void Load()
         {
-            foreach (var player in Core.Instance.SvManager.Database.Users.Find(x => x.Character.CustomData.Data.ContainsKey(CustomDataKey)).ToDictionary(x => x.ID, x => x.Character.CustomData))
+            foreach (var player in Core.Instance.SvManager.Database.Users.FindAll().ToDictionary(x => x.ID, x => x.Character.CustomData))
             {
+                if (player.Value.Data == null || !player.Value.Data.ContainsKey(CustomDataKey))
+                {
+                    continue;
+                }
+
                 var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>(CustomDataKey);
                 Cooldowns.Add(player.Key, cooldownsObj);
                 foreach (var cooldownType in cooldownsObj)
