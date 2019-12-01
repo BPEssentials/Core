@@ -280,6 +280,7 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Teleport\TeleportCoordinates.cs" />
     <Compile Include="Commands\Teleport\TeleportHere.cs" />
     <Compile Include="Commands\Teleport\Teleport.cs" />
     <Compile Include="Commands\Utils\Launch.cs" />
