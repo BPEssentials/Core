@@ -11,8 +11,8 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.SvForce(new UnityEngine.Vector3(0f, 6500f, 0f));
-            target.TS("launched_target");
-            player.TS("launched", target.username.SanitizeString());
+            target.TS("target_launched");
+            player.TS("player_launched", target.username.SanitizeString());
         }
     }
 }
