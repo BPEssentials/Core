@@ -56,6 +56,9 @@
     "warpCreate_created": "The warp {0} with a price of {1}$ and a delay of {2} seconds has been created.",
     "warps": "Warps you can warp to {0}: {1}",
     "warp": "warp",
-    "kit": "kit"
+    "kit": "kit",
+    "enabled": "enabled",
+    "disabled": "disabled",
+    "godmode_toggle": "Godmode has now been {1} for {0}."
   }
 }

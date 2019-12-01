@@ -280,6 +280,7 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Player\ToggleGodmode.cs" />
     <Compile Include="Commands\Teleport\TeleportHere.cs" />
     <Compile Include="Commands\Teleport\Teleport.cs" />
     <Compile Include="Commands\Misc\Launch.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="CooldownHandler.cs" />
+    <Compile Include="ExtensionMethods\String.cs" />
     <Compile Include="FileHandler\ExpandableFileHandler.cs" />
     <Compile Include="Models\LastLocation.cs" />
     <Compile Include="Models\KitHandler.cs" />
