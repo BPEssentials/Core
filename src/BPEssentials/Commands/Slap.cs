@@ -1,8 +1,8 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Required;
 
 namespace BPEssentials.Commands
 {

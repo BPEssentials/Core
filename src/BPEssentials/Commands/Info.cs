@@ -34,15 +34,10 @@ namespace BPEssentials.Commands
         // TODO: There might be a better way to do this, for example using reflection.
         private StringBuilder GetOfflineInfo(ShPlayer player, string targetStr)
         {
-            if (!ulong.TryParse(targetStr, out var targetUlong))
-            {
-                player.SendChatMessage($"Could not parse '{targetStr}' to a ulong.");
-                return null;
-            }
-            var target = player.manager.svManager.Database.Users.FindSingle(x => x.ID == targetUlong);
+            var target = player.manager.svManager.Database.Users.FindById(targetStr);
             if (target == null)
             {
-                player.SendChatMessage($"No account found with the id '{targetUlong}'.");
+                player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return null;
             }
             var sb = new StringBuilder();
@@ -90,14 +85,14 @@ namespace BPEssentials.Commands
             var sb = new StringBuilder();
             sb
             .Append("ID: ").AppendLine(target.ID.ToString())
-            .Append("SteamID64: ").AppendLine(target.svPlayer.steamID.ToString())
+            .Append("SteamID64: ").AppendLine(target.steamID.ToString())
             .Append("Username: ").Append(target.username.SanitizeString()).AppendLine(" (Sanitized)")
             .Append("Health: ").AppendLine(target.health.ToString())
             .Append("BankBalance: ").AppendLine(target.svPlayer.bankBalance.ToString())
             .Append("Position: ").AppendLine(target.GetPosition().ToString())
             .Append("Rotation: ").AppendLine(target.GetRotation().ToString())
             .Append("Stats: ").AppendLine(string.Join("\n    - ", target.stats))
-            .Append("Expecting more info? Type '/info ").Append(target.svPlayer.steamID.ToString()).AppendLine("'.");
+            .Append("Expecting more info? Type '/info ").Append(target.steamID.ToString()).AppendLine("'.");
             return sb;
         }
     }

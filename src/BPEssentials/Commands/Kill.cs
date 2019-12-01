@@ -9,7 +9,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.SvSuicide();
+            target.svPlayer.SvKillSelf();
             player.TS("killed", target.username.SanitizeString());
         }
     }

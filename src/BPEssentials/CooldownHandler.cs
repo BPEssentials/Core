@@ -2,17 +2,14 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BPEssentials.Cooldowns
 {
     public class CooldownHandler
     {
-        public Dictionary<ulong, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<ulong, Dictionary<string, Dictionary<string, int>>>();
+        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> Cooldowns { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
 
         private bool ready;
 
@@ -20,7 +17,7 @@ namespace BPEssentials.Cooldowns
 
         public void Load()
         {
-            foreach (var player in Core.Instance.SvManager.Database.Users.FindMany(x => x.Character.CustomData.Data.ContainsKey(CustomDataKey)).ToDictionary(x => x.ID, x => x.Character.CustomData))
+            foreach (var player in Core.Instance.SvManager.Database.Users.Find(x => x.Character.CustomData.Data.ContainsKey(CustomDataKey)).ToDictionary(x => x.ID, x => x.Character.CustomData))
             {
                 var cooldownsObj = player.Value.FetchCustomData<Dictionary<string, Dictionary<string, int>>>(CustomDataKey);
                 Cooldowns.Add(player.Key, cooldownsObj);
@@ -42,21 +39,21 @@ namespace BPEssentials.Cooldowns
             {
                 Core.Instance.Logger.Log(cooldownPlayer.Key.ToString());
                 Core.Instance.Logger.Log(JsonConvert.SerializeObject(cooldownPlayer.Value));
-                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.svPlayer.steamID == cooldownPlayer.Key);
+                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.steamID == cooldownPlayer.Key);
                 if (onlinePlayer)
                 {
                     onlinePlayer.svPlayer.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
                 }
                 else
                 {
-                    var newUser = Core.Instance.SvManager.Database.Users.FindSingle(x => x.ID == cooldownPlayer.Key);
+                    var newUser = Core.Instance.SvManager.Database.Users.FindById(cooldownPlayer.Key);
                     newUser.Character.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
-                    Core.Instance.SvManager.Database.Users.UpdateSingle(newUser);
+                    Core.Instance.SvManager.Database.Users.Update(newUser);
                 }
             }
         }
 
-        private IEnumerator StartCooldown(ulong ID, string type, string key)
+        private IEnumerator StartCooldown(string ID, string type, string key)
         {
             while (!ready)
             {
@@ -75,7 +72,7 @@ namespace BPEssentials.Cooldowns
 
         }
 
-        public void AddCooldown(ulong ID, string type, string key, int time = 0)
+        public void AddCooldown(string ID, string type, string key, int time = 0)
         {
             if (!Cooldowns.ContainsKey(ID))
             {
@@ -92,12 +89,12 @@ namespace BPEssentials.Cooldowns
             Core.Instance.SvManager.StartCoroutine(StartCooldown(ID, type, key));
         }
 
-        public bool IsCooldown(ulong ID, string type, string key)
+        public bool IsCooldown(string ID, string type, string key)
         {
             return GetCooldown(ID, type, key) > 0;
         }
 
-        public int GetCooldown(ulong ID, string type, string key)
+        public int GetCooldown(string ID, string type, string key)
         {
             if (!Cooldowns.ContainsKey(ID) || !Cooldowns[ID].ContainsKey(type) || !Cooldowns[ID][type].ContainsKey(key)) { return 0; }
             return Cooldowns[ID][type][key];

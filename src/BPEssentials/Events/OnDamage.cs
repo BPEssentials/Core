@@ -1,8 +1,8 @@
 ﻿using BPEssentials.ExtensionMethods;
-using BrokeProtocol;
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Required;
 using System;
 using UnityEngine;
 

@@ -1,13 +1,6 @@
-﻿using BPEssentials.ExtensionMethods;
-using BrokeProtocol;
-using BrokeProtocol.API;
-using BrokeProtocol.API.ExtensionMethods;
-using BrokeProtocol.Entities;
+﻿using BrokeProtocol.API;
 using BrokeProtocol.Managers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace BPEssentials.RegisteredEvents
 {

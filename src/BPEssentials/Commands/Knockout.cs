@@ -2,6 +2,7 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Required;
 
 namespace BPEssentials.Commands
 {
@@ -9,7 +10,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.SvForceStance(BrokeProtocol.Utility.StanceIndex.KnockedOut);
+            target.svPlayer.SvForceStance(StanceIndex.KnockedOut);
             player.TS("ko", target.username.SanitizeString());
         }
     }
