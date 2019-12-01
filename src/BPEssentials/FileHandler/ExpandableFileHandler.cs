@@ -12,6 +12,7 @@ namespace BPEssentials.FileHandler
     public interface IExpandableFile
     {
         string Name { get; set; }
+
         bool Disabled { get; set; }
     }
 
@@ -27,7 +28,6 @@ namespace BPEssentials.FileHandler
 
     public abstract class ExpandableFileHandler<JsonType> where JsonType : class, IExpandableFile, new()
     {
-
         protected ExpandableFileHandler()
         {
         }
@@ -41,7 +41,6 @@ namespace BPEssentials.FileHandler
         public List<JsonType> List { get; private set; } = new List<JsonType>();
 
         public string Name { get; set; }
-
 
         public IReader<JsonType> FileReader { get; } = new Reader<JsonType>();
 

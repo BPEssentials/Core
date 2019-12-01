@@ -13,6 +13,7 @@ namespace BPEssentials
             FileExtension = "json";
             FilesDirectory = Core.Instance.Paths.KitsFolder;
         }
+
         public class JsonModel : IExpandableFile, IExpandableFileDelayable, IExpandableFileHasPrice
         {
             public string Name { get; set; }
