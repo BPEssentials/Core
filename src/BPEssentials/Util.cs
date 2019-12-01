@@ -28,6 +28,18 @@ namespace BPEssentials
             }
         }
 
+        public static void SendToAllEnabledChatT(string node, params string[] formatting)
+        {
+            foreach (var currPlayer in EntityCollections.Humans)
+            {
+                if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
+                {
+                    continue;
+                }
+                currPlayer.TS(node, formatting);
+            }
+        }
+
         public static void SendToAllEnabledChat(string message)
         {
             foreach (var currPlayer in EntityCollections.Humans)
