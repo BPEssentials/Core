@@ -32,8 +32,8 @@ namespace BPEssentials
                     continue;
                 }
                 Core.Instance.Logger.LogWarning($"{directory.Key} directory was not found; creating");
-                Directory.CreateDirectory(directory.Key);
-                Core.Instance.Logger.Log($"{directory.Key} directory was created.");
+                Directory.CreateDirectory(directory.Value);
+                Core.Instance.Logger.LogInfo($"{directory.Key} directory was created.");
             }
 
             foreach (var file in RequiredFiles)
@@ -47,7 +47,7 @@ namespace BPEssentials
                     Core.Instance.Logger.LogWarning($"{file.Key} was not found; downloading.");
                     var content = await Client.GetStringAsync($"{Core.Instance.Info.Git}/raw/{(Core.IsDevelopmentBuild() ? "development" : "master")}/dist/{file.Key}");
                     File.WriteAllText(file.Value, content);
-                    Core.Instance.Logger.Log($"{file.Key} was downloaded.");
+                    Core.Instance.Logger.LogInfo($"{file.Key} was downloaded.");
                 }
                 catch (HttpRequestException e)
                 {

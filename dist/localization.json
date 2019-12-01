@@ -58,6 +58,9 @@
     "warp": "warp",
     "kit": "kit",
     "TeleportCoordinates": "You have teleported yourself to x: {0} y: {1} z {2} placeIndex: {3}",
-    "TeleportCoordinates_invalidPlaceIndex": "The placeIndex {0} is invalid!"
+    "TeleportCoordinates_invalidPlaceIndex": "The placeIndex {0} is invalid!",
+    "enabled": "enabled",
+    "disabled": "disabled",
+    "godmode_toggle": "Godmode has now been {1} for {0}."
   }
 }
