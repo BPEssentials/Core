@@ -265,6 +265,12 @@
       "Commands": [
         "kick"
       ]
+    },
+    {
+      "CommandName": "Give",
+      "Commands": [
+        "give"
+      ]
     }
   ]
 }
