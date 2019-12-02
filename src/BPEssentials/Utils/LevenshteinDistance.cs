@@ -2,7 +2,7 @@
 
 namespace BPEssentials.Utils
 {
-    public static class LevenshteinDistanceUtil
+    public static class LevenshteinDistance
     {
         public static int ComputeLevenshteinDistance(string source, string target)
         {
