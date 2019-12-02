@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BPEssentials.Utils;
+using System;
 using System.Collections.Generic;
 using System.Timers;
 
@@ -56,7 +57,7 @@ namespace BPEssentials
                 return;
             }
             var lines = Announcements[Index].Split(new[] { "\r\n", "\r", "\n", "\\r\\n", "\\r", "\\n" }, StringSplitOptions.None);
-            Util.SendToAllEnabledChat(lines);
+            ChatUtils.SendToAllEnabledChat(lines);
             Core.Instance.Logger.LogInfo("Announcement made...");
         }
     }
