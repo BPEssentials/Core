@@ -1,6 +1,6 @@
 ﻿namespace BPEssentials.Utils
 {
-    public static class ReloadUtil
+    public static class IO
     {
         public static void ReloadFiles()
         {
