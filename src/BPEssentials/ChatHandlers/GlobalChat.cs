@@ -1,5 +1,6 @@
 ﻿using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
@@ -24,7 +25,7 @@ namespace BPEssentials.ChatHandlers
             switch (player.GetExtendedPlayer().CurrentChat)
             {
                 case Chat.StaffChat:
-                    Util.SendStaffChatMessage(player, message);
+                    ChatUtils.SendStaffChatMessage(player, message);
                     return;
 
                 case Chat.Disabled:
@@ -32,7 +33,7 @@ namespace BPEssentials.ChatHandlers
                     return;
 
                 default:
-                    Util.SendToAllEnabledChat($"{player.username.SanitizeString()}: {message.SanitizeString()}");
+                    ChatUtils.SendToAllEnabledChat($"{player.username.SanitizeString()}: {message.SanitizeString()}");
                     return;
             }
         }

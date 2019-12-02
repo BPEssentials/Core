@@ -92,7 +92,7 @@ namespace BPEssentials
             {
                 Logger.LogInfo($"[C] Registering command {command.CommandName}..");
                 var name = "bpe:c:" + command.CommandName;
-                if (!Util.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
+                if (!Utils.CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
                 {
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
