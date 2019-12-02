@@ -330,6 +330,7 @@
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="CooldownHandler.cs" />
     <Compile Include="ExtensionMethods\String.cs" />
+    <Compile Include="EntityHandler.cs" />
     <Compile Include="FileHandler\ExpandableFileHandler.cs" />
     <Compile Include="Models\LastLocation.cs" />
     <Compile Include="Models\KitHandler.cs" />
