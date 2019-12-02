@@ -281,6 +281,7 @@
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
+    <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
     <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />
     <Compile Include="Commands\Player\Inventory\Give.cs" />
     <Compile Include="Commands\Moderation\Ban.cs" />

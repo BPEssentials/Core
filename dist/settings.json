@@ -285,6 +285,13 @@
         "lockvehicle",
         "lv"
       ]
+    },
+    {
+      "CommandName": "RepairVehicle",
+      "Commands": [
+        "repairvehicle",
+        "rv"
+      ]
     }
   ]
 }
