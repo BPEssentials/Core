@@ -278,6 +278,13 @@
         "vehicle",
         "v"
       ]
+    },
+    {
+      "CommandName": "LockVehicle",
+      "Commands": [
+        "lockvehicle",
+        "lv"
+      ]
     }
   ]
 }
