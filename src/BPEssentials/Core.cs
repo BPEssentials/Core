@@ -4,6 +4,7 @@ using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
+using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
@@ -92,7 +93,7 @@ namespace BPEssentials
             {
                 Logger.LogInfo($"[C] Registering command {command.CommandName}..");
                 var name = "bpe:c:" + command.CommandName;
-                if (!Utils.CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
+                if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
                 {
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
