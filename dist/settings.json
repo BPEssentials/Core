@@ -271,6 +271,13 @@
       "Commands": [
         "give"
       ]
+    },
+    {
+      "CommandName": "SpawnVehicle",
+      "Commands": [
+        "vehicle",
+        "v"
+      ]
     }
   ]
 }
