@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
@@ -32,6 +34,16 @@ namespace BPEssentials.Utils
                 }
                 currPlayer.TS(node, formatting);
             }
+        }
+
+        public static string FormatMessage(ShPlayer player, string message)
+        {
+            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey("bpe:format"));
+            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData("bpe:format", out string formatter))
+            {
+                return string.Format(formatter, player.ID, player.username.SanitizeString(), message.SanitizeString());
+            }
+            return $"{player.username}: {message.SanitizeString()}";
         }
 
         public static void SendToAllEnabledChat(string message)
