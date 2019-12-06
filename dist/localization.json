@@ -66,6 +66,11 @@
     "all_ban":"{0} banned {1} for the reason: {2}",
     "player_kick" : "You kicked kicked {0} for the reason: {1}",
     "player_ban" :"You banned {0} for the reason: {1}",
-    "chat_disabled": "Your chat has been disabled. You cannot speak in this channel currently."
+    "chat_disabled": "Your chat has been disabled. You cannot speak in this channel currently.",
+    "player_notInVehicle": "You need to be in a vehicle to use this command.",
+    "player_vehicle_locked": "You have locked your {0}.",
+    "player_vehicle_repaired": "Repaired {0}.",
+    "player_vehicle_spawned": "Spawned {0}.",
+    "player_give": "Gave {0} {2} {1.}"
   }
 }

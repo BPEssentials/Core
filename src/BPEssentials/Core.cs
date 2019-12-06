@@ -46,6 +46,8 @@ namespace BPEssentials
 
         public KitHandler KitHandler { get; set; }
 
+        public EntityHandler EntityHandler { get; set; }
+
         public Core()
         {
             Instance = this;
@@ -66,6 +68,9 @@ namespace BPEssentials
 
             KitHandler = new KitHandler();
             KitHandler.LoadAll();
+
+            EntityHandler = new EntityHandler();
+            EntityHandler.LoadEntities();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));

@@ -280,6 +280,10 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Vehicles\LockVehicle.cs" />
+    <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
+    <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />
+    <Compile Include="Commands\Player\Inventory\Give.cs" />
     <Compile Include="Commands\Moderation\Ban.cs" />
     <Compile Include="Commands\Moderation\Kick.cs" />
     <Compile Include="Commands\Teleport\TeleportCoordinates.cs" />
@@ -330,6 +334,7 @@
     <Compile Include="ExtensionMethods\Player.cs" />
     <Compile Include="CooldownHandler.cs" />
     <Compile Include="ExtensionMethods\String.cs" />
+    <Compile Include="EntityHandler.cs" />
     <Compile Include="FileHandler\ExpandableFileHandler.cs" />
     <Compile Include="Models\LastLocation.cs" />
     <Compile Include="Models\KitHandler.cs" />

@@ -265,6 +265,33 @@
       "Commands": [
         "kick"
       ]
+    },
+    {
+      "CommandName": "Give",
+      "Commands": [
+        "give"
+      ]
+    },
+    {
+      "CommandName": "SpawnVehicle",
+      "Commands": [
+        "vehicle",
+        "v"
+      ]
+    },
+    {
+      "CommandName": "LockVehicle",
+      "Commands": [
+        "lockvehicle",
+        "lv"
+      ]
+    },
+    {
+      "CommandName": "RepairVehicle",
+      "Commands": [
+        "repairvehicle",
+        "rv"
+      ]
     }
   ]
 }
