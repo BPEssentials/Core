@@ -296,6 +296,13 @@
         "repairvehicle",
         "rv"
       ]
+    },
+    {
+      "CommandName": "Discord",
+      "Commands": [
+        "discord",
+        "discordlink"
+      ]
     }
   ]
 }
