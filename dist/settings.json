@@ -1,11 +1,15 @@
 {
   "General": {
-    "AnnounceInterval": 120
+    "Version": "3.0.0",
+    "AnnounceInterval": 120,
   },
   "Announcements": [
     "test0",
     "test1"
   ],
+  "Messages": {
+    "DiscordLink": "http://discord.gg/WpdNCDw"
+  },
   "MessageColors": {},
   "FunctionUI": {},
   "ReportOptions": {},
