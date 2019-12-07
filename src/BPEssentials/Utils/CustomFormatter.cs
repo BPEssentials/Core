@@ -18,29 +18,29 @@ namespace BPEssentials.Utils
             }
         }
 
-        public string Format(string formatter, object arg, IFormatProvider formatProvider)
+        public string Format(string format, object arg, IFormatProvider formatProvider)
         {
             if (arg == null)
             {
                 return string.Empty;
             }
-            if (formatter == "lcase")
+            if (format == "lcase")
             {
                 return arg.ToString().ToLowerInvariant();
             }
-            else if (formatter == "ucase")
+            else if (format == "ucase")
             {
                 return arg.ToString().ToUpperInvariant();
             }
-            else if (formatter == "nospace")
+            else if (format == "nospace")
             {
                 return arg.ToString().Replace(" ", "");
             }
-            else if (formatter == "parsecolor")
+            else if (format == "parsecolor")
             {
                 return arg.ToString().SanitizeString().ParseColorCodes();
             }
-            else if (formatter == "unsanitized")
+            else if (format == "unsanitized")
             {
                 return arg.ToString().ParseColorCodes();
             }
@@ -49,7 +49,7 @@ namespace BPEssentials.Utils
                 var arg_IFormattable = arg as IFormattable;
                 if (arg_IFormattable != null)
                 {
-                    return (arg_IFormattable).ToString(formatter, CultureInfo.CurrentCulture).SanitizeString();
+                    return (arg_IFormattable).ToString(format, CultureInfo.CurrentCulture).SanitizeString();
                 }
             }
             return arg.ToString().SanitizeString();
