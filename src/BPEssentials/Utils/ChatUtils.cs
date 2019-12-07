@@ -41,12 +41,19 @@ namespace BPEssentials.Utils
             var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey("bpe:format"));
             if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData("bpe:format", out string formatter))
             {
-                return string.Format(formatter, player.ID, player.username.SanitizeString(), message.SanitizeString());
+                try
+                {
+                    return string.Format(new CustomFormatter(), formatter.ParseColorCodes(), player.ID, player.username.SanitizeString(), message);
+                }
+                catch (Exception err)
+                {
+                    Core.Instance.Logger.LogException(err);
+                }
             }
             return $"{player.username}: {message.SanitizeString()}";
         }
 
-        public static void SendToAllEnabledChat(string message)
+        public static void SendToAllEnabledChat(string message, bool useColors = true)
         {
             foreach (var currPlayer in EntityCollections.Humans)
             {
@@ -54,7 +61,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage(message);
+                currPlayer.SendChatMessage(message, useColors);
             }
         }
 

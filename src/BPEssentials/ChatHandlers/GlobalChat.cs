@@ -33,7 +33,7 @@ namespace BPEssentials.ChatHandlers
                     return;
 
                 default:
-                    ChatUtils.SendToAllEnabledChat(ChatUtils.FormatMessage(player, message));
+                    ChatUtils.SendToAllEnabledChat(ChatUtils.FormatMessage(player, message), false);
                     return;
             }
         }
