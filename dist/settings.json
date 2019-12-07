@@ -1,7 +1,7 @@
 {
   "General": {
     "Version": "3.0.0",
-    "AnnounceInterval": 120,
+    "AnnounceInterval": 120
   },
   "Announcements": [
     "test0",
