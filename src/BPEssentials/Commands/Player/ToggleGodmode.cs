@@ -3,7 +3,7 @@ using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
-namespace BPEssentials.Commands.Player
+namespace BPEssentials.Commands
 {
     public class ToggleGodmode : Command
     {

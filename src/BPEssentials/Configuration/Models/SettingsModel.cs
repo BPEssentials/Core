@@ -44,6 +44,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
     public class Messages
     {
+        public string DiscordLink { get; set; }
     }
 
     public class General

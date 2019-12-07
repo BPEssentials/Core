@@ -280,6 +280,7 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
     <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />
@@ -342,6 +343,7 @@
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileChecker.cs" />
+    <Compile Include="Utils\CustomFormatter.cs" />
     <Compile Include="Utils\LevenshteinDistance.cs" />
     <Compile Include="Utils\IO.cs" />
     <Compile Include="Utils\ChatUtils.cs" />

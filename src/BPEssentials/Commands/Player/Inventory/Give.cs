@@ -15,7 +15,7 @@ namespace BPEssentials.Commands
             target = target ?? player;
             var item = Core.Instance.EntityHandler.Items.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Key, name)).FirstOrDefault();
             target.TransferItem(DeltaInv.AddToMe, item.Value.index, amount, true);
-            player.TS("player_give", target.username.SanitizeString(), name.SanitizeString(), amount.ToString());
+            player.TS("player_give", target.username.SanitizeString(), item.Key, amount.ToString());
         }
     }
 }
