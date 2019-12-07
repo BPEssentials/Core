@@ -3,20 +3,10 @@
     "Version": "3.0.0",
     "AnnounceInterval": 120
   },
-  "Announcements": [
-    "test0",
-    "test1"
-  ],
+  "Announcements": [],
   "Messages": {
     "DiscordLink": "http://discord.gg/WpdNCDw"
   },
-  "MessageColors": {},
-  "FunctionUI": {},
-  "ReportOptions": {},
-  "JobIndexArray": {},
-  "WhitelistedJobs": [],
-  "BlockedItems": [],
-  "Misc": {},
   "Commands": [
     {
       "CommandName": "Essentials",
