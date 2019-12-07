@@ -42,8 +42,6 @@ namespace BPEssentials.Cooldowns
         {
             foreach (var cooldownPlayer in Cooldowns)
             {
-                Core.Instance.Logger.Log(cooldownPlayer.Key.ToString());
-                Core.Instance.Logger.Log(JsonConvert.SerializeObject(cooldownPlayer.Value));
                 var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.steamID == cooldownPlayer.Key);
                 if (onlinePlayer)
                 {

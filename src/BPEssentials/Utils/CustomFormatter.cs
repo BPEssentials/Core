@@ -9,38 +9,48 @@ namespace BPEssentials.Utils
         public object GetFormat(Type formatType)
         {
             if (formatType == typeof(ICustomFormatter))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
 
-        public string Format(string format, object arg, IFormatProvider formatProvider)
+        public string Format(string formatter, object arg, IFormatProvider formatProvider)
         {
-            if (arg == null) {  return string.Empty;
-            }
-            if (format == "lcase")
+            if (arg == null)
             {
-                return arg.ToString().ToLower();
+                return string.Empty;
             }
-            else if (format == "ucase")
+            if (formatter == "lcase")
             {
-                return arg.ToString().ToUpper();
+                return arg.ToString().ToLowerInvariant();
             }
-            else if (format == "nospace")
+            else if (formatter == "ucase")
+            {
+                return arg.ToString().ToUpperInvariant();
+            }
+            else if (formatter == "nospace")
             {
                 return arg.ToString().Replace(" ", "");
             }
-            else if (format == "parsecolor")
+            else if (formatter == "parsecolor")
             {
                 return arg.ToString().SanitizeString().ParseColorCodes();
             }
-            else if (format == "unsanitized")
+            else if (formatter == "unsanitized")
             {
                 return arg.ToString().ParseColorCodes();
             }
-            else if (arg is IFormattable)
+            else
             {
-                return ((IFormattable)arg).ToString(format, CultureInfo.CurrentCulture).SanitizeString();
+                var arg_IFormattable = arg as IFormattable;
+                if (arg_IFormattable != null)
+                {
+                    return (arg_IFormattable).ToString(formatter, CultureInfo.CurrentCulture).SanitizeString();
+                }
             }
             return arg.ToString().SanitizeString();
         }

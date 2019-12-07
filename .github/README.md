@@ -5,7 +5,6 @@
 
 Check our [Website](https://bpessentials.github.io/Docs/) for features, commands, installation, and more!
 
-
 ## Synopsis
 
 BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Protocol
