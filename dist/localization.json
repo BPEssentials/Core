@@ -38,7 +38,7 @@
     "player_tpa_denied": "You denied the TPA request of {0}.",
     "expFileHandler_error_notFound": "The {0} '{1}' was not found!",
     "expFileHandler_error_noPermission": "You do not have permissions to use the {0} {1}",
-    "expFileHandler_error_disabled" : "The {0} {1} has been disabled",
+    "expFileHandler_error_disabled": "The {0} {1} has been disabled",
     "expFileHandler_error_cooldown": "You need to wait {1} more seconds!",
     "expFileHandler_error_price": "This {0} costs {1}, but you only have {2}",
     "delay_error_negative": "The delay can not be negative.",
@@ -63,9 +63,9 @@
     "disabled": "disabled",
     "godmode_toggle": "Godmode has now been {1} for {0}.",
     "all_kick": "{0} kicked {1} for the reason: {2}",
-    "all_ban":"{0} banned {1} for the reason: {2}",
-    "player_kick" : "You kicked kicked {0} for the reason: {1}",
-    "player_ban" :"You banned {0} for the reason: {1}",
+    "all_ban": "{0} banned {1} for the reason: {2}",
+    "player_kick": "You kicked kicked {0} for the reason: {1}",
+    "player_ban": "You banned {0} for the reason: {1}",
     "chat_disabled": "Your chat has been disabled. You cannot speak in this channel currently.",
     "player_notInVehicle": "You need to be in a vehicle to use this command.",
     "player_vehicle_locked": "You have locked your {0}.",
@@ -74,8 +74,8 @@
     "player_give": "Gave {0} {2} {1}.",
     "discord": "Our Discord: {0}"
   },
-"BR": {
- "arrested": "Preso {0}.",
+  "BR": {
+    "arrested": "Preso {0}.",
     "open_atm": "Abrindo ATM...",
     "no_top_location": "Não existe nenhum local para se teleportar.",
     "cleared_crimes": "Limpo os crimes de {0}.",
@@ -113,7 +113,7 @@
     "player_tpa_denied": "Você negou o pedido de tpa de {0}.",
     "expFileHandler_error_notFound": "O {0} '{1}' Não foi encontrado!",
     "expFileHandler_error_noPermission": "Você não tem permissão para usar o {0} {1}",
-    "expFileHandler_error_disabled" : "O {0} {1} Foi desabilitado",
+    "expFileHandler_error_disabled": "O {0} {1} Foi desabilitado",
     "expFileHandler_error_cooldown": "Você precisar esperar mais {1} segundos!",
     "expFileHandler_error_price": "Isso {0} custa {1}, mas você tem apenas {2}",
     "delay_error_negative": "O delay não pode ser negativo.",
@@ -138,9 +138,9 @@
     "disabled": "desabilitado",
     "godmode_toggle": "Godmode agora foi {1} para {0}.",
     "all_kick": "{0} kickado {1} pela razão de: {2}",
-    "all_ban":"{0} banido {1} pela razão de: {2}",
-    "player_kick" : "Você kickou {0} pela razão de: {1}",
-    "player_ban" :"Você baniu {0} pela razão de: {1}",
+    "all_ban": "{0} banido {1} pela razão de: {2}",
+    "player_kick": "Você kickou {0} pela razão de: {1}",
+    "player_ban": "Você baniu {0} pela razão de: {1}",
     "chat_disabled": "Seu chat foi desabilitado. Você não pode falar no chat neste momento.",
     "player_notInVehicle": "Você precisa estar em um veículo para usar este comando.",
     "player_vehicle_locked": "Você trancou seu {0}.",
@@ -148,3 +148,5 @@
     "player_vehicle_spawned": "Spawnado {0}.",
     "player_give": "Dado {0} {2} {1}.",
     "discord": "Nosso Discord: {0}"
+  }
+}
