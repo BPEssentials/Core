@@ -6,7 +6,7 @@ namespace BPEssentials.Commands
 {
     public class RepairVehicle : Command
     {
-        public void Invoke(ShPlayer player, string name)
+        public void Invoke(ShPlayer player)
         {
             var vehicle = player.curMount as ShTransport;
             if (vehicle == null)
