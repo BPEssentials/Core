@@ -56,7 +56,7 @@ namespace BPEssentials.FileHandler
             List = List.Where(x => x.Name != (name ?? fileName)).ToList();
         }
 
-        public virtual void LoadAll()
+        public virtual void ReloadAll()
         {
             Core.Instance.Logger.LogInfo($"Loading {Name}s..");
             List.Clear();
