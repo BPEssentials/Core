@@ -97,14 +97,13 @@ namespace BPEssentials
             foreach (var command in Settings.Commands)
             {
                 Logger.LogInfo($"[C] Registering command {command.CommandName}..");
-                var name = "bpe:c:" + command.CommandName;
                 if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
                 {
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
                 }
-                CommandHandler.RemoveCommand(name);
-                CommandHandler.RegisterCommand(name, command.Commands, del, (player, apiCommand) =>
+                CommandHandler.RemoveCommand(command.CommandName);
+                CommandHandler.RegisterCommand(command.CommandName, command.Commands, del, (player, apiCommand) =>
                 {
                     if (command.Disabled)
                     {
@@ -121,8 +120,8 @@ namespace BPEssentials
         {
             foreach (var customCommand in CustomCommandsReader.Parsed)
             {
-                Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)}..");
-                var name = "bpe:cc:" + customCommand.Name;
+                Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)} by name '{customCommand.Name}'..");
+                var name = "cc." + customCommand.Name;
                 CommandHandler.RemoveCommand(name);
                 CommandHandler.RegisterCommand(name, customCommand.Commands, new Action<ShPlayer>((player) =>
                 {

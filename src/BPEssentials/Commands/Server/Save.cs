@@ -15,7 +15,6 @@ namespace BPEssentials.Commands
             player.TS("saving_game");
             player.manager.svManager.SaveAll();
 
-
             // TODO: Move this into the Save Event
             Core.Instance.CooldownHandler.SaveCooldowns();
         }
