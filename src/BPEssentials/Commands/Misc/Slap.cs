@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
             target.svPlayer.Damage(DamageIndex.Null, amount, null, null);
             target.svPlayer.SvForce(new UnityEngine.Vector3(500f, 0f, 500f));
             target.TS("target_slap", player.username.SanitizeString(), amount.ToString());
-            player.TS("player_slap", player.username.SanitizeString(), amount.ToString());
+            player.TS("player_slap", target.username.SanitizeString(), amount.ToString());
         }
     }
 }
