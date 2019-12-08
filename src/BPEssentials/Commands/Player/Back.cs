@@ -6,8 +6,9 @@ namespace BPEssentials.Commands
 {
     public class Back : Command
     {
-        public void Invoke(ShPlayer player, ShPlayer target)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
+            target = target ?? player;
             var lastlocation = target.GetExtendedPlayer().LastLocation;
             if (!lastlocation.HasPositionSet())
             {
