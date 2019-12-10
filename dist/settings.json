@@ -293,6 +293,19 @@
         "discord",
         "discordlink"
       ]
+    },
+    {
+      "CommandName": "WarnList",
+      "Commands": [
+        "warns",
+        "listwarns"
+      ]
+    },
+    {
+      "CommandName": "Warn",
+      "Commands": [
+        "warn"
+      ]
     }
   ]
 }

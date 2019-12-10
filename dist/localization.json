@@ -72,6 +72,10 @@
     "player_vehicle_repaired": "Repaired {0}.",
     "player_vehicle_spawned": "Spawned {0}.",
     "player_give": "Gave {0} {2} {1}.",
-    "discord": "Our Discord: {0}"
+    "discord": "Our Discord: {0}",
+    "all_warned": "{0} warned {1} for {1}",
+    "player_warn" : "You have warned {0} for the reason: {1}",
+    "target_warn" : "You have been warned by {0} for the reason: {1}",
+    "warns": "Warns of {0} {1}: {2}",
   }
 }
