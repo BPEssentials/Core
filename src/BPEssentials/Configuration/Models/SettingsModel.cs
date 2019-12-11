@@ -10,6 +10,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public Messages Messages { get; set; }
 
+        public Levenshtein Levenshtein { get; set; }
+
         public FunctionUI FunctionUI { get; set; }
 
         public ReportOptions ReportOptions { get; set; }
@@ -32,6 +34,19 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool AllowWhileCuffed { get; set; } = true;
 
         public bool AllowWhileJailed { get; set; } = true;
+    }
+
+    public enum LevenshteinMode {
+        Automatic,
+        Suggest,
+        None
+    }
+
+    public class Levenshtein 
+    {
+        public LevenshteinMode GiveMode { get; set; }
+        public LevenshteinMode WarpMode { get; set; }
+        public LevenshteinMode KitMode { get; set; }
     }
 
     public class ReportOptions

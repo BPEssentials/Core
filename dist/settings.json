@@ -7,6 +7,11 @@
   "Messages": {
     "DiscordLink": "http://discord.gg/WpdNCDw"
   },
+  "Levenshtein": {
+    "GiveMode": "Automatic",
+    "WarpMode": "Suggest",
+    "KitMode": "Suggest"
+  },
   "Commands": [
     {
       "CommandName": "Essentials",

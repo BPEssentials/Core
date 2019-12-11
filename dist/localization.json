@@ -77,5 +77,7 @@
     "player_warn" : "You have warned {0} for the reason: {1}",
     "target_warn" : "You have been warned by {0} for the reason: {1}",
     "warns": "Warns of {0} {1}: {2}",
+    "levenshteinSuggest": "Did you mean {0}?",
+    "give_notFound": "The item {0} was not found."
   }
 }
