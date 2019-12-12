@@ -280,6 +280,8 @@
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Moderation\StaffChat.cs" />
+    <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />

@@ -313,6 +313,19 @@
       "Commands": [
         "warn"
       ]
+    },
+    {
+      "CommandName": "ToggleSpyChat",
+      "Commands": [
+        "spy"
+      ]
+    },
+    {
+      "CommandName": "StaffChat",
+      "Commands": [
+        "staffchat",
+        "sc"
+      ]
     }
   ]
 }

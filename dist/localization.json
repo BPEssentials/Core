@@ -78,6 +78,10 @@
     "target_warn" : "You have been warned by {0} for the reason: {1}",
     "warns": "Warns of {0} {1}: {2}",
     "levenshteinSuggest": "Did you mean {0}?",
-    "give_notFound": "The item {0} was not found."
+    "give_notFound": "The item {0} was not found.",
+    "staff_chat_enabled": "Staff chat has been enabled.",
+    "staff_chat_disabled": "Staff chat has been disabled.",
+    "spy_chat_enabled": "Spy chat has been enabled.",
+    "spy_chat_disabled": "Spy chat has been disabled."
   }
 }

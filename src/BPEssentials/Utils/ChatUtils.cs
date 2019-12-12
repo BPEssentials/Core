@@ -20,7 +20,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.SanitizeString()}: {message}"); // to Username
+                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.SanitizeString()}: {message}");
             }
         }
 
