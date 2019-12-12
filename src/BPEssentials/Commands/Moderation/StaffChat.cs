@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string text = "")
         {
             var ePlayer = player.GetExtendedPlayer();
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrWhiteSpace(text))
             {
                 if (ePlayer.CurrentChat == Enums.Chat.StaffChat)
                 {
