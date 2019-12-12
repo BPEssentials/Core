@@ -1,6 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.ExtensionMethods.Cooldowns;
+using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System.Linq;
@@ -14,22 +15,33 @@ namespace BPEssentials.Commands
             var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
             if (obj == null)
             {
-                player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
-                return;
+                if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
+                {
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    return;
+                }
+                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, obj.Name)).FirstOrDefault();
+
+                if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
+                {
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    player.TS("levenshteinSuggest", obj.Name);
+                    return;
+                }
             }
-            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{kit}"))
+            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{obj.Name}"))
             {
-                player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.KitHandler.Name), kit);
+                player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.KitHandler.Name), obj.Name);
                 return;
             }
             if (obj.Disabled)
             {
-                player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), kit);
+                player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), obj.Name);
                 return;
             }
-            if (player.HasCooldown(Core.Instance.KitHandler.Name, kit))
+            if (player.HasCooldown(Core.Instance.KitHandler.Name, obj.Name))
             {
-                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), player.GetCooldown(Core.Instance.KitHandler.Name, kit).ToString());
+                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), player.GetCooldown(Core.Instance.KitHandler.Name, obj.Name).ToString());
                 return;
             }
             if (obj.Price > 0)
@@ -44,11 +56,11 @@ namespace BPEssentials.Commands
             obj.GiveItems(player);
             if (obj.Delay > 0)
             {
-                player.AddCooldown(Core.Instance.KitHandler.Name, kit, obj.Delay);
+                player.AddCooldown(Core.Instance.KitHandler.Name, obj.Name, obj.Delay);
             }
             player.SendChatMessage(
-                player.T(Core.Instance.KitHandler.Name + "_received", kit) + 
-                (obj.Price > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") + 
+                player.T(Core.Instance.KitHandler.Name + "_received", obj.Name) +
+                (obj.Price > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") +
                 (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
         }
     }

@@ -8,6 +8,8 @@ namespace BPEssentials.Commands
 {
     public class Ban : Command
     {
+        public override bool LastArgSpaces { get; } = true;
+
         public void Invoke(ShPlayer player, ShPlayer target, string reason = "No reason provided.")
         {
             ChatUtils.SendToAllEnabledChatT("all_ban", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());

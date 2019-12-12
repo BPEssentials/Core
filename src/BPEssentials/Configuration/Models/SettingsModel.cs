@@ -6,9 +6,11 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     {
         public General General { get; set; }
 
+        public List<string> Announcements { get; set; }
+
         public Messages Messages { get; set; }
 
-        public List<string> Announcements { get; set; }
+        public Levenshtein Levenshtein { get; set; }
 
         public FunctionUI FunctionUI { get; set; }
 
@@ -34,6 +36,19 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool AllowWhileJailed { get; set; } = true;
     }
 
+    public enum LevenshteinMode {
+        Automatic,
+        Suggest,
+        None
+    }
+
+    public class Levenshtein 
+    {
+        public LevenshteinMode GiveMode { get; set; }
+        public LevenshteinMode WarpMode { get; set; }
+        public LevenshteinMode KitMode { get; set; }
+    }
+
     public class ReportOptions
     {
     }
@@ -52,5 +67,9 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public string Version { get; set; }
 
         public int AnnounceInterval { get; set; }
+
+        public int[] KeptItemsOnDeath { get; set; }
+
+        public bool KeepAllItemsOnDeath { get; set; }
     }
 }

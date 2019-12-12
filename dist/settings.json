@@ -1,11 +1,18 @@
 {
   "General": {
     "Version": "3.0.0",
-    "AnnounceInterval": 120
+    "AnnounceInterval": 120,
+    "KeepAllItemsOnDeath": false,
+    "KeptItemsOnDeath": []
   },
   "Announcements": [],
   "Messages": {
     "DiscordLink": "http://discord.gg/WpdNCDw"
+  },
+  "Levenshtein": {
+    "GiveMode": "Automatic",
+    "WarpMode": "Suggest",
+    "KitMode": "Suggest"
   },
   "Commands": [
     {
@@ -292,6 +299,32 @@
       "Commands": [
         "discord",
         "discordlink"
+      ]
+    },
+    {
+      "CommandName": "WarnList",
+      "Commands": [
+        "warns",
+        "listwarns"
+      ]
+    },
+    {
+      "CommandName": "Warn",
+      "Commands": [
+        "warn"
+      ]
+    },
+    {
+      "CommandName": "ToggleSpyChat",
+      "Commands": [
+        "spy"
+      ]
+    },
+    {
+      "CommandName": "StaffChat",
+      "Commands": [
+        "staffchat",
+        "sc"
       ]
     }
   ]

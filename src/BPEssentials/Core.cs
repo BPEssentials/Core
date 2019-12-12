@@ -37,7 +37,7 @@ namespace BPEssentials
         public Announcer Announcer { get; set; }
 
         public I18n I18n { get; set; }
-        
+
         public SvManager SvManager { get; set; }
 
         public CooldownHandler CooldownHandler { get; set; }
@@ -58,16 +58,14 @@ namespace BPEssentials
                 Website = "https://userr00t.github.io/BP-Essentials/"
             };
 
-            OnReloadRequestAsync();
-            SetCutsomData();
-
             CooldownHandler = new CooldownHandler();
 
             WarpHandler = new WarpHandler();
-            WarpHandler.LoadAll();
 
             KitHandler = new KitHandler();
-            KitHandler.LoadAll();
+
+            OnReloadRequestAsync();
+            SetCustomData();
 
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
@@ -77,7 +75,7 @@ namespace BPEssentials
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 
-        private void SetCutsomData()
+        private void SetCustomData()
         {
             CustomData.AddOrUpdate("version", Version);
             CustomData.AddOrUpdate("devbuild", IsDevelopmentBuild());
@@ -164,6 +162,8 @@ namespace BPEssentials
             RegisterCommands();
             SetupAnnouncer();
             SetupI18n();
+            WarpHandler.ReloadAll();
+            KitHandler.ReloadAll();
         }
 
         public void OnVersionRequest(string callback)
