@@ -21,7 +21,7 @@ namespace BPEssentials.Modules
 
         public void FindAll()
         {
-            foreach (var plugin in (IEnumerable<Plugin>)Plugins.GetPlugin("please replace me later"))
+            foreach (var plugin in (IEnumerable<Plugin>)Plugins.GetPlugin("please replace me later")) // TODO: Replace line with 'Plugins.GetAll()', just needed something to test it with
             {
                 if (!plugin.CustomData.TryFetchCustomData("bpe:isModule", out bool val) || !val)
                 {
