@@ -65,7 +65,7 @@ namespace BPEssentials
             KitHandler = new KitHandler();
 
             OnReloadRequestAsync();
-            SetCutsomData();
+            SetCustomData();
 
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
@@ -75,7 +75,7 @@ namespace BPEssentials
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 
-        private void SetCutsomData()
+        private void SetCustomData()
         {
             CustomData.AddOrUpdate("version", Version);
             CustomData.AddOrUpdate("devbuild", IsDevelopmentBuild());
