@@ -67,5 +67,9 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public string Version { get; set; }
 
         public int AnnounceInterval { get; set; }
+
+        public int[] KeptItemsOnDeath { get; set; }
+
+        public bool KeepAllItemsOnDeath { get; set; }
     }
 }

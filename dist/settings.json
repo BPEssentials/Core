@@ -1,7 +1,9 @@
 {
   "General": {
     "Version": "3.0.0",
-    "AnnounceInterval": 120
+    "AnnounceInterval": 120,
+    "KeepAllItemsOnDeath": false,
+    "KeptItemsOnDeath": []
   },
   "Announcements": [],
   "Messages": {
