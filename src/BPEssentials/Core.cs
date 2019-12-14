@@ -54,8 +54,8 @@ namespace BPEssentials
             Info = new PluginInfo("BPEssentials", "BPE", new List<PluginAuthor> { new PluginAuthor("UserR00T"), new PluginAuthor("PLASMA_chicken") })
             {
                 Description = "Basic commands for powerful moderation.",
-                Git = "https://github.com/UserR00T/BP-Essentials/",
-                Website = "https://userr00t.github.io/BP-Essentials/"
+                Git = "https://github.com/BPEssentials/Core",
+                Website = "https://bpessentials.github.io/Docs/"
             };
 
             CooldownHandler = new CooldownHandler();
