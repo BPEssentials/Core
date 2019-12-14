@@ -13,7 +13,7 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target, string reason)
         {
-            player.AddWarn(player, reason);
+            target.AddWarn(player, reason);
             ChatUtils.SendToAllEnabledChatT("all_warned", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());
             player.TS("player_warned", target.username.SanitizeString(), reason.SanitizeString());
             player.TS("target_warned", player.username.SanitizeString(), reason.SanitizeString());
