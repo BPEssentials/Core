@@ -45,7 +45,7 @@ namespace BPEssentials
                 try
                 {
                     Core.Instance.Logger.LogWarning($"{file.Key} was not found; downloading.");
-                    var content = await Client.GetStringAsync($"{Core.Instance.Info.Git}/raw/{(Core.IsDevelopmentBuild() ? "development" : "master")}/dist/{file.Key}");
+                    var content = await Client.GetStringAsync($"{Core.Instance.Info.Git}/raw/{(Core.IsDevelopmentBuild() ? "master" : Core.Version)}/dist/{file.Key}");
                     File.WriteAllText(file.Value, content);
                     Core.Instance.Logger.LogInfo($"{file.Key} was downloaded.");
                 }
