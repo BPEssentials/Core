@@ -17,14 +17,14 @@ namespace BPEssentials.Commands
             {
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
                     return;
                 }
-                obj = Core.Instance.WarpHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, obj.Name)).FirstOrDefault();
+                obj = Core.Instance.WarpHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, warp)).FirstOrDefault();
 
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
                     player.TS("levenshteinSuggest", obj.Name);
                     return;
                 }

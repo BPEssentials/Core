@@ -17,14 +17,14 @@ namespace BPEssentials.Commands
             {
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                     return;
                 }
-                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, obj.Name)).FirstOrDefault();
+                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, kit)).FirstOrDefault();
 
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                     player.TS("levenshteinSuggest", obj.Name);
                     return;
                 }
