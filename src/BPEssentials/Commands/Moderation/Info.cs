@@ -2,6 +2,7 @@
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
 
@@ -26,8 +27,7 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-
-            // TODO: send as server info or CEF (pref server info to limit footprint)
+            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
         }
 
         // TODO: Add i18n for this
