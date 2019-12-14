@@ -21,7 +21,12 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public override string ToString()
             {
-                return $"{Reason} by {IssuerSteamID}";
+                var issuer = Core.Instance.SvManager.Database.Users.FindById(IssuerSteamID);
+                if (issuer == null)
+                {
+                    return $"{Reason} by {IssuerSteamID}";
+                }
+                return $"{Reason} by {issuer.Character.Username}";
             }
         }
 
