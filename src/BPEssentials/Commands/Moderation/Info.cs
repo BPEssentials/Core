@@ -75,7 +75,7 @@ namespace BPEssentials.Commands
                 .Append("    - Rank: ").AppendLine(target.Character.Job.Rank.ToString())
                 .Append("    - Experience: ").AppendLine(target.Character.Job.Experience.ToString())
 
-              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + x.Value)));
+              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + Newtonsoft.Json.JsonConvert.SerializeObject(x.Value))));
 
             return sb;
         }
