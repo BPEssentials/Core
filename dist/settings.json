@@ -315,6 +315,12 @@
       ]
     },
     {
+      "CommandName": "WarnRemove",
+      "Commands": [
+        "removewarn"
+      ]
+    },
+    {
       "CommandName": "ToggleSpyChat",
       "Commands": [
         "spy"
