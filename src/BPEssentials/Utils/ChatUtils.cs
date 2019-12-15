@@ -16,7 +16,7 @@ namespace BPEssentials.Utils
         {
             foreach (var currPlayer in EntityCollections.Humans)
             {
-                if (currPlayer == player || !currPlayer.GetExtendedPlayer().CanRecieveStaffChat)
+                if (!currPlayer.GetExtendedPlayer().CanRecieveStaffChat)
                 {
                     continue;
                 }
