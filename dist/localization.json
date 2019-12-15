@@ -82,7 +82,18 @@
     "staff_chat_enabled": "Staff chat has been enabled.",
     "staff_chat_disabled": "Staff chat has been disabled.",
     "spy_chat_enabled": "Spy chat has been enabled.",
-    "spy_chat_disabled": "Spy chat has been disabled."
+    "spy_chat_disabled": "Spy chat has been disabled.",
+    "warns_for": "Warns for {0}",
+    "none": "none",
+    "warns_count": "Total Count: {0} Warns",
+    "warn_remove_error_null_or_negative": "WarnId {0} cannot be negative or null.",
+    "warn_remove_error_notExistant": "The Warn {0} does not exist",
+    "player_warn_removed": "Removed the Warn {0}",
+    "warn_toString": "{0} by {1} on {2}",
+    "command_disabled": "The Command {0} is disabled.",
+    "command_failed_cuffed": "This Command cannot be used when cuffed!",
+    "command_failed_jail": "This Command cannot be used when in jail!",
+    "command_failed_crimes": "This Command cannot be used when wanted!"
   },
   "BR": {
     "arrested": "Preso {0}.",
