@@ -41,6 +41,13 @@ namespace BPEssentials.ExtensionMethods.Warns
             player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
         }
 
+        public static void RemoveWarn(this ShPlayer player, int warnId)
+        {
+            var warns = GetWarns(player);
+            warns.Remove(warns[warnId]);
+            player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
+        }
+
         public static List<SerializableWarn> GetWarns(this ShPlayer player)
         {
             player.svPlayer.CustomData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns);
