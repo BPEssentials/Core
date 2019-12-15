@@ -110,7 +110,12 @@ namespace BPEssentials
                         player.TS("command_disabled", command.CommandName);
                         return false;
                     }
-                    if(!command.AllowWhileCuffed && player.IsRestrained())
+                    if (!command.AllowWhileDead && player.IsDead())
+                    {
+                        player.TS("command_failed_crimes", command.CommandName);
+                        return false;
+                    }
+                    if (!command.AllowWhileCuffed && player.IsRestrained())
                     {
                         player.TS("command_failed_cuffed", command.CommandName);
                         return false;

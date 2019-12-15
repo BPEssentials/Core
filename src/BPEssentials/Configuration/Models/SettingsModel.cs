@@ -29,6 +29,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public bool Disabled { get; set; }
 
+        public bool AllowWhileDead { get; set; } = true;
+
         public bool AllowWithCrimes { get; set; } = true;
 
         public bool AllowWhileCuffed { get; set; } = true;
