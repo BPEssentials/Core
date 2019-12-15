@@ -19,7 +19,7 @@ namespace BPEssentials.Commands
                 return;
             }
             target = target ?? player;
-            var warns = target.GetWarns().Select(warn => warn.ToString()).ToArray();
+            var warns = target.GetWarns().Select(warn => warn.ToString(player)).ToArray();
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(player.T("warns_for", target.username.SanitizeString()));
             if (warns.Length == 0)

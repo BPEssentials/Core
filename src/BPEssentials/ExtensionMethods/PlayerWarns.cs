@@ -24,14 +24,10 @@ namespace BPEssentials.ExtensionMethods.Warns
                 Date = dateTime;
             }
 
-            public override string ToString()
+            public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.Database.Users.FindById(IssuerSteamID);
-                if (issuer == null)
-                {
-                    return $"{Reason} by {IssuerSteamID}";
-                }
-                return $"{Reason} by {issuer.Character.Username} on {Date.ToString(CultureInfo.InvariantCulture)}";
+                return player.T("warn_toString", Reason, issuer != null ? issuer.Character.Username : IssuerSteamID, Date.ToString(CultureInfo.InvariantCulture));
             }
         }
 

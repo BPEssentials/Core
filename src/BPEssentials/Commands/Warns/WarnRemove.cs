@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
                 player.TS("warn_remove_error_notExistant", warnId.ToString());
                 return;
             }
-            player.TS("player_warn_removed", warns[warnId - 1].ToString());
+            player.TS("player_warn_removed", warns[warnId - 1].ToString(player));
             target.RemoveWarn(warnId - 1);
         }
     }
