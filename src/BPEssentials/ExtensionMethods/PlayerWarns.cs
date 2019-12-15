@@ -1,6 +1,7 @@
 ﻿using BrokeProtocol.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace BPEssentials.ExtensionMethods.Warns
 {
@@ -30,7 +31,7 @@ namespace BPEssentials.ExtensionMethods.Warns
                 {
                     return $"{Reason} by {IssuerSteamID}";
                 }
-                return $"{Reason} by {issuer.Character.Username} on {Date.ToString()}";
+                return $"{Reason} by {issuer.Character.Username} on {Date.ToString(CultureInfo.InvariantCulture)}";
             }
         }
 
