@@ -162,7 +162,11 @@
         "tpa",
         "tprequest",
         "teleportrequest"
-      ]
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
     },
     {
       "CommandName": "TpaAccept",
@@ -171,7 +175,11 @@
         "tpaaccept",
         "tpaa",
         "accept"
-      ]
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
     },
     {
       "CommandName": "TpaDeny",
@@ -212,7 +220,11 @@
       "CommandName": "Warp",
       "Commands": [
         "warp"
-      ]
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
     },
     {
       "CommandName": "WarpCreate",
