@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Basic commands for powerful moderation.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BPE - https://userr00t.github.io/BP-Essentials/")]
+[assembly: AssemblyProduct("BPE - https://bpessentials.github.io/Docs/")]
 [assembly: AssemblyCopyright("(c) BP-Essentials.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("6898544b-a280-4866-ba6f-9d0dc8f62ca8")]
 
-[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0-prerelease.1")]

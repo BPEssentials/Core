@@ -2,6 +2,7 @@
 using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
 
@@ -26,8 +27,7 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-
-            // TODO: send as server info or CEF (pref server info to limit footprint)
+            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
         }
 
         // TODO: Add i18n for this
@@ -75,7 +75,7 @@ namespace BPEssentials.Commands
                 .Append("    - Rank: ").AppendLine(target.Character.Job.Rank.ToString())
                 .Append("    - Experience: ").AppendLine(target.Character.Job.Experience.ToString())
 
-              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + x.Value)));
+              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + Newtonsoft.Json.JsonConvert.SerializeObject(x.Value))));
 
             return sb;
         }

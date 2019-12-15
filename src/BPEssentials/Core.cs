@@ -4,10 +4,12 @@ using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
+using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
+using BrokeProtocol.Utility.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -54,8 +56,8 @@ namespace BPEssentials
             Info = new PluginInfo("BPEssentials", "BPE", new List<PluginAuthor> { new PluginAuthor("UserR00T"), new PluginAuthor("PLASMA_chicken") })
             {
                 Description = "Basic commands for powerful moderation.",
-                Git = "https://github.com/UserR00T/BP-Essentials/",
-                Website = "https://userr00t.github.io/BP-Essentials/"
+                Git = "https://github.com/BPEssentials/Core",
+                Website = "https://bpessentials.github.io/Docs/"
             };
 
             CooldownHandler = new CooldownHandler();
@@ -105,10 +107,32 @@ namespace BPEssentials
                 {
                     if (command.Disabled)
                     {
-                        player.SendChatMessage("Command disabled");
+                        player.TS("command_disabled", command.CommandName);
                         return false;
                     }
-                    // TODO: implement allowwhileX here
+                    if (!player.GetExtendedPlayer().EnabledBypass)
+                    {
+                        if (!command.AllowWhileDead && player.IsDead())
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWhileCuffed && player.IsRestrained())
+                        {
+                            player.TS("command_failed_cuffed", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWhileJailed && player.job is Prisoner)
+                        {
+                            player.TS("command_failed_jail", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWithCrimes && player.wantedLevel != 0)
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
+                    }
                     return true;
                 }, instance.LastArgSpaces);
             }
