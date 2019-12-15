@@ -110,25 +110,28 @@ namespace BPEssentials
                         player.TS("command_disabled", command.CommandName);
                         return false;
                     }
-                    if (!command.AllowWhileDead && player.IsDead())
+                    if (!player.GetExtendedPlayer().EnabledBypass)
                     {
-                        player.TS("command_failed_crimes", command.CommandName);
-                        return false;
-                    }
-                    if (!command.AllowWhileCuffed && player.IsRestrained())
-                    {
-                        player.TS("command_failed_cuffed", command.CommandName);
-                        return false;
-                    }
-                    if (!command.AllowWhileJailed && player.job is Prisoner)
-                    {
-                        player.TS("command_failed_jail", command.CommandName);
-                        return false;
-                    }
-                    if (!command.AllowWithCrimes && player.wantedLevel != 0)
-                    {
-                        player.TS("command_failed_crimes", command.CommandName);
-                        return false;
+                        if (!command.AllowWhileDead && player.IsDead())
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWhileCuffed && player.IsRestrained())
+                        {
+                            player.TS("command_failed_cuffed", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWhileJailed && player.job is Prisoner)
+                        {
+                            player.TS("command_failed_jail", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWithCrimes && player.wantedLevel != 0)
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
                     }
                     return true;
                 }, instance.LastArgSpaces);
