@@ -4,10 +4,12 @@ using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
+using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
+using BrokeProtocol.Utility.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -105,10 +107,24 @@ namespace BPEssentials
                 {
                     if (command.Disabled)
                     {
-                        player.SendChatMessage("Command disabled");
+                        player.TS("command_disabled", command.CommandName);
                         return false;
                     }
-                    // TODO: implement allowwhileX here
+                    if(!command.AllowWhileCuffed && player.IsRestrained())
+                    {
+                        player.TS("command_failed_cuffed", command.CommandName);
+                        return false;
+                    }
+                    if (!command.AllowWhileJailed && player.job is Prisoner)
+                    {
+                        player.TS("command_failed_jail", command.CommandName);
+                        return false;
+                    }
+                    if (!command.AllowWithCrimes && player.wantedLevel != 0)
+                    {
+                        player.TS("command_failed_crimes", command.CommandName);
+                        return false;
+                    }
                     return true;
                 }, instance.LastArgSpaces);
             }
