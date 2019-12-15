@@ -4,6 +4,7 @@ using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
+using System;
 using System.Linq;
 
 namespace BPEssentials.Commands
@@ -12,7 +13,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string warp)
         {
-            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name == warp);
+            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name.Equals(warp, StringComparison.OrdinalIgnoreCase)));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.None)

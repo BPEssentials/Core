@@ -4,6 +4,7 @@ using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
+using System;
 using System.Linq;
 
 namespace BPEssentials.Commands
@@ -12,7 +13,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string kit)
         {
-            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
+            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name.Equals(kit, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
