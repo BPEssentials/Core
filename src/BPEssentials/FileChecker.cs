@@ -51,7 +51,7 @@ namespace BPEssentials
                 }
                 catch (HttpRequestException e)
                 {
-                    Core.Instance.Logger.LogError($"{file.Key} could not be donwloaded because of: {e.Message}.");
+                    Core.Instance.Logger.LogError($"{file.Key} could not be downloaded because of: {e.Message}.");
                 }
             }
         }
