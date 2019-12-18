@@ -17,12 +17,12 @@ namespace BPEssentials.ExtensionMethods
         public static void ResetAndSavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
             player.SavePosition();
-            player.Client.svPlayer.SvReset(position, rotation, index);
+            player.Client.svPlayer.SvRestore(position, rotation, index);
         }
         public static void ResetAndSavePosition(this PlayerItem player, ShPlayer targetPlayer)
         {
             player.SavePosition();
-            player.Client.svPlayer.SvReset(targetPlayer.GetPosition(), targetPlayer.GetRotation(), targetPlayer.GetPlaceIndex());
+            player.Client.svPlayer.SvRestore(targetPlayer.GetPosition(), targetPlayer.GetRotation(), targetPlayer.GetPlaceIndex());
         }
     }
 }
