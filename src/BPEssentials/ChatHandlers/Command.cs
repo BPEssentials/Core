@@ -6,13 +6,9 @@ using BrokeProtocol.Collections;
 
 namespace BPEssentials.ChatHandlers
 {
-    public class GlobalCommand : IScript
+    public class Command : IScript
     {
-        public GlobalCommand()
-        {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnCommand, new Action<ShPlayer, string>(OnEvent));
-        }
-
+        [Target(GameSourceEvent.PlayerCommand, ExecutionMode.Event)]
         public void OnEvent(ShPlayer player, string message)
         {
             Core.Instance.Logger.LogInfo($"[COMMAND] {player.username}: {message}");
