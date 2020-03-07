@@ -1,7 +1,7 @@
 ﻿using BPEssentials.ExtendedPlayer;
-using BrokeProtocol.API.Types;
 using BrokeProtocol.Entities;
-using System.Linq;
+using BrokeProtocol.Utility;
+using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.ExtensionMethods
 {
@@ -24,6 +24,12 @@ namespace BPEssentials.ExtensionMethods
         public static void TS(this ShPlayer player, string node, params string[] formatting)
         {
             player.SendChatMessage(player.T(node, formatting));
+        }
+
+        public static void SendChatMessage(this ShPlayer player, string message, bool useColors = false)
+        {
+            message = useColors ? message.ParseColorCodes() : message;
+            player.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BPEssentials.Commands
                 player.TS("price_error_negative");
                 return;
             }
-            if (player.svPlayer.InApartment())
+            if (player.svPlayer.InApartment)
             {
                 player.TS("warpCreate_error_inApartment");
                 return;
@@ -37,8 +37,8 @@ namespace BPEssentials.Commands
                 Delay = Math.Max(0, delay),
                 Price = Math.Max(0, price),
                 Name = warp,
-                Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition()), PlaceIndex = player.GetPlaceIndex() },
-                SerializableQuaternion = new SerializableQuaternion(player.GetRotation())
+                Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition), PlaceIndex = player.GetPlaceIndex },
+                SerializableQuaternion = new SerializableQuaternion(player.GetRotation)
             };
             Core.Instance.WarpHandler.CreateNew(obj, warp);
             player.TS("warpCreate_created", warp, price.ToString(), delay.ToString());

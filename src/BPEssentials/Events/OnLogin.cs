@@ -6,11 +6,7 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnLogin : IScript
     {
-        public OnLogin()
-        {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnInitialize, new Action<ShPlayer>(OnEvent));
-        }
-
+        [Target(GameSourceEvent.PlayerInitialize, ExecutionMode.Event)]
         public void OnEvent(ShPlayer player)
         {
             Core.Instance.PlayerHandler.AddOrReplace(player);

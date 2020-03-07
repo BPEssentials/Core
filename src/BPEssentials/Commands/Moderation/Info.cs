@@ -1,9 +1,10 @@
 ﻿using BPEssentials.Abstractions;
-using BrokeProtocol.API.ExtensionMethods;
-using BrokeProtocol.Collections;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
+
 
 namespace BPEssentials.Commands
 {
@@ -14,27 +15,20 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-            if (EntityCollections.TryGetPlayerByNameOrId(targetStr, out ShPlayer target))
-            {
-                sb = GetOnlineInfo(target);
-            }
-            else
-            {
-                sb = GetOfflineInfo(player, targetStr);
-            }
+            sb = GetOfflineInfo(player, targetStr);
+
             if (sb == null)
             {
                 return;
             }
-
-            // TODO: send as server info or CEF (pref server info to limit footprint)
+            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
         }
 
         // TODO: Add i18n for this
         // TODO: There might be a better way to do this, for example using reflection.
         private StringBuilder GetOfflineInfo(ShPlayer player, string targetStr)
         {
-            var target = player.manager.svManager.Database.Users.FindById(targetStr);
+            var target = player.manager.svManager.database.Users.FindById(targetStr);
             if (target == null)
             {
                 player.SendChatMessage($"No account found with the id '{targetStr}'.");
@@ -42,7 +36,7 @@ namespace BPEssentials.Commands
             }
             var sb = new StringBuilder();
             sb
-            .Append("SteamID64: ").AppendLine(target.ID.ToString())
+            .Append("accountID64: ").AppendLine(target.ID.ToString())
             .Append("Last Updated: ").AppendLine(target.LastUpdated.ToString())
             .Append("Join Date: ").AppendLine(target.JoinDate.ToString())
 
@@ -52,7 +46,7 @@ namespace BPEssentials.Commands
               .Append("  - Date: ").AppendLine(target.BanInfo?.Date.ToString())
 
             .AppendLine("Character:")
-              .Append("  - Username: ").Append(target.Character.Username.SanitizeString()).AppendLine(" (Sanitized)")
+              .Append("  - Username: ").Append(target.Character.Username.CleanerMessage()).AppendLine(" (Sanitized)")
               .Append("  - Health: ").AppendLine(target.Character.Health.ToString())
               .Append("  - BankBalance: ").AppendLine(target.Character.BankBalance.ToString())
               .Append("  - Position: ").AppendLine(target.Character.Position.ToString())
@@ -75,7 +69,7 @@ namespace BPEssentials.Commands
                 .Append("    - Rank: ").AppendLine(target.Character.Job.Rank.ToString())
                 .Append("    - Experience: ").AppendLine(target.Character.Job.Experience.ToString())
 
-              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + x.Value)));
+              .Append("  - CustomData: ").AppendLine(string.Join("\n    - ", target.Character.CustomData.Data.Select(x => x.Key + ": " + Newtonsoft.Json.JsonConvert.SerializeObject(x.Value))));
 
             return sb;
         }
@@ -85,14 +79,14 @@ namespace BPEssentials.Commands
             var sb = new StringBuilder();
             sb
             .Append("ID: ").AppendLine(target.ID.ToString())
-            .Append("SteamID64: ").AppendLine(target.steamID.ToString())
-            .Append("Username: ").Append(target.username.SanitizeString()).AppendLine(" (Sanitized)")
+            .Append("accountID64: ").AppendLine(target.accountID.ToString())
+            .Append("Username: ").Append(target.username.CleanerMessage()).AppendLine(" (Sanitized)")
             .Append("Health: ").AppendLine(target.health.ToString())
             .Append("BankBalance: ").AppendLine(target.svPlayer.bankBalance.ToString())
-            .Append("Position: ").AppendLine(target.GetPosition().ToString())
-            .Append("Rotation: ").AppendLine(target.GetRotation().ToString())
+            .Append("Position: ").AppendLine(target.GetPosition.ToString())
+            .Append("Rotation: ").AppendLine(target.GetRotation.ToString())
             .Append("Stats: ").AppendLine(string.Join("\n    - ", target.stats))
-            .Append("Expecting more info? Type '/info ").Append(target.steamID.ToString()).AppendLine("'.");
+            .Append("Expecting more info? Type '/info ").Append(target.accountID.ToString()).AppendLine("'.");
             return sb;
         }
     }

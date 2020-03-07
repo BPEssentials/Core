@@ -6,11 +6,7 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnLeave : IScript
     {
-        public OnLeave()
-        {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnDestroy, new Action<ShPlayer>(OnEvent));
-        }
-
+        [Target(GameSourceEvent.PlayerDestroy, ExecutionMode.Event)]
         public void OnEvent(ShPlayer player)
         {
             Core.Instance.PlayerHandler.Remove(player.ID);

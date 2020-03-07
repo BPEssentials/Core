@@ -1,7 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
@@ -15,8 +15,8 @@ namespace BPEssentials.Commands
                 player.TS("no_tpa_requests");
                 return;
             }
-            ePlayer.TpaUser.TS("TpaUser_tpa_denied", player.username.SanitizeString());
-            player.TS("player_tpa_denied", ePlayer.TpaUser.username.SanitizeString());
+            ePlayer.TpaUser.TS("TpaUser_tpa_denied", player.username.CleanerMessage());
+            player.TS("player_tpa_denied", ePlayer.TpaUser.username.CleanerMessage());
             ePlayer.TpaUser = null;
         }
     }

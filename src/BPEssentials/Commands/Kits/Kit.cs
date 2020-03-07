@@ -4,6 +4,7 @@ using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
+using System;
 using System.Linq;
 
 namespace BPEssentials.Commands
@@ -12,24 +13,24 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string kit)
         {
-            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name == kit);
+            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name.Equals(kit, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                     return;
                 }
-                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, obj.Name)).FirstOrDefault();
+                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, kit)).FirstOrDefault();
 
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                     player.TS("levenshteinSuggest", obj.Name);
                     return;
                 }
             }
-            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{obj.Name}"))
+            if (!player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.KitHandler.Name}.{obj.Name}"))
             {
                 player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.KitHandler.Name), obj.Name);
                 return;

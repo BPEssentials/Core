@@ -1,6 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
+using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility.Networking;
 
@@ -13,7 +13,7 @@ namespace BPEssentials.Commands
             target = target ?? player;
             target.ClearCrimes();
             target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ClearCrimes, target.ID);
-            player.TS("cleared_crimes", target.username.SanitizeString());
+            player.TS("cleared_crimes", target.username.CleanerMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
+using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -12,7 +12,7 @@ namespace BPEssentials.Commands
             target = target ?? player;
             target.svPlayer.SvForce(new UnityEngine.Vector3(0f, 6500f, 0f));
             target.TS("target_launched");
-            player.TS("player_launched", target.username.SanitizeString());
+            player.TS("player_launched", target.username.CleanerMessage());
         }
     }
 }

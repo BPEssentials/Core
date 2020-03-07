@@ -4,6 +4,7 @@ using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
+using System;
 using System.Linq;
 
 namespace BPEssentials.Commands
@@ -12,24 +13,24 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string warp)
         {
-            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name == warp);
+            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name.Equals(warp, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
                     return;
                 }
-                obj = Core.Instance.WarpHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, obj.Name)).FirstOrDefault();
+                obj = Core.Instance.WarpHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, warp)).FirstOrDefault();
 
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
-                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), obj.Name);
+                    player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
                     player.TS("levenshteinSuggest", obj.Name);
                     return;
                 }
             }
-            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.WarpHandler.Name}.{obj.Name}"))
+            if (!player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.WarpHandler.Name}.{obj.Name}"))
             {
                 player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.WarpHandler.Name), obj.Name);
                 return;

@@ -2,7 +2,6 @@
 using BPEssentials.ExtensionMethods;
 using BPEssentials.ExtensionMethods.Warns;
 using BPEssentials.Utils;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -13,10 +12,10 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target, string reason)
         {
-            player.AddWarn(player, reason);
-            ChatUtils.SendToAllEnabledChatT("all_warned", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());
-            player.TS("player_warned", target.username.SanitizeString(), reason.SanitizeString());
-            player.TS("target_warned", player.username.SanitizeString(), reason.SanitizeString());
+            target.AddWarn(player, reason);
+            ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.username.CleanerMessage(), reason.CleanerMessage());
+            player.TS("player_warn", target.username.CleanerMessage(), reason.CleanerMessage());
+            player.TS("target_warn", player.username.CleanerMessage(), reason.CleanerMessage());
         }
     }
 }

@@ -42,38 +42,41 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BP-CoreLib">
-      <HintPath>lib\BP-CoreLib.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\Plugins\BP-CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="BPGangs">
+      <HintPath>$(BP_GAMEDIR)\Plugins\BPGangs.dll</HintPath>
     </Reference>
     <Reference Include="EmbedIO">
-      <HintPath>lib\Managed\EmbedIO.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\EmbedIO.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB">
-      <HintPath>lib\Managed\LiteDB.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Managed\Mono.Posix.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Mono.Posix.dll</HintPath>
     </Reference>
     <Reference Include="NavMeshComponents">
-      <HintPath>lib\Managed\NavMeshComponents.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\NavMeshComponents.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Managed\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestClient">
-      <HintPath>lib\Managed\RestClient.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\RestClient.dll</HintPath>
     </Reference>
     <Reference Include="Scripts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Managed\Scripts.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Scripts.dll</HintPath>
     </Reference>
     <Reference Include="SharedMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Managed\SharedMemory.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\SharedMemory.dll</HintPath>
     </Reference>
     <Reference Include="Swan.Lite">
-      <HintPath>lib\Managed\Swan.Lite.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Swan.Lite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -83,7 +86,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel.Internals, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Managed\System.ServiceModel.Internals.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\System.ServiceModel.Internals.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -93,194 +96,198 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>lib\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>lib\Managed\Unity.Timeline.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>lib\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>lib\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>lib\Managed\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.AIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>lib\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ARModule">
-      <HintPath>lib\Managed\UnityEngine.ARModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ARModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>lib\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>lib\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-      <HintPath>lib\Managed\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>lib\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>lib\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>lib\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>lib\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>lib\Managed\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.FileSystemHttpModule">
-      <HintPath>lib\Managed\UnityEngine.FileSystemHttpModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.FileSystemHttpModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>lib\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
-      <HintPath>lib\Managed\UnityEngine.GridModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.GridModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>lib\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>lib\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>lib\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>lib\Managed\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.InputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>lib\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>lib\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>lib\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>lib\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>lib\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>lib\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>lib\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>lib\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>lib\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>lib\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>lib\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>lib\Managed\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>lib\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>lib\Managed\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>lib\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>lib\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>lib\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>lib\Managed\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">
-      <HintPath>lib\Managed\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>lib\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>lib\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>lib\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>lib\Managed\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule">
-      <HintPath>lib\Managed\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>lib\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>lib\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>lib\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>lib\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>lib\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>lib\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>lib\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>lib\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>lib\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>lib\Managed\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>lib\Managed\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
-      <HintPath>lib\Managed\UnityEngine.VRModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.VRModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
-      <HintPath>lib\Managed\UnityEngine.WindModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.WindModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XRModule">
-      <HintPath>lib\Managed\UnityEngine.XRModule.dll</HintPath>
+      <HintPath>$(BP_GAMEDIR)\BrokeProtocol_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Z_GameSource">
+      <HintPath>$(BP_GAMEDIR)\Plugins\zGameSource.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Command.cs" />
     <Compile Include="Announcer.cs" />
-    <Compile Include="ChatHandlers\GlobalCommand.cs" />
+    <Compile Include="ChatHandlers\Command.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
     <Compile Include="Commands\Moderation\StaffChat.cs" />
+    <Compile Include="Commands\Moderation\ToggleBypass.cs" />
     <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
@@ -314,6 +321,7 @@
     <Compile Include="Commands\Kits\Kit.cs" />
     <Compile Include="Commands\Kits\KitCreate.cs" />
     <Compile Include="Commands\Warns\Warn.cs" />
+    <Compile Include="Commands\Warns\WarnRemove.cs" />
     <Compile Include="Commands\Warns\WarnList.cs" />
     <Compile Include="Commands\Warps\WarpList.cs" />
     <Compile Include="Commands\Warps\WarpCreate.cs" />
@@ -328,8 +336,9 @@
     <Compile Include="Configuration\Models\SettingsModel.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Enums\Chat.cs" />
-    <Compile Include="Events\OnStarted.cs" />
+    <Compile Include="Events\OnDropDead.cs" />
     <Compile Include="Events\OnDamage.cs" />
+    <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayer.cs" />
@@ -359,7 +368,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="lib\" />
+    <Folder Include="$(BP_GAMEDIR)\BrokeProtocol_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetFileName)" "$(BP_GAMEDIR)\Plugins\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
