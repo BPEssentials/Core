@@ -1,7 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
-using BrokeProtocol.API.ExtensionMethods;
+
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace BPEssentials.Commands
                 }
             }
             target.TransferItem(DeltaInv.AddToMe, item.Value.index, amount, true);
-            player.TS("player_give", target.username.SanitizeString(), item.Key, amount.ToString());
+            player.TS("player_give", target.username.CleanerMessage(), item.Key, amount.ToString());
         }
     }
 }

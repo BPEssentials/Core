@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
-
 
 namespace BPEssentials.Utils
 {
@@ -20,7 +18,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.SanitizeString()}: {message}");
+                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.CleanerMessage()}: {message}");
             }
         }
 
@@ -36,10 +34,10 @@ namespace BPEssentials.Utils
             }
         }
 
-        public static string FormatMessage(ShPlayer player, string message)
+        public static string FormatMessage(ShPlayer player, string message, string formatKey = "format")
         {
-            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey("bpe:format"));
-            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData("bpe:format", out string formatter))
+            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
+            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
             {
                 try
                 {
@@ -50,8 +48,9 @@ namespace BPEssentials.Utils
                     Core.Instance.Logger.LogException(err);
                 }
             }
-            return $"{player.username}: {message.SanitizeString()}";
+            return $"{player.username}: {message.CleanerMessage()}";
         }
+
 
         public static void SendToAllEnabledChat(string message, bool useColors = true)
         {

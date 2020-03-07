@@ -1,5 +1,4 @@
 ﻿using BrokeProtocol.Collections;
-using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace BPEssentials.Cooldowns
 
         public void Load()
         {
-            foreach (var player in Core.Instance.SvManager.Database.Users.FindAll().ToDictionary(x => x.ID, x => x.Character.CustomData))
+            foreach (var player in Core.Instance.SvManager.database.Users.FindAll().ToDictionary(x => x.ID, x => x.Character.CustomData))
             {
                 if (player.Value.Data == null || !player.Value.Data.ContainsKey(CustomDataKey))
                 {
@@ -42,16 +41,16 @@ namespace BPEssentials.Cooldowns
         {
             foreach (var cooldownPlayer in Cooldowns)
             {
-                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.steamID == cooldownPlayer.Key);
+                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.accountID == cooldownPlayer.Key);
                 if (onlinePlayer)
                 {
                     onlinePlayer.svPlayer.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
                 }
                 else
                 {
-                    var newUser = Core.Instance.SvManager.Database.Users.FindById(cooldownPlayer.Key);
+                    var newUser = Core.Instance.SvManager.database.Users.FindById(cooldownPlayer.Key);
                     newUser.Character.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
-                    Core.Instance.SvManager.Database.Users.Update(newUser);
+                    Core.Instance.SvManager.database.Users.Update(newUser);
                 }
             }
         }

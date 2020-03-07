@@ -30,7 +30,7 @@ namespace BPEssentials.Commands
                     return;
                 }
             }
-            if (!player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.WarpHandler.Name}.{obj.Name}"))
+            if (!player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{Core.Instance.WarpHandler.Name}.{obj.Name}"))
             {
                 player.TS("expFileHandler_error_noPermission", player.T(Core.Instance.WarpHandler.Name), obj.Name);
                 return;

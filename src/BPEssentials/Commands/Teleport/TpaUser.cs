@@ -1,7 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
+using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -12,12 +12,12 @@ namespace BPEssentials.Commands
         {
             var eTarget = target.GetExtendedPlayer();
             eTarget.TpaUser = player;
-            player.SendChatMessage($"{player.T("player_tpa_sent", target.username.SanitizeString())}  {(eTarget.CurrentChat == Chat.Disabled ? player.T("player_tpa_chat_disabled") : "")}");
+            player.SendChatMessage($"{player.T("player_tpa_sent", target.username.CleanerMessage())}  {(eTarget.CurrentChat == Chat.Disabled ? player.T("player_tpa_chat_disabled") : "")}");
             if (eTarget.CurrentChat == Chat.Disabled)
             {
                 return;
             }
-            target.TS("target_tpa_sent", player.username.SanitizeString());
+            target.TS("target_tpa_sent", player.username.CleanerMessage());
         }
     }
 }

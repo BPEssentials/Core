@@ -1,6 +1,8 @@
-﻿using BrokeProtocol.API.ExtensionMethods;
+﻿using BrokeProtocol.Utility;
 using System;
 using System.Globalization;
+using BPEssentials.ExtensionMethods;
+
 
 namespace BPEssentials.Utils
 {
@@ -38,21 +40,25 @@ namespace BPEssentials.Utils
             }
             else if (format == "parsecolor")
             {
-                return arg.ToString().SanitizeString().ParseColorCodes();
+                return arg.ToString().CleanerMessage().ParseColorCodes();
             }
             else if (format == "unsanitized")
             {
                 return arg.ToString().ParseColorCodes();
+            }
+            else if (format == "sanitized")
+            {
+                return arg.ToString().CleanerMessage();
             }
             else
             {
                 var arg_IFormattable = arg as IFormattable;
                 if (arg_IFormattable != null)
                 {
-                    return (arg_IFormattable).ToString(format, CultureInfo.CurrentCulture).SanitizeString();
+                    return (arg_IFormattable).ToString(format, CultureInfo.CurrentCulture).CleanerMessage();
                 }
             }
-            return arg.ToString().SanitizeString();
+            return arg.ToString().CleanerMessage();
         }
     }
 }

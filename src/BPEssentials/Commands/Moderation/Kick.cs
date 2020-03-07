@@ -1,8 +1,8 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
@@ -12,9 +12,9 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target, string reason = "No reason provided.")
         {
-            ChatUtils.SendToAllEnabledChatT("all_kick", player.username.SanitizeString(), target.username.SanitizeString(), reason.SanitizeString());
-            player.TS("player_kick", target.username.SanitizeString(), reason.SanitizeString());
-            player.svPlayer.SvKick(target.ID, reason);
+            ChatUtils.SendToAllEnabledChatT("all_kick", player.username.CleanerMessage(), target.username.CleanerMessage(), reason.CleanerMessage());
+            player.TS("player_kick", target.username.CleanerMessage(), reason.CleanerMessage());
+            player.svPlayer.SvKick(target, reason);
         }
     }
 }

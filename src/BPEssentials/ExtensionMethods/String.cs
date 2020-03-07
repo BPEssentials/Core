@@ -22,7 +22,7 @@
 
         public static string CleanerMessage(this string san)
         {
-            return san.Replace("<", "<<b></b>");
+            return san.Replace("<", "<<b></b>").Replace("&", "＆");
         }
     }
 }
