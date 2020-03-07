@@ -26,12 +26,12 @@ namespace BPEssentials.Modules
 
         public string GetName()
         {
-            return ModuleInfo?.Plugin?.GetPluginName();
+            return ModuleInfo?.Plugin?.Info.Name;
         }
 
         public string GetDescription()
         {
-            return ModuleInfo?.Plugin?.GetPluginDescription();
+            return ModuleInfo?.Plugin?.Info.Description;
         }
     }
 
