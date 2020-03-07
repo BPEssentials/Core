@@ -73,5 +73,10 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public int[] KeptItemsOnDeath { get; set; }
 
         public bool KeepAllItemsOnDeath { get; set; }
+
+        public bool LocalChatOverHead { get; set; } = true;
+
+        public bool LocalChatInChat { get; set; }
+
     }
 }

@@ -28,7 +28,14 @@ namespace BPEssentials.ChatHandlers
 
             player.manager.svManager.chatted.Add(player);
 
-            player.svPlayer.Send(SvSendType.LocalOthers, Channel.Unsequenced, ClPacket.LocalChatMessage, player.ID, ChatUtils.FormatMessage(player, message, "localformat"));
+            if (Core.Instance.Settings.General.LocalChatOverHead)
+            {
+                player.svPlayer.Send(SvSendType.LocalOthers, Channel.Unsequenced, ClPacket.LocalChatMessage, player.ID, message.CleanerMessage());
+            }
+            if (Core.Instance.Settings.General.LocalChatInChat)
+            {
+                player.svPlayer.Send(SvSendType.LocalOthers, Channel.Unsequenced, ClPacket.GameMessage, ChatUtils.FormatMessage(player, message, "localformat"));
+            }
         }
     }
 }
