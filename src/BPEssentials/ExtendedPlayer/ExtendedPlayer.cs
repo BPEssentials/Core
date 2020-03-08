@@ -1,7 +1,6 @@
 ﻿using BPEssentials.Models;
-﻿using BPEssentials.Enums;
+using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
-
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System;
