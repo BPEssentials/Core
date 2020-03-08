@@ -332,6 +332,7 @@
     <Compile Include="Enums\Chat.cs" />
     <Compile Include="Events\OnDropDead.cs" />
     <Compile Include="Events\OnDamage.cs" />
+    <Compile Include="Events\OnRegister.cs" />
     <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
