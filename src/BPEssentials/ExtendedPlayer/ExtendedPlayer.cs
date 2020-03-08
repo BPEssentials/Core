@@ -31,8 +31,6 @@ namespace BPEssentials.ExtendedPlayer
 
         public LastLocation LastLocation { get; } = new LastLocation();
 
-        public bool WantsVerify { get; set;  } = false;
-
         public void SendPmMessage(ShPlayer target, string message)
         {
             Client.SendChatMessage($"[PM] {target.username.CleanerMessage()} > {message.CleanerMessage()}");
