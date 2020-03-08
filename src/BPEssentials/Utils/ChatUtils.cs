@@ -41,7 +41,7 @@ namespace BPEssentials.Utils
             {
                 try
                 {
-                    return string.Format(new CustomFormatter(), formatter.ParseColorCodes(), player.ID, player.username.SanitizeString(), message);
+                    return string.Format(new CustomFormatter(), formatter, player.ID, player.username, message);
                 }
                 catch (Exception err)
                 {
