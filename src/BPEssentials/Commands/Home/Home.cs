@@ -11,23 +11,40 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, int homeNumber)
         {
+
+            List<ShApartment> apartments = new List<ShApartment>(player.ownedApartments.Keys);
+            if (apartments.Count == 0)
+            {
+                player.TS("No_Appartments");
+            }
+            else if (apartments.Count < homeNumber || homeNumber < 1)
+            {
+
+                player.TS("You_only_own", apartments.Count.ToString());
+                return;
+            }
+
             //make the apartments start at 1 (eg. /home 1 would point to apartments[0])
             homeNumber--;
-            List<ShApartment> apartments = new List<ShApartment>(player.ownedApartments.Keys);
-            try
+            System.Console.WriteLine(apartments[homeNumber].GetRotation.x);
+            System.Console.WriteLine(apartments[homeNumber].GetRotation.y);
+            System.Console.WriteLine(apartments[homeNumber].GetRotation.z);
+            System.Console.WriteLine(apartments[homeNumber].GetRotation.w);
+            if (apartments[homeNumber].GetRotation.y <0.9)
             {
-                player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(1, 1, 1), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
+                System.Console.WriteLine("nice");
+                player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(1, 0, 2), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
             }
-            catch(System.IndexOutOfRangeException e)
+            else
             {
-                player.TS("You_only_own", apartments.Count.ToString()) ;
+                player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(-1, 0, -1), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
             }
-                }
 
 
 
 
 
-
+        }
+        
     }
 }

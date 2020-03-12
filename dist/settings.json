@@ -25,7 +25,6 @@
   {
       "CommandName": "Home",
       "Commands": [
-        "essentials",
         "home"
       ]
     },
