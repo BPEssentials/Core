@@ -4,6 +4,8 @@
     "AnnounceInterval": 120,
     "KeepAllItemsOnDeath": false,
     "KeptItemsOnDeath": []
+    "LocalChatOverHead": true,		
+    "LocalChatInChat": false
   },
   "Announcements": [],
   "Messages": {
