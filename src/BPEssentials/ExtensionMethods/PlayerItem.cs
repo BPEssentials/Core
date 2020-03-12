@@ -8,7 +8,7 @@ namespace BPEssentials.ExtensionMethods
     {
         public static void SavePosition(this PlayerItem player)
         {
-            player.SavePosition(player.Client.GetPosition(), player.Client.GetRotation(), player.Client.GetPlaceIndex());
+            player.SavePosition(player.Client.GetPosition, player.Client.GetRotation, player.Client.GetPlaceIndex);
         }
         public static void SavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
@@ -22,7 +22,7 @@ namespace BPEssentials.ExtensionMethods
         public static void ResetAndSavePosition(this PlayerItem player, ShPlayer targetPlayer)
         {
             player.SavePosition();
-            player.Client.svPlayer.SvRestore(targetPlayer.GetPosition(), targetPlayer.GetRotation(), targetPlayer.GetPlaceIndex());
+            player.Client.svPlayer.SvRestore(targetPlayer.GetPosition, targetPlayer.GetRotation, targetPlayer.GetPlaceIndex);
         }
     }
 }

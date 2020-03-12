@@ -1,10 +1,13 @@
 ﻿using BPEssentials.Models;
-﻿using BPEssentials.Enums;
-using BrokeProtocol.API.ExtensionMethods;
+using BPEssentials.Enums;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
+using System;
 
 namespace BPEssentials.ExtendedPlayer
 {
+    [Serializable]
     public class PlayerItem : BPCoreLib.Abstractions.ExtendedPlayer
     {
         public PlayerItem(ShPlayer player) : base(player)
@@ -19,7 +22,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public Chat CurrentChat { get; set; } = Chat.Global;
 
-        public bool CanRecieveStaffChat => Client.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
+        public bool CanRecieveStaffChat => Client.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
 
         public ShPlayer ReplyToUser { get; set; }
 
@@ -29,13 +32,13 @@ namespace BPEssentials.ExtendedPlayer
 
         public void SendPmMessage(ShPlayer target, string message)
         {
-            Client.SendChatMessage($"[PM] {target.username.SanitizeString()} > {message.SanitizeString()}");
-            target.SendChatMessage($"[PM] {Client.username.SanitizeString()} < {message.SanitizeString()}");
+            Client.SendChatMessage($"[PM] {target.username.CleanerMessage()} > {message.CleanerMessage()}");
+            target.SendChatMessage($"[PM] {Client.username.CleanerMessage()} < {message.CleanerMessage()}");
         }
 
         public void SendSpyChatMessage(ShPlayer target, string command)
         {
-            Client.SendChatMessage($"[SPYCHAT] {target.username.SanitizeString()}: {command.SanitizeString()}");
+            Client.SendChatMessage($"[SPYCHAT] {target.username.CleanerMessage()}: {command.CleanerMessage()}");
         }
     }
 }

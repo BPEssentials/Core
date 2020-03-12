@@ -2,26 +2,31 @@
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
 using System;
 
 namespace BPEssentials.ChatHandlers
 {
     public class GlobalChat : IScript
     {
-        public GlobalChat()
-        {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Player.OnGlobalChatMessage, new Action<ShPlayer, string>(OnEvent));
-        }
-
+        [Target(GameSourceEvent.PlayerGlobalChatMessage, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
-            if (message.StartsWith(CommandHandler.Prefix))
+            if (player.manager.svManager.chatted.OverLimit(player))
             {
                 return;
             }
+
+            if (CommandHandler.OnEvent(player, message)) // 'true' if message starts with command prefix
+            {
+                return;
+            }
+
+            player.manager.svManager.chatted.Add(player);
+
             Core.Instance.Logger.LogInfo($"[GLOBAL] {player.username}: {message}");
+
             switch (player.GetExtendedPlayer().CurrentChat)
             {
                 case Chat.StaffChat:

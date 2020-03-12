@@ -1,7 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+
 
 namespace BPEssentials.Commands
 {
@@ -13,7 +13,7 @@ namespace BPEssentials.Commands
             var shRetained = target.curEquipable as ShRestrained;
             target.svPlayer.SvSetEquipable(shRetained.otherRestrained.index);
             target.TS("target_restrained");
-            player.TS("player_restrained", target.username.SanitizeString());
+            player.TS("player_restrained", target.username.CleanerMessage());
         }
     }
 }

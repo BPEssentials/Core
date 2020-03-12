@@ -23,6 +23,10 @@ namespace BPEssentials
 
         public static string Version { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
+        public static string Git { get; } = "https://github.com/BPEssentials/Core";
+
+        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
 
@@ -53,13 +57,11 @@ namespace BPEssentials
         public Core()
         {
             Instance = this;
-            Info = new PluginInfo("BPEssentials", "BPE", new List<PluginAuthor> { new PluginAuthor("UserR00T"), new PluginAuthor("PLASMA_chicken") })
+            Info = new PluginInfo("BPEssentials", "bpe")
             {
                 Description = "Basic commands for powerful moderation.",
-                Git = "https://github.com/BPEssentials/Core",
                 Website = "https://bpessentials.github.io/Docs/"
             };
-
             CooldownHandler = new CooldownHandler();
 
             WarpHandler = new WarpHandler();
@@ -68,12 +70,13 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-
+            
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
+            new Commands.Save().StartSaveTimer();
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 
@@ -102,8 +105,7 @@ namespace BPEssentials
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
                 }
-                CommandHandler.RemoveCommand(command.CommandName);
-                CommandHandler.RegisterCommand(command.CommandName, command.Commands, del, (player, apiCommand) =>
+                CommandHandler.RegisterCommand(command.Commands, del, (player, apiCommand) =>
                 {
                     if (command.Disabled)
                     {
@@ -112,12 +114,12 @@ namespace BPEssentials
                     }
                     if (!player.GetExtendedPlayer().EnabledBypass)
                     {
-                        if (!command.AllowWhileDead && player.IsDead())
+                        if (!command.AllowWhileDead && player.IsDead)
                         {
                             player.TS("command_failed_crimes", command.CommandName);
                             return false;
                         }
-                        if (!command.AllowWhileCuffed && player.IsRestrained())
+                        if (!command.AllowWhileCuffed && player.IsRestrained)
                         {
                             player.TS("command_failed_cuffed", command.CommandName);
                             return false;
@@ -134,7 +136,7 @@ namespace BPEssentials
                         }
                     }
                     return true;
-                }, instance.LastArgSpaces);
+                }, command.CommandName);
             }
         }
 
@@ -144,8 +146,7 @@ namespace BPEssentials
             {
                 Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)} by name '{customCommand.Name}'..");
                 var name = "cc." + customCommand.Name;
-                CommandHandler.RemoveCommand(name);
-                CommandHandler.RegisterCommand(name, customCommand.Commands, new Action<ShPlayer>((player) =>
+                CommandHandler.RegisterCommand(name, new Action<ShPlayer>((player) =>
                 {
                     player.SendChatMessage(customCommand.Response);
                 }));
@@ -196,7 +197,7 @@ namespace BPEssentials
             {
                 return;
             }
-            EventsHandler.Call(callback, Version, IsDevelopmentBuild());
+            EventsHandler.Exec(callback, Version, IsDevelopmentBuild());
         }
     }
 }

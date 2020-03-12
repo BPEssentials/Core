@@ -1,7 +1,8 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
+
 
 namespace BPEssentials.Commands
 {
@@ -10,7 +11,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target)
         {
             player.GetExtendedPlayer().ResetAndSavePosition(target);
-            player.TS("tp_to", target.username.SanitizeString());
+            player.TS("tp_to", target.username.CleanerMessage());
         }
     }
 }

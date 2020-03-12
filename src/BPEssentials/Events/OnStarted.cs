@@ -6,11 +6,7 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnStarted : IScript
     {
-        public OnStarted()
-        {
-            GameSourceHandler.Add(BrokeProtocol.API.Events.Manager.OnStarted, new Action<SvManager>(OnEvent));
-        }
-
+        [Target(GameSourceEvent.ManagerStart, ExecutionMode.Event)]
         public void OnEvent(SvManager svManager)
         {
             Core.Instance.SvManager = svManager;

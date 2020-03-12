@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using System.Linq;
 
@@ -20,12 +21,12 @@ namespace BPEssentials.Commands
 
                 case "info":
                     player.SendChatMessage(info.ToString());
-                    player.SendChatMessage($"Authors: {string.Join(", ", info.Authors.Select(x => x.ToString()))}");
+                    player.SendChatMessage($"Authors: {string.Join(", ", Core.Authors.Select(x => x.ToString()))}");
                     player.SendChatMessage($"Version: {(Core.IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Core.Version}");
                     break;
 
                 case "reload":
-                    if (!player.svPlayer.HasPermission(info.GroupNamespace + ".reload"))
+                    if (!player.HasPermission(info.GroupNamespace + ".reload"))
                     {
                         player.SendChatMessage($"No permission! Requires the '{info.GroupNamespace}.reload' permission.");
                         return;
