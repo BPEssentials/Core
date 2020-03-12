@@ -3,9 +3,7 @@
     "Version": "3.0.0",
     "AnnounceInterval": 120,
     "KeepAllItemsOnDeath": false,
-    "KeptItemsOnDeath": [],
-    "LocalChatOverHead": true,
-    "LocalChatInChat": false
+    "KeptItemsOnDeath": []
   },
   "Announcements": [],
   "Messages": {
@@ -22,6 +20,13 @@
       "Commands": [
         "essentials",
         "ess"
+      ]
+    },
+  {
+      "CommandName": "Home",
+      "Commands": [
+        "essentials",
+        "home"
       ]
     },
     {
