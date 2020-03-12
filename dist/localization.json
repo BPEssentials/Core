@@ -96,8 +96,8 @@
     "command_failed_crimes": "This Command cannot be used when wanted!",
     "bypass_enabled": "Bypass has been enabled.",
     "bypass_disabled": "Bypass has been disabled.",
-    "You_only_own": "You only own {0} apartment",
-    "No_Appartments": "You don't own any appartments"
+    "you_only_own": "You only own {0} apartment.",
+    "no_appartments": "You don't own any appartments."
   },
   "BR": {
     "arrested": "Preso {0}.",
