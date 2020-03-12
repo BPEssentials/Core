@@ -38,12 +38,13 @@ namespace BPEssentials.RegisteredEvents
                     svManager.RegisterFail(authData.connection, $"Name cannot be registered (min: {Util.minCredential}, max: {Util.maxCredential})");
                     return;
                 }
-                if (!Regex.IsMatch(connectData.username, @"^[a-zA-Z0-9_]+$"))
+                // -- BPE EXTEND
+                if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectData.username, @"^[a-zA-Z0-9_]+$"))
                 {
                     svManager.RegisterFail(authData.connection, $"Your Username can only contain letters: A-Z a-z 0-9 _ -");
                     return;
                 }
-
+                // BPE EXTEND --
                 svManager.AddNewPlayer(authData, connectData);
             }
         }
