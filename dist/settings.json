@@ -24,12 +24,6 @@
         "ess"
       ]
     },
-  {
-      "CommandName": "Home",
-      "Commands": [
-        "home"
-      ]
-    },
     {
       "CommandName": "Info",
       "Commands": [
@@ -359,6 +353,16 @@
         "bypass",
         "togglebypass"
       ]
+    },
+      {
+      "CommandName": "Home",
+      "Commands": [
+        "home"
+      ]
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
     }
   ]
 }
