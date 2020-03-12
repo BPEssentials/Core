@@ -35,12 +35,6 @@ namespace BPEssentials.Commands
             {
                 player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(-1, 0, -1), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
             }
-
-
-
-
-
         }
-        
     }
 }
