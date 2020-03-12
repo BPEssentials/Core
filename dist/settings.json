@@ -359,7 +359,7 @@
       "CommandName": "Home",
       "Commands": [
         "home"
-      ]
+      ],
       "AllowWhileDead": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
