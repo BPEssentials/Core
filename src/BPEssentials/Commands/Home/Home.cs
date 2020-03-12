@@ -9,13 +9,14 @@ namespace BPEssentials.Commands
 {
     public class Home : Command
     {
-        public void Invoke(ShPlayer player, int homeNumber)
+        public void Invoke(ShPlayer player, int homeNumber=1)
         {
 
             List<ShApartment> apartments = new List<ShApartment>(player.ownedApartments.Keys);
             if (apartments.Count == 0)
             {
                 player.TS("No_Appartments");
+                return;
             }
             else if (apartments.Count < homeNumber || homeNumber < 1)
             {
@@ -26,13 +27,8 @@ namespace BPEssentials.Commands
 
             //make the apartments start at 1 (eg. /home 1 would point to apartments[0])
             homeNumber--;
-            System.Console.WriteLine(apartments[homeNumber].GetRotation.x);
-            System.Console.WriteLine(apartments[homeNumber].GetRotation.y);
-            System.Console.WriteLine(apartments[homeNumber].GetRotation.z);
-            System.Console.WriteLine(apartments[homeNumber].GetRotation.w);
             if (apartments[homeNumber].GetRotation.y <0.9)
             {
-                System.Console.WriteLine("nice");
                 player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(1, 0, 2), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
             }
             else
