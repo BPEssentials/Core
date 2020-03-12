@@ -96,7 +96,7 @@
     "command_failed_crimes": "This Command cannot be used when wanted!",
     "bypass_enabled": "Bypass has been enabled.",
     "bypass_disabled": "Bypass has been disabled.",
-    "you_only_own": "You only own {0} apartment.",
+    "you_only_own": "You only own {0} apartment(s).",
     "no_appartments": "You don't own any appartments."
   },
   "BR": {
