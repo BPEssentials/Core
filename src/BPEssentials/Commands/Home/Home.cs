@@ -15,7 +15,7 @@ namespace BPEssentials.Commands
             var apartments = new List<ShApartment>(player.ownedApartments.Keys);
             if (apartments.Count == 0)
             {
-                player.TS("No_Appartments");
+                player.TS("no_appartments");
                 return;
             }
             else if (apartments.Count < homeNumber || homeNumber < 1)
