@@ -29,7 +29,7 @@ namespace BPEssentials.Commands
             // Make the apartments start at 1 (eg. /home 1 would point to apartments[0]).
             homeNumber--;
             var offset = new Vector3(-1, 0, -1);
-            var apartment = apartments[Math.Max(0, homeNumber)];
+            var apartment = apartments[Math.Max(0, --homeNumber)];
             if (apartment.GetRotation.y < 0.9)
             {
                 offset = new Vector3(1, 0, 2);
