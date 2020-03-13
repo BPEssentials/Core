@@ -272,6 +272,9 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>lib\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="zGameSource">
+      <HintPath>lib\zGameSource.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Command.cs" />
@@ -279,6 +282,7 @@
     <Compile Include="ChatHandlers\Command.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
+    <Compile Include="Commands\Home\Home.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
     <Compile Include="Commands\Moderation\StaffChat.cs" />
     <Compile Include="Commands\Moderation\ToggleBypass.cs" />
