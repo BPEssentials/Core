@@ -9,7 +9,7 @@ namespace BPEssentials.Commands
 {
     public class Home : Command
     {
-        public void Invoke(ShPlayer player, int homeNumber=1)
+        public void Invoke(ShPlayer player, int homeNumber = 1)
         {
 
             var apartments = new List<ShApartment>(player.ownedApartments.Keys);
