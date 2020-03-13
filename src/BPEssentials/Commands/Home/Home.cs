@@ -12,7 +12,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, int homeNumber=1)
         {
 
-            List<ShApartment> apartments = new List<ShApartment>(player.ownedApartments.Keys);
+            var apartments = new List<ShApartment>(player.ownedApartments.Keys);
             if (apartments.Count == 0)
             {
                 player.TS("No_Appartments");
