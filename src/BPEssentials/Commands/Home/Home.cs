@@ -13,28 +13,28 @@ namespace BPEssentials.Commands
         {
 
             var apartments = new List<ShApartment>(player.ownedApartments.Keys);
+            if (apartments.Count < homeNumber)
+            {
+
+                player.TS("you_only_own", apartments.Count.ToString());
+                return;
+            }
+
             if (apartments.Count == 0)
             {
                 player.TS("no_appartments");
                 return;
             }
-            else if (apartments.Count < homeNumber || homeNumber < 1)
-            {
 
-                player.TS("You_only_own", apartments.Count.ToString());
-                return;
-            }
-
-            //make the apartments start at 1 (eg. /home 1 would point to apartments[0])
+            // Make the apartments start at 1 (eg. /home 1 would point to apartments[0]).
             homeNumber--;
-            if (apartments[homeNumber].GetRotation.y <0.9)
+            var offset = new Vector3(-1, 0, -1);
+            var apartment = apartments[Math.Max(0, homeNumber)];
+            if (apartment.GetRotation.y < 0.9)
             {
-                player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(1, 0, 2), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
+                offset = new Vector3(1, 0, 2);
             }
-            else
-            {
-                player.GetExtendedPlayer().ResetAndSavePosition(apartments[homeNumber].GetPosition + new Vector3(-1, 0, -1), apartments[homeNumber].GetRotation, apartments[homeNumber].GetPlaceIndex);
-            }
+            player.GetExtendedPlayer().ResetAndSavePosition(apartment.GetPosition + offset, apartment.GetRotation, apartment.GetPlaceIndex);
         }
     }
 }
