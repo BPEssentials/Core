@@ -102,7 +102,7 @@
     "player_muted": "{0} has been muted.",
     "player_unmuted": "{0} has been unmuted.",
     "muted_player": "You are muted.",
-    "paid_to" : "paid ${0} to {1}.",
+    "paid_to" : "Paid ${0} to {1}.",
     "received_from" : "Received ${0} from {1}." 
   },
   "BR": {
