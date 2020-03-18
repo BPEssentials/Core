@@ -21,6 +21,8 @@ namespace BPEssentials.Commands
             }
             player.TransferItem(DeltaInv.RemoveFromMe, item.Value.index, amount, true);
             target.TransferItem(DeltaInv.AddToMe, item.Value.index, amount, true);
+            player.TS("paid_to", amount.ToString(), target.username);
+            target.TS("received_from", amount.ToString(), player.username);
         }
     }
 }

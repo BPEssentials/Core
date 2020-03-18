@@ -370,9 +370,15 @@
       "Commands": [
         "pay"
       ],
- "AllowWhileDead": false,
+      "AllowWhileDead": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false
+    },
+    {
+      "CommandName": "ToggleMute",
+      "Commands": [
+        "mute"
+      ],
     }
   ]
 }

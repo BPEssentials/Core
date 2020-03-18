@@ -98,7 +98,12 @@
     "bypass_disabled": "Bypass has been disabled.",
     "you_only_own": "You only own {0} apartment(s).",
     "no_appartments": "You don't own any appartments.",
-    "you_dont_own": "You dont have ${0}"
+    "you_dont_own": "You dont have ${0}.",
+    "player_muted": "{0} has been muted.",
+    "player_unmuted": "{0} has been unmuted.",
+    "muted_player": "You are mute.",
+    "paid_to" : "paid ${0} to {1}.",
+    "received_from" : "Received ${0} from {1}." 
   },
   "BR": {
     "arrested": "Preso {0}.",
