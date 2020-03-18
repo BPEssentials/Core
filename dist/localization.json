@@ -97,7 +97,8 @@
     "bypass_enabled": "Bypass has been enabled.",
     "bypass_disabled": "Bypass has been disabled.",
     "you_only_own": "You only own {0} apartment(s).",
-    "no_appartments": "You don't own any appartments."
+    "no_appartments": "You don't own any appartments.",
+    "you_dont_own": "You dont have ${0}"
   },
   "BR": {
     "arrested": "Preso {0}.",

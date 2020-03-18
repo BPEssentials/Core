@@ -287,6 +287,7 @@
     <Compile Include="Commands\Moderation\StaffChat.cs" />
     <Compile Include="Commands\Moderation\ToggleBypass.cs" />
     <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
+    <Compile Include="Commands\Pay\Pay.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
