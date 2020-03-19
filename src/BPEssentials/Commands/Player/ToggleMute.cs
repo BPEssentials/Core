@@ -5,7 +5,7 @@ using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
-    class ToggleMute : Command
+    public class ToggleMute : Command
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
