@@ -32,6 +32,9 @@ namespace BPEssentials.ChatHandlers
                 case Chat.StaffChat:
                     ChatUtils.SendStaffChatMessage(player, message);
                     return;
+                case Chat.Muted:
+                    player.TS("muted_player");
+                    return;
 
                 case Chat.Disabled:
                     player.TS("chat_disabled");
