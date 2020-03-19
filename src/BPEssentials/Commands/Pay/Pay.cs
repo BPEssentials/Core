@@ -6,7 +6,6 @@ using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System.Linq;
 
-
 namespace BPEssentials.Commands
 {
     public class Pay : Command
