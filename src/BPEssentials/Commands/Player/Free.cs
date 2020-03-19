@@ -1,7 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.UnRestrain();
-            player.TS("freed", target.username.SanitizeString());
+            player.TS("freed", target.username.CleanerMessage());
         }
     }
 }

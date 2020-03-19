@@ -3,7 +3,10 @@
     "Version": "3.0.0",
     "AnnounceInterval": 120,
     "KeepAllItemsOnDeath": false,
-    "KeptItemsOnDeath": []
+    "KeptItemsOnDeath": [],
+    "LocalChatOverHead": true,
+    "LocalChatInChat": false,
+    "LimitNames": false
   },
   "Announcements": [],
   "Messages": {
@@ -351,6 +354,31 @@
         "bypass",
         "togglebypass"
       ]
+    },
+      {
+      "CommandName": "Home",
+      "Commands": [
+        "home"
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
+    },
+   {
+      "CommandName": "Pay",
+      "Commands": [
+        "pay"
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false
+    },
+    {
+      "CommandName": "ToggleMute",
+      "Commands": [
+        "mute"
+      ],
     }
   ]
 }

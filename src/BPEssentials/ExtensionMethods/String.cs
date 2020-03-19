@@ -19,5 +19,10 @@
         {
             return val ? ifTrue : ifFalse;
         }
+
+        public static string CleanerMessage(this string san)
+        {
+            return san.Replace("<", "<<b></b>").Replace("&", "＆");
+        }
     }
 }

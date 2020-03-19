@@ -1,4 +1,4 @@
-{
+﻿{
   "EN": {
     "arrested": "Arrested {0}.",
     "open_atm": "Opening ATM Menu...",
@@ -95,7 +95,15 @@
     "command_failed_jail": "This Command cannot be used when in jail!",
     "command_failed_crimes": "This Command cannot be used when wanted!",
     "bypass_enabled": "Bypass has been enabled.",
-    "bypass_disabled": "Bypass has been disabled."
+    "bypass_disabled": "Bypass has been disabled.",
+    "you_only_own": "You only own {0} apartment(s).",
+    "no_appartments": "You don't own any appartments.",
+    "you_dont_own": "You dont have ${0}.",
+    "player_muted": "{0} has been muted.",
+    "player_unmuted": "{0} has been unmuted.",
+    "muted_player": "You are muted.",
+    "paid_to" : "Paid ${0} to {1}.",
+    "received_from" : "Received ${0} from {1}." 
   },
   "BR": {
     "arrested": "Preso {0}.",

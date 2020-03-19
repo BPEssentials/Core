@@ -1,11 +1,11 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.ExtensionMethods.Warns;
-using BrokeProtocol.API.ExtensionMethods;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
+
 
 namespace BPEssentials.Commands
 {
@@ -13,7 +13,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target != null && !player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
+            if (target != null && !player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
             {
                 player.TS("warns_noPermission_viewOtherPlayers");
                 return;
@@ -21,7 +21,7 @@ namespace BPEssentials.Commands
             target = target ?? player;
             var warns = target.GetWarns().Select(warn => warn.ToString(player)).ToArray();
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(player.T("warns_for", target.username.SanitizeString()));
+            stringBuilder.AppendLine(player.T("warns_for", target.username.CleanerMessage()));
             if (warns.Length == 0)
             {
                 stringBuilder.AppendLine(player.T("none"));

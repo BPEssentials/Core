@@ -272,17 +272,23 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>lib\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="zGameSource">
+      <HintPath>lib\zGameSource.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Command.cs" />
     <Compile Include="Announcer.cs" />
-    <Compile Include="ChatHandlers\GlobalCommand.cs" />
+    <Compile Include="ChatHandlers\Command.cs" />
     <Compile Include="ChatHandlers\LocalChat.cs" />
     <Compile Include="ChatHandlers\GlobalChat.cs" />
+    <Compile Include="Commands\Home\Home.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
     <Compile Include="Commands\Moderation\StaffChat.cs" />
     <Compile Include="Commands\Moderation\ToggleBypass.cs" />
     <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
+    <Compile Include="Commands\Pay\Pay.cs" />
+    <Compile Include="Commands\Player\ToggleMute.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
@@ -330,8 +336,10 @@
     <Compile Include="Configuration\Models\SettingsModel.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Enums\Chat.cs" />
-    <Compile Include="Events\OnStarted.cs" />
+    <Compile Include="Events\OnDropDead.cs" />
     <Compile Include="Events\OnDamage.cs" />
+    <Compile Include="Events\OnRegister.cs" />
+    <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayer.cs" />

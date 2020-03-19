@@ -1,6 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.API.ExtensionMethods;
+
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 using Newtonsoft.Json;
@@ -10,13 +10,29 @@ namespace BPEssentials.Commands
 {
     public class Save : Command
     {
+        public void StartSaveTimer()
+        {
+           
+                var Tmer = new System.Timers.Timer(); // TODO: Disposing the timer seems to break
+                Tmer.Elapsed += (sender, e) => Run();
+                Tmer.Interval = 15 * 60 * 1000;
+                Tmer.Enabled = true;
+            
+        }
+
         public void Invoke(ShPlayer player)
         {
-            player.TS("saving_game");
-            player.manager.svManager.SaveAll();
+            Run();
+        }
+        public void Run()
+        {
+            Core.Instance.Logger.Log("Saving Game Status");
+            Utils.ChatUtils.SendToAllEnabledChatT("saving_game");
+            Core.Instance.SvManager.SaveAll();
 
             // TODO: Move this into the Save Event
             Core.Instance.CooldownHandler.SaveCooldowns();
+
         }
     }
 }
