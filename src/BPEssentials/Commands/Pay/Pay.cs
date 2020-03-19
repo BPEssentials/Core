@@ -11,8 +11,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, int amount=1)
         {
-            var item = Core.Instance.EntityHandler.Items.FirstOrDefault(x => x.Key == "Money");
-            if (player.MyItemCount(item.Value.index) < amount)
+            if (player.MyMoneyCount() < amount)
             {
                 player.TS("you_dont_own", amount.ToString());
                 return;
