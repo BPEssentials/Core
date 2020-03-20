@@ -379,6 +379,12 @@
       "Commands": [
         "mute"
       ]
+    },
+    {
+      "CommandName": "SetJob",
+      "Commands": [
+        "setjob"
+      ]
     }
   ]
 }
