@@ -378,7 +378,7 @@
       "CommandName": "ToggleMute",
       "Commands": [
         "mute"
-      ],
+      ]
     },
     {
       "CommandName": "SetJob",
