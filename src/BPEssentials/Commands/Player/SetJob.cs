@@ -19,6 +19,5 @@ namespace BPEssentials.Commands
                 target.TS("new_job", player.username.CleanerMessage(), job.ToString());
             }
         }
-
     }
 }
