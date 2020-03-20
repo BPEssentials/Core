@@ -378,7 +378,13 @@
       "CommandName": "ToggleMute",
       "Commands": [
         "mute"
-      ],
+      ]
+    },
+    {
+      "CommandName": "Sudo",
+      "Commands": [
+        "sudo"
+      ]
     }
   ]
 }
