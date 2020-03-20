@@ -384,7 +384,7 @@
       "CommandName": "SetJob",
       "Commands": [
         "setjob"
-      ],
+      ]
     }
   ]
 }
