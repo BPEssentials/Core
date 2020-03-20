@@ -379,12 +379,16 @@
       "Commands": [
         "mute"
       ]
-
     },
     {
       "CommandName": "Sudo",
       "Commands": [
         "sudo"
+    },
+    {
+      "CommandName": "SetJob",
+      "Commands": [
+        "setjob"
       ]
     }
   ]
