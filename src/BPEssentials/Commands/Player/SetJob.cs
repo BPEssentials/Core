@@ -14,8 +14,10 @@ namespace BPEssentials.Commands
             target = target ?? player;
             target.svPlayer.SvTrySetJob(job, true, false);
             player.TS("job_set", target.username.CleanerMessage(), job.ToString());
-            if (target != player)
+            if (target != player) 
+            {
                 target.TS("new_job", player.username.CleanerMessage(), job.ToString());
+            }
         }
 
     }
