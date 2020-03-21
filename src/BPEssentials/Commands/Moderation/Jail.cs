@@ -24,12 +24,12 @@ namespace BPEssentials.Commands
 					return;
 				}
 				Transform getPositionT = jail.GetPositionT;
-				player.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
+				target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
 				target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
-				svplayer.SvClearCrimes();
-				svplayer.player.RemoveItemsJail();
-				svMovable.StartCoroutine(svplayer.JailTimer(timeInSeconds));
-				svMovable.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
+				target.svPlayer.SvClearCrimes();
+				target.svPlayer.player.RemoveItemsJail();
+				target.svPlayer.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
+				target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
 				player.TS("in_prison", player.username.CleanerMessage(), timeInSeconds.ToString());
 			}
 		}
