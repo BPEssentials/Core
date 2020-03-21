@@ -381,6 +381,12 @@
       ]
     },
     {
+      "CommandName": "SetJob",
+      "Commands": [
+        "setjob"
+      ]
+    },
+    {
       "CommandName": "Jail",
       "Commands": [
         "jail"
