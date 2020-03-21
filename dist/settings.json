@@ -384,6 +384,7 @@
       "CommandName": "Sudo",
       "Commands": [
         "sudo"
+      ]
     },
     {
       "CommandName": "SetJob",
