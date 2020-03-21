@@ -32,7 +32,7 @@ namespace BPEssentials.Commands
 				svplayer.player.RemoveItemsJail();
 				svMovable.StartCoroutine(svplayer.JailTimer(timeInSeconds));
 				svMovable.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
-				player.TS("in_prison", player.username.CleanerMessage(), timeInSeconds.ToString());
+				player.TS("in_prison", player.username, timeInSeconds.ToString());
 			}
 		}
     }
