@@ -16,8 +16,6 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
 		{
-			SvPlayer svplayer = player.svPlayer;
-			SvMovable svMovable = player.svMovable;
 			ShJail jail = player.manager.jails.FirstOrDefault();
 			if (jail)
 			{
