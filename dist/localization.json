@@ -103,7 +103,8 @@
     "player_unmuted": "{0} has been unmuted.",
     "muted_player": "You are muted.",
     "paid_to" : "Paid ${0} to {1}.",
-    "received_from" : "Received ${0} from {1}." 
+    "received_from" : "Received ${0} from {1}.",
+    "in_prison" : "Placed {0} in prison for {1} seconds"
   },
   "BR": {
     "arrested": "Preso {0}.",
