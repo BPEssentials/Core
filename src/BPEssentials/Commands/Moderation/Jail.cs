@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
 {
     public class Jail : Command
     {
-        public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
+        public void Invoke(ShPlayer player, ShPlayer target, int timeInSeconds)
 		{
 			ShJail jail = player.manager.jails.FirstOrDefault();
 			if (jail)
