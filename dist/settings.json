@@ -381,6 +381,12 @@
       ]
     },
     {
+      "CommandName": "Sudo",
+      "Commands": [
+        "sudo"
+      ]
+    },
+    {
       "CommandName": "SetJob",
       "Commands": [
         "setjob"
