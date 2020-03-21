@@ -27,7 +27,7 @@ namespace BPEssentials.Commands
 				}
 				Transform getPositionT = jail.GetPositionT;
 				player.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
-				svMovable.SvRestore(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
+				target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
 				svplayer.SvClearCrimes();
 				svplayer.player.RemoveItemsJail();
 				svMovable.StartCoroutine(svplayer.JailTimer(timeInSeconds));
