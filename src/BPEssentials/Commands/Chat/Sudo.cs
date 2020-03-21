@@ -8,7 +8,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, string message)
         {
-            Core.Instance.Logger.LogInfo($"[GLOBAL] {target.username}: {message}");
+            Core.Instance.Logger.LogInfo($"[SUDO] {target.username}: {message}");
             ChatUtils.SendToAllEnabledChat(ChatUtils.FormatMessage(target, message), false);
         }
     }
