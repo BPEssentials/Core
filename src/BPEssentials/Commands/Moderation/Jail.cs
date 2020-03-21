@@ -28,7 +28,7 @@ namespace BPEssentials.Commands
 				target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
 				target.svPlayer.SvClearCrimes();
 				target.RemoveItemsJail();
-				target.svPlayer.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
+				target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
 				target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
 				player.TS("in_prison", player.username.CleanerMessage(), timeInSeconds.ToString());
 			}
