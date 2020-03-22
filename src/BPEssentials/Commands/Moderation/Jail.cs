@@ -12,14 +12,14 @@ using UnityEngine;
 
 namespace BPEssentials.Commands
 {
-    public class Jail : Command
-    {
-        public void Invoke(ShPlayer player, ShPlayer target, int timeInSeconds)
+	public class Jail : Command
+	{
+		public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
 		{
-			ShJail jail = player.manager.jails.FirstOrDefault();
+			ShJail jail = target.manager.jails.FirstOrDefault();
 			if (jail)
 			{
-				if (player.IsDead || player.job is Prisoner)
+				if (target.IsDead || target.job is Prisoner)
 				{
 					return;
 				}
@@ -29,9 +29,10 @@ namespace BPEssentials.Commands
 				target.svPlayer.SvClearCrimes();
 				target.RemoveItemsJail();
 				target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
-				target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
-				player.TS("in_prison", player.username.CleanerMessage(), timeInSeconds.ToString());
+				target.svMovable.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
+				player.TS("player_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString());
+				player.TS("target_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString());
 			}
 		}
-    }
+	}
 }
