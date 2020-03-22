@@ -22,6 +22,7 @@ namespace BPEssentials.Commands
                     return;
                 }
                 item = Core.Instance.EntityHandler.Items.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Key, name)).FirstOrDefault();
+                
                 if (Core.Instance.Settings.Levenshtein.GiveMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
                     player.TS("give_notFound", name);
