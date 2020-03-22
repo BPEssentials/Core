@@ -12,16 +12,16 @@ namespace BPEssentials.ExtensionMethods
             return Core.Instance.PlayerHandler.GetSafe(player.ID);
         }
 
-        public static string T(this SvPlayer player, string node, params string[] formatting) { 
+        public static string T(this SvPlayer player, string node, params object[] formatting) { 
             return Core.Instance.I18n.Localize(player.language.code, node, formatting) ?? Core.Instance.I18n.Localize("EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]";
         }
 
-        public static string T(this ShPlayer player, string node, params string[] formatting)
+        public static string T(this ShPlayer player, string node, params object[] formatting)
         {
             return player.svPlayer.T(node, formatting);
         }
 
-        public static void TS(this ShPlayer player, string node, params string[] formatting)
+        public static void TS(this ShPlayer player, string node, params object[] formatting)
         {
             player.SendChatMessage(player.T(node, formatting));
         }
