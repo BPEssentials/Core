@@ -15,7 +15,8 @@
   "Levenshtein": {
     "GiveMode": "Automatic",
     "WarpMode": "Suggest",
-    "KitMode": "Suggest"
+    "KitMode": "Suggest",
+    "SetJobMode": "Suggest"
   },
   "Commands": [
     {

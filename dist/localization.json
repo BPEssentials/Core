@@ -105,7 +105,8 @@
     "paid_to" : "Paid ${0} to {1}.",
     "received_from" : "Received ${0} from {1}.",
     "job_set" : "{0} now has the job: {1}.",
-    "new_job" : "{0} gave you a new job of {1}."
+    "new_job" : "{0} gave you a new job of {1}.",
+    "job_notFound": "The job {0} was not found.",
   },
   "BR": {
     "arrested": "Preso {0}.",

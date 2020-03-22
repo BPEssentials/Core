@@ -49,6 +49,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public LevenshteinMode GiveMode { get; set; }
         public LevenshteinMode WarpMode { get; set; }
         public LevenshteinMode KitMode { get; set; }
+        public LevenshteinMode SetJobMode { get; set; }
     }
 
     public class ReportOptions
