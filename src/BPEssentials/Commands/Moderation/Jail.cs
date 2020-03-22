@@ -30,7 +30,7 @@ namespace BPEssentials.Commands
 				target.svPlayer.SvClearCrimes();
 				target.RemoveItemsJail();
 				target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
-				target.svMovable.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
+				target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
 				player.TS("player_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString(CultureInfo.InvariantCulture));
 				player.TS("target_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString(CultureInfo.InvariantCulture));
 			}
