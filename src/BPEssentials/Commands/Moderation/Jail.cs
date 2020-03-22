@@ -7,6 +7,7 @@ using BrokeProtocol.Utility.Jobs;
 using BrokeProtocol.Utility.Networking;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 
@@ -30,8 +31,8 @@ namespace BPEssentials.Commands
 				target.RemoveItemsJail();
 				target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
 				target.svMovable.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
-				player.TS("player_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString());
-				player.TS("target_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString());
+				player.TS("player_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString(CultureInfo.InvariantCulture));
+				player.TS("target_jail", player.username.CleanerMessage(), player.username.CleanerMessage(), timeInSeconds.ToString(CultureInfo.InvariantCulture));
 			}
 		}
 	}
