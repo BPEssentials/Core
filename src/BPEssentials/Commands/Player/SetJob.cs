@@ -44,7 +44,7 @@ namespace BPEssentials.Commands
             player.TS("job_set", target.username.CleanerMessage(), jobName.ToString());
             if (target != player) 
             {
-                target.TS("new_job", player.username.CleanerMessage(), jobName.ToString());
+                target.TS("new_job", player.username.CleanerMessage(), wantedJob.Key);
             }
         }
     }
