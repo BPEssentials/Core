@@ -18,8 +18,10 @@ namespace BPEssentials.Commands
 		public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
 		{
 			var jail = target.manager.jails.FirstOrDefault();
-			if (jail)
+			if (jail == null)
 			{
+				return;
+			}
 				if (target.IsDead || target.job is Prisoner)
 				{
 					return;
