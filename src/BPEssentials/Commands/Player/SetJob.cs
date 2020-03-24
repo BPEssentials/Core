@@ -20,7 +20,6 @@ namespace BPEssentials.Commands
             foreach (JobIndex jobType in Enum.GetValues(typeof(JobIndex)))
             {
                 jobs.Add(jobType.ToString(), jobType);
-                Console.WriteLine($"{ jobType.ToString()} , { jobType}");
             }           
 
             var wantedJob = jobs.FirstOrDefault(x => x.Key == jobName);
