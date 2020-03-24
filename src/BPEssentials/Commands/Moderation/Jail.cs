@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
 				{
 					return;
 				}
-				Transform getPositionT = jail.GetPositionT;
+				var getPositionT = jail.GetPositionT;
 				target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
 				target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
 				target.svPlayer.SvClearCrimes();
