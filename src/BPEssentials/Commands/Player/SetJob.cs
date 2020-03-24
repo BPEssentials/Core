@@ -23,7 +23,6 @@ namespace BPEssentials.Commands
             }           
 
             var wantedJob = jobs.FirstOrDefault(x => x.Key == jobName);
-            Console.WriteLine(wantedJob.Value);
             if (wantedJob.Key == null)
             {
                 if (Core.Instance.Settings.Levenshtein.SetJobMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
