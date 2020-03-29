@@ -145,11 +145,11 @@ namespace BPEssentials
             foreach (var customCommand in CustomCommandsReader.Parsed)
             {
                 Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)} by name '{customCommand.Name}'..");
-                var name = "cc." + customCommand.Name;
-                CommandHandler.RegisterCommand(name, new Action<ShPlayer>((player) =>
+                var permission = "cc." + customCommand.Name;
+                CommandHandler.RegisterCommand(customCommand.Commands, new Action<ShPlayer>((player) =>
                 {
                     player.SendChatMessage(customCommand.Response);
-                }));
+                }), null, permission);
             }
         }
 
