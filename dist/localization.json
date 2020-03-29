@@ -106,8 +106,8 @@
     "received_from" : "Received ${0} from {1}.",
     "job_set" : "{0} now has the job: {1}.",
     "new_job" : "{0} gave you a new job of {1}.",
-    "player_jail" : "You have placed {1} in prison for {2} seconds",
-    "target_jail" : "{0} has placed you in prison for {2} seconds",
+    "player_jail" : "You have placed {0} in prison for {1} seconds",
+    "target_jail" : "{0} has placed you in prison for {1} seconds",
   },
   "BR": {
     "arrested": "Preso {0}.",
