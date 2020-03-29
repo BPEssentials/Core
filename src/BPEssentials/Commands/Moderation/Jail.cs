@@ -22,19 +22,19 @@ namespace BPEssentials.Commands
 			{
 				return;
 			}
-				if (target.IsDead || target.job is Prisoner)
-				{
-					return;
-				}
-				var getPositionT = jail.GetPositionT;
-				target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
-				target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
-				target.svPlayer.SvClearCrimes();
-				target.RemoveItemsJail();
-				target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
-				target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
-				player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);
-				player.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
+			if (target.IsDead || target.job is Prisoner)
+			{
+				return;
+			}
+			var getPositionT = jail.GetPositionT;
+			target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
+			target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
+			target.svPlayer.SvClearCrimes();
+			target.RemoveItemsJail();
+			target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
+			target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
+			player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);
+			player.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
 			}
 		}
 	}
