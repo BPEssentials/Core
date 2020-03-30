@@ -34,7 +34,7 @@ namespace BPEssentials.Commands
 			target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
 			target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
 			player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);
-			player.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
+			target.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
 			}
 		}
 	}
