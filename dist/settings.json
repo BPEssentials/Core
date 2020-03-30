@@ -391,6 +391,12 @@
       "Commands": [
         "setjob"
       ]
+    },
+    {
+      "CommandName": "Jail",
+      "Commands": [
+        "jail"
+      ]
     }
   ]
 }
