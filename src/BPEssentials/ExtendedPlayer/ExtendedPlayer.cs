@@ -14,8 +14,6 @@ namespace BPEssentials.ExtendedPlayer
         {
         }
 
-        public bool HasGodmode { get; set; }
-
         public bool EnabledBypass { get; set; }
 
         public bool EnabledSpychat { get; set; }

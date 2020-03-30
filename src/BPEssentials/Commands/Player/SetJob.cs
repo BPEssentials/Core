@@ -40,7 +40,7 @@ namespace BPEssentials.Commands
                 }
             }
             target.svPlayer.SvTrySetJob(wantedJob.Value, true, false);
-            player.TS("job_set", target.username.CleanerMessage(), jobName.ToString());
+            player.TS("job_set", target.username.CleanerMessage(), jobName);
             if (target != player) 
             {
                 target.TS("new_job", player.username.CleanerMessage(), wantedJob.Key);
