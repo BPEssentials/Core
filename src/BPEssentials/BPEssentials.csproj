@@ -285,6 +285,7 @@
     <Compile Include="Commands\Chat\Sudo.cs" />
     <Compile Include="Commands\Home\Home.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Moderation\Jail.cs" />
     <Compile Include="Commands\Moderation\StaffChat.cs" />
     <Compile Include="Commands\Moderation\ToggleBypass.cs" />
     <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
