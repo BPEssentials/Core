@@ -13,7 +13,7 @@ namespace BPEssentials.ChatHandlers
         [Target(GameSourceEvent.PlayerGlobalChatMessage, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
-            if (player.manager.svManager.chatted.OverLimit(player))
+            if (player.manager.svManager.chatted.Limit(player))
             {
                 return;
             }
@@ -22,8 +22,6 @@ namespace BPEssentials.ChatHandlers
             {
                 return;
             }
-
-            player.manager.svManager.chatted.Add(player);
 
             Core.Instance.Logger.LogInfo($"[GLOBAL] {player.username}: {message}");
 

@@ -300,7 +300,6 @@
     <Compile Include="Commands\Moderation\Ban.cs" />
     <Compile Include="Commands\Moderation\Kick.cs" />
     <Compile Include="Commands\Teleport\TeleportCoordinates.cs" />
-    <Compile Include="Commands\Player\ToggleGodmode.cs" />
     <Compile Include="Commands\Teleport\TeleportHere.cs" />
     <Compile Include="Commands\Teleport\Teleport.cs" />
     <Compile Include="Commands\Misc\Launch.cs" />
@@ -340,7 +339,6 @@
     <Compile Include="Core.cs" />
     <Compile Include="Enums\Chat.cs" />
     <Compile Include="Events\OnDropDead.cs" />
-    <Compile Include="Events\OnDamage.cs" />
     <Compile Include="Events\OnRegister.cs" />
     <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />

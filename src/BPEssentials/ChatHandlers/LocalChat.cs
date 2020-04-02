@@ -13,7 +13,7 @@ namespace BPEssentials.ChatHandlers
         [Target(GameSourceEvent.PlayerLocalChatMessage, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
-            if (player.manager.svManager.chatted.OverLimit(player))
+            if (player.manager.svManager.chatted.Limit(player))
             {
                 return;
             }
@@ -25,8 +25,6 @@ namespace BPEssentials.ChatHandlers
             {
                 return;
             }
-
-            player.manager.svManager.chatted.Add(player);
 
             if (Core.Instance.Settings.General.LocalChatOverHead)
             {
