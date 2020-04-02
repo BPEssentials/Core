@@ -17,7 +17,7 @@ namespace BPEssentials.Commands
             
             target = target ?? player;
             var jobs = new Dictionary<string, JobIndex>();
-            foreach (JobIndex jobType in Enum.GetValues(typeof(JobIndex)))
+            foreach (var jobType in Enum.GetValues(typeof(JobIndex)))
             {
                 jobs.Add(jobType.ToString(), jobType);
             }           
