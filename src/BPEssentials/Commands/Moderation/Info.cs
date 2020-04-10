@@ -1,6 +1,8 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
+using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Server.LiteDB.Models;
 using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
@@ -15,10 +17,16 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-            sb = GetOfflineInfo(player, targetStr);
-
-            if (sb == null)
+            var target = Core.Instance.SvManager.database.Users.FindById(targetStr);
+            if (target != null)
             {
+                sb = GetOfflineInfo(target);
+            }else if(EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
+            {
+                sb = GetOnlineInfo(shPlayer);
+            }else
+            {
+                player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return;
             }
             player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
@@ -26,14 +34,8 @@ namespace BPEssentials.Commands
 
         // TODO: Add i18n for this
         // TODO: There might be a better way to do this, for example using reflection.
-        private StringBuilder GetOfflineInfo(ShPlayer player, string targetStr)
+        private StringBuilder GetOfflineInfo(User target)
         {
-            var target = player.manager.svManager.database.Users.FindById(targetStr);
-            if (target == null)
-            {
-                player.SendChatMessage($"No account found with the id '{targetStr}'.");
-                return null;
-            }
             var sb = new StringBuilder();
             sb
             .Append("accountID64: ").AppendLine(target.ID.ToString())

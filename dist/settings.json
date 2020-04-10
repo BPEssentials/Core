@@ -5,7 +5,8 @@
     "KeepAllItemsOnDeath": false,
     "KeptItemsOnDeath": [],
     "LocalChatOverHead": true,
-    "LocalChatInChat": false
+    "LocalChatInChat": false,
+    "LimitNames": false
   },
   "Announcements": [],
   "Messages": {
@@ -14,7 +15,8 @@
   "Levenshtein": {
     "GiveMode": "Automatic",
     "WarpMode": "Suggest",
-    "KitMode": "Suggest"
+    "KitMode": "Suggest",
+    "SetJobMode": "Suggest"
   },
   "Commands": [
     {
@@ -352,6 +354,49 @@
       "Commands": [
         "bypass",
         "togglebypass"
+      ]
+    },
+      {
+      "CommandName": "Home",
+      "Commands": [
+        "home"
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false,
+      "AllowWhileJailed": false
+    },
+   {
+      "CommandName": "Pay",
+      "Commands": [
+        "pay"
+      ],
+      "AllowWhileDead": false,
+      "AllowWithCrimes": false,
+      "AllowWhileCuffed": false
+    },
+    {
+      "CommandName": "ToggleMute",
+      "Commands": [
+        "mute"
+      ]
+    },
+    {
+      "CommandName": "Sudo",
+      "Commands": [
+        "sudo"
+      ]
+    },
+    {
+      "CommandName": "SetJob",
+      "Commands": [
+        "setjob"
+      ]
+    },
+    {
+      "CommandName": "Jail",
+      "Commands": [
+        "jail"
       ]
     }
   ]

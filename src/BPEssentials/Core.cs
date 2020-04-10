@@ -26,7 +26,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } = new string[] { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -151,11 +151,11 @@ namespace BPEssentials
             foreach (var customCommand in CustomCommandsReader.Parsed)
             {
                 Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)} by name '{customCommand.Name}'..");
-                var name = "cc." + customCommand.Name;
-                CommandHandler.RegisterCommand(name, new Action<ShPlayer>((player) =>
+                var permission = "cc." + customCommand.Name;
+                CommandHandler.RegisterCommand(customCommand.Commands, new Action<ShPlayer>((player) =>
                 {
                     player.SendChatMessage(customCommand.Response);
-                }));
+                }), null, permission);
             }
         }
 

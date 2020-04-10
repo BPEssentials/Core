@@ -13,7 +13,7 @@ namespace BPEssentials.ChatHandlers
         [Target(GameSourceEvent.PlayerGlobalChatMessage, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
-            if (player.manager.svManager.chatted.OverLimit(player))
+            if (player.manager.svManager.chatted.Limit(player))
             {
                 return;
             }
@@ -23,14 +23,15 @@ namespace BPEssentials.ChatHandlers
                 return;
             }
 
-            player.manager.svManager.chatted.Add(player);
-
             Core.Instance.Logger.LogInfo($"[GLOBAL] {player.username}: {message}");
 
             switch (player.GetExtendedPlayer().CurrentChat)
             {
                 case Chat.StaffChat:
                     ChatUtils.SendStaffChatMessage(player, message);
+                    return;
+                case Chat.Muted:
+                    player.TS("muted_player");
                     return;
 
                 case Chat.Disabled:

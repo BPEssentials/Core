@@ -1,7 +1,6 @@
 ﻿using BPEssentials.Models;
-﻿using BPEssentials.Enums;
+using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
-
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System;
@@ -14,8 +13,6 @@ namespace BPEssentials.ExtendedPlayer
         public PlayerItem(ShPlayer player) : base(player)
         {
         }
-
-        public bool HasGodmode { get; set; }
 
         public bool EnabledBypass { get; set; }
 
@@ -30,8 +27,6 @@ namespace BPEssentials.ExtendedPlayer
         public ShPlayer TpaUser { get; set; }
 
         public LastLocation LastLocation { get; } = new LastLocation();
-
-        public bool WantsVerify { get; set;  } = false;
 
         public void SendPmMessage(ShPlayer target, string message)
         {

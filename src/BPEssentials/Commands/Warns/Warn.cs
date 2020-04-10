@@ -15,7 +15,7 @@ namespace BPEssentials.Commands
             target.AddWarn(player, reason);
             ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.username.CleanerMessage(), reason.CleanerMessage());
             player.TS("player_warn", target.username.CleanerMessage(), reason.CleanerMessage());
-            player.TS("target_warn", player.username.CleanerMessage(), reason.CleanerMessage());
+            target.TS("target_warn", player.username.CleanerMessage(), reason.CleanerMessage());
         }
     }
 }

@@ -36,12 +36,12 @@ namespace BPEssentials.Utils
 
         public static string FormatMessage(ShPlayer player, string message, string formatKey = "format")
         {
-            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
-            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
+            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.Value.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
+            if (formatGroup.Value != null && formatGroup.Value.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
             {
                 try
                 {
-                    return string.Format(new CustomFormatter(), formatter.ParseColorCodes(), player.ID, player.username.SanitizeString(), message);
+                    return string.Format(new CustomFormatter(), formatter, player.ID, player.username, message);
                 }
                 catch (Exception err)
                 {
