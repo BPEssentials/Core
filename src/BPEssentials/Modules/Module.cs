@@ -27,9 +27,4 @@
             return ModuleInfo?.Plugin?.Info.Description;
         }
     }
-
-    public class Test : Module
-    {
-        public override ModuleInfo ModuleInfo { get; set; } = new ModuleInfo(Core.Instance);
-    }
 }
