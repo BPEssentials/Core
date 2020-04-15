@@ -15,7 +15,7 @@ namespace BPEssentials.Utils
         {
             try
             {
-                type = Type.GetType($"BPEssentials.Commands.{typeName}");
+                type = Type.GetType(typeName);
                 instance = (Abstractions.Command)Activator.CreateInstance(type);
                 instance = InjectDependenciesIntoCommand(instance, Core.Instance.Logger, Core.Instance.Settings, Core.Instance.PlayerHandler);
                 return true;
@@ -43,7 +43,7 @@ namespace BPEssentials.Utils
             del = null;
             try
             {
-                if (!TryInstanciateAndInjectDependencies(typeName, out instance, out var type))
+                if (!TryInstanciateAndInjectDependencies($"BPEssentials.Commands.{typeName}", out instance, out var type))
                 {
                     return false;
                 }

@@ -4,6 +4,7 @@ using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
+using BPEssentials.Modules;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
@@ -54,6 +55,8 @@ namespace BPEssentials
 
         public EntityHandler EntityHandler { get; set; }
 
+        public ModuleHandler ModuleHandler { get; set; }
+
         public Core()
         {
             Instance = this;
@@ -73,6 +76,9 @@ namespace BPEssentials
             
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
+
+            ModuleHandler = new ModuleHandler();
+            ModuleHandler.Initialize();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
