@@ -9,7 +9,7 @@ namespace BPEssentials.Commands
 {
     public class UnBan : Command
     {
-        public void Invoke(ShPlayer player, string targetAccount, string reason = "No reason provided.")
+        public void Invoke(ShPlayer player, string targetAccount)
         {
             if (player.HasPermissionBP(PermEnum.UnbanAccount) && Core.Instance.SvManager.TryGetUserData(targetAccount, out var target))
             {
