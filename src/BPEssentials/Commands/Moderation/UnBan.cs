@@ -15,7 +15,6 @@ namespace BPEssentials.Commands
             {
                 target.Unban();
                 Core.Instance.SvManager.database.Users.Upsert(target);
-                player.svPlayer.Send(SvSendType.Self, Channel.Reliable, 98, targetAccount, false);
             }
         }
     }
