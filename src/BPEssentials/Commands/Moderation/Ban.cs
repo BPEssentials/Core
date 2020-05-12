@@ -6,7 +6,7 @@ using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
-    public class Ban : Command
+    public class UnBan : Command
     {
         public override bool LastArgSpaces { get; } = true;
 

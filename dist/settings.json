@@ -398,6 +398,12 @@
       "Commands": [
         "jail"
       ]
+    },
+    {
+      "CommandName": "UnBan",
+      "Commands": [
+        "unban"
+      ]
     }
   ]
 }
