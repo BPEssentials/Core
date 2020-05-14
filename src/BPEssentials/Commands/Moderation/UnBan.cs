@@ -15,6 +15,7 @@ namespace BPEssentials.Commands
             {
                 target.Unban();
                 Core.Instance.SvManager.database.Users.Upsert(target);
+                player.TS("unbanned", targetAccount.CleanerMessage());
             }
         }
     }
