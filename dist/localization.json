@@ -109,7 +109,8 @@
     "job_notFound": "The job {0} was not found.",
     "player_jail" : "You have placed {0} in prison for {1} seconds",
     "target_jail" : "{0} has placed you in prison for {1} seconds",
-    "god_damage_blocked": "Damage blocked: {0}HP. (Attacker: {1}: {2})"
+    "god_damage_blocked": "Damage blocked: {0}HP. (Attacker: {1}: {2})",
+    "pay_error_negative": "You cannot pay 0 or less."
   },
   "BR": {
     "arrested": "Preso {0}.",
