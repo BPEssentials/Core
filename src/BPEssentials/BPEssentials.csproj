@@ -291,6 +291,7 @@
     <Compile Include="Commands\Moderation\ToggleSpyChat.cs" />
     <Compile Include="Commands\Pay\Pay.cs" />
     <Compile Include="Commands\Player\SetJob.cs" />
+    <Compile Include="Commands\Player\ToggleGodmode.cs" />
     <Compile Include="Commands\Player\ToggleMute.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
@@ -340,6 +341,7 @@
     <Compile Include="Enums\Chat.cs" />
     <Compile Include="Events\OnDropDead.cs" />
     <Compile Include="Events\OnRegister.cs" />
+    <Compile Include="Events\OnDamge.cs" />
     <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
