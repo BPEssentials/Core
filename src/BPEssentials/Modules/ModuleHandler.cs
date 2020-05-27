@@ -19,11 +19,11 @@ namespace BPEssentials.Modules
         {
             foreach (var plugin in BPAPI.Instance.Plugins)
             {
-                if (!plugin.CustomData.TryFetchCustomData("bpe:isModule", out bool val) || !val)
+                if (!plugin.Value.Plugin.CustomData.TryFetchCustomData("bpe:isModule", out bool val) || !val)
                 {
                     continue;
                 }
-                if (!plugin.CustomData.TryFetchCustomData("bpe:module", out Module module) || module == null)
+                if (!plugin.Value.Plugin.CustomData.TryFetchCustomData("bpe:module", out Module module) || module == null)
                 {
                     continue;
                 }
