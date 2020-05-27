@@ -1,5 +1,5 @@
 {
-    "AutoWarn": ["shit"],
-    "AutoKick": ["fuck"],
-    "AutoBan": ["nigga"]
+    "AutoWarn": [],
+    "AutoKick": [],
+    "AutoBan": []
 }
