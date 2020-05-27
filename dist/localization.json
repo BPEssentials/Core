@@ -111,7 +111,8 @@
     "target_jail" : "{0} has placed you in prison for {1} seconds",
     "unbanned" : "{0} was unban",
     "usernot_found" : "Could not find user by the username of {0}",
-    "usernot_ban" : "{0} is not ban"
+    "usernot_ban" : "{0} is not ban",
+    "no_permission" : "You dont have permission to use this command"
 },
   "BR": {
     "arrested": "Preso {0}.",
