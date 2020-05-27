@@ -24,7 +24,6 @@ namespace BPEssentials.Commands
                 return;
             }
             player.TS("user_not_found", targetAccount.CleanerMessage());
-            return;
         }
     }
 }
