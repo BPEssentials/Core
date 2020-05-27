@@ -109,7 +109,9 @@
     "job_notFound": "The job {0} was not found.",
     "player_jail" : "You have placed {0} in prison for {1} seconds",
     "target_jail" : "{0} has placed you in prison for {1} seconds",
-    "unbanned" : "{0} was unban"
+    "unbanned" : "{0} was unban",
+    "usernot_found" : "Could not find user by the username of {0}",
+    "usernot_ban" : "{0} is not ban"
 },
   "BR": {
     "arrested": "Preso {0}.",
