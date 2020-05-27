@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
             if (!Core.Instance.SvManager.TryGetUserData(targetAccount, out var target))
             {
                 player.TS("user_not_found", targetAccount.CleanerMessage());
-                return;  
+                return;
             }
             if (!target.BanInfo.IsBanned)
             {
