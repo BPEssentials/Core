@@ -7,7 +7,7 @@ using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
 {
-    public class UnBan : Command
+    public class Unban : Command
     {
         public void Invoke(ShPlayer player, string targetAccount)
         {
