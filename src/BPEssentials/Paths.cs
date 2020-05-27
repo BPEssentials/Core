@@ -10,11 +10,12 @@ namespace BPEssentials
 
         public string CustomCommandsFile { get; } = Path.Combine(EssentialsFolder, "CustomCommands.json");
 
+        public string TriggersFile { get; } = Path.Combine(EssentialsFolder, "triggers.json");
+
         public string LocalizationFile { get; } = Path.Combine(EssentialsFolder, "localization.json");
 
         public string WarpsFolder { get; } = Path.Combine(EssentialsFolder, "Warps/");
 
         public string KitsFolder { get; } = Path.Combine(EssentialsFolder, "Kits/");
-
     }
 }

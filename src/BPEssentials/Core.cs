@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Linq;
 
 namespace BPEssentials
 {
@@ -26,7 +27,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -40,6 +41,8 @@ namespace BPEssentials
         public Settings Settings => SettingsReader.Parsed;
 
         public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
+
+        public IReader<List<CustomTriggers>> CustomEventReader { get; } = new Reader<List<CustomTriggers>>();
 
         public Announcer Announcer { get; set; }
 
@@ -73,7 +76,7 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-            
+
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 
@@ -156,6 +159,30 @@ namespace BPEssentials
                 {
                     player.SendChatMessage(customCommand.Response);
                 }), null, permission);
+            }
+        }
+
+        public void RegisterCustomTriggers()
+        {
+            foreach (var customEvent in CustomEventReader.Parsed)
+            {
+                Logger.LogInfo($"[CC] Registering custom trigger(s) {string.Join(", ", customEvent.Trigger)}");
+                EventsHandler.Add(customEvent.Trigger, new Action<ShPlayer, string>((player, eventName) =>
+                {
+                    if (customEvent.PrivateResponse != null && customEvent.PrivateResponse != "")
+                    {
+                        player.SendChatMessage(customEvent.PrivateResponse, true);
+                    }
+                    if (customEvent.SendInChat != null && customEvent.SendInChat != "")
+                    {
+                        player.svPlayer.SvGlobalChatMessage(customEvent.SendInChat);
+                    }
+                    foreach (var command in customEvent.Commands)
+                    {
+                        var args = new List<string>(command.Split(' '));
+                        CommandHandler.Commands.Values.FirstOrDefault(x => x.Name == args[0]).Invoke(player, args.FindAll(x => args.IndexOf(x) > 0).ToArray());
+                    }
+                }));
             }
         }
 
