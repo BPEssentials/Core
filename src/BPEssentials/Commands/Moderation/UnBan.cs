@@ -11,24 +11,20 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string targetAccount)
         {
-            if (player.HasPermissionBP(PermEnum.UnbanAccount))
+            if (Core.Instance.SvManager.TryGetUserData(targetAccount, out var target))
             {
-                if (Core.Instance.SvManager.TryGetUserData(targetAccount, out var target))
+                if (target.BanInfo.IsBanned)
                 {
-                    if (target.BanInfo.IsBanned)
-                    {
-                        target.Unban();
-                        Core.Instance.SvManager.database.Users.Upsert(target);
-                        player.TS("unbanned", targetAccount.CleanerMessage());
-                        return;
-                    }
-                    player.TS("usernot_ban", targetAccount.CleanerMessage());
+                    target.Unban();
+                    Core.Instance.SvManager.database.Users.Upsert(target);
+                    player.TS("unbanned", targetAccount.CleanerMessage());
                     return;
                 }
-                player.TS("usernot_found", targetAccount.CleanerMessage());
+                player.TS("user_not_ban", targetAccount.CleanerMessage());
                 return;
             }
-            player.TS("no_permission");
+            player.TS("user_not_found", targetAccount.CleanerMessage());
+            return;
         }
     }
 }
