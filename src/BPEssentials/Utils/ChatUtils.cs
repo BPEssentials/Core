@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
@@ -51,7 +52,6 @@ namespace BPEssentials.Utils
             return $"{player.username}: {message.CleanerMessage()}";
         }
 
-
         public static void SendToAllEnabledChat(string message, bool useColors = true)
         {
             foreach (var currPlayer in EntityCollections.Humans)
@@ -80,5 +80,17 @@ namespace BPEssentials.Utils
         }
 
         public static void SendToAllEnabledChat(List<string> messages) => SendToAllEnabledChat(messages.ToArray());
+
+        public static bool MessageInBlacklist(string message, List<string> blacklist)
+        {
+            foreach (string s in blacklist)
+            {
+                if (s.Contains(message))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

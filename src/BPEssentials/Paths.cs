@@ -8,6 +8,8 @@ namespace BPEssentials
 
         public string SettingsFile { get; } = Path.Combine(EssentialsFolder, "settings.json");
 
+        public string WordBlacklistFile { get; } = Path.Combine(EssentialsFolder, "wordBlacklist.json");
+
         public string CustomCommandsFile { get; } = Path.Combine(EssentialsFolder, "CustomCommands.json");
 
         public string LocalizationFile { get; } = Path.Combine(EssentialsFolder, "localization.json");
@@ -15,6 +17,5 @@ namespace BPEssentials
         public string WarpsFolder { get; } = Path.Combine(EssentialsFolder, "Warps/");
 
         public string KitsFolder { get; } = Path.Combine(EssentialsFolder, "Kits/");
-
     }
 }

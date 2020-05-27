@@ -26,7 +26,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -40,6 +40,10 @@ namespace BPEssentials
         public Settings Settings => SettingsReader.Parsed;
 
         public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
+
+        public IReader<WordBlacklist> WordBlacklistReader { get; } = new Reader<WordBlacklist>();
+
+        public WordBlacklist WordBlacklist => WordBlacklistReader.Parsed;
 
         public Announcer Announcer { get; set; }
 
@@ -73,7 +77,7 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-            
+
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 
@@ -175,12 +179,14 @@ namespace BPEssentials
         public void SetConfigurationFilePaths()
         {
             SettingsReader.Path = Paths.SettingsFile;
+            WordBlacklistReader.Path = Paths.WordBlacklistFile;
             CustomCommandsReader.Path = Paths.CustomCommandsFile;
         }
 
         public void ReadConfigurationFiles()
         {
             SettingsReader.ReadAndParse();
+            WordBlacklistReader.ReadAndParse();
             CustomCommandsReader.ReadAndParse();
         }
 
