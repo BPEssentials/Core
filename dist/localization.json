@@ -111,10 +111,6 @@
     "target_jail" : "{0} has placed you in prison for {1} seconds",
     "god_damage_blocked": "Damage blocked: {0}HP. (Attacker: {1}: {2})",
     "pay_error_negative": "You cannot pay 0 or less.",
-    "unbanned" : "{0} was unban",
-    "usernot_found" : "Could not find user by the username of {0}",
-    "usernot_ban" : "{0} is not ban",
-    "no_permission" : "You dont have permission to use this command",
     "auto_warnchat" : "AUTO WARN: Using a blacklisted word in chat.",
     "auto_banchat" : "AUTO BAN: Using a blacklisted word in chat.",
     "auto_kickchat" : "AUTO KICK: Using a blacklisted word in chat."
