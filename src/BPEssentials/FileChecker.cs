@@ -7,7 +7,7 @@ namespace BPEssentials
 {
     public static class FileChecker
     {
-        public static Dictionary<string, string> RequiredDirectories { get; }= new Dictionary<string, string>
+        public static Dictionary<string, string> RequiredDirectories { get; } = new Dictionary<string, string>
         {
             {"Essentials", Paths.EssentialsFolder},
             {"Warps", Core.Instance.Paths.KitsFolder},
@@ -17,6 +17,7 @@ namespace BPEssentials
         public static Dictionary<string, string> RequiredFiles { get; } = new Dictionary<string, string>
         {
             {"settings.json", Core.Instance.Paths.SettingsFile},
+            {"wordBlacklist.json", Core.Instance.Paths.SettingsFile},
             {"CustomCommands.json", Core.Instance.Paths.CustomCommandsFile},
             {"localization.json", Core.Instance.Paths.LocalizationFile}
         };
