@@ -85,7 +85,7 @@ namespace BPEssentials.Utils
         {
             foreach (string s in blacklist)
             {
-                if (s.Contains(message))
+                if (message.Contains(s))
                 {
                     return true;
                 }
