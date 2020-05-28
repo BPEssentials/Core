@@ -15,8 +15,9 @@ namespace BPEssentials.ExtensionMethods
 
         public static string TC(this SvPlayer player, string node, params object[] formatting)
         {
+            var formatter = new CustomFormatter(Core.Instance.Settings.Messages.ArgColor, Core.Instance.Settings.Messages.InfoColor);
             return $"<color={Core.Instance.Settings.Messages.InfoColor}>" +
-                (Core.Instance.I18n.Localize(new CustomFormatter(Core.Instance.Settings.Messages.ArgColor, Core.Instance.Settings.Messages.InfoColor), player.language.code, node, formatting) ?? Core.Instance.I18n.Localize(new CustomFormatter(Core.Instance.Settings.Messages.ArgColor, Core.Instance.Settings.Messages.InfoColor), "EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]")
+                (Core.Instance.I18n.Localize(formatter, player.language.code, node, formatting) ?? Core.Instance.I18n.Localize(formatter, "EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]")
                 + "</color>";
         }
 
