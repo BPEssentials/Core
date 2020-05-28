@@ -60,9 +60,9 @@ namespace BPEssentials.Commands
                 player.AddCooldown(Core.Instance.KitHandler.Name, obj.Name, obj.Delay);
             }
             player.SendChatMessage(
-                player.T(Core.Instance.KitHandler.Name + "_received", obj.Name) +
-                (obj.Price > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") +
-                (obj.Delay > 0 ? player.T(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
+                player.TC(Core.Instance.KitHandler.Name + "_received", obj.Name) +
+                (obj.Price > 0 ? player.TC(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") +
+                (obj.Delay > 0 ? player.TC(Core.Instance.KitHandler.Name + "_received_Delay", obj.Delay.ToString()) : ""));
         }
     }
 }
