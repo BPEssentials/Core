@@ -52,7 +52,7 @@ namespace BPEssentials.ChatHandlers
                     {
                         string reason = player.T("auto_kickchat");
                         ChatUtils.SendToAllEnabledChatT("all_kick", player.username.CleanerMessage(), player.username.CleanerMessage(), reason.CleanerMessage());
-                        player.svPlayer.SvKick(player, reason);
+                        Core.Instance.SvManager.KickConnection(player.svPlayer.connection);
                         return;
                     }
                     if (ChatUtils.MessageInBlacklist(message, Core.Instance.WordBlacklist.AutoWarn))
