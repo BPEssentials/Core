@@ -364,7 +364,8 @@
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileChecker.cs" />
-    <Compile Include="Utils\CustomFormatter.cs" />
+    <Compile Include="Utils\Formatters\FormatterChat.cs" />
+    <Compile Include="Utils\Formatters\FormatterResponse.cs" />
     <Compile Include="Utils\LevenshteinDistance.cs" />
     <Compile Include="Utils\IO.cs" />
     <Compile Include="Utils\ChatUtils.cs" />
