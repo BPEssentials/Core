@@ -285,6 +285,7 @@
     <Compile Include="Commands\Chat\Sudo.cs" />
     <Compile Include="Commands\Home\Home.cs" />
     <Compile Include="Commands\Kits\KitList.cs" />
+    <Compile Include="Commands\Moderation\Ban.cs" />
     <Compile Include="Commands\Moderation\Jail.cs" />
     <Compile Include="Commands\Moderation\StaffChat.cs" />
     <Compile Include="Commands\Moderation\ToggleBypass.cs" />
@@ -298,7 +299,7 @@
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
     <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />
     <Compile Include="Commands\Player\Inventory\Give.cs" />
-    <Compile Include="Commands\Moderation\Ban.cs" />
+    <Compile Include="Commands\Moderation\UnBan.cs" />
     <Compile Include="Commands\Moderation\Kick.cs" />
     <Compile Include="Commands\Teleport\TeleportCoordinates.cs" />
     <Compile Include="Commands\Teleport\TeleportHere.cs" />
