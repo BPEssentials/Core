@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Linq;
+using BrokeProtocol.Utility;
 
 namespace BPEssentials
 {
@@ -164,6 +165,18 @@ namespace BPEssentials
 
         public void RegisterCustomTriggers()
         {
+            var allPermGroup = "bpe_all_perms";
+            if (!GroupManager.Groups.ContainsKey(allPermGroup))
+            {
+                Group newGroup = new Group();
+                newGroup.Permissions.Add("*");
+                GroupManager.Groups.Add("bpe_all_perms", newGroup);
+            }
+            else if (!GroupManager.Groups["bpe_all_perms"].Permissions.Contains("*"))
+            {
+                Core.Instance.Logger.LogWarning($"Bpe can not create group named {allPermGroup} because one such group may already exit and it does not have * perms");
+            }
+
             foreach (var customEvent in CustomEventReader.Parsed)
             {
                 Logger.LogInfo($"[CC] Registering custom trigger(s) {string.Join(", ", customEvent.Trigger)}");
@@ -177,11 +190,39 @@ namespace BPEssentials
                     {
                         player.svPlayer.SvGlobalChatMessage(customEvent.SendInChat);
                     }
+                    GroupManager.Groups[allPermGroup].AddMember(player);
                     foreach (var command in customEvent.Commands)
                     {
-                        var args = new List<string>(command.Split(' '));
-                        CommandHandler.Commands.Values.FirstOrDefault(x => x.Name == args[0]).Invoke(player, args.FindAll(x => args.IndexOf(x) > 0).ToArray());
+                        string[] array = command.Split('"').Select((string element, int index) => (index % 2 != 0) ? new string[1]
+                        {
+                            element
+                        } : element.Split(Util.commandSeparators, StringSplitOptions.RemoveEmptyEntries)).SelectMany((string[] element) => element).ToArray();
+                        string item = array[0].ToLowerInvariant();
+                        int num = array.Length;
+                        while (true)
+                        {
+                            if (CommandHandler.Commands.TryGetValue((item, num).GetHashCode(), out BrokeProtocol.API.Types.Command value))
+                            {
+                                value.Invoke(player, array, num);
+                                return;
+                            }
+                            if (num < 2)
+                            {
+                                break;
+                            }
+                            array[num - 2] = string.Join(" ", array[num - 2], array[num - 1]);
+                            num--;
+                        }
+                        if (CommandHandler.Commands.TryGetValue((item, 0).GetHashCode(), out BrokeProtocol.API.Types.Command value2))
+                        {
+                            value2.SendUsage(player);
+                        }
+                        else
+                        {
+                            player.svPlayer.SendGameMessage("Command Not Found, Please Make sure you configured triggers.josn correctly");
+                        }
                     }
+                    GroupManager.Groups[allPermGroup].RemoveMember(player);
                 }));
             }
         }
@@ -203,12 +244,14 @@ namespace BPEssentials
         {
             SettingsReader.Path = Paths.SettingsFile;
             CustomCommandsReader.Path = Paths.CustomCommandsFile;
+            CustomEventReader.Path = Paths.TriggersFile;
         }
 
         public void ReadConfigurationFiles()
         {
             SettingsReader.ReadAndParse();
             CustomCommandsReader.ReadAndParse();
+            CustomEventReader.ReadAndParse();
         }
 
         public async void OnReloadRequestAsync()
@@ -217,6 +260,7 @@ namespace BPEssentials
             await FileChecker.CheckFiles();
             ReadConfigurationFiles();
             RegisterCustomCommands();
+            RegisterCustomTriggers();
             RegisterCommands();
             SetupAnnouncer();
             SetupI18n();

@@ -6,6 +6,7 @@
         {
             Core.Instance.ReadConfigurationFiles();
             Core.Instance.RegisterCustomCommands();
+            Core.Instance.RegisterCustomTriggers();
         }
     }
 }

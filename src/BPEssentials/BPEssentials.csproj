@@ -336,6 +336,7 @@
     <Compile Include="Commands\General\OnlinePlayers.cs" />
     <Compile Include="Commands\Essentials.cs" />
     <Compile Include="Configuration\Models\CustomCommands.cs" />
+    <Compile Include="Configuration\Models\CustomTriggers.cs" />
     <Compile Include="Configuration\Models\SettingsModel.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Enums\Chat.cs" />

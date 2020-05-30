@@ -1,0 +1,8 @@
+[
+    {
+        "Trigger" : "test",
+        "PrivateResponse" : "THIS IS PRIVATE",
+        "SendInChat" : "THIS IS GLOBAL",
+        "Commands" : ["heal"]
+    }
+]
