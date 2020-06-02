@@ -1,6 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Managers;
 using BrokeProtocol.Required;
 using BrokeProtocol.Utility.Jobs;
 using BrokeProtocol.Utility.Networking;
@@ -12,7 +13,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
         {
-            var jail = target.manager.jails.FirstOrDefault();
+            var jail = SceneManager.Instance.jail;
             if (jail == null)
             {
                 return;
@@ -21,9 +22,9 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-            var getPositionT = jail.GetPositionT;
+            var getPositionT = jail.mainT;
             target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
-            target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, jail.GetPlaceIndex);
+            target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, 0);
             target.svPlayer.SvClearCrimes();
             target.RemoveItemsJail();
             target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
@@ -33,4 +34,3 @@ namespace BPEssentials.Commands
         }
     }
 }
-
