@@ -101,18 +101,22 @@ namespace BPEssentials.Cooldowns
             return Cooldowns[ID][type][key];
         }
 
-        private IEnumerator WhileRuning(int time, Action action)
+        private IEnumerator MethodTimer(int time, Action action, int repeat = -1)
         {
-            while (true)
+            int i = 0;
+            while (i != repeat)
             {
                 action.Invoke();
                 yield return new WaitForSecondsRealtime(time);
+                if (repeat > 0)
+                {
+                    i++;
+                }
             }
         }
 
-        public void StartInfiniteTimer(int time, Action action)
+        public void StartMethodTimer(int time, Action action, int repeat = -1)
         {
-            Core.Instance.SvManager.StartCoroutine(WhileRuning(time, action));
+            Core.Instance.SvManager.StartCoroutine(MethodTimer(time, action, repeat));
         }
     }
-}
