@@ -1,4 +1,5 @@
 ﻿using BrokeProtocol.Collections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,6 @@ namespace BPEssentials.Cooldowns
             ready = true;
         }
 
-
         public void SaveCooldowns()
         {
             foreach (var cooldownPlayer in Cooldowns)
@@ -71,7 +71,6 @@ namespace BPEssentials.Cooldowns
             {
                 Cooldowns[ID][type].Remove(key);
             }
-
         }
 
         public void AddCooldown(string ID, string type, string key, int time = 0)
@@ -100,6 +99,20 @@ namespace BPEssentials.Cooldowns
         {
             if (!Cooldowns.ContainsKey(ID) || !Cooldowns[ID].ContainsKey(type) || !Cooldowns[ID][type].ContainsKey(key)) { return 0; }
             return Cooldowns[ID][type][key];
+        }
+
+        private IEnumerator WhileRuning(int time, Action action)
+        {
+            while (true)
+            {
+                action.Invoke();
+                yield return new WaitForSecondsRealtime(time);
+            }
+        }
+
+        public void StartInfiniteTimer(int time, Action action)
+        {
+            Core.Instance.SvManager.StartCoroutine(WhileRuning(time, action));
         }
     }
 }
