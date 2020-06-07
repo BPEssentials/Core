@@ -1,43 +1,21 @@
 ﻿using BPEssentials.Utils;
 using System;
 using System.Collections.Generic;
-using System.Timers;
 
 namespace BPEssentials
 {
     public class Announcer
     {
-        public Timer Timer { get; }
-
         public List<string> Announcements { get; } = new List<string>();
 
         public int Index { get; private set; }
 
-        public double Interval
+        public Announcer(int interval)
         {
-            get => Timer.Interval;
-            set
-            {
-                Timer.Enabled = false;
-                Timer.Interval = value;
-                Timer.Enabled = true;
-            }
+            Core.Instance.CooldownHandler.StartInfiniteTimer(interval, OnElapsed);
         }
 
-        public Announcer(double interval)
-        {
-            Timer = new Timer();
-            Timer.Elapsed += (sender, e) => OnElapsed();
-            Timer.Enabled = false;
-            if (interval <= 0)
-            {
-                return;
-            }
-            Timer.Interval = interval;
-            Timer.Enabled = true;
-        }
-
-        public Announcer(double interval, List<string> announcements) : this(interval)
+        public Announcer(int interval, List<string> announcements) : this(interval)
         {
             Announcements = announcements;
         }
