@@ -12,7 +12,7 @@ namespace BPEssentials
 
         public Announcer(int interval)
         {
-            Core.Instance.CooldownHandler.StartInfiniteTimer(interval, OnElapsed);
+            Core.Instance.CooldownHandler.StartMethodTimer(interval, OnElapsed);
         }
 
         public Announcer(int interval, List<string> announcements) : this(interval)

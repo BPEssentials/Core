@@ -120,3 +120,4 @@ namespace BPEssentials.Cooldowns
             Core.Instance.SvManager.StartCoroutine(MethodTimer(time, action, repeat));
         }
     }
+}
