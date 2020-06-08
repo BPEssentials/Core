@@ -21,7 +21,7 @@
   "Warns" : {
       "DefaultWarnsExpirationInDays" : 20,
       "DeleteExpiredWarns" : true
-   }
+   },
   "Commands": [
     {
       "CommandName": "Essentials",
