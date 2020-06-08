@@ -13,6 +13,8 @@ namespace BPEssentials.ExtensionMethods.Warns
         {
             public string Reason { get; set; }
 
+            public bool Expired { get; set; }
+
             public string IssueraccountID { get; set; }
 
             public DateTime Date { get; set; }
@@ -62,7 +64,7 @@ namespace BPEssentials.ExtensionMethods.Warns
             {
                 warns = new List<SerializableWarn>();
             }
-            return warns;
+            return warns.FindAll(x => !x.Expired);
         }
     }
 }

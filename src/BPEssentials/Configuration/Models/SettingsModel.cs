@@ -88,5 +88,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     public class warns
     {
         public int DefaultWarnsExpirationInDays { get; set; }
+
+        public bool DeleteExpiredWarns { get; set; }
     }
 }

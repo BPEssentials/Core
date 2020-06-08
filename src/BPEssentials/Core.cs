@@ -172,7 +172,12 @@ namespace BPEssentials
                 {
                     if (warn.Date.AddDays(warn.Length) <= DateTime.Now)
                     {
-                        warns.Remove(warn);
+                        if (Settings.Warns.DeleteExpiredWarns)
+                        {
+                            warns.Remove(warn);
+                            continue;
+                        }
+                        warn.Expired = true;
                     }
                 }
             }
