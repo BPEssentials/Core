@@ -35,7 +35,6 @@ namespace BPEssentials.Commands
                 user.Character.CustomData.AddOrUpdate(CustomDataKey, warns);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.CleanerMessage(), reason.CleanerMessage());
                 player.TS("player_warn", target.CleanerMessage(), reason.CleanerMessage());
-                shTarget.TS("target_warn", target.CleanerMessage(), reason.CleanerMessage());
                 return;
             }
             player.TS("user_not_found", target.CleanerMessage());
