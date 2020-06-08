@@ -214,6 +214,7 @@ namespace BPEssentials
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
+            DeleteExpiredWarns();
         }
 
         public void OnVersionRequest(string callback)
