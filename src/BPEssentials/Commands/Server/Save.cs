@@ -11,8 +11,11 @@ namespace BPEssentials.Commands
     {
         public void StartSaveTimer()
         {
-            int interval = 15 * 60 * 1000;
-            Core.Instance.CooldownHandler.StartMethodTimer(interval, Run);
+            if (Core.Instance.Settings.General.SaveIntervalInMinutes > 0)
+            {
+                int interval = Core.Instance.Settings.General.SaveIntervalInMinutes * 60;
+                Core.Instance.CooldownHandler.StartMethodTimer(interval, Run);
+            }
         }
 
         public void Invoke(ShPlayer player)

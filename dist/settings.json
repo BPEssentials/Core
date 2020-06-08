@@ -6,7 +6,8 @@
     "KeptItemsOnDeath": [],
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
-    "LimitNames": false
+    "LimitNames": false,
+    "SaveIntervalInMinutes" : 15
   },
   "Announcements": [],
   "Messages": {
