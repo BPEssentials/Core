@@ -82,14 +82,7 @@ namespace BPEssentials.Utils
 
         public static bool MessageInBlacklist(string message, List<string> blacklist)
         {
-            foreach (string s in blacklist)
-            {
-                if (message.Contains(s))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return blacklist.Any(w => message.Contains(w));
         }
     }
 }
