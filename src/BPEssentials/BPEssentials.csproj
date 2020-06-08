@@ -343,6 +343,7 @@
     <Compile Include="Events\OnDropDead.cs" />
     <Compile Include="Events\OnRegister.cs" />
     <Compile Include="Events\OnDamge.cs" />
+    <Compile Include="Events\OnSave.cs" />
     <Compile Include="Events\OnStarted.cs" />
     <Compile Include="Events\OnLeave.cs" />
     <Compile Include="Events\OnLogin.cs" />
