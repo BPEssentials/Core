@@ -17,11 +17,21 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public DateTime Date { get; set; }
 
-            public SerializableWarn(string issuer, string reason, DateTime dateTime)
+            public int Length { get; set; }
+
+            public SerializableWarn(string issuer, string reason, DateTime dateTime, int length = -1)
             {
                 IssueraccountID = issuer;
                 Reason = reason;
                 Date = dateTime;
+                if (length < 1)
+                {
+                    Length = length;
+                }
+                else
+                {
+                    Length = Core.Instance.Settings.Warns.DefaultWarnsExpirationInDays;
+                }
             }
 
             public string ToString(ShPlayer player)
@@ -31,10 +41,10 @@ namespace BPEssentials.ExtensionMethods.Warns
             }
         }
 
-        public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason)
+        public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason, int length = -1)
         {
             var warns = GetWarns(player);
-            warns.Add(new SerializableWarn(issuer.accountID, reason, DateTime.Now));
+            warns.Add(new SerializableWarn(issuer.accountID, reason, DateTime.Now, length));
             player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
         }
 

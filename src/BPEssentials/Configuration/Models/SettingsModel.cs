@@ -16,6 +16,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public ReportOptions ReportOptions { get; set; }
 
+        public warns Warns { get; set; }
+
         public List<Command> Commands { get; set; }
     }
 
@@ -38,13 +40,14 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool AllowWhileJailed { get; set; } = true;
     }
 
-    public enum LevenshteinMode {
+    public enum LevenshteinMode
+    {
         Automatic,
         Suggest,
         None
     }
 
-    public class Levenshtein 
+    public class Levenshtein
     {
         public LevenshteinMode GiveMode { get; set; }
         public LevenshteinMode WarpMode { get; set; }
@@ -80,5 +83,10 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool LocalChatInChat { get; set; }
 
         public bool LimitNames { get; set; }
+    }
+
+    public class warns
+    {
+        public int DefaultWarnsExpirationInDays { get; set; }
     }
 }
