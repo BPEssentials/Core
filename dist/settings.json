@@ -20,7 +20,7 @@
   },
   "Warns" : {
       "DefaultWarnsExpirationInDays" : 20
-   }
+   },
   "Commands": [
     {
       "CommandName": "Essentials",
