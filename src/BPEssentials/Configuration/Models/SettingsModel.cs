@@ -16,7 +16,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public ReportOptions ReportOptions { get; set; }
 
-        public warns Warns { get; set; }
+        public Warns Warns { get; set; }
 
         public List<Command> Commands { get; set; }
     }
@@ -85,7 +85,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool LimitNames { get; set; }
     }
 
-    public class warns
+    public class Warns
     {
         public int DefaultWarnsExpirationInDays { get; set; }
 
