@@ -104,9 +104,12 @@ namespace BPEssentials.Cooldowns
         private IEnumerator MethodTimer(int time, Action action, int repeat = -1)
         {
             int i = 0;
-            while (i != repeat)
+            Core.Instance.Logger.Log("Starting cool down loop");
+            while (i <= repeat && !(repeat < 0))
             {
+                Core.Instance.Logger.Log("Starting cool down method");
                 action.Invoke();
+                Core.Instance.Logger.Log("Waiting " + time + "s");
                 yield return new WaitForSecondsRealtime(time);
                 if (repeat > 0)
                 {
@@ -117,6 +120,7 @@ namespace BPEssentials.Cooldowns
 
         public void StartMethodTimer(int time, Action action, int repeat = -1)
         {
+            Core.Instance.Logger.Log("Starting cool down");
             Core.Instance.SvManager.StartCoroutine(MethodTimer(time, action, repeat));
         }
     }

@@ -12,6 +12,8 @@ namespace BPEssentials.RegisteredEvents
             Core.Instance.SvManager = svManager;
 
             Core.Instance.CooldownHandler.Load();
+            Core.Instance.SetupAnnouncer();
+            new Commands.Save().StartSaveTimer();
         }
     }
 }

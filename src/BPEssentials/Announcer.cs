@@ -10,7 +10,7 @@ namespace BPEssentials
 
         public int Index { get; private set; }
 
-        public Announcer(int interval)
+        private Announcer(int interval)
         {
             Core.Instance.CooldownHandler.StartMethodTimer(interval, OnElapsed);
         }

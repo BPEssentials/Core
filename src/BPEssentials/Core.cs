@@ -26,7 +26,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -73,7 +73,7 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-            
+
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 
@@ -82,7 +82,6 @@ namespace BPEssentials
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
-            new Commands.Save().StartSaveTimer();
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 
@@ -191,7 +190,10 @@ namespace BPEssentials
             ReadConfigurationFiles();
             RegisterCustomCommands();
             RegisterCommands();
-            SetupAnnouncer();
+            if (Instance.SvManager != null)
+            {
+                SetupAnnouncer();
+            }
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
