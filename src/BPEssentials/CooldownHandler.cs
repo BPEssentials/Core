@@ -105,13 +105,13 @@ namespace BPEssentials.Cooldowns
         {
             int i = 0;
             Core.Instance.Logger.Log("Starting cool down loop");
-            while (i <= repeat && !(repeat < 0))
+            while (i < repeat && repeat != -1)
             {
                 Core.Instance.Logger.Log("Starting cool down method");
                 action.Invoke();
                 Core.Instance.Logger.Log("Waiting " + time + "s");
                 yield return new WaitForSecondsRealtime(time);
-                if (repeat > 0)
+                if (repeat != -1)
                 {
                     i++;
                 }
