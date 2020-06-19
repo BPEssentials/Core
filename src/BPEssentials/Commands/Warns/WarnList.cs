@@ -54,7 +54,7 @@ namespace BPEssentials.Commands
             }
             else
             {
-                stringBuilder.AppendLine(player.T("warns_count", warns.Count.ToString()));
+                stringBuilder.AppendLine(player.T("warns_count", warns.Count));
                 stringBuilder.AppendLine();
                 for (int i = 0; i < warns.Count; i++)
                 {
