@@ -114,7 +114,7 @@
     "unbanned": "{0} was unbanned.",
     "user_not_found": "Could not find user by the username of {0}.",
     "user_not_ban": "{0} is not banned.",
-     "auto_warnchat" : "AUTO WARN: Using a blacklisted word in chat.",
+    "auto_warnchat" : "AUTO WARN: Using a blacklisted word in chat.",
     "auto_banchat" : "AUTO BAN: Using a blacklisted word in chat.",
     "auto_kickchat" : "AUTO KICK: Using a blacklisted word in chat."
   },
