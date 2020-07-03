@@ -16,13 +16,11 @@ namespace BPEssentials.Commands
                 player.TS("user_not_found", targetAccount.CleanerMessage());
                 return;
             }
-            if (!target.BanInfo.IsBanned)
+            player.svMovable.Send(SvSendType.Self, Channel.Reliable, 98, new object[]
             {
-                player.TS("user_not_ban", targetAccount.CleanerMessage());
-                return;
-            }
-            target.Unban();
-            Core.Instance.SvManager.database.Users.Upsert(target);
+                    target.IP,
+                    false
+            });
             player.TS("unbanned", targetAccount.CleanerMessage());
         }
     }
