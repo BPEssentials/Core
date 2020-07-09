@@ -16,13 +16,7 @@ namespace BPEssentials.Commands
                 player.TS("user_not_found", targetAccount.CleanerMessage());
                 return;
             }
-            if (!target.BanInfo.IsBanned)
-            {
-                player.TS("user_not_ban", targetAccount.CleanerMessage());
-                return;
-            }
-            target.Unban();
-            Core.Instance.SvManager.database.Users.Upsert(target);
+            Core.Instance.SvManager.database.Bans.Delete(target.IP);
             player.TS("unbanned", targetAccount.CleanerMessage());
         }
     }

@@ -41,7 +41,7 @@ namespace BPEssentials.Cooldowns
         {
             foreach (var cooldownPlayer in Cooldowns)
             {
-                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.accountID == cooldownPlayer.Key);
+                var onlinePlayer = EntityCollections.Humans.FirstOrDefault(x => x.username == cooldownPlayer.Key);
                 if (onlinePlayer)
                 {
                     onlinePlayer.svPlayer.CustomData.AddOrUpdate(CustomDataKey, cooldownPlayer.Value);
