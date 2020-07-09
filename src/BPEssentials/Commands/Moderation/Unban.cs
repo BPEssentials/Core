@@ -17,11 +17,6 @@ namespace BPEssentials.Commands
                 return;
             }
             Core.Instance.SvManager.database.Bans.Delete(target.IP);
-            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, SvPacket.UnbanIP, new object[]
-            {
-                    target.IP,
-                    false
-            });
             player.TS("unbanned", targetAccount.CleanerMessage());
         }
     }
