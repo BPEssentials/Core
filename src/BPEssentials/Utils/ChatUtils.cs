@@ -19,7 +19,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.CleanerMessage()}: {message}");
+                currPlayer.SendChatMessage(ChatUtils.FormatMessage(player, message, "staffformat"), false);
             }
         }
 
