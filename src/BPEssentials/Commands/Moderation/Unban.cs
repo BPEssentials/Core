@@ -16,7 +16,8 @@ namespace BPEssentials.Commands
                 player.TS("user_not_found", targetAccount.CleanerMessage());
                 return;
             }
-            player.svMovable.Send(SvSendType.Self, Channel.Reliable, 98, new object[]
+            Core.Instance.SvManager.database.Bans.Delete(target.IP);
+            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, SvPacket.UnbanIP, new object[]
             {
                     target.IP,
                     false
