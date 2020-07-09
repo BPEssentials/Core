@@ -47,6 +47,9 @@
     <Reference Include="EmbedIO">
       <HintPath>lib\Managed\EmbedIO.dll</HintPath>
     </Reference>
+    <Reference Include="ENet-CSharp">
+      <HintPath>lib\Managed\ENet-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="LiteDB">
       <HintPath>lib\Managed\LiteDB.dll</HintPath>
     </Reference>
