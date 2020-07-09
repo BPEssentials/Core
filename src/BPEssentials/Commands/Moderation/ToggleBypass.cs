@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
         {
             var ePlayer = player.GetExtendedPlayer();
             ePlayer.EnabledBypass = !ePlayer.EnabledBypass;
-            if (ePlayer.EnabledSpychat)
+            if (ePlayer.EnabledBypass)
             {
                 player.TS("bypass_enabled");
 
