@@ -26,7 +26,7 @@ namespace BPEssentials.Commands
                     break;
 
                 case "reload":
-                    if (!player.HasPermission(info.GroupNamespace + ".reload"))
+                    if (!player.svPlayer.HasPermission(info.GroupNamespace + ".reload"))
                     {
                         player.SendChatMessage($"No permission! Requires the '{info.GroupNamespace}.reload' permission.");
                         return;
