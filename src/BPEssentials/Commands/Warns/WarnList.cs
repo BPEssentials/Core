@@ -13,7 +13,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target != null && !player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
+            if (target != null && !player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
             {
                 player.TS("warns_noPermission_viewOtherPlayers");
                 return;
