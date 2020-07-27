@@ -20,7 +20,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public Chat CurrentChat { get; set; } = Chat.Global;
 
-        public bool CanRecieveStaffChat => Client.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
+        public bool CanRecieveStaffChat => Client.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
 
         public ShPlayer ReplyToUser { get; set; }
 
