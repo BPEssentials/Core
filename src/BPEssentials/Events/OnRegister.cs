@@ -1,11 +1,9 @@
-﻿using BrokeProtocol.API;
+using BrokeProtocol.API;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.LiteDB;
 using BrokeProtocol.Managers;
-using BrokeProtocol.Server.LiteDB.Models;
 using BrokeProtocol.Utility;
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace BPEssentials.RegisteredEvents
@@ -24,12 +22,6 @@ namespace BPEssentials.RegisteredEvents
                         svManager.RegisterFail(connectData.connection, "Invalid credentials");
                         return;
                     }
-                }
-
-                if (!connectData.username.ValidCredential())
-                {
-                    svManager.RegisterFail(connectData.connection, $"Name cannot be registered (min: {Util.minCredential}, max: {Util.maxCredential})");
-                    return;
                 }
 
                 if (!connectData.username.ValidCredential())
