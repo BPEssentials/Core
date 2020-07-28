@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Utils.Formatter.Chat;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 
@@ -18,7 +19,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.CleanerMessage()}: {message}");
+                currPlayer.SendChatMessage(ChatUtils.FormatMessage(player, message, "staffformat"), false);
             }
         }
 

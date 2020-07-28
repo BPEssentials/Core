@@ -4,7 +4,7 @@ using System.Globalization;
 using BPEssentials.ExtensionMethods;
 
 
-namespace BPEssentials.Utils
+namespace BPEssentials.Utils.Formatter.Chat
 {
     public class CustomFormatter : IFormatProvider, ICustomFormatter
     {
