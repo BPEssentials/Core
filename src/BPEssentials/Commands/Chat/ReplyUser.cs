@@ -24,6 +24,7 @@ namespace BPEssentials.Commands
                 return;
             }
             ePlayer.ReplyToUser = eTarget.Client;
+            eTarget.ReplyToUser = player;
             player.GetExtendedPlayer().SendPmMessage(eTarget.Client, message);
         }
     }
