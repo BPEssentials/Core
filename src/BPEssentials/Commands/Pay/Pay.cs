@@ -15,7 +15,7 @@ namespace BPEssentials.Commands
                 player.TS("pay_error_negative");
                 return;
             }
-            if (player.MyMoneyCount() < amount)
+            if (player.MyMoneyCount < amount)
             {
                 player.TS("you_dont_own", amount.ToString());
                 return;

@@ -47,9 +47,9 @@ namespace BPEssentials.Commands
             }
             if (obj.Price > 0)
             {
-                if (player.MyMoneyCount() < obj.Price)
+                if (player.MyMoneyCount < obj.Price)
                 {
-                    player.TS("expFileHandler_error_price", player.T(Core.Instance.WarpHandler.Name), obj.Price.ToString(), player.MyMoneyCount().ToString());
+                    player.TS("expFileHandler_error_price", player.T(Core.Instance.WarpHandler.Name), obj.Price.ToString(), player.MyMoneyCount.ToString());
                     return;
                 }
                 player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
