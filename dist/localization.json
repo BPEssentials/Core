@@ -114,7 +114,8 @@
     "user_not_found": "Could not find user by the username of {0}.",
     "user_not_ban": "{0} is not banned.",
     "pm>": "[PM] {0} > {1}",
-    "pm<": "[PM] {0} < {1}"
+    "pm<": "[PM] {0} < {1}",
+    "god_damage_blocked_minimal":  "Damage blocked: {0}HP."
   },
   "BR": {
     "arrested": "Preso {0}.",
