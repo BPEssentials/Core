@@ -4,8 +4,8 @@ using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
-using BPEssentials.Modules;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Modules;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
@@ -160,7 +160,7 @@ namespace BPEssentials
             }
         }
 
-        public void DeleteExpiredWarns()
+        public void CheckExpiredWarns()
         {
             foreach (var user in Instance.SvManager.database.Users.FindAll())
             {
@@ -219,7 +219,7 @@ namespace BPEssentials
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
-            DeleteExpiredWarns();
+            CheckExpiredWarns();
         }
 
         public void OnVersionRequest(string callback)
