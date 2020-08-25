@@ -1,7 +1,6 @@
 ﻿{
   "EN": {
     "arrested": "Arrested {0}.",
-    "open_atm": "Opening ATM Menu...",
     "no_top_location": "There is no location to teleport to.",
     "cleared_crimes": "Cleared crimes of {0}.",
     "force_disconnect": "Disconnected {0}.",

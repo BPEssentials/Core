@@ -320,7 +320,6 @@
     <Compile Include="Commands\Player\Feed.cs" />
     <Compile Include="Commands\Player\Heal.cs" />
     <Compile Include="Commands\Server\Save.cs" />
-    <Compile Include="Commands\General\Atm.cs" />
     <Compile Include="Commands\Player\Back.cs" />
     <Compile Include="Commands\Teleport\TpaAccept.cs" />
     <Compile Include="Commands\Teleport\TpaDeny.cs" />
