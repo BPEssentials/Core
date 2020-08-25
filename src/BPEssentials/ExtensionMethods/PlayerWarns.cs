@@ -39,14 +39,14 @@ namespace BPEssentials.ExtensionMethods.Warns
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer != null ? issuer.Character.Username : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture));
+                return player.T("warn_toString", Reason, issuer != null ? issuer.ID : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture));
             }
         }
 
         public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason, int length = -1)
         {
             var warns = GetWarns(player);
-            warns.Add(new SerializableWarn(issuer.accountID, reason, DateTime.Now, length));
+            warns.Add(new SerializableWarn(issuer.username, reason, DateTime.Now, length));
             player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
         }
 

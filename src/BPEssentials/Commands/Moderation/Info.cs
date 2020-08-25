@@ -2,11 +2,10 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Server.LiteDB.Models;
+using BrokeProtocol.LiteDB;
 using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
-
 
 namespace BPEssentials.Commands
 {
@@ -21,10 +20,12 @@ namespace BPEssentials.Commands
             if (target != null)
             {
                 sb = GetOfflineInfo(target);
-            }else if(EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
+            }
+            else if (EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
             {
                 sb = GetOnlineInfo(shPlayer);
-            }else
+            }
+            else
             {
                 player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return;
@@ -42,13 +43,8 @@ namespace BPEssentials.Commands
             .Append("Last Updated: ").AppendLine(target.LastUpdated.ToString())
             .Append("Join Date: ").AppendLine(target.JoinDate.ToString())
 
-            .AppendLine("BanInfo: ")
-              .Append("  - Is banned: ").AppendLine(target.BanInfo?.IsBanned.ToString())
-              .Append("  - Reason: ").AppendLine(target.BanInfo?.Reason)
-              .Append("  - Date: ").AppendLine(target.BanInfo?.Date.ToString())
-
             .AppendLine("Character:")
-              .Append("  - Username: ").Append(target.Character.Username.CleanerMessage()).AppendLine(" (Sanitized)")
+              .Append("  - Username: ").Append(target.ID.CleanerMessage()).AppendLine(" (Sanitized)")
               .Append("  - Health: ").AppendLine(target.Character.Health.ToString())
               .Append("  - BankBalance: ").AppendLine(target.Character.BankBalance.ToString())
               .Append("  - Position: ").AppendLine(target.Character.Position.ToString())
@@ -81,14 +77,13 @@ namespace BPEssentials.Commands
             var sb = new StringBuilder();
             sb
             .Append("ID: ").AppendLine(target.ID.ToString())
-            .Append("accountID64: ").AppendLine(target.accountID.ToString())
             .Append("Username: ").Append(target.username.CleanerMessage()).AppendLine(" (Sanitized)")
             .Append("Health: ").AppendLine(target.health.ToString())
             .Append("BankBalance: ").AppendLine(target.svPlayer.bankBalance.ToString())
             .Append("Position: ").AppendLine(target.GetPosition.ToString())
             .Append("Rotation: ").AppendLine(target.GetRotation.ToString())
             .Append("Stats: ").AppendLine(string.Join("\n    - ", target.stats))
-            .Append("Expecting more info? Type '/info ").Append(target.accountID.ToString()).AppendLine("'.");
+            .Append("Expecting more info? Type '/info ").Append(target.username.ToString()).AppendLine("'.");
             return sb;
         }
     }

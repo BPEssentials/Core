@@ -66,6 +66,11 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     public class Messages
     {
         public string DiscordLink { get; set; }
+
+        public string InfoColor { get; set; } = "#179b43";
+
+        public string ArgColor { get; set; } = "#178d9b";
+
     }
 
     public class General

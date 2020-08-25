@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Utils.Formatter.Chat;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 
@@ -18,7 +19,7 @@ namespace BPEssentials.Utils
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage($"[STAFFCHAT] {player.username.CleanerMessage()}: {message}");
+                currPlayer.SendChatMessage(ChatUtils.FormatMessage(player, message, "staffformat"), false);
             }
         }
 
@@ -36,8 +37,8 @@ namespace BPEssentials.Utils
 
         public static string FormatMessage(ShPlayer player, string message, string formatKey = "format")
         {
-            var formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.Value.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
-            if (formatGroup.Value != null && formatGroup.Value.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
+            var formatGroup = player.svPlayer.Groups.SelectMany(groupType => groupType.Value).FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
+            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
             {
                 try
                 {

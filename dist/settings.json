@@ -10,7 +10,9 @@
   },
   "Announcements": [],
   "Messages": {
-    "DiscordLink": "http://discord.gg/WpdNCDw"
+    "DiscordLink": "http://discord.gg/WpdNCDw",
+    "InfoColor": "#179b43",
+    "ArgColor": "#178d9b"
   },
   "Levenshtein": {
     "GiveMode": "Automatic",

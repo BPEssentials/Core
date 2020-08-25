@@ -47,6 +47,9 @@
     <Reference Include="EmbedIO">
       <HintPath>lib\Managed\EmbedIO.dll</HintPath>
     </Reference>
+    <Reference Include="ENet-CSharp">
+      <HintPath>lib\Managed\ENet-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="LiteDB">
       <HintPath>lib\Managed\LiteDB.dll</HintPath>
     </Reference>
@@ -365,7 +368,8 @@
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileChecker.cs" />
-    <Compile Include="Utils\CustomFormatter.cs" />
+    <Compile Include="Utils\Formatters\FormatterChat.cs" />
+    <Compile Include="Utils\Formatters\FormatterResponse.cs" />
     <Compile Include="Utils\LevenshteinDistance.cs" />
     <Compile Include="Utils\IO.cs" />
     <Compile Include="Utils\ChatUtils.cs" />

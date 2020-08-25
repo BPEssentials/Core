@@ -3,60 +3,34 @@ using BPEssentials.ExtensionMethods;
 using BPEssentials.ExtensionMethods.Warns;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility.Networking;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static BPEssentials.ExtensionMethods.Warns.ExtensionPlayerWarns;
+
 
 namespace BPEssentials.Commands
 {
     public class WarnList : Command
     {
-        public void Invoke(ShPlayer player, string target = null)
+        public void Invoke(ShPlayer player, ShPlayer target = null)
         {
-            if (target != null && !player.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
+            if (target != null && !player.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.{nameof(WarnList)}.viewotherplayers"))
             {
                 player.TS("warns_noPermission_viewOtherPlayers");
                 return;
             }
-            ShPlayer shTarget;
-            if (target == null)
-            {
-                shTarget = player;
-            }
-            else
-            {
-                shTarget = Core.Instance.SvManager.connectedPlayers.FirstOrDefault(x => x.Value.accountID.Equals(target) || x.Value.ID.Equals(int.Parse(target))).Value;
-            }
+            target = target ?? player;
+            var warns = target.GetWarns().Select(warn => warn.ToString(player)).ToArray();
             StringBuilder stringBuilder = new StringBuilder();
-            List<SerializableWarn> warns;
-            if (shTarget != null)
-            {
-                warns = shTarget.GetWarns();
-                stringBuilder.AppendLine(player.T("warns_for", shTarget.username.CleanerMessage()));
-            }
-            else
-            {
-                if (!Core.Instance.SvManager.TryGetUserData(target, out var user))
-                {
-                    player.TS("user_not_found", target.CleanerMessage());
-                    return;
-                }
-                if (!user.Character.CustomData.TryFetchCustomData(CustomDataKey, out warns))
-                {
-                    warns = new List<SerializableWarn>();
-                }
-                stringBuilder.AppendLine(player.T("warns_for", user.Character.Username.CleanerMessage()));
-            }
-            if (warns.Count == 0)
+            stringBuilder.AppendLine(player.T("warns_for", target.username.CleanerMessage()));
+            if (warns.Length == 0)
             {
                 stringBuilder.AppendLine(player.T("none"));
             }
             else
             {
-                stringBuilder.AppendLine(player.T("warns_count", warns.Count));
+                stringBuilder.AppendLine(player.T("warns_count", warns.Length.ToString()));
                 stringBuilder.AppendLine();
-                for (int i = 0; i < warns.Count; i++)
+                for (int i = 0; i < warns.Length; i++)
                 {
                     stringBuilder.AppendLine($"{i + 1} - {warns[i]}");
                 }
