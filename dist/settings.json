@@ -47,15 +47,6 @@
       ]
     },
     {
-      "CommandName": "Atm",
-      "Commands": [
-        "atm",
-        "bank",
-        "bal",
-        "balance"
-      ]
-    },
-    {
       "CommandName": "Feed",
       "Commands": [
         "feed",

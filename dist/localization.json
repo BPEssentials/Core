@@ -1,7 +1,6 @@
 ﻿{
   "EN": {
     "arrested": "Arrested {0}.",
-    "open_atm": "Opening ATM Menu...",
     "no_top_location": "There is no location to teleport to.",
     "cleared_crimes": "Cleared crimes of {0}.",
     "force_disconnect": "Disconnected {0}.",
@@ -115,7 +114,10 @@
     "user_not_found": "Could not find user by the username of {0}.",
     "user_not_ban": "{0} is not banned.",
     "pm>": "[PM] {0} > {1}",
-    "pm<": "[PM] {0} < {1}"
+    "pm<": "[PM] {0} < {1}",
+    "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
+    "info_title": "User Info",
+    "warn_list_title": "Warn List"
   },
   "BR": {
     "arrested": "Preso {0}.",

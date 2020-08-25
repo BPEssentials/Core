@@ -35,7 +35,7 @@ namespace BPEssentials.Commands
                     stringBuilder.AppendLine($"{i + 1} - {warns[i]}");
                 }
             }
-            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, stringBuilder.ToString());
+            player.svPlayer.SendTextPanel(player.T("warn_list_title"), stringBuilder.ToString());
         }
     }
 }
