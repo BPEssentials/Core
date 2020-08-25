@@ -30,7 +30,7 @@ namespace BPEssentials.Commands
                 player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return;
             }
-            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
+            player.svPlayer.SendTextPanel(player.T("info_title"), sb.ToString());
         }
 
         // TODO: Add i18n for this
@@ -41,7 +41,6 @@ namespace BPEssentials.Commands
             sb
             .Append("accountID64: ").AppendLine(target.ID.ToString())
             .Append("Last Updated: ").AppendLine(target.LastUpdated.ToString())
-            .Append("Join Date: ").AppendLine(target.JoinDate.ToString())
 
             .AppendLine("Character:")
               .Append("  - Username: ").Append(target.ID.CleanerMessage()).AppendLine(" (Sanitized)")

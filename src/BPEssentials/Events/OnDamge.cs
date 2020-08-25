@@ -15,7 +15,14 @@ namespace BPEssentials.RegisteredEvents
         {
             if (player.svPlayer.godMode)
             {
-                player.TS("god_damage_blocked", amount, attacker.ID, attacker.username.CleanerMessage());
+                if (attacker)
+                {
+                    player.TS("god_damage_blocked", amount, attacker.ID, attacker.username.CleanerMessage());
+                }
+                else
+                {
+                    player.TS("god_damage_blocked_minimal", amount);
+                }
             }
         }
     }
