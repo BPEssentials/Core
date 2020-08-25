@@ -41,7 +41,6 @@ namespace BPEssentials.Commands
             sb
             .Append("accountID64: ").AppendLine(target.ID.ToString())
             .Append("Last Updated: ").AppendLine(target.LastUpdated.ToString())
-            .Append("Join Date: ").AppendLine(target.JoinDate.ToString())
 
             .AppendLine("Character:")
               .Append("  - Username: ").Append(target.ID.CleanerMessage()).AppendLine(" (Sanitized)")
