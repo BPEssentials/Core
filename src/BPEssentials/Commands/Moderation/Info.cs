@@ -30,7 +30,7 @@ namespace BPEssentials.Commands
                 player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return;
             }
-            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ServerInfo, sb.ToString());
+            player.svPlayer.SendTextPanel(player.T("info_title"), sb.ToString());
         }
 
         // TODO: Add i18n for this
