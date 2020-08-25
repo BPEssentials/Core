@@ -10,33 +10,34 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnRegiser : IScript
     {
+
         [Target(GameSourceEvent.ManagerTryRegister, ExecutionMode.Override)]
-        public void OnTryRegister(SvManager svManager, ConnectionData connectData)
+        public void OnTryRegister(SvManager svManager, ConnectionData connectionData)
         {
-            if (ValidateUser(svManager, connectData))
+            if (ValidateUser(svManager, connectionData))
             {
-                if (svManager.TryGetUserData(connectData.username, out User playerData))
+                if (svManager.TryGetUserData(connectionData.username, out User playerData))
                 {
-                    if (playerData.PasswordHash != connectData.passwordHash)
+                    if (playerData.PasswordHash != connectionData.passwordHash)
                     {
-                        svManager.RegisterFail(connectData.connection, "Invalid credentials");
+                        svManager.RegisterFail(connectionData.connection, "Invalid credentials");
                         return;
                     }
                 }
 
-                if (!connectData.username.ValidCredential())
+                if (!connectionData.username.ValidCredential())
                 {
-                    svManager.RegisterFail(connectData.connection, $"Name cannot be registered (min: {Util.minCredential}, max: {Util.maxCredential})");
+                    svManager.RegisterFail(connectionData.connection, $"Name cannot be registered (min: {Util.minCredential}, max: {Util.maxCredential})");
                     return;
                 }
                 // -- BPE EXTEND
-                if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectData.username, @"^[a-zA-Z0-9_]+$"))
+                if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectionData.username, @"^[a-zA-Z0-9_]+$"))
                 {
-                    svManager.RegisterFail(connectData.connection, $"Your Username can only contain letters: A-Z a-z 0-9 _ -");
+                    svManager.RegisterFail(connectionData.connection, $"Your Username can only contain letters: A-Z a-z 0-9 _ -");
                     return;
                 }
                 // BPE EXTEND --
-                svManager.AddNewPlayer(connectData);
+                svManager.AddNewPlayer(connectionData, playerData?.Persistent);
             }
         }
 
