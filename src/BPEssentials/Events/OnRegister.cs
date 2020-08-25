@@ -31,7 +31,7 @@ namespace BPEssentials.RegisteredEvents
                     return;
                 }
                 // -- BPE EXTEND
-                if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectionData.username, @"^[a-zA-Z0-9_]+$"))
+                if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectionData.username, @"^[a-zA-Z0-9_-]+$"))
                 {
                     svManager.RegisterFail(connectionData.connection, $"Your Username can only contain letters: A-Z a-z 0-9 _ -");
                     return;
