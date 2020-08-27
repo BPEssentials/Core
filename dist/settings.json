@@ -3,10 +3,16 @@
     "Version": "3.0.0",
     "AnnounceInterval": 120,
     "KeepAllItemsOnDeath": false,
-    "KeptItemsOnDeath": [],
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
     "LimitNames": false
+  },
+  "KeptItemsOnDeath": {
+    "KeepAllItemsOnDeath": false,
+    "KeptItemIds": [],
+    "KeptItemNames": [],
+    "KeepAllPhones": false,
+    "KeepAllLicenses": false
   },
   "Messages": {
     "DiscordLink": "http://discord.gg/WpdNCDw",

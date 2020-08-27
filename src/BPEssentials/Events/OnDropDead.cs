@@ -13,18 +13,24 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnDropDead : IScript
     {
+        private readonly int[] LicenseIDs = new int[] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
+
         [Target(GameSourceEvent.PlayerRemoveItemsDeath, ExecutionMode.Override)]
         protected void OnRemoveItemsDeath(ShPlayer player)
         {
             // -- BPE EXTEND
-            if (BPEssentials.Core.Instance.Settings.General.KeepAllItemsOnDeath) { return; }
+            if (BPEssentials.Core.Instance.Settings.KeptItemsOnDeath.KeepAllItemsOnDeath) { return; }
             // BPE EXTEND --
 
             // Allows players to keep items/rewards from job ranks
             foreach (InventoryItem myItem in player.myItems.Values.ToArray())
             {
                 // -- BPE EXTEND
-                if (BPEssentials.Core.Instance.Settings.General.KeptItemsOnDeath.Contains(myItem.item.index)) { continue; }
+                if (BPEssentials.Core.Instance.Settings.KeptItemsOnDeath.KeptItemIds.Contains(myItem.item.index)) { continue; }
+                if (BPEssentials.Core.Instance.Settings.KeptItemsOnDeath.KeptItemNames.Contains(myItem.item.itemName)) { continue; }
+                if (BPEssentials.Core.Instance.Settings.KeptItemsOnDeath.KeepAllPhones && myItem.item is ShPhone) { continue; }
+                if (BPEssentials.Core.Instance.Settings.KeptItemsOnDeath.KeepAllLicenses && LicenseIDs.Contains(myItem.item.index)) { continue; }
+
                 // BPE EXTEND --
 
                 int extra = myItem.count;
