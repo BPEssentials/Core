@@ -1,4 +1,6 @@
-﻿using BrokeProtocol.Entities;
+﻿using BrokeProtocol.API.Types;
+using BrokeProtocol.Entities;
+using BrokeProtocol.LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -39,32 +41,63 @@ namespace BPEssentials.ExtensionMethods.Warns
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer != null ? issuer.ID : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture));
+                return player.T("warn_toString", Reason, issuer != null ? issuer.ID : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
             }
         }
 
         public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason, int length = -1)
         {
-            var warns = GetWarns(player);
+            player.svPlayer.CustomData.AddWarn(issuer, reason, length);
+        }
+
+        public static void AddWarn(this User user, ShPlayer issuer, string reason, int length = -1)
+        {
+            user.Character.CustomData.AddWarn(issuer, reason, length);
+        }
+
+        public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason, int length = -1)
+        {
+            var warns = customData.GetWarns();
             warns.Add(new SerializableWarn(issuer.username, reason, DateTime.Now, length));
-            player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
+            customData.AddOrUpdate(CustomDataKey, warns);
         }
 
         public static void RemoveWarn(this ShPlayer player, int warnId)
         {
-            var warns = GetWarns(player);
+            player.svPlayer.CustomData.RemoveWarn(warnId);
+        }
+
+        public static void RemoveWarn(this User user, int warnId)
+        {
+            user.Character.CustomData.RemoveWarn(warnId);
+        }
+
+        public static void RemoveWarn(this CustomData customData, int warnId)
+        {
+            var warns = customData.GetWarns();
             warns.Remove(warns[warnId]);
-            player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
+            customData.AddOrUpdate(CustomDataKey, warns);
         }
 
         public static List<SerializableWarn> GetWarns(this ShPlayer player)
         {
-            player.svPlayer.CustomData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns);
+            return player.svPlayer.CustomData.GetWarns();
+
+        }
+
+        public static List<SerializableWarn> GetWarns(this User user)
+        {
+            return user.Character.CustomData.GetWarns();
+        }
+
+        private static List<SerializableWarn> GetWarns(this CustomData customData)
+        {
+            customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns);
             if (warns == null)
             {
                 warns = new List<SerializableWarn>();
             }
-            return warns.FindAll(x => !x.Expired);
+            return warns;
         }
     }
 }
