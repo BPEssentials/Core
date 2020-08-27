@@ -21,7 +21,7 @@
     "SetJobMode": "Suggest"
   },
   "Warns" : {
-      "DefaultWarnsExpirationInDays" : 20,
+      "DefaultWarnsExpirationInDays" : 30,
       "DeleteExpiredWarns" : true
    },
   "Commands": [

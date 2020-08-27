@@ -86,9 +86,9 @@
     "none": "none",
     "warns_count": "Total Count: {0} Warns",
     "warn_remove_error_null_or_negative": "WarnId {0} cannot be negative or null.",
-    "warn_remove_error_notExistant": "The Warn {0} does not exist",
+    "warn_remove_error_notExistent": "The Warn {0} does not exist",
     "player_warn_removed": "Removed the Warn {0}",
-    "warn_toString": "{0} by {1} on {2}",
+    "warn_toString": "{0} by {1} on {2} expiring after {3} days. {4}",
     "command_disabled": "The Command {0} is disabled.",
     "command_failed_cuffed": "This Command cannot be used when cuffed!",
     "command_failed_jail": "This Command cannot be used when in jail!",
@@ -117,7 +117,8 @@
     "pm<": "[PM] {0} < {1}",
     "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
     "info_title": "User Info",
-    "warn_list_title": "Warn List"
+    "warn_list_title": "Warn List",
+    "warn_expired": "expired warn"
   },
   "BR": {
     "arrested": "Preso {0}.",
@@ -357,7 +358,7 @@
     "none": "none",
     "warns_count": "Всего: {0} предупреждений",
     "warn_remove_error_null_or_negative": "ID предупреждения {0} не может быть меньше или равно нулю.",
-    "warn_remove_error_notExistant": "Предупреждение {0} не существует",
+    "warn_remove_error_notExistent": "Предупреждение {0} не существует",
     "player_warn_removed": "Убрано предупреждение {0}",
     "warn_toString": "{0} от {1} {2}",
     "command_disabled": "Команда {0} отключена.",
