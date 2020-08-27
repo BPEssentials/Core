@@ -13,7 +13,7 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnDropDead : IScript
     {
-        private readonly int[] LicenseIDs = new int[] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
+        private readonly int[] LicenseIDs = new [] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
 
         [Target(GameSourceEvent.PlayerRemoveItemsDeath, ExecutionMode.Override)]
         protected void OnRemoveItemsDeath(ShPlayer player)
