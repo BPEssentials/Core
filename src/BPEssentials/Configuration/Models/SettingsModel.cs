@@ -6,7 +6,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     {
         public General General { get; set; }
 
-        public List<string> Announcements { get; set; }
 
         public Messages Messages { get; set; }
 
