@@ -6,7 +6,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     {
         public General General { get; set; }
 
-        public List<string> Announcements { get; set; }
+        public KeptItemsOnDeath KeptItemsOnDeath { get; set; }
 
         public Messages Messages { get; set; }
 
@@ -70,15 +70,25 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
     }
 
+    public class KeptItemsOnDeath
+    {
+        public bool KeepAllItemsOnDeath { get; set; }
+
+        public int[] KeptItemIds { get; set; }
+
+        public string[] KeptItemNames { get; set; }
+
+        public bool KeepAllPhones { get; set; }
+
+        public bool KeepAllLicenses { get; set; }
+
+    }
+
     public class General
     {
         public string Version { get; set; }
 
         public int AnnounceInterval { get; set; }
-
-        public int[] KeptItemsOnDeath { get; set; }
-
-        public bool KeepAllItemsOnDeath { get; set; }
 
         public bool LocalChatOverHead { get; set; } = true;
 

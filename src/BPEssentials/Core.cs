@@ -41,8 +41,6 @@ namespace BPEssentials
 
         public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
 
-        public Announcer Announcer { get; set; }
-
         public I18n I18n { get; set; }
 
         public SvManager SvManager { get; set; }
@@ -159,12 +157,6 @@ namespace BPEssentials
             }
         }
 
-        public void SetupAnnouncer()
-        {
-            Announcer = new Announcer(Settings.General.AnnounceInterval * 1000, Settings.Announcements);
-            Logger.LogInfo("Announcer started!");
-        }
-
         public void SetupI18n()
         {
             I18n = new I18n();
@@ -191,7 +183,6 @@ namespace BPEssentials
             ReadConfigurationFiles();
             RegisterCustomCommands();
             RegisterCommands();
-            SetupAnnouncer();
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
