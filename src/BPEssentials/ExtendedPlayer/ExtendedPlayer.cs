@@ -30,6 +30,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public void SendPmMessage(ShPlayer target, string message)
         {
+            target.GetExtendedPlayer();
             Client.TS("pm>", target.username.CleanerMessage(), message.CleanerMessage());
             target.TS("pm<", Client.username.CleanerMessage(), message.CleanerMessage());
         }
