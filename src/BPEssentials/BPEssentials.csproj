@@ -325,9 +325,9 @@
     <Compile Include="Commands\Player\ClearWanted.cs" />
     <Compile Include="Commands\Kits\Kit.cs" />
     <Compile Include="Commands\Kits\KitCreate.cs" />
-    <Compile Include="Commands\Warns\Warn.cs" />
-    <Compile Include="Commands\Warns\WarnRemove.cs" />
-    <Compile Include="Commands\Warns\WarnList.cs" />
+    <Compile Include="Commands\Moderation\Warns\Warn.cs" />
+    <Compile Include="Commands\Moderation\Warns\WarnRemove.cs" />
+    <Compile Include="Commands\Moderation\Warns\WarnList.cs" />
     <Compile Include="Commands\Warps\WarpList.cs" />
     <Compile Include="Commands\Warps\WarpCreate.cs" />
     <Compile Include="Commands\Warps\Warp.cs" />

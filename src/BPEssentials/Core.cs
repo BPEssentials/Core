@@ -3,8 +3,8 @@ using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
 using BPEssentials.ExtendedPlayer;
-using BPEssentials.Modules;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Modules;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
@@ -25,7 +25,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -73,7 +73,7 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-            
+
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 

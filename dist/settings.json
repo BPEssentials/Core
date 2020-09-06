@@ -27,6 +27,10 @@
     "KitMode": "Suggest",
     "SetJobMode": "Suggest"
   },
+  "Warns" : {
+      "DefaultWarnsExpirationInDays" : 30,
+      "DeleteExpiredWarns" : true
+   },
   "Commands": [
     {
       "CommandName": "Essentials",

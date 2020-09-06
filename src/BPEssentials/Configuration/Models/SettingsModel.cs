@@ -16,6 +16,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public ReportOptions ReportOptions { get; set; }
 
+        public Warns Warns { get; set; }
+
         public List<Command> Commands { get; set; }
     }
 
@@ -24,8 +26,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public string CommandName { get; set; }
 
         public List<string> Commands { get; set; }
-
-        public string ExecutableBy { get; set; }
 
         public bool Disabled { get; set; }
 
@@ -40,13 +40,14 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool AllowWhileJailed { get; set; } = true;
     }
 
-    public enum LevenshteinMode {
+    public enum LevenshteinMode
+    {
         Automatic,
         Suggest,
         None
     }
 
-    public class Levenshtein 
+    public class Levenshtein
     {
         public LevenshteinMode GiveMode { get; set; }
         public LevenshteinMode WarpMode { get; set; }
@@ -99,5 +100,12 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool LimitNames { get; set; }
 
         public bool DisableAccountOverwrite { get; set; }
+    }
+
+    public class Warns
+    {
+        public int DefaultWarnsExpirationInDays { get; set; } = 30;
+
+        public bool DeleteExpiredWarns { get; set; }
     }
 }
