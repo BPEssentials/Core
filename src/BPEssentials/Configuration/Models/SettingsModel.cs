@@ -90,7 +90,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
     public class Warns
     {
-        public int DefaultWarnsExpirationInDays { get; set; }
+        public int DefaultWarnsExpirationInDays { get; set; } = 30;
 
         public bool DeleteExpiredWarns { get; set; }
     }

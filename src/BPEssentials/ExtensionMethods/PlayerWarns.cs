@@ -34,7 +34,7 @@ namespace BPEssentials.ExtensionMethods.Warns
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
+                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
             }
         }
 
@@ -85,10 +85,9 @@ namespace BPEssentials.ExtensionMethods.Warns
 
         private static List<SerializableWarn> GetWarns(this CustomData customData)
         {
-            customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns);
-            if (warns == null)
+            if (!customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns))
             {
-                warns = new List<SerializableWarn>();
+                return new List<SerializableWarn>();
             }
             // Checking for expired Warns
             foreach (var warn in warns)

@@ -19,6 +19,12 @@ namespace BPEssentials.Commands
                 return;
             }
 
+            if(target == null)
+            {
+                SendWarnList(player, player.username, player.GetWarns());
+                return;
+            }
+
             if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
             {
                 SendWarnList(player, shTarget.username, shTarget.GetWarns());
@@ -34,7 +40,7 @@ namespace BPEssentials.Commands
             player.TS("user_not_found", target.CleanerMessage());
         }
 
-        public void SendWarnList(ShPlayer player, string username, List<SerializableWarn> warnList)
+        public void SendWarnList(ShPlayer player, string username, List<ExtensionPlayerWarns.SerializableWarn> warnList)
         {
             var warns = warnList.Select(warn => warn.ToString(player)).ToArray();
             var stringBuilder = new StringBuilder();

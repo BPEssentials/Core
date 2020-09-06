@@ -40,7 +40,7 @@ namespace BPEssentials.Commands
             player.TS("user_not_found", target.CleanerMessage());
         }
 
-        private bool CheckWarnCount(ShPlayer player, int warnId, List<SerializableWarn> warns)
+        private bool CheckWarnCount(ShPlayer player, int warnId, List<ExtensionPlayerWarns.SerializableWarn> warns)
         {
             if (warns.Count < warnId)
             {
