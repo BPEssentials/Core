@@ -23,14 +23,14 @@ namespace BPEssentials.Commands
 
             if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
             {
-                if (CheckWarmCount(player, warnId, shTarget.GetWarns())) return;
+                if (CheckWarnCount(player, warnId, shTarget.GetWarns())) { return; }
                 shTarget.RemoveWarn(warnId - 1);
                 return;
             }
 
             if (Core.Instance.SvManager.TryGetUserData(target, out var user))
             {
-                if (CheckWarmCount(player, warnId, user.GetWarns())) return;
+                if (CheckWarnCount(player, warnId, user.GetWarns())) { return; }
                 user.RemoveWarn(warnId - 1);
                 return;
             }
@@ -38,7 +38,7 @@ namespace BPEssentials.Commands
             player.TS("user_not_found", target.CleanerMessage());
         }
 
-        private bool CheckWarmCount(ShPlayer player, int warnId, List<SerializableWarn> warns)
+        private bool CheckWarnCount(ShPlayer player, int warnId, List<SerializableWarn> warns)
         {
             if (warns.Count < warnId)
             {

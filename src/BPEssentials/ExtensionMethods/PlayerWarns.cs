@@ -100,7 +100,7 @@ namespace BPEssentials.ExtensionMethods.Warns
             // Checking for expired Warns
             foreach (var warn in warns)
             {
-                if (warn.Expired) continue;
+                if (warn.Expired) { continue };
                 if (warn.Date.AddDays(warn.Length) <= DateTimeOffset.Now)
                 {
                     if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
