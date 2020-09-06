@@ -13,8 +13,6 @@ namespace BPEssentials.RegisteredEvents
         public void OnEvent(SvManager svManager)
         {
             Core.Instance.SvManager = svManager;
-
-            Core.Instance.CooldownHandler.Load();
         }
     }
 }
