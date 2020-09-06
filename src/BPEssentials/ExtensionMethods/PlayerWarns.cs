@@ -28,20 +28,13 @@ namespace BPEssentials.ExtensionMethods.Warns
                 IssueraccountID = issuer;
                 Reason = reason;
                 Date = dateTime;
-                if (length < 1)
-                {
-                    Length = length;
-                }
-                else
-                {
-                    Length = Core.Instance.Settings.Warns.DefaultWarnsExpirationInDays;
-                }
+                Length = length > 0 ? length : Core.Instance.Settings.Warns.DefaultWarnsExpirationInDays;
             }
 
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer != null ? issuer.ID : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
+                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
             }
         }
 
@@ -100,16 +93,20 @@ namespace BPEssentials.ExtensionMethods.Warns
             // Checking for expired Warns
             foreach (var warn in warns)
             {
-                if (warn.Expired) { continue; }
-                if (warn.Date.AddDays(warn.Length) <= DateTimeOffset.Now)
+                if (warn.Expired)
                 {
-                    if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
-                    {
-                        warns.Remove(warn);
-                        continue;
-                    }
-                    warn.Expired = true;
+                    continue;
                 }
+                if (warn.Date.AddDays(warn.Length) > DateTimeOffset.Now)
+                {
+                    continue;
+                }
+                if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
+                {
+                    warns.Remove(warn);
+                    continue;
+                }
+                warn.Expired = true;
             }
 
             return warns;

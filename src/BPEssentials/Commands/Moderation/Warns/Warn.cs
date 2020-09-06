@@ -4,7 +4,6 @@ using BPEssentials.ExtensionMethods.Warns;
 using BPEssentials.Utils;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
-using static BPEssentials.ExtensionMethods.Warns.ExtensionPlayerWarns;
 
 namespace BPEssentials.Commands
 {

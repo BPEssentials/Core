@@ -6,7 +6,6 @@ using BrokeProtocol.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static BPEssentials.ExtensionMethods.Warns.ExtensionPlayerWarns;
 
 namespace BPEssentials.Commands
 {
@@ -33,13 +32,12 @@ namespace BPEssentials.Commands
             }
 
             player.TS("user_not_found", target.CleanerMessage());
-
         }
 
         public void SendWarnList(ShPlayer player, string username, List<SerializableWarn> warnList)
         {
             var warns = warnList.Select(warn => warn.ToString(player)).ToArray();
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(player.T("warns_for", username.CleanerMessage()));
             if (warns.Length == 0)
             {

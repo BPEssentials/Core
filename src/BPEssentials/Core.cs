@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using static BPEssentials.ExtensionMethods.Warns.ExtensionPlayerWarns;
 
 namespace BPEssentials
 {

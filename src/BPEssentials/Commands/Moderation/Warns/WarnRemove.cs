@@ -4,7 +4,6 @@ using BPEssentials.ExtensionMethods.Warns;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 using System.Collections.Generic;
-using static BPEssentials.ExtensionMethods.Warns.ExtensionPlayerWarns;
 
 namespace BPEssentials.Commands
 {
@@ -20,14 +19,20 @@ namespace BPEssentials.Commands
 
             if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
             {
-                if (CheckWarnCount(player, warnId, shTarget.GetWarns())) { return; }
+                if (CheckWarnCount(player, warnId, shTarget.GetWarns()))
+                {
+                    return;
+                }
                 shTarget.RemoveWarn(warnId - 1);
                 return;
             }
 
             if (Core.Instance.SvManager.TryGetUserData(target, out var user))
             {
-                if (CheckWarnCount(player, warnId, user.GetWarns())) { return; }
+                if (CheckWarnCount(player, warnId, user.GetWarns()))
+                {
+                    return;
+                }
                 user.RemoveWarn(warnId - 1);
                 return;
             }
