@@ -196,7 +196,6 @@ namespace BPEssentials
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
-            CheckExpiredWarns();
         }
 
         public void OnVersionRequest(string callback)
