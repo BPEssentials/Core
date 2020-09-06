@@ -1,11 +1,13 @@
 {
   "General": {
     "Version": "3.0.0",
-    "AnnounceInterval": 120,
-    "KeepAllItemsOnDeath": false,
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
-    "LimitNames": false
+    // Makes NEW Usernames only contain letters: A-Z a-z 0-9 _ - 
+    // This does not change already Registerd ones
+    "LimitNames": false,
+    // This forbbids pressing Register when the Account already was registerd once.
+    "DisableAccountOverwrite": false
   },
   "KeptItemsOnDeath": {
     "KeepAllItemsOnDeath": false,
