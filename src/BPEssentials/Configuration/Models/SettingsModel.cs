@@ -27,8 +27,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public List<string> Commands { get; set; }
 
-        public string ExecutableBy { get; set; }
-
         public bool Disabled { get; set; }
 
         public bool AllowWhileDead { get; set; } = true;
