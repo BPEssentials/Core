@@ -95,5 +95,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool LocalChatInChat { get; set; }
 
         public bool LimitNames { get; set; }
+
+        public bool DisableAccountOverwrite { get; set; }
     }
 }
