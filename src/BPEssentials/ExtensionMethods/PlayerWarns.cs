@@ -90,22 +90,22 @@ namespace BPEssentials.ExtensionMethods.Warns
                 return new List<SerializableWarn>();
             }
             // Checking for expired Warns
-            foreach (var warn in warns)
+            for (int i = warns.Count - 1; i >= 0; i--)
             {
-                if (warn.Expired)
+                if (warns[i].Expired)
                 {
                     continue;
                 }
-                if (warn.Date.AddDays(warn.Length) > DateTimeOffset.Now)
+                if (warns[i].Date.AddDays(warns[i].Length) > DateTimeOffset.Now)
                 {
                     continue;
                 }
                 if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
                 {
-                    warns.Remove(warn);
+                    warns.RemoveAt(i);
                     continue;
                 }
-                warn.Expired = true;
+                warns[i].Expired = true;
             }
 
             return warns;
