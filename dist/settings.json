@@ -166,6 +166,7 @@
         "teleportrequest"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -179,6 +180,7 @@
         "accept"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -224,6 +226,7 @@
         "warp"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -360,6 +363,7 @@
         "home"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -370,6 +374,7 @@
         "pay"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false
     },

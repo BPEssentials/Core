@@ -123,6 +123,11 @@ namespace BPEssentials
                             player.TS("command_failed_crimes", command.CommandName);
                             return false;
                         }
+                        if (!command.AllowWhileKO && player.IsKnockedOut)
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
                         if (!command.AllowWhileCuffed && player.IsRestrained)
                         {
                             player.TS("command_failed_cuffed", command.CommandName);

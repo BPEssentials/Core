@@ -31,6 +31,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public bool AllowWhileDead { get; set; } = true;
 
+        public bool AllowWhileKO { get; set; } = true;
+
         public bool AllowWithCrimes { get; set; } = true;
 
         public bool AllowWhileCuffed { get; set; } = true;
