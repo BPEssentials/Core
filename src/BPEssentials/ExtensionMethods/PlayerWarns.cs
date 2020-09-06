@@ -19,11 +19,11 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public string IssueraccountID { get; set; }
 
-            public DateTime Date { get; set; }
+            public DateTimeOffset Date { get; set; }
 
             public int Length { get; set; }
 
-            public SerializableWarn(string issuer, string reason, DateTime dateTime, int length = -1)
+            public SerializableWarn(string issuer, string reason, DateTimeOffset dateTime, int length = -1)
             {
                 IssueraccountID = issuer;
                 Reason = reason;
@@ -58,7 +58,7 @@ namespace BPEssentials.ExtensionMethods.Warns
         public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason, int length = -1)
         {
             var warns = customData.GetWarns();
-            warns.Add(new SerializableWarn(issuer.username, reason, DateTime.Now, length));
+            warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now, length));
             customData.AddOrUpdate(CustomDataKey, warns);
         }
 
@@ -101,7 +101,7 @@ namespace BPEssentials.ExtensionMethods.Warns
             foreach (var warn in warns)
             {
                 if (warn.Expired) continue;
-                if (warn.Date.AddDays(warn.Length) <= DateTime.Now)
+                if (warn.Date.AddDays(warn.Length) <= DateTimeOffset.Now)
                 {
                     if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
                     {
