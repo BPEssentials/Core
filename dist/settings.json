@@ -5,7 +5,9 @@
     "KeepAllItemsOnDeath": false,
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
-    "LimitNames": false
+    "LimitNames": false,
+    // This forbbids pressing Register when the Account already was registerd once.
+    "DisableAccountOverwrite": false
   },
   "KeptItemsOnDeath": {
     "KeepAllItemsOnDeath": false,
