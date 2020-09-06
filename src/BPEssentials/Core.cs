@@ -160,30 +160,6 @@ namespace BPEssentials
             }
         }
 
-        public void CheckExpiredWarns()
-        {
-            foreach (var user in Instance.SvManager.database.Users.FindAll())
-            {
-                if (!user.Character.CustomData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns))
-                {
-                    continue;
-                }
-                foreach (var warn in warns)
-                {
-                    if (warn.Date.AddDays(warn.Length) <= DateTime.Now)
-                    {
-                        if (Settings.Warns.DeleteExpiredWarns)
-                        {
-                            warns.Remove(warn);
-                            continue;
-                        }
-                        warn.Expired = true;
-                    }
-                }
-                // TODO: Possibly Upsert here
-            }
-        }
-
         public void SetupAnnouncer()
         {
             Announcer = new Announcer(Settings.General.AnnounceInterval * 1000, Settings.Announcements);
