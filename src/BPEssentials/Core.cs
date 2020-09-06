@@ -2,7 +2,6 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
-using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Modules;
@@ -41,13 +40,13 @@ namespace BPEssentials
 
         public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
 
-        public Announcer Announcer { get; set; }
-
         public I18n I18n { get; set; }
 
         public SvManager SvManager { get; set; }
 
-        public CooldownHandler CooldownHandler { get; set; }
+        public ICooldownHandler KitsCooldownHandler { get; set; }
+
+        public ICooldownHandler WarpsCooldownHandler { get; set; }
 
         public WarpHandler WarpHandler { get; set; }
 
@@ -65,7 +64,8 @@ namespace BPEssentials
                 Description = "Basic commands for powerful moderation.",
                 Website = "https://bpessentials.github.io/Docs/"
             };
-            CooldownHandler = new CooldownHandler();
+            KitsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:kits");
+            WarpsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:warps");
 
             WarpHandler = new WarpHandler();
 
@@ -125,6 +125,11 @@ namespace BPEssentials
                             player.TS("command_failed_crimes", command.CommandName);
                             return false;
                         }
+                        if (!command.AllowWhileKO && player.IsKnockedOut)
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
                         if (!command.AllowWhileCuffed && player.IsRestrained)
                         {
                             player.TS("command_failed_cuffed", command.CommandName);
@@ -159,12 +164,6 @@ namespace BPEssentials
             }
         }
 
-        public void SetupAnnouncer()
-        {
-            Announcer = new Announcer(Settings.General.AnnounceInterval * 1000, Settings.Announcements);
-            Logger.LogInfo("Announcer started!");
-        }
-
         public void SetupI18n()
         {
             I18n = new I18n();
@@ -191,7 +190,6 @@ namespace BPEssentials
             ReadConfigurationFiles();
             RegisterCustomCommands();
             RegisterCommands();
-            SetupAnnouncer();
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();

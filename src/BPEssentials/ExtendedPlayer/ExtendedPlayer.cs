@@ -28,10 +28,12 @@ namespace BPEssentials.ExtendedPlayer
 
         public LastLocation LastLocation { get; } = new LastLocation();
 
-        public void SendPmMessage(ShPlayer target, string message)
+        public void SendPmMessage(PlayerItem target, string message)
         {
-            Client.TS("pm>", target.username.CleanerMessage(), message.CleanerMessage());
-            target.TS("pm<", Client.username.CleanerMessage(), message.CleanerMessage());
+            ReplyToUser = target.Client;
+            target.ReplyToUser = Client;
+            Client.TS("pm>", ReplyToUser.username.CleanerMessage(), message.CleanerMessage());
+            ReplyToUser.TS("pm<", Client.username.CleanerMessage(), message.CleanerMessage());
         }
 
         public void SendSpyChatMessage(ShPlayer target, string command)

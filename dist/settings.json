@@ -1,14 +1,21 @@
 {
   "General": {
     "Version": "3.0.0",
-    "AnnounceInterval": 120,
-    "KeepAllItemsOnDeath": false,
-    "KeptItemsOnDeath": [],
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
-    "LimitNames": false
+    // Makes NEW Usernames only contain letters: A-Z a-z 0-9 _ - 
+    // This does not change already Registerd ones
+    "LimitNames": false,
+    // This forbbids pressing Register when the Account already was registerd once.
+    "DisableAccountOverwrite": false
   },
-  "Announcements": [],
+  "KeptItemsOnDeath": {
+    "KeepAllItemsOnDeath": false,
+    "KeptItemIds": [],
+    "KeptItemNames": [],
+    "KeepAllPhones": false,
+    "KeepAllLicenses": false
+  },
   "Messages": {
     "DiscordLink": "http://discord.gg/WpdNCDw",
     "InfoColor": "#179b43",
@@ -165,6 +172,7 @@
         "teleportrequest"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -178,6 +186,7 @@
         "accept"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -223,6 +232,7 @@
         "warp"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -359,6 +369,7 @@
         "home"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false,
       "AllowWhileJailed": false
@@ -369,6 +380,7 @@
         "pay"
       ],
       "AllowWhileDead": false,
+      "AllowWhileKO": false,
       "AllowWithCrimes": false,
       "AllowWhileCuffed": false
     },
