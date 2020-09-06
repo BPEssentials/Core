@@ -1,6 +1,5 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
@@ -40,9 +39,9 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.WarpHandler.Name), obj.Name);
                 return;
             }
-            if (player.HasCooldown(Core.Instance.WarpHandler.Name, obj.Name))
+            if (Core.Instance.WarpsCooldownHandler.IsCooldown(player.svPlayer, obj.Name, obj.Delay))
             {
-                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.WarpHandler.Name), player.GetCooldown(Core.Instance.WarpHandler.Name, obj.Name).ToString());
+                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.WarpHandler.Name), Core.Instance.WarpsCooldownHandler.GetCooldown(player.svPlayer, obj.Name, obj.Delay).ToString());
                 return;
             }
             if (obj.Price > 0)
@@ -57,7 +56,7 @@ namespace BPEssentials.Commands
             player.GetExtendedPlayer().ResetAndSavePosition(obj.Position.SerializableVector3.ToVector3(), obj.SerializableQuaternion.ToQuaternion(), obj.Position.PlaceIndex);
             if (obj.Delay > 0)
             {
-                player.AddCooldown(Core.Instance.WarpHandler.Name, obj.Name, obj.Delay);
+                Core.Instance.WarpsCooldownHandler.AddCooldown(player.svPlayer, obj.Name);
             }
             player.SendChatMessage(
                 player.TC(Core.Instance.WarpHandler.Name + "_teleported", obj.Name) + 

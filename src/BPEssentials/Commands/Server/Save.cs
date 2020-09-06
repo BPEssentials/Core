@@ -29,10 +29,6 @@ namespace BPEssentials.Commands
             Core.Instance.Logger.Log("Saving Game Status");
             Utils.ChatUtils.SendToAllEnabledChatT("saving_game");
             Core.Instance.SvManager.SaveAll();
-
-            // TODO: Move this into the Save Event
-            Core.Instance.CooldownHandler.SaveCooldowns();
-
         }
     }
 }

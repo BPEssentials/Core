@@ -2,7 +2,6 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
-using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
 using BPEssentials.Modules;
 using BPEssentials.ExtensionMethods;
@@ -45,7 +44,9 @@ namespace BPEssentials
 
         public SvManager SvManager { get; set; }
 
-        public CooldownHandler CooldownHandler { get; set; }
+        public ICooldownHandler KitsCooldownHandler { get; set; }
+
+        public ICooldownHandler WarpsCooldownHandler { get; set; }
 
         public WarpHandler WarpHandler { get; set; }
 
@@ -63,7 +64,8 @@ namespace BPEssentials
                 Description = "Basic commands for powerful moderation.",
                 Website = "https://bpessentials.github.io/Docs/"
             };
-            CooldownHandler = new CooldownHandler();
+            KitsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:kits");
+            WarpsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:warps");
 
             WarpHandler = new WarpHandler();
 
