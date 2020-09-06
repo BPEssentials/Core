@@ -84,7 +84,6 @@
     "spy_chat_disabled": "Spy chat has been disabled.",
     "warns_for": "Warns for {0}:",
     "none": "none",
-    "warns_count": "Total Count: {0} Warns",
     "warn_remove_error_null_or_negative": "WarnId {0} cannot be negative or null.",
     "warn_remove_error_not_existent": "The Warn {0} does not exist",
     "player_warn_removed": "Removed the Warn {0}",
@@ -118,7 +117,9 @@
     "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
     "info_title": "User Info",
     "warn_list_title": "Warn List",
-    "warn_expired": "expired warn"
+    "warn_expired": "expired warn",
+    "active_warns_count": "Active Warns: {0} Warns",
+    "expired_warns_count": "Expired Warns: {0} Warns"
   },
   "BR": {
     "arrested": "Preso {0}.",
@@ -356,7 +357,6 @@
     "spy_chat_disabled": "Шпионский чат был выключен.",
     "warns_for": "Warns for {0}:",
     "none": "none",
-    "warns_count": "Всего: {0} предупреждений",
     "warn_remove_error_null_or_negative": "ID предупреждения {0} не может быть меньше или равно нулю.",
     "warn_remove_error_not_existent": "Предупреждение {0} не существует",
     "player_warn_removed": "Убрано предупреждение {0}",
