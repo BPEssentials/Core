@@ -11,11 +11,11 @@ namespace BPEssentials.Commands
     {
         public override bool LastArgSpaces { get; } = true;
 
-        public void Invoke(ShPlayer player, string target, string reason, int length = -1)
+        public void Invoke(ShPlayer player, string target, string reason)
         {
             if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
             {
-                shTarget.AddWarn(player, reason, length);
+                shTarget.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), shTarget.username.CleanerMessage(), reason.CleanerMessage());
                 player.TS("player_warn", shTarget.username.CleanerMessage(), reason.CleanerMessage());
                 shTarget.TS("target_warn", shTarget.username.CleanerMessage(), reason.CleanerMessage());
@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
 
             if (Core.Instance.SvManager.TryGetUserData(target, out var user))
             {
-                user.AddWarn(player, reason, length);
+                user.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.CleanerMessage(), reason.CleanerMessage());
                 player.TS("player_warn", target.CleanerMessage(), reason.CleanerMessage());
                 return;

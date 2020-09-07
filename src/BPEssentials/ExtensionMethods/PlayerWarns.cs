@@ -21,37 +21,35 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public DateTimeOffset Date { get; set; }
 
-            public int Length { get; set; }
 
             public SerializableWarn(string issuer, string reason, DateTimeOffset dateTime, int length = -1)
             {
                 IssueraccountID = issuer;
                 Reason = reason;
                 Date = dateTime;
-                Length = length > 0 ? length : Core.Instance.Settings.Warns.DefaultWarnsExpirationInDays;
             }
 
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Length, Expired ? player.T("warn_expired") : "");
+                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Expired ? player.T("warn_expired") : "");
             }
         }
 
-        public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason, int length = -1)
+        public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason)
         {
-            player.svPlayer.CustomData.AddWarn(issuer, reason, length);
+            player.svPlayer.CustomData.AddWarn(issuer, reason);
         }
 
-        public static void AddWarn(this User user, ShPlayer issuer, string reason, int length = -1)
+        public static void AddWarn(this User user, ShPlayer issuer, string reason)
         {
-            user.Character.CustomData.AddWarn(issuer, reason, length);
+            user.Character.CustomData.AddWarn(issuer, reason);
         }
 
-        public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason, int length = -1)
+        public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason)
         {
             var warns = customData.GetWarns();
-            warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now, length));
+            warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now));
             customData.AddOrUpdate(CustomDataKey, warns);
         }
 
@@ -96,10 +94,7 @@ namespace BPEssentials.ExtensionMethods.Warns
                 {
                     continue;
                 }
-                if (warns[i].Date.AddDays(warns[i].Length) > DateTimeOffset.Now)
-                {
-                    continue;
-                }
+                
                 if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
                 {
                     warns.RemoveAt(i);
