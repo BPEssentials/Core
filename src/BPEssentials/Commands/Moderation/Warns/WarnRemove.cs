@@ -34,6 +34,7 @@ namespace BPEssentials.Commands
                     return;
                 }
                 user.RemoveWarn(warnId - 1);
+                Core.Instance.SvManager.database.Users.Upsert(user);
                 return;
             }
 
