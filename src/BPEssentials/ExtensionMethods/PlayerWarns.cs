@@ -22,7 +22,7 @@ namespace BPEssentials.ExtensionMethods.Warns
             public DateTimeOffset Date { get; set; }
 
 
-            public SerializableWarn(string issuer, string reason, DateTimeOffset dateTime, int length = -1)
+            public SerializableWarn(string issuer, string reason, DateTimeOffset dateTime)
             {
                 IssueraccountID = issuer;
                 Reason = reason;
@@ -91,6 +91,10 @@ namespace BPEssentials.ExtensionMethods.Warns
             for (int i = warns.Count - 1; i >= 0; i--)
             {
                 if (warns[i].Expired)
+                {
+                    continue;
+                }
+                if (warns[i].Date.AddDays(Core.Instance.Settings.Warns.WarnsExpirationInDays) > DateTimeOffset.Now)
                 {
                     continue;
                 }
