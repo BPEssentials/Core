@@ -117,7 +117,8 @@
     "pm<": "[PM] {0} < {1}",
     "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
     "info_title": "User Info",
-    "warn_list_title": "Warn List"
+    "warn_list_title": "Warn List",
+    "expFileHandler_deleted": "The {0} {1}  has been deleted!"
   },
   "BR": {
     "arrested": "Preso {0}.",
