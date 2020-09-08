@@ -235,6 +235,12 @@
       ]
     },
     {
+      "CommandName": "WarpDelete",
+      "Commands": [
+        "deletewarp"
+      ]
+    },
+    {
       "CommandName": "WarpList",
       "Commands": [
         "listwarp",
