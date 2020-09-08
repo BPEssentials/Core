@@ -235,12 +235,6 @@
       ]
     },
     {
-      "CommandName": "WarpDelete",
-      "Commands": [
-        "deletewarp"
-      ]
-    },
-    {
       "CommandName": "WarpList",
       "Commands": [
         "listwarp",
@@ -407,6 +401,18 @@
       "CommandName": "UnBan",
       "Commands": [
         "unban"
+      ]
+    },
+    {
+      "CommandName": "WarpDelete",
+      "Commands": [
+        "deletewarp"
+      ]
+    },
+    {
+      "CommandName": "KitDelete",
+      "Commands": [
+        "deletekit"
       ]
     }
   ]
