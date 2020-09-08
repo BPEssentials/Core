@@ -27,6 +27,7 @@ namespace BPEssentials.Commands
                 user.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.CleanerMessage(), reason.CleanerMessage());
                 player.TS("player_warn", target.CleanerMessage(), reason.CleanerMessage());
+                Core.Instance.SvManager.database.Users.Upsert(user);
                 return;
             }
 
