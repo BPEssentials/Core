@@ -117,7 +117,7 @@
     "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
     "info_title": "User Info",
     "warn_list_title": "Warn List",
-    "expFileHandler_deleted": "The {0} {1} has been deleted!"
+    "expFileHandler_deleted": "The {0} {1} has been deleted!",
     "warn_expired": "expired warn",
     "active_warns_count": "Active Warns: {0} Warns",
     "expired_warns_count": "Expired Warns: {0} Warns"
