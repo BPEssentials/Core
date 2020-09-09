@@ -18,6 +18,11 @@ namespace BPEssentials.RegisteredEvents
             {
                 if (svManager.TryGetUserData(connectionData.username, out User playerData))
                 {
+                    if(Core.Instance.Settings.General.DisableAccountOverwrite)
+                    {
+                        svManager.RegisterFail(connectionData.connection, "This Name has already been registerd and this Server has disabled overwriting Accounts!");
+                        return;
+                    }
                     if (playerData.PasswordHash != connectionData.passwordHash)
                     {
                         svManager.RegisterFail(connectionData.connection, "Invalid credentials");

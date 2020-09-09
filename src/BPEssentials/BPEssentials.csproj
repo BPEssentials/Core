@@ -351,10 +351,8 @@
     <Compile Include="Events\OnLogin.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayer.cs" />
     <Compile Include="ExtendedPlayer\ExtendedPlayerFactory.cs" />
-    <Compile Include="ExtensionMethods\PlayerCooldowns.cs" />
     <Compile Include="ExtensionMethods\PlayerItem.cs" />
     <Compile Include="ExtensionMethods\Player.cs" />
-    <Compile Include="CooldownHandler.cs" />
     <Compile Include="ExtensionMethods\PlayerWarns.cs" />
     <Compile Include="ExtensionMethods\String.cs" />
     <Compile Include="EntityHandler.cs" />

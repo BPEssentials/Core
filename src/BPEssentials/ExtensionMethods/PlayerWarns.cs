@@ -1,4 +1,6 @@
-﻿using BrokeProtocol.Entities;
+﻿using BrokeProtocol.API.Types;
+using BrokeProtocol.Entities;
+using BrokeProtocol.LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,11 +15,14 @@ namespace BPEssentials.ExtensionMethods.Warns
         {
             public string Reason { get; set; }
 
+            public bool Expired { get; set; }
+
             public string IssueraccountID { get; set; }
 
-            public DateTime Date { get; set; }
+            public DateTimeOffset Date { get; set; }
 
-            public SerializableWarn(string issuer, string reason, DateTime dateTime)
+
+            public SerializableWarn(string issuer, string reason, DateTimeOffset dateTime)
             {
                 IssueraccountID = issuer;
                 Reason = reason;
@@ -27,31 +32,81 @@ namespace BPEssentials.ExtensionMethods.Warns
             public string ToString(ShPlayer player)
             {
                 var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer != null ? issuer.ID : IssueraccountID, Date.ToString(CultureInfo.InvariantCulture));
+                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Expired ? player.T("warn_expired") : "");
             }
         }
 
         public static void AddWarn(this ShPlayer player, ShPlayer issuer, string reason)
         {
-            var warns = GetWarns(player);
-            warns.Add(new SerializableWarn(issuer.username, reason, DateTime.Now));
-            player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
+            player.svPlayer.CustomData.AddWarn(issuer, reason);
+        }
+
+        public static void AddWarn(this User user, ShPlayer issuer, string reason)
+        {
+            user.Character.CustomData.AddWarn(issuer, reason);
+        }
+
+        public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason)
+        {
+            var warns = customData.GetWarns();
+            warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now));
+            customData.AddOrUpdate(CustomDataKey, warns);
         }
 
         public static void RemoveWarn(this ShPlayer player, int warnId)
         {
-            var warns = GetWarns(player);
+            player.svPlayer.CustomData.RemoveWarn(warnId);
+        }
+
+        public static void RemoveWarn(this User user, int warnId)
+        {
+            user.Character.CustomData.RemoveWarn(warnId);
+        }
+
+        public static void RemoveWarn(this CustomData customData, int warnId)
+        {
+            var warns = customData.GetWarns();
             warns.Remove(warns[warnId]);
-            player.svPlayer.CustomData.AddOrUpdate(CustomDataKey, warns);
+            customData.AddOrUpdate(CustomDataKey, warns);
         }
 
         public static List<SerializableWarn> GetWarns(this ShPlayer player)
         {
-            player.svPlayer.CustomData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns);
-            if (warns == null)
+            return player.svPlayer.CustomData.GetWarns();
+
+        }
+
+        public static List<SerializableWarn> GetWarns(this User user)
+        {
+            return user.Character.CustomData.GetWarns();
+        }
+
+        private static List<SerializableWarn> GetWarns(this CustomData customData)
+        {
+            if (!customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns))
             {
-                warns = new List<SerializableWarn>();
+                return new List<SerializableWarn>();
             }
+            // Checking for expired Warns
+            for (int i = warns.Count - 1; i >= 0; i--)
+            {
+                if (warns[i].Expired)
+                {
+                    continue;
+                }
+                if (warns[i].Date.AddDays(Core.Instance.Settings.Warns.WarnsExpirationInDays) > DateTimeOffset.Now)
+                {
+                    continue;
+                }
+                
+                if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
+                {
+                    warns.RemoveAt(i);
+                    continue;
+                }
+                warns[i].Expired = true;
+            }
+
             return warns;
         }
     }

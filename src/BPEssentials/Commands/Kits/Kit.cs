@@ -1,6 +1,5 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BPEssentials.ExtensionMethods.Cooldowns;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
@@ -40,9 +39,9 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), obj.Name);
                 return;
             }
-            if (player.HasCooldown(Core.Instance.KitHandler.Name, obj.Name))
+            if (Core.Instance.KitsCooldownHandler.IsCooldown(player.svPlayer, obj.Name, obj.Delay))
             {
-                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), player.GetCooldown(Core.Instance.KitHandler.Name, obj.Name).ToString());
+                player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), Core.Instance.KitsCooldownHandler.GetCooldown(player.svPlayer, obj.Name, obj.Delay).ToString());
                 return;
             }
             if (obj.Price > 0)
@@ -57,7 +56,7 @@ namespace BPEssentials.Commands
             obj.GiveItems(player);
             if (obj.Delay > 0)
             {
-                player.AddCooldown(Core.Instance.KitHandler.Name, obj.Name, obj.Delay);
+                Core.Instance.KitsCooldownHandler.AddCooldown(player.svPlayer, obj.Name);
             }
             player.SendChatMessage(
                 player.TC(Core.Instance.KitHandler.Name + "_received", obj.Name) +

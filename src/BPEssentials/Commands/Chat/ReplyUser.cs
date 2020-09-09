@@ -23,7 +23,7 @@ namespace BPEssentials.Commands
                 player.SendChatMessage($"{player.T("user_has_chat_disabled")} {player.T("message_not_sent")}");
                 return;
             }
-            player.GetExtendedPlayer().SendPmMessage(eTarget.Client, message);
+            player.GetExtendedPlayer().SendPmMessage(eTarget, message);
         }
     }
 }

@@ -2,10 +2,9 @@
 using BPCoreLib.Util;
 using BPEssentials.Configuration.Models;
 using BPEssentials.Configuration.Models.SettingsModel;
-using BPEssentials.Cooldowns;
 using BPEssentials.ExtendedPlayer;
-using BPEssentials.Modules;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Modules;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
@@ -26,7 +25,7 @@ namespace BPEssentials
 
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
-        public static string[] Authors { get; } =  { "PLASMA_chicken", "UserR00T" };
+        public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
 
         // TODO: This can get confusing real fast, need a new name for this.
         public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
@@ -45,7 +44,9 @@ namespace BPEssentials
 
         public SvManager SvManager { get; set; }
 
-        public CooldownHandler CooldownHandler { get; set; }
+        public ICooldownHandler KitsCooldownHandler { get; set; }
+
+        public ICooldownHandler WarpsCooldownHandler { get; set; }
 
         public WarpHandler WarpHandler { get; set; }
 
@@ -63,7 +64,8 @@ namespace BPEssentials
                 Description = "Basic commands for powerful moderation.",
                 Website = "https://bpessentials.github.io/Docs/"
             };
-            CooldownHandler = new CooldownHandler();
+            KitsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:kits");
+            WarpsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:warps");
 
             WarpHandler = new WarpHandler();
 
@@ -71,7 +73,7 @@ namespace BPEssentials
 
             OnReloadRequestAsync();
             SetCustomData();
-            
+
             EntityHandler = new EntityHandler();
             EntityHandler.LoadEntities();
 
@@ -119,6 +121,11 @@ namespace BPEssentials
                     if (!player.GetExtendedPlayer().EnabledBypass)
                     {
                         if (!command.AllowWhileDead && player.IsDead)
+                        {
+                            player.TS("command_failed_crimes", command.CommandName);
+                            return false;
+                        }
+                        if (!command.AllowWhileKO && player.IsKnockedOut)
                         {
                             player.TS("command_failed_crimes", command.CommandName);
                             return false;
