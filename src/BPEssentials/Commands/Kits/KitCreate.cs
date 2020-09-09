@@ -17,8 +17,12 @@ namespace BPEssentials.Commands
             }
             if (price < 0)
             {
-                player.TS("price_error_negative");
-                return;
+                price = 0;
+                foreach (var item in player.myItems.Values)
+                {
+                    price += item.count * item.currentValue;
+                }
+                player.TS("kit_price_has_been_auto_calculated", price);
             }
             var file = Path.Combine(Core.Instance.Paths.KitsFolder, $"{kit}.json");
             if (File.Exists(file))
