@@ -22,7 +22,7 @@ namespace BPEssentials.Commands
                 {
                     price += item.count * item.currentValue;
                 }
-                player.TS("kit_price_has_been_auto_calculated", price);
+                player.TS("kit_price_automatically_calculated", price);
             }
             var file = Path.Combine(Core.Instance.Paths.KitsFolder, $"{kit}.json");
             if (File.Exists(file))
