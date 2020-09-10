@@ -51,10 +51,10 @@ namespace BPEssentials.Commands
             }
             else
             {
-                stringBuilder.AppendLine(player.T("active_warns_count", warnList.Select(x => !x.Expired).Count()));
+                stringBuilder.AppendLine(player.T("active_warns_count", warnList.Count(x => !x.Expired)));
                 if (!Core.Instance.Settings.Warns.DeleteExpiredWarns)
                 {
-                    stringBuilder.AppendLine(player.T("expired_warns_count", warnList.Select(x => x.Expired).Count()));
+                    stringBuilder.AppendLine(player.T("expired_warns_count", warnList.Count(x => x.Expired)));
                 }
                 stringBuilder.AppendLine();
                 for (int i = 0; i < warns.Length; i++)
