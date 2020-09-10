@@ -120,7 +120,8 @@
     "expFileHandler_deleted": "The {0} {1} has been deleted!",
     "warn_expired": "expired warn",
     "active_warns_count": "Active Warns: {0} Warns",
-    "expired_warns_count": "Expired Warns: {0} Warns"
+    "expired_warns_count": "Expired Warns: {0} Warns",
+    "kit_price_automatically_calculated": "Automatic Kit Price: {0}$"
   },
   "BR": {
     "arrested": "Preso {0}.",
