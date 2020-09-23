@@ -38,6 +38,8 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool AllowWhileCuffed { get; set; } = true;
 
         public bool AllowWhileJailed { get; set; } = true;
+
+        public int CoolDown { get; set; } = 0;
     }
 
     public enum LevenshteinMode
@@ -70,7 +72,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public string InfoColor { get; set; } = "#179b43";
 
         public string ArgColor { get; set; } = "#178d9b";
-
     }
 
     public class KeptItemsOnDeath
@@ -84,7 +85,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
         public bool KeepAllPhones { get; set; }
 
         public bool KeepAllLicenses { get; set; }
-
     }
 
     public class General
