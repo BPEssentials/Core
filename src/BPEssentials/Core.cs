@@ -59,9 +59,6 @@ namespace BPEssentials
 
         public ModuleHandler ModuleHandler { get; set; }
 
-        // TODO think of a better name
-        public readonly string CommandCoolDownType = "command";
-
         public Core()
         {
             Instance = this;

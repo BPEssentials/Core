@@ -39,7 +39,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public bool AllowWhileJailed { get; set; } = true;
 
-        public int CoolDown { get; set; } = 0;
+        public int CoolDown { get; set; }
     }
 
     public enum LevenshteinMode
