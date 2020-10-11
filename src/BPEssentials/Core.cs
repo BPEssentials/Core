@@ -123,7 +123,10 @@ namespace BPEssentials
                             return false;
                         }
 
-                        if (!player.GetExtendedPlayer().EnabledBypass)
+                        if (player.GetExtendedPlayer().EnabledBypass)
+                        {
+                        return true;
+                        }
                         {
                             if (!command.AllowWhileDead && player.IsDead)
                             {
