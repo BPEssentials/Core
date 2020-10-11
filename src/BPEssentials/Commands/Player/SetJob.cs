@@ -20,7 +20,7 @@ namespace BPEssentials.Commands
             var jobs = new Dictionary<string, JobInfo>();
             foreach (var jobType in BPAPI.Instance.Jobs)
             {
-                jobs.Add(jobType.ToString(), jobType);
+                jobs.Add(jobType.shared.jobName, jobType);
             }
 
             var wantedJob = jobs.FirstOrDefault(x => x.Key == jobName);
