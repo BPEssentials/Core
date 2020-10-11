@@ -30,7 +30,7 @@ namespace BPEssentials.Commands
                 player.SendChatMessage($"No account found with the id '{targetStr}'.");
                 return;
             }
-            player.svPlayer.SendTextPanel(player.T("info_title"), sb.ToString());
+            player.svPlayer.SendTextMenu(player.T("info_title"), sb.ToString());
         }
 
         // TODO: Add i18n for this
@@ -62,7 +62,7 @@ namespace BPEssentials.Commands
               .Append("  - Items: ").AppendLine(string.Join("\n    - ", target.Character.Items.Select(x => x.Key + ": " + x.Value)))
 
               .AppendLine("  - Job: ")
-                .Append("    - Index: ").AppendLine(target.Character.Job.Index.ToString())
+                .Append("    - Index: ").AppendLine(target.Character.Job.JobIndex.ToString())
                 .Append("    - Rank: ").AppendLine(target.Character.Job.Rank.ToString())
                 .Append("    - Experience: ").AppendLine(target.Character.Job.Experience.ToString())
 

@@ -10,16 +10,16 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target)
         {
             var eTarget = target.GetExtendedPlayer();
-            if (eTarget.CurrentChat == Enums.Chat.Muted)
+            if (eTarget.Muted)
             {
-                eTarget.CurrentChat = Enums.Chat.Global;
                 player.TS("player_unmuted", target.username);
             }
             else
             {
-                eTarget.CurrentChat = Enums.Chat.Muted;
-                player.TS("player_muted",  target.username);
+                player.TS("player_muted", target.username);
             }
+
+            eTarget.Muted = !eTarget.Muted;
         }
     }
 }

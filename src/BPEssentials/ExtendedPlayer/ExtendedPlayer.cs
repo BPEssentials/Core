@@ -14,6 +14,8 @@ namespace BPEssentials.ExtendedPlayer
         {
         }
 
+        public bool Muted { get; set; }
+
         public bool EnabledBypass { get; set; }
 
         public bool EnabledSpychat { get; set; }

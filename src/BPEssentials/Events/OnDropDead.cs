@@ -8,12 +8,11 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-
 namespace BPEssentials.RegisteredEvents
 {
     public class OnDropDead : IScript
     {
-        private readonly int[] LicenseIDs = new [] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
+        private readonly int[] LicenseIDs = new[] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
 
         [Target(GameSourceEvent.PlayerRemoveItemsDeath, ExecutionMode.Override)]
         protected void OnRemoveItemsDeath(ShPlayer player)
@@ -34,13 +33,13 @@ namespace BPEssentials.RegisteredEvents
                 // BPE EXTEND --
 
                 int extra = myItem.count;
-                if (player.job.info.rankItems.Length > player.rank)
+                if (player.svPlayer.job.info.upgrades.Length > player.rank)
                 {
                     for (int rankIndex = player.rank; rankIndex >= 0; rankIndex--)
                     {
-                        foreach (InventoryItem i in player.job.info.rankItems[rankIndex].items)
+                        foreach (var i in player.svPlayer.job.info.upgrades[rankIndex].items)
                         {
-                            if (myItem.item.index == i.item.index)
+                            if (myItem.item.name == i.itemName)
                             {
                                 extra = Mathf.Max(0, myItem.count - i.count);
                             }
@@ -57,4 +56,3 @@ namespace BPEssentials.RegisteredEvents
         }
     }
 }
-
