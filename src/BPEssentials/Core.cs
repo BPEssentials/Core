@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using BrokeProtocol.GameSource.Jobs;
 
 namespace BPEssentials
 {
@@ -136,7 +135,7 @@ namespace BPEssentials
                             player.TS("command_failed_cuffed", command.CommandName);
                             return false;
                         }
-                        if (!command.AllowWhileJailed && player.svPlayer.job is Prisoner)
+                        if (!command.AllowWhileJailed && player.svPlayer.job.info.shared.jobIndex == BPAPI.Instance.PrisonerIndex)
                         {
                             player.TS("command_failed_jail", command.CommandName);
                             return false;
