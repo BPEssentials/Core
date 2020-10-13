@@ -1,13 +1,9 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
+using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
-using BrokeProtocol.Required;
-using BrokeProtocol.Utility.Jobs;
 using BrokeProtocol.Utility.Networking;
-using System.Linq;
-using BrokeProtocol.API;
-using BrokeProtocol.GameSource.Jobs;
 
 namespace BPEssentials.Commands
 {
