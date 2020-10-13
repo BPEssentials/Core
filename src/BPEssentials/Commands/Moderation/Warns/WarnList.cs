@@ -19,7 +19,7 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            if(target == null)
+            if (target == null)
             {
                 SendWarnList(player, player.username, player.GetWarns());
                 return;
@@ -62,7 +62,7 @@ namespace BPEssentials.Commands
                     stringBuilder.AppendLine($"{i + 1} - {warns[i]}");
                 }
             }
-            player.svPlayer.SendTextPanel(player.T("warn_list_title"), stringBuilder.ToString());
+            player.svPlayer.SendTextMenu(player.T("warn_list_title"), stringBuilder.ToString());
         }
     }
 }

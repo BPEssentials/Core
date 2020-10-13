@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
             target = target ?? player;
-            target.svPlayer.UnRestrain();
+            target.svPlayer.Unrestrain();
             player.TS("freed", target.username.CleanerMessage());
         }
     }

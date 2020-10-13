@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using BPEssentials.Utils;
+using BrokeProtocol.API;
+using BrokeProtocol.Utility.Jobs;
 
 namespace BPEssentials.Commands
 {
@@ -14,13 +16,12 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string jobName, ShPlayer target = null)
         {
-            
             target = target ?? player;
-            var jobs = new Dictionary<string, JobIndex>();
-            foreach (JobIndex jobType in Enum.GetValues(typeof(JobIndex)))
+            var jobs = new Dictionary<string, JobInfo>();
+            foreach (var jobType in BPAPI.Instance.Jobs)
             {
-                jobs.Add(jobType.ToString(), jobType);
-            }           
+                jobs.Add(jobType.shared.jobName, jobType);
+            }
 
             var wantedJob = jobs.FirstOrDefault(x => x.Key == jobName);
             if (wantedJob.Key == null)
@@ -39,9 +40,9 @@ namespace BPEssentials.Commands
                     return;
                 }
             }
-            target.svPlayer.SvTrySetJob(wantedJob.Value, true, false);
+            target.svPlayer.SvSetJob(wantedJob.Value, true, false);
             player.TS("job_set", target.username.CleanerMessage(), jobName);
-            if (target != player) 
+            if (target != player)
             {
                 target.TS("new_job", player.username.CleanerMessage(), wantedJob.Key);
             }

@@ -18,6 +18,12 @@ namespace BPEssentials.ChatHandlers
                 return;
             }
 
+            if (player.GetExtendedPlayer().Muted)
+            {
+                player.TS("muted_player");
+                return;
+            }
+
             if (CommandHandler.OnEvent(player, message)) // 'true' if message starts with command prefix
             {
                 return;
@@ -29,9 +35,6 @@ namespace BPEssentials.ChatHandlers
             {
                 case Chat.StaffChat:
                     ChatUtils.SendStaffChatMessage(player, message);
-                    return;
-                case Chat.Muted:
-                    player.TS("muted_player");
                     return;
 
                 case Chat.Disabled:

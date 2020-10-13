@@ -6,6 +6,8 @@ using BrokeProtocol.Required;
 using BrokeProtocol.Utility.Jobs;
 using BrokeProtocol.Utility.Networking;
 using System.Linq;
+using BrokeProtocol.API;
+using BrokeProtocol.GameSource.Jobs;
 
 namespace BPEssentials.Commands
 {
@@ -18,12 +20,12 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-            if (target.IsDead || target.job is Prisoner)
+            if (target.IsDead || target.svPlayer.job.info.shared.jobIndex == BPAPI.Instance.PrisonerIndex)
             {
                 return;
             }
             var getPositionT = jail.mainT;
-            target.svPlayer.SvTrySetJob(JobIndex.Prisoner, true, false);
+            target.svPlayer.SvTrySetJob(BPAPI.Instance.PrisonerIndex, true, false);
             target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, 0);
             target.svPlayer.SvClearCrimes();
             target.RemoveItemsJail();

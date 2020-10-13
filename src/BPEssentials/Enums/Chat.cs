@@ -4,7 +4,6 @@
     {
         Disabled,
         Global,
-        StaffChat,
-        Muted
+        StaffChat
     }
 }
