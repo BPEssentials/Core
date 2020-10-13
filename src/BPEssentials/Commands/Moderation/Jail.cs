@@ -20,7 +20,7 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-            if (target.IsDead || target.svPlayer.job is Prisoner)
+            if (target.IsDead || target.svPlayer.job.info.shared.jobIndex == BPAPI.Instance.PrisonerIndex)
             {
                 return;
             }
