@@ -10,14 +10,21 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player)
         {
             var ePlayer = player.GetExtendedPlayer();
-            if (ePlayer.TpaUser == null)
+            if (ePlayer.TpaUser == null || ePlayer.TpaUser.Player == null)
             {
                 player.TS("no_tpa_requests");
                 return;
             }
-            ePlayer.TpaUser.TS("TpaUser_tpa_accepted", player.username.CleanerMessage());
-            player.TS("player_tpa_accepted", ePlayer.TpaUser.username.CleanerMessage());
-            ePlayer.TpaUser.GetExtendedPlayer().ResetAndSavePosition(player);
+            ePlayer.TpaUser.Player.TS("TpaUser_tpa_accepted", player.username.CleanerMessage());
+            player.TS("player_tpa_accepted", ePlayer.TpaUser.Player.username.CleanerMessage());
+            if (ePlayer.TpaUser.TpHere)
+            {
+                player.GetExtendedPlayer().ResetAndSavePosition(ePlayer.TpaUser.Player);
+            }
+            else
+            {
+                ePlayer.TpaUser.Player.GetExtendedPlayer().ResetAndSavePosition(player);
+            }
             ePlayer.TpaUser = null;
         }
     }

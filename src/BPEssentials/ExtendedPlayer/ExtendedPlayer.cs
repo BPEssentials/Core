@@ -26,7 +26,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public ShPlayer ReplyToUser { get; set; }
 
-        public ShPlayer TpaUser { get; set; }
+        public TpaUserStore TpaUser { get; set; }
 
         public LastLocation LastLocation { get; } = new LastLocation();
 
@@ -42,5 +42,19 @@ namespace BPEssentials.ExtendedPlayer
         {
             Client.SendChatMessage($"[SPYCHAT] {target.username.CleanerMessage()}: {command.CleanerMessage()}");
         }
+
+        public void SetTpaUser(ShPlayer target, bool TpHere = false)
+        {
+            TpaUser = new TpaUserStore() { Player = target, TpHere = TpHere };
+        }
+    }
+
+
+    [Serializable]
+    public class TpaUserStore
+    {
+        public ShPlayer Player { get; set; }
+
+        public bool TpHere { get; set; }
     }
 }

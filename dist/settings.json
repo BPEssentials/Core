@@ -118,7 +118,8 @@
       "CommandName": "Slap",
       "Commands": [
         "slap",
-        "slp"
+        "slp",
+        "spank"
       ]
     },
     {
@@ -432,6 +433,24 @@
       "Commands": [
         "giveammo",
         "ga"
+      ]
+    },
+    {
+      "CommandName": "TpaHereUser",
+      "Commands": [
+        "tpahere",
+        "tpah",
+        "tphererequest",
+        "teleporthererequest"
+      ]
+    },
+    {
+      "CommandName": "TpaHereAll",
+      "Commands": [
+        "tpahereall",
+        "tpaha",
+        "tphererequestall",
+        "teleporthererequestall"
       ]
     }
   ]
