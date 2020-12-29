@@ -82,7 +82,6 @@ namespace BPEssentials
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
             EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
-            new Commands.Save().StartSaveTimer();
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 

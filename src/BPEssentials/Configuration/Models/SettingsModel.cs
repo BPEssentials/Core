@@ -91,7 +91,7 @@ namespace BPEssentials.Configuration.Models.SettingsModel
     {
         public string Version { get; set; }
 
-        public int AnnounceInterval { get; set; }
+        public int SaveInterval { get; set; } = 15;
 
         public bool LocalChatOverHead { get; set; } = true;
 

@@ -7,7 +7,8 @@
     // This does not change already Registerd ones
     "LimitNames": false,
     // This forbbids pressing Register when the Account already was registerd once.
-    "DisableAccountOverwrite": false
+    "DisableAccountOverwrite": false,
+    "SaveInterval": 15
   },
   "KeptItemsOnDeath": {
     "KeepAllItemsOnDeath": false,
@@ -424,6 +425,13 @@
       "CommandName": "KitDelete",
       "Commands": [
         "deletekit"
+      ]
+    },
+    {
+      "CommandName": "GiveAmmo",
+      "Commands": [
+        "giveammo",
+        "ga"
       ]
     }
   ]
