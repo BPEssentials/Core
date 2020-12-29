@@ -425,6 +425,13 @@
       "Commands": [
         "deletekit"
       ]
+    },
+    {
+      "CommandName": "GiveAmmo",
+      "Commands": [
+        "giveammo",
+        "ga"
+      ]
     }
   ]
 }
