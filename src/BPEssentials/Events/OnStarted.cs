@@ -1,4 +1,5 @@
-﻿using BrokeProtocol.API;
+﻿using BPCoreLib.Util;
+using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
 using BrokeProtocol.Utility;
@@ -13,6 +14,7 @@ namespace BPEssentials.RegisteredEvents
         public void OnEvent(SvManager svManager)
         {
             Core.Instance.SvManager = svManager;
+            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.AnnounceInterval * 60 * 1000, new Commands.Save().Run));
         }
     }
 }
