@@ -9,7 +9,7 @@ namespace BPEssentials.RegisteredEvents
         [Target(GameSourceEvent.PlayerDestroy, ExecutionMode.Event)]
         public void OnEvent(ShPlayer player)
         {
-            if (!player.isHuman) return;
+            if (!player.isHuman) { return; }
             Core.Instance.PlayerHandler.Remove(player.ID);
             Core.Instance.Logger.LogInfo($"[DISCONNECT] {player.username} disconnected.");
         }
