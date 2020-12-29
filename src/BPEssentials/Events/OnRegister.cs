@@ -16,12 +16,12 @@ namespace BPEssentials.RegisteredEvents
         {
             if (Core.Instance.Settings.General.LimitNames && !Regex.IsMatch(connectionData.username, @"^[a-zA-Z0-9_-]+$"))
             {
-                svManager.RegisterFail(connectionData.connection, $"Your Username can only contain letters: A-Z a-z 0-9 _ -");
+                svManager.RegisterFail(connectionData.connection, $"Your username can only contain the following characters: A-Z a-z 0-9 _ -");
                 return false;
             }
             if (svManager.TryGetUserData(connectionData.username, out var user) && Core.Instance.Settings.General.DisableAccountOverwrite)
             {
-                svManager.RegisterFail(connectionData.connection, "This Name has already been registerd and this Server has disabled overwriting Accounts!");
+                svManager.RegisterFail(connectionData.connection, "This name has already been registered and this server has disabled overwriting accounts!");
                 return false;
             }
             return true;
