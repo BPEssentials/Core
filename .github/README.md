@@ -11,7 +11,9 @@ BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Pro
 
 ## How to Compile
 
-1. Change envirorment Variable `BPDIR` to the path of your Broke Protocol Directory: e.g. `BPDIR=E:\Steam\steamapps\common\BROKE PROTOCOL`
+1. Change the environment variable `BPDIR` to the path of your Broke Protocol game directory: e.g. `BPDIR=E:\Steam\steamapps\common\BROKE PROTOCOL`. Make sure this environment variable is set _before_ running your IDE, for example Visual Studio.
+2. Open the `.sln` in your favorite IDE. Suggested IDE is currently Visual Studio 2019 or VSCode (note, for VSCode you may need to create a `tasks.json` file.)
+3. Within your IDE, press build to compile the project. Using Visual Studio 2019 (or VSCode if you installed [this](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) extension), you may also press `CTRL+SHIFT+B` to build.
 
 ## Contributors
 
