@@ -1,10 +1,6 @@
-﻿using BPEssentials.Abstractions;
-using BPEssentials.ExtensionMethods;
-
-using BrokeProtocol.Collections;
+﻿using BPCoreLib.Util;
+using BPEssentials.Abstractions;
 using BrokeProtocol.Entities;
-using Newtonsoft.Json;
-using System.Linq;
 
 namespace BPEssentials.Commands
 {
@@ -12,18 +8,14 @@ namespace BPEssentials.Commands
     {
         public void StartSaveTimer()
         {
-           
-                var Tmer = new System.Timers.Timer(); // TODO: Disposing the timer seems to break
-                Tmer.Elapsed += (sender, e) => Run();
-                Tmer.Interval = 15 * 60 * 1000;
-                Tmer.Enabled = true;
-            
+            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.AnnounceInterval * 60 * 1000, Run));
         }
 
         public void Invoke(ShPlayer player)
         {
             Run();
         }
+
         public void Run()
         {
             Core.Instance.Logger.Log("Saving Game Status");
