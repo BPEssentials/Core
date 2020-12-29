@@ -9,6 +9,10 @@ Check our [Website](https://bpessentials.github.io/Docs/) for features, commands
 
 BP:Essentials aims to bring a simplistic yet powerful command suite to Broke Protocol
 
+## How to Compile
+
+1. Change envirorment Variable `BPDIR` to the path of your Broke Protocol Directory: e.g. `BPDIR=E:\Steam\steamapps\common\BROKE PROTOCOL`
+
 ## Contributors
 
 PLASMAchicken: [Github](https://github.com/PLASMAchicken)
