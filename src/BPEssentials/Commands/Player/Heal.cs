@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.SvClearInjuries();
-            target.svPlayer.Heal(target.maxStat);
+            target.svPlayer.SvHeal(target.maxStat);
             player.TS("healed", target.username.CleanerMessage());
         }
     }
