@@ -62,7 +62,7 @@ namespace BPEssentials.Commands
 
               .Append("  - Apartments: ").Append(target.Character.Apartments.Count).Append(", Indexes: ").Append(string.Join(", ", target.Character.Apartments.Select(x => x.Index)))
               .Append("  - Wearables: ").AppendLine(string.Join("\n    - ", target.Character.Wearables))
-              .Append("  - Items: ").AppendLine(string.Join("\n    - ", target.Character.Items.Select(x => x.Key + ": " + Core.Instance.EntityHandler.Items.FirstOrDefault(search => search.Value.index == x.Value).Value.item)))
+              .Append("  - Items: ").AppendLine(string.Join("\n    - ", target.Character.Items.Select(x => x.Key + ": " + Core.Instance.EntityHandler.Items.FirstOrDefault(search => search.Value.index == x.Value).Value.itemName)))
 
               .AppendLine("  - Job: ")
                 .Append("    - Index: ").AppendLine(target.Character.Job.JobIndex.ToString())
