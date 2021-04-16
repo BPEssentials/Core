@@ -1,19 +1,20 @@
-﻿using BrokeProtocol.API;
-using BrokeProtocol.Entities;
-using BrokeProtocol.Utility;
-using System;
-using BPEssentials.ExtensionMethods;
-using BrokeProtocol.Utility.Networking;
+﻿using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
+using BrokeProtocol.API;
+using BrokeProtocol.Collections;
+using BrokeProtocol.Entities;
+using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.ChatHandlers
 {
     public class LocalChat : IScript
     {
+        private static LimitQueue<ShPlayer> chatted = new LimitQueue<ShPlayer>(8, 20f);
+
         [Target(GameSourceEvent.PlayerLocalChatMessage, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
-            if (player.manager.svManager.chatted.Limit(player))
+            if (chatted.Limit(player))
             {
                 return;
             }

@@ -2,7 +2,7 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Managers;
+using BrokeProtocol.Utility;
 using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
         {
-            var jail = SceneManager.Instance.jail;
+            var jail = Core.Instance.SvManager.jails.GetRandom();
             if (jail == null)
             {
                 return;

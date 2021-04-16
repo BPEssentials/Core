@@ -1,10 +1,6 @@
 ﻿using BPCoreLib.Util;
 using BrokeProtocol.API;
-using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
-using BrokeProtocol.Utility;
-using System;
-using System.Linq;
 
 namespace BPEssentials.RegisteredEvents
 {

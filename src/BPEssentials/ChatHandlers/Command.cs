@@ -1,8 +1,7 @@
 ﻿using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
-using BrokeProtocol.Entities;
-using System;
 using BrokeProtocol.Collections;
+using BrokeProtocol.Entities;
 
 namespace BPEssentials.ChatHandlers
 {
