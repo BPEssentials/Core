@@ -98,7 +98,7 @@ namespace BPEssentials.ExtensionMethods.Warns
                 {
                     continue;
                 }
-                
+
                 if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
                 {
                     warns.RemoveAt(i);

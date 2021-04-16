@@ -1,7 +1,5 @@
-﻿using BrokeProtocol.Utility;
-using System;
+﻿using System;
 using System.Globalization;
-using BPEssentials.ExtensionMethods;
 
 
 namespace BPEssentials.Utils.Formatter.Response
@@ -38,13 +36,13 @@ namespace BPEssentials.Utils.Formatter.Response
                 return string.Empty;
             }
 
-               
-                   var arg_IFormattable = arg as IFormattable;
-                   if (arg_IFormattable != null)
-                   {
-                       return $"</color><color={ArgColor}>" +(arg_IFormattable).ToString(format, CultureInfo.CurrentCulture) + $"</color><color={InfoColor}>";
-                   }
-               
+
+            var arg_IFormattable = arg as IFormattable;
+            if (arg_IFormattable != null)
+            {
+                return $"</color><color={ArgColor}>" + (arg_IFormattable).ToString(format, CultureInfo.CurrentCulture) + $"</color><color={InfoColor}>";
+            }
+
             return $"</color><color={ArgColor}>{arg.ToString()}</color><color={InfoColor}>";
         }
     }

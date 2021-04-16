@@ -1,10 +1,6 @@
 ﻿using BPCoreLib.Util;
 using BrokeProtocol.API;
-using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
-using BrokeProtocol.Utility;
-using System;
-using System.Linq;
 
 namespace BPEssentials.RegisteredEvents
 {
@@ -14,7 +10,7 @@ namespace BPEssentials.RegisteredEvents
         public void OnEvent(SvManager svManager)
         {
             Core.Instance.SvManager = svManager;
-            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.SaveInterval * 60 * 1000, new Commands.Save().Run));
+            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run));
         }
     }
 }

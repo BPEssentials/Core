@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BPEssentials.Enums;
+﻿using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils.Formatter.Chat;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BPEssentials.Utils
 {

@@ -1,6 +1,5 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -9,7 +8,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.SvKillSelf();
+            target.svPlayer.SvDestroySelf();
             player.TS("killed", target.username.CleanerMessage());
         }
     }

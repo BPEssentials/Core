@@ -1,6 +1,5 @@
 ﻿using BrokeProtocol.API;
 using BrokeProtocol.Entities;
-using System;
 
 namespace BPEssentials.RegisteredEvents
 {

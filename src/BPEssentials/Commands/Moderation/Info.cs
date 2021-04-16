@@ -3,7 +3,6 @@ using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 using BrokeProtocol.LiteDB;
-using BrokeProtocol.Utility.Networking;
 using System.Linq;
 using System.Text;
 
@@ -16,19 +15,23 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-            var target = Core.Instance.SvManager.database.Users.FindById(targetStr);
-            if (target != null)
-            {
-                sb = GetOfflineInfo(target);
-            }
-            else if (EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
+
+            if (EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
             {
                 sb = GetOnlineInfo(shPlayer);
             }
             else
             {
-                player.SendChatMessage($"No account found with the id '{targetStr}'.");
-                return;
+                var target = Core.Instance.SvManager.database.Users.FindById(targetStr);
+                if (target != null)
+                {
+                    sb = GetOfflineInfo(target);
+                }
+                else
+                {
+                    player.SendChatMessage($"No account found with the id '{targetStr}'.");
+                    return;
+                }
             }
             player.svPlayer.SendTextMenu(player.T("info_title"), sb.ToString());
         }
@@ -59,7 +62,7 @@ namespace BPEssentials.Commands
 
               .Append("  - Apartments: ").Append(target.Character.Apartments.Count).Append(", Indexes: ").Append(string.Join(", ", target.Character.Apartments.Select(x => x.Index)))
               .Append("  - Wearables: ").AppendLine(string.Join("\n    - ", target.Character.Wearables))
-              .Append("  - Items: ").AppendLine(string.Join("\n    - ", target.Character.Items.Select(x => x.Key + ": " + x.Value)))
+              .Append("  - Items: ").AppendLine(string.Join("\n    - ", target.Character.Items.Select(x => x.Key + ": " + Core.Instance.EntityHandler.Items.FirstOrDefault(search => search.Value.index == x.Value).Value.itemName)))
 
               .AppendLine("  - Job: ")
                 .Append("    - Index: ").AppendLine(target.Character.Job.JobIndex.ToString())

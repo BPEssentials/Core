@@ -1,7 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
