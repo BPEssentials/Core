@@ -109,8 +109,7 @@ namespace BPEssentials
             foreach (var command in Settings.Commands)
             {
                 Logger.LogInfo($"[C] Registering command {command.CommandName}..");
-                if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del,
-                    out var instance))
+                if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
                 {
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
