@@ -154,7 +154,6 @@ namespace BPEssentials
 
                             if (command.CoolDown > 0 && CommandsCooldownHandler.IsCooldown(player.svPlayer, command.CommandName, command.CoolDown))
                             {
-                                //TODO localtion
                                 player.TS("command_failed_cooldown", command.CommandName,
                                     CommandsCooldownHandler.GetCooldown(player.svPlayer, command.CommandName, command.CoolDown));
                                 return false;
