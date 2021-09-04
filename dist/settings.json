@@ -411,7 +411,7 @@
       ]
     },
     {
-      "CommandName": "UnBan",
+      "CommandName": "Unban",
       "Commands": [
         "unban"
       ]
