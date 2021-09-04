@@ -1,6 +1,5 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility.Networking;
 

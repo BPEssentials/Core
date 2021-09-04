@@ -2,7 +2,7 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Managers;
+using BrokeProtocol.Utility;
 using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
         {
-            var jail = SceneManager.Instance.jail;
+            var jail = Core.Instance.SvManager.jails.GetRandom();
             if (jail == null)
             {
                 return;
@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
             target.svPlayer.SvTrySetJob(BPAPI.Instance.PrisonerIndex, true, false);
             target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, 0);
             target.svPlayer.SvClearCrimes();
-            target.RemoveItemsJail();
+            target.svPlayer.RemoveItemsJail();
             target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
             target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
             player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);

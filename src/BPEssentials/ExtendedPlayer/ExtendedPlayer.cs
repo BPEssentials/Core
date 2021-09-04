@@ -1,8 +1,7 @@
-﻿using BPEssentials.Models;
-using BPEssentials.Enums;
+﻿using BPEssentials.Enums;
 using BPEssentials.ExtensionMethods;
+using BPEssentials.Models;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility;
 using System;
 
 namespace BPEssentials.ExtendedPlayer

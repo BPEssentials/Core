@@ -1,7 +1,7 @@
-﻿using BrokeProtocol.Utility;
+﻿using BPEssentials.ExtensionMethods;
+using BrokeProtocol.Utility;
 using System;
 using System.Globalization;
-using BPEssentials.ExtensionMethods;
 
 
 namespace BPEssentials.Utils.Formatter.Chat

@@ -2,7 +2,6 @@
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
-using System;
 using System.IO;
 using System.Linq;
 

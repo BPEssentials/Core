@@ -38,7 +38,7 @@ namespace BPEssentials.ExtensionMethods
             return player.svPlayer.T(node, formatting);
         }
 
-      
+
         public static void TS(this ShPlayer player, string node, params object[] formatting)
         {
             player.SendChatMessage(player.TC(node, formatting));

@@ -1,6 +1,5 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
-using BrokeProtocol.Utility;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
@@ -11,7 +10,7 @@ namespace BPEssentials.Commands
         {
             target = target ?? player;
             target.svPlayer.SvClearInjuries();
-            target.svPlayer.Heal(target.maxStat);
+            target.svPlayer.SvHeal(target.maxStat);
             player.TS("healed", target.username.CleanerMessage());
         }
     }
