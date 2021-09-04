@@ -8,9 +8,9 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.Restrain(target.manager.handcuffed);
+            target.svPlayer.Restrain(player, target.Handcuffs.restrained);
             var shRetained = target.curEquipable as ShRestrained;
-            target.svPlayer.SvSetEquipable(shRetained.index);
+            target.svPlayer.SvSetEquipable(shRetained);
             target.TS("target_restrained");
             player.TS("player_restrained", target.username.CleanerMessage());
         }
