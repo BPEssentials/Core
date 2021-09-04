@@ -300,6 +300,8 @@
     <Compile Include="Commands\Player\ToggleGodmode.cs" />
     <Compile Include="Commands\Player\ToggleMute.cs" />
     <Compile Include="Commands\Server\Discord.cs" />
+    <Compile Include="Commands\Teleport\TpaHereAll.cs" />
+    <Compile Include="Commands\Teleport\TpaHereUser.cs" />
     <Compile Include="Commands\Vehicles\LockVehicle.cs" />
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
     <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />

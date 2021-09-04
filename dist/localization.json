@@ -122,7 +122,10 @@
     "active_warns_count": "Active Warns: {0} Warns",
     "expired_warns_count": "Expired Warns: {0} Warns",
     "kit_price_automatically_calculated": "Automatic Kit Price: {0}$",
-    "player_giveammo_fail": "You do not have a weapon that needs ammo in your hands!"
+    "player_giveammo_fail": "You do not have a weapon that needs ammo in your hands!",
+    "player_tpahere_all": "Tpa here request sent to everyone!",
+    "target_tpahere_sent": "{0} sent you a TPAHere request! Type /tpaccept to accept it.",
+    "player_tpahere_sent": "Sent a TPAHere request to {0}."
   },
   "BR": {
     "arrested": "Preso {0}.",
