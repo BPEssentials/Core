@@ -304,7 +304,7 @@
     <Compile Include="Commands\Vehicles\RepairVehicle.cs" />
     <Compile Include="Commands\Vehicles\SpawnVehicle.cs" />
     <Compile Include="Commands\Player\Inventory\Give.cs" />
-    <Compile Include="Commands\Moderation\UnBan.cs" />
+    <Compile Include="Commands\Moderation\Unban.cs" />
     <Compile Include="Commands\Moderation\Kick.cs" />
     <Compile Include="Commands\Teleport\TeleportCoordinates.cs" />
     <Compile Include="Commands\Teleport\TeleportHere.cs" />
