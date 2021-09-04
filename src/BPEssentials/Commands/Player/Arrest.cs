@@ -8,7 +8,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.Restrain(target.manager.handcuffed);
+            target.svPlayer.Restrain(player, target.Handcuffs.restrained);
             player.TS("arrested", target.username.CleanerMessage());
         }
     }
