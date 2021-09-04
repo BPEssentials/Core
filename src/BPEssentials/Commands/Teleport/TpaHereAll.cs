@@ -12,7 +12,10 @@ namespace BPEssentials.Commands
             player.TS("player_tpahere_all");
             foreach (var eTarget in Core.Instance.PlayerHandler.Players)
             {
-                if (eTarget.Key == player.ID) return;
+                if (eTarget.Key == player.ID)
+                {
+                    return;
+                }
                 eTarget.Value.SetTpaUser(player, true);
                 if (eTarget.Value.CurrentChat == Chat.Disabled)
                 {
