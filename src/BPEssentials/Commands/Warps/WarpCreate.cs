@@ -21,7 +21,7 @@ namespace BPEssentials.Commands
                 player.TS("price_error_negative");
                 return;
             }
-            if (player.svPlayer.InApartment)
+            if (player.InApartment)
             {
                 player.TS("warpCreate_error_inApartment");
                 return;

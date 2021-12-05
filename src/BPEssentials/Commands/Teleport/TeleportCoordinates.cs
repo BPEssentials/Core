@@ -10,7 +10,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, float x, float y, float z, int placeIndex = 0)
         {
-            if (placeIndex < 0 || placeIndex > (Core.Instance.SvManager.fixedPlaces.Count + Core.Instance.SvManager.apartments.Count))
+            if (placeIndex < 0)
             {
                 player.TS("TeleportCoordinates_invalidPlaceIndex", placeIndex.ToString());
                 return;
