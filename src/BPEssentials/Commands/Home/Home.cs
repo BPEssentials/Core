@@ -25,13 +25,8 @@ namespace BPEssentials.Commands
                 player.TS("no_appartments");
                 return;
             }
-            var offset = new Vector3(-1, 0, -1);
             var apartment = apartments[Math.Max(0, --homeNumber)];
-            if (apartment.GetRotation.y < 0.9)
-            {
-                offset = new Vector3(1, 0, 2);
-            }
-            player.GetExtendedPlayer().ResetAndSavePosition(apartment.GetPosition + offset, apartment.GetRotation, apartment.GetPlaceIndex);
+            player.GetExtendedPlayer().ResetAndSavePosition(apartment.spawnPoint.position, apartment.spawnPoint.rotation, apartment.GetPlaceIndex);
         }
     }
 }
