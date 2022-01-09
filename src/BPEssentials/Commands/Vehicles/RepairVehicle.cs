@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
                 player.TS("player_notInVehicle");
                 return;
             }
-            vehicle.RestoreStats();
+            vehicle.svTransport.SvHeal(vehicle.maxStat);
             player.TS("player_vehicle_repaired", vehicle.name);
         }
     }
