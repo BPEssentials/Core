@@ -276,8 +276,8 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>$(BPDIR)\BrokeProtocol_Data\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
-    <Reference Include="zGameSource">
-      <HintPath>lib\zGameSource.dll</HintPath>
+    <Reference Include="_GameSource">
+      <HintPath>lib\_GameSource.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
