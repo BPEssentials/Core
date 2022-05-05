@@ -22,7 +22,7 @@ namespace BPEssentials.Commands
             }
             var getPositionT = jail.mainT;
             target.svPlayer.SvTrySetJob(BPAPI.Instance.PrisonerIndex, true, false);
-            target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, 0);
+            target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, getPositionT.parent.GetSiblingIndex());
             target.svPlayer.SvClearCrimes();
             target.svPlayer.RemoveItemsJail();
             target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
