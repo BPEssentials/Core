@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Restrain : Command
+    public class Restrain : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

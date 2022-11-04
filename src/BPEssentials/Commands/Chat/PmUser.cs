@@ -5,7 +5,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class PmUser : Command
+    public class PmUser : BpeCommand
     {
         public override bool LastArgSpaces => true;
 

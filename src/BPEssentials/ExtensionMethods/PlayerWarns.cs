@@ -1,9 +1,10 @@
-﻿using BrokeProtocol.API.Types;
-using BrokeProtocol.Entities;
+﻿using BrokeProtocol.Entities;
 using BrokeProtocol.LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using BrokeProtocol.API;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.ExtensionMethods.Warns
 {
@@ -31,8 +32,8 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public string ToString(ShPlayer player)
             {
-                var issuer = Core.Instance.SvManager.database.Users.FindById(IssueraccountID);
-                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Expired ? player.T("warn_expired") : "");
+                var issuer = SvManager.Instance.database.Users.FindById(IssueraccountID);
+                return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Expired ? player.T("warn_expired") : "-");
             }
         }
 

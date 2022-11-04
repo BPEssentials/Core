@@ -6,10 +6,11 @@ using BrokeProtocol.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
 {
-    public class WarnList : Command
+    public class WarnList : BpeCommand
     {
         public void Invoke(ShPlayer player, string target = null)
         {
@@ -31,7 +32,7 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            if (Core.Instance.SvManager.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out var user))
             {
                 SendWarnList(player, user.ID, user.GetWarns());
                 return;

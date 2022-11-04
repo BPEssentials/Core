@@ -18,15 +18,13 @@ namespace BPEssentials.ChatHandlers
             {
                 return;
             }
-
+            if (CommandHandler.OnEvent(player, message)) // 'true' if message starts with command prefix
+            {
+                return;
+            }
             if (player.GetExtendedPlayer().Muted)
             {
                 player.TS("muted_player");
-                return;
-            }
-
-            if (CommandHandler.OnEvent(player, message)) // 'true' if message starts with command prefix
-            {
                 return;
             }
 

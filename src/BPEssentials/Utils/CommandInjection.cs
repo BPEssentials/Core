@@ -11,12 +11,12 @@ namespace BPEssentials.Utils
 {
     public static class CommandInjection
     {
-        public static bool TryInstanciateAndInjectDependencies(string typeName, out Abstractions.Command instance, out Type type)
+        public static bool TryInstanciateAndInjectDependencies(string typeName, out Abstractions.BpeCommand instance, out Type type)
         {
             try
             {
                 type = Type.GetType(typeName);
-                instance = (Abstractions.Command)Activator.CreateInstance(type);
+                instance = (Abstractions.BpeCommand)Activator.CreateInstance(type);
                 instance = InjectDependenciesIntoCommand(instance, Core.Instance.Logger, Core.Instance.Settings, Core.Instance.PlayerHandler);
                 return true;
             }
@@ -29,15 +29,15 @@ namespace BPEssentials.Utils
             }
         }
 
-        public static Abstractions.Command InjectDependenciesIntoCommand(Abstractions.Command command, ILogger logger, Settings settings, ExtendedPlayerFactory<PlayerItem> extendedPlayerFactory)
+        public static Abstractions.BpeCommand InjectDependenciesIntoCommand(Abstractions.BpeCommand bpeCommand, ILogger logger, Settings settings, ExtendedPlayerFactory<PlayerItem> extendedPlayerFactory)
         {
-            command.Logger = logger;
-            command.Settings = settings;
-            command.PlayerFactory = extendedPlayerFactory;
-            return command;
+            bpeCommand.Logger = logger;
+            bpeCommand.Settings = settings;
+            bpeCommand.PlayerFactory = extendedPlayerFactory;
+            return bpeCommand;
         }
 
-        public static bool TryGetCommandMethodDelegateByTypeName(string typeName, out Delegate del, out Abstractions.Command instance)
+        public static bool TryGetCommandMethodDelegateByTypeName(string typeName, out Delegate del, out Abstractions.BpeCommand instance)
         {
             instance = null;
             del = null;

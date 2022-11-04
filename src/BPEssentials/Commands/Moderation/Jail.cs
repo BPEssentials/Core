@@ -1,32 +1,45 @@
-﻿using BPEssentials.Abstractions;
+﻿using System.Linq;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
+using BrokeProtocol.GameSource;
+using BrokeProtocol.GameSource.Types;
 using BrokeProtocol.Utility;
 using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
 {
-    public class Jail : Command
+    public class Jail : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
         {
-            var jail = Core.Instance.SvManager.jails.GetRandom();
+            var jail = LifeManager.jails.GetRandom();
             if (jail == null)
             {
                 return;
             }
-            if (target.IsDead || target.svPlayer.job.info.shared.jobIndex == BPAPI.Instance.PrisonerIndex)
+            if (target.IsDead || target.svPlayer.IsPrisoner())
             {
                 return;
             }
             var getPositionT = jail.mainT;
-            target.svPlayer.SvTrySetJob(BPAPI.Instance.PrisonerIndex, true, false);
+            target.svPlayer.SvSetJob(BPAPI.Jobs[LifeCore.prisonerIndex], true, false);
             target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, getPositionT.parent.GetSiblingIndex());
-            target.svPlayer.SvClearCrimes();
-            target.svPlayer.RemoveItemsJail();
-            target.StartCoroutine(target.svPlayer.JailTimer(timeInSeconds));
-            target.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ShowTimer, timeInSeconds);
+            target.LifePlayer().ClearCrimes();
+            foreach (var i in player.myItems.Values.ToArray())
+            {
+                if (!i.item.illegal)
+                {
+                    continue;
+                }
+
+                player.TransferItem(DeltaInv.RemoveFromMe, i.item.index, i.count);
+            }
+            if (LifeManager.pluginPlayers.TryGetValue(player, out var pluginPlayer))
+            {
+                pluginPlayer.StartJailTimer(timeInSeconds);
+            }
             player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);
             target.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
         }

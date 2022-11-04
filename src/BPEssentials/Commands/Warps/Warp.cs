@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class Warp : Command
+    public class Warp : BpeCommand
     {
         public void Invoke(ShPlayer player, string warp)
         {

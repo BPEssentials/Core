@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class OnlinePlayers : Command
+    public class OnlinePlayers : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

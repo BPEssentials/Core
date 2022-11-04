@@ -33,11 +33,11 @@ namespace BPEssentials.RegisteredEvents
                 // BPE EXTEND --
 
                 int extra = myItem.count;
-                if (player.svPlayer.job.info.upgrades.Length > player.rank)
+                if (player.svPlayer.job.info.shared.upgrades.Length > player.rank)
                 {
                     for (int rankIndex = player.rank; rankIndex >= 0; rankIndex--)
                     {
-                        foreach (var i in player.svPlayer.job.info.upgrades[rankIndex].items)
+                        foreach (var i in player.svPlayer.job.info.shared.upgrades[rankIndex].items)
                         {
                             if (myItem.item.name == i.itemName)
                             {
@@ -69,7 +69,7 @@ namespace BPEssentials.RegisteredEvents
                         player.manager.svManager.briefcasePrefabs.GetRandom(),
                         player.GetPlace,
                         hit.point,
-                        Quaternion.LookRotation(player.GetPositionT.forward),
+                        Quaternion.LookRotation(player.transform.forward),
                         false);
 
                     if (briefcase)

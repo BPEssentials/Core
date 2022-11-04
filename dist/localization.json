@@ -87,7 +87,7 @@
     "warn_remove_error_null_or_negative": "WarnId {0} cannot be negative or null.",
     "warn_remove_error_not_existent": "The Warn {0} does not exist",
     "player_warn_removed": "Removed the Warn {0}",
-    "warn_toString": "{0} by {1} on {2} expiring after {3} days. {4}",
+    "warn_toString": "{0} by {1} on {2} expiring after {3} days.",
     "command_disabled": "The Command {0} is disabled.",
     "command_failed_cuffed": "This Command cannot be used when cuffed!",
     "command_failed_jail": "This Command cannot be used when in jail!",

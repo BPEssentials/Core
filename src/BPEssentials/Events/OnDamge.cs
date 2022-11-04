@@ -8,9 +8,10 @@ namespace BPEssentials.RegisteredEvents
 {
     public class OnDamge : IScript
     {
-        [Target(GameSourceEvent.PlayerDamage, ExecutionMode.Event)]
-        public void OnDamage(ShPlayer player, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider, Vector3 source, Vector3 hitPoint)
+        [Target(GameSourceEvent.PlayerDamage, ExecutionMode.PreEvent)]
+        public void OnDamage(ShDestroyable destroyable, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider, Vector3 source, Vector3 hitPoint)
         {
+            var player = destroyable.Player;
             if (player.svPlayer.godMode)
             {
                 if (attacker)

@@ -1,9 +1,10 @@
 ﻿using BPEssentials.Abstractions;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
 {
-    public class Save : Command
+    public class Save : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {
@@ -14,7 +15,7 @@ namespace BPEssentials.Commands
         {
             Core.Instance.Logger.Log("Saving Game Status");
             Utils.ChatUtils.SendToAllEnabledChatT("saving_game");
-            Core.Instance.SvManager.SaveAll();
+            SvManager.Instance.SaveAll();
         }
     }
 }

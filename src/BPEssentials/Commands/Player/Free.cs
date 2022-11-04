@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Free : Command
+    public class Free : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {

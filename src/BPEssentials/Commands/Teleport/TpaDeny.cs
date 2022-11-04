@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class TpaDeny : Command
+    public class TpaDeny : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

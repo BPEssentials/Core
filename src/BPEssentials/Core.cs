@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using BrokeProtocol.GameSource;
 
 namespace BPEssentials
 {
@@ -40,8 +41,6 @@ namespace BPEssentials
         public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
 
         public I18n I18n { get; set; }
-
-        public SvManager SvManager { get; set; }
 
         public ICooldownHandler KitsCooldownHandler { get; set; }
 
@@ -133,12 +132,12 @@ namespace BPEssentials
                             player.TS("command_failed_cuffed", command.CommandName);
                             return false;
                         }
-                        if (!command.AllowWhileJailed && player.svPlayer.job.info.shared.jobIndex == BPAPI.Instance.PrisonerIndex)
+                        if (!command.AllowWhileJailed && player.svPlayer.IsPrisoner())
                         {
                             player.TS("command_failed_jail", command.CommandName);
                             return false;
                         }
-                        if (!command.AllowWithCrimes && player.wantedLevel != 0)
+                        if (!command.AllowWithCrimes && player.LifePlayer().wantedLevel != 0)
                         {
                             player.TS("command_failed_crimes", command.CommandName);
                             return false;

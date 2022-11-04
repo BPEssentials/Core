@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class Kit : Command
+    public class Kit : BpeCommand
     {
         public void Invoke(ShPlayer player, string kit)
         {

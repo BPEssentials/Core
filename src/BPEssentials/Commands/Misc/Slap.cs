@@ -5,7 +5,7 @@ using BrokeProtocol.Required;
 
 namespace BPEssentials.Commands
 {
-    public class Slap : Command
+    public class Slap : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

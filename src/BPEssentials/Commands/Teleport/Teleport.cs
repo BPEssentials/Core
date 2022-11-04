@@ -5,7 +5,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Teleport : Command
+    public class Teleport : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

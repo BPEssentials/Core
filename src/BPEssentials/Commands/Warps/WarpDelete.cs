@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class WarpDelete : Command
+    public class WarpDelete : BpeCommand
     {
         public void Invoke(ShPlayer player, string warp)
         {

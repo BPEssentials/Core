@@ -5,7 +5,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Kick : Command
+    public class Kick : BpeCommand
     {
         public override bool LastArgSpaces { get; } = true;
 

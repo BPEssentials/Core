@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 namespace BPEssentials.Commands
 {
-    public class Pay : Command
+    public class Pay : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target, int amount = 1)
         {

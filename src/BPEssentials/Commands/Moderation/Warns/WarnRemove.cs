@@ -4,10 +4,11 @@ using BPEssentials.ExtensionMethods.Warns;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 using System.Collections.Generic;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
 {
-    public class WarnRemove : Command
+    public class WarnRemove : BpeCommand
     {
         public void Invoke(ShPlayer player, string target, int warnId)
         {
@@ -27,14 +28,14 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            if (Core.Instance.SvManager.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out var user))
             {
                 if (CheckWarnCount(player, warnId, user.GetWarns()))
                 {
                     return;
                 }
                 user.RemoveWarn(warnId - 1);
-                Core.Instance.SvManager.database.Users.Upsert(user);
+                SvManager.Instance.database.Users.Upsert(user);
                 return;
             }
 

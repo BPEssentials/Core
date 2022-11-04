@@ -1,6 +1,7 @@
 ﻿using BPEssentials.ExtendedPlayer;
 using BPEssentials.Utils.Formatter.Response;
 using BrokeProtocol.Entities;
+using BrokeProtocol.GameSource;
 using BrokeProtocol.Utility;
 using BrokeProtocol.Utility.Networking;
 
@@ -17,7 +18,7 @@ namespace BPEssentials.ExtensionMethods
         {
             var formatter = new CustomFormatter(Core.Instance.Settings.Messages.ArgColor, Core.Instance.Settings.Messages.InfoColor);
             return $"<color={Core.Instance.Settings.Messages.InfoColor}>" +
-                (Core.Instance.I18n.Localize(formatter, player.language.code, node, formatting) ?? Core.Instance.I18n.Localize(formatter, "EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]")
+                (Core.Instance.I18n.Localize(formatter, player.player.language.code, node, formatting) ?? Core.Instance.I18n.Localize(formatter, "EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]")
                 + "</color>";
         }
 
@@ -29,7 +30,7 @@ namespace BPEssentials.ExtensionMethods
         public static string T(this SvPlayer player, string node, params object[] formatting)
         {
 
-            return Core.Instance.I18n.Localize(player.language.code, node, formatting) ?? Core.Instance.I18n.Localize("EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]";
+            return Core.Instance.I18n.Localize(player.player.language.code, node, formatting) ?? Core.Instance.I18n.Localize("EN", node, formatting) ?? $"{node} [{string.Join(", ", formatting)}]";
 
         }
 
@@ -50,5 +51,9 @@ namespace BPEssentials.ExtensionMethods
             player.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
         }
 
+        public static bool IsPrisoner(this SvPlayer player)
+        {
+            return ((MyJobInfo)player.job.info).groupIndex == GroupIndex.Prisoner;
+        }
     }
 }

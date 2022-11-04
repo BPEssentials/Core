@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class WarpList : Command
+    public class WarpList : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

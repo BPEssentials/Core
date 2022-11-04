@@ -5,7 +5,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class TpaAccept : Command
+    public class TpaAccept : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

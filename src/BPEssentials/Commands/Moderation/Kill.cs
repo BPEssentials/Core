@@ -4,11 +4,11 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Kill : Command
+    public class Kill : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            target.svPlayer.SvDestroySelf();
+            target.Die();
             player.TS("killed", target.username.CleanerMessage());
         }
     }

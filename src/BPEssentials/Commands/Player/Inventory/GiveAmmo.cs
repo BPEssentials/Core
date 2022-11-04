@@ -6,7 +6,7 @@ using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
-    public class GiveAmmo : Command
+    public class GiveAmmo : BpeCommand
     {
         public void Invoke(ShPlayer player, int amount = 1, ShPlayer target = null)
         {
@@ -15,6 +15,7 @@ namespace BPEssentials.Commands
             if (!target.curEquipable || !target.curEquipable.AmmoItem)
             {
                 player.TS("player_giveammo_fail");
+                return;
             }
 
             var item = target.curEquipable.AmmoItem;

@@ -17,7 +17,7 @@ namespace BPEssentials.Modules
 
         public void FindAll()
         {
-            foreach (var plugin in BPAPI.Instance.Plugins)
+            foreach (var plugin in BPAPI.Plugins)
             {
                 if (!plugin.Value.Plugin.CustomData.TryFetchCustomData("bpe:isModule", out bool val) || !val)
                 {

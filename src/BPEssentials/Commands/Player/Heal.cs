@@ -4,13 +4,14 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Heal : Command
+    public class Heal : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target = null)
         {
             target = target ?? player;
+            target.svPlayer.HealFull();
+            target.svPlayer.UpdateStatsDelta(1f, 1f, 1f);
             target.svPlayer.SvClearInjuries();
-            target.svPlayer.SvHeal(target.maxStat);
             player.TS("healed", target.username.CleanerMessage());
         }
     }

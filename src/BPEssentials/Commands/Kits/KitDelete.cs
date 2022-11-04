@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class KitDelete : Command
+    public class KitDelete : BpeCommand
     {
         public void Invoke(ShPlayer player, string kit)
         {

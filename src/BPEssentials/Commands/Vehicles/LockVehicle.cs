@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class LockVehicle : Command
+    public class LockVehicle : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

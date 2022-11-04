@@ -4,10 +4,11 @@ using BPEssentials.ExtensionMethods.Warns;
 using BPEssentials.Utils;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
 {
-    public class Warn : Command
+    public class Warn : BpeCommand
     {
         public override bool LastArgSpaces { get; } = true;
 
@@ -22,12 +23,12 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            if (Core.Instance.SvManager.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out var user))
             {
                 user.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.CleanerMessage(), reason.CleanerMessage());
                 player.TS("player_warn", target.CleanerMessage(), reason.CleanerMessage());
-                Core.Instance.SvManager.database.Users.Upsert(user);
+                SvManager.Instance.database.Users.Upsert(user);
                 return;
             }
 

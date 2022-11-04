@@ -5,7 +5,7 @@ using BrokeProtocol.Required;
 
 namespace BPEssentials.Commands
 {
-    public class Knockout : Command
+    public class Knockout : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

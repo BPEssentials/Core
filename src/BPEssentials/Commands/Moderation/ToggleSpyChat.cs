@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class ToggleSpyChat : Command
+    public class ToggleSpyChat : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

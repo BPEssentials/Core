@@ -9,13 +9,13 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class SetJob : Command
+    public class SetJob : BpeCommand
     {
         public void Invoke(ShPlayer player, string jobName, ShPlayer target = null)
         {
             target = target ?? player;
             var jobs = new Dictionary<string, JobInfo>();
-            foreach (var jobType in BPAPI.Instance.Jobs)
+            foreach (var jobType in BPAPI.Jobs)
             {
                 jobs.Add(jobType.shared.jobName, jobType);
             }

@@ -7,10 +7,9 @@ namespace BPEssentials.RegisteredEvents
     public class OnStarted : IScript
     {
         [Target(GameSourceEvent.ManagerStart, ExecutionMode.Event)]
-        public void OnEvent(SvManager svManager)
+        public void OnEvent()
         {
-            Core.Instance.SvManager = svManager;
-            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run));
+            SvManager.Instance.StartCoroutine(Interval.Start(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run));
         }
     }
 }

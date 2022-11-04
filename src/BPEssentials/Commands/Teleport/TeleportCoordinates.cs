@@ -2,15 +2,16 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using System.Globalization;
+using BrokeProtocol.Managers;
 using UnityEngine;
 
 namespace BPEssentials.Commands
 {
-    public class TeleportCoordinates : Command
+    public class TeleportCoordinates : BpeCommand
     {
         public void Invoke(ShPlayer player, float x, float y, float z, int placeIndex = 0)
         {
-            if (placeIndex < 0)
+            if (placeIndex < 0 || placeIndex > (SceneManager.Instance.places.Count + SvManager.Instance.apartments.Count))
             {
                 player.TS("TeleportCoordinates_invalidPlaceIndex", placeIndex.ToString());
                 return;

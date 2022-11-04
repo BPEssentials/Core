@@ -7,7 +7,7 @@ using System.IO;
 
 namespace BPEssentials.Commands
 {
-    public class WarpCreate : Command
+    public class WarpCreate : BpeCommand
     {
         public void Invoke(ShPlayer player, string warp, int price = 0, int delay = 0)
         {

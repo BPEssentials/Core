@@ -5,7 +5,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class ToggleChat : Command
+    public class ToggleChat : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

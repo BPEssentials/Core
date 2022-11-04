@@ -5,10 +5,11 @@ using BrokeProtocol.Entities;
 using BrokeProtocol.LiteDB;
 using System.Linq;
 using System.Text;
+using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
 {
-    public class Info : Command
+    public class Info : BpeCommand
     {
         public override bool LastArgSpaces => true;
 
@@ -22,7 +23,7 @@ namespace BPEssentials.Commands
             }
             else
             {
-                var target = Core.Instance.SvManager.database.Users.FindById(targetStr);
+                var target = SvManager.Instance.database.Users.FindById(targetStr);
                 if (target != null)
                 {
                     sb = GetOfflineInfo(target);
@@ -57,7 +58,6 @@ namespace BPEssentials.Commands
               .Append("  - PlaceIndex: ").AppendLine(target.Character.PlaceIndex.ToString())
               .Append("  - SkinIndex: ").AppendLine(target.Character.SkinIndex.ToString())
 
-              .Append("  - JailTime: ").AppendLine(target.Character.JailTime.ToString())
               .Append("  - MapName: ").AppendLine(target.Character.MapName)
 
               .Append("  - Apartments: ").Append(target.Character.Apartments.Count).Append(", Indexes: ").Append(string.Join(", ", target.Character.Apartments.Select(x => x.Index)))

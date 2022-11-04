@@ -6,7 +6,7 @@ using System.IO;
 
 namespace BPEssentials.Commands
 {
-    public class KitCreate : Command
+    public class KitCreate : BpeCommand
     {
         public void Invoke(ShPlayer player, string kit, int price = 0, int delay = 0)
         {

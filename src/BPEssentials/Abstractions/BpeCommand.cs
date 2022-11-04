@@ -5,7 +5,7 @@ using BPEssentials.ExtendedPlayer;
 
 namespace BPEssentials.Abstractions
 {
-    public abstract class Command
+    public abstract class BpeCommand
     {
         public virtual bool LastArgSpaces { get; }
 

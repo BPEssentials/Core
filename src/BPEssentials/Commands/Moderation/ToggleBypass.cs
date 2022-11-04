@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class ToggleBypass : Command
+    public class ToggleBypass : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {
