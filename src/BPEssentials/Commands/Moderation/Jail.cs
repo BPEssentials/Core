@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BPCoreLib.ExtensionMethods;
 using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
@@ -6,7 +7,7 @@ using BrokeProtocol.Entities;
 using BrokeProtocol.GameSource;
 using BrokeProtocol.GameSource.Types;
 using BrokeProtocol.Utility;
-using BrokeProtocol.Utility.Networking;
+using UnityEngine;
 
 namespace BPEssentials.Commands
 {
@@ -14,7 +15,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, float timeInSeconds)
         {
-            var jail = LifeManager.jails.GetRandom();
+            ServerTrigger jail = LifeManager.jails.GetRandom();
             if (jail == null)
             {
                 return;
@@ -23,11 +24,12 @@ namespace BPEssentials.Commands
             {
                 return;
             }
-            var getPositionT = jail.mainT;
+
+            Transform getPositionT = jail.mainT;
             target.svPlayer.SvSetJob(BPAPI.Jobs[LifeCore.prisonerIndex], true, false);
             target.GetExtendedPlayer().ResetAndSavePosition(getPositionT.position, getPositionT.rotation, getPositionT.parent.GetSiblingIndex());
             target.LifePlayer().ClearCrimes();
-            foreach (var i in player.myItems.Values.ToArray())
+            foreach (InventoryItem i in player.myItems.Values.ToArray())
             {
                 if (!i.item.illegal)
                 {
@@ -36,10 +38,11 @@ namespace BPEssentials.Commands
 
                 player.TransferItem(DeltaInv.RemoveFromMe, i.item.index, i.count);
             }
-            if (LifeManager.pluginPlayers.TryGetValue(player, out var pluginPlayer))
+            if (LifeManager.pluginPlayers.TryGetValue(player, out LifeSourcePlayer pluginPlayer))
             {
                 pluginPlayer.StartJailTimer(timeInSeconds);
             }
+
             player.TS("player_jail", target.username.CleanerMessage(), timeInSeconds);
             target.TS("target_jail", player.username.CleanerMessage(), timeInSeconds);
         }

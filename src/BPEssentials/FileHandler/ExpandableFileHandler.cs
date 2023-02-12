@@ -61,13 +61,13 @@ namespace BPEssentials.FileHandler
             foreach (string file in Directory.EnumerateFiles(FilesDirectory, $"*.{FileExtension}", SearchOption.AllDirectories))
             {
                 FileReader.Path = file;
-                var obj = FileReader.ReadAndParse();
-
+                JsonType obj = FileReader.Read();
                 if (List.Any(x => x.Name == obj.Name))
                 {
                     Core.Instance.Logger.LogError($"Cannot add {Name} {obj.Name} because it already exists in the list!");
                     continue;
                 }
+
                 List.Add(obj);
                 Core.Instance.Logger.LogInfo($"Loaded {Name}: {obj.Name}");
             }

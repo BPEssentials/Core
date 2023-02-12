@@ -12,7 +12,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string kit)
         {
-            var obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name.Equals(kit, StringComparison.OrdinalIgnoreCase));
+            KitHandler.JsonModel obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name.Equals(kit, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
@@ -20,8 +20,8 @@ namespace BPEssentials.Commands
                     player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
                     return;
                 }
-                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, kit)).FirstOrDefault();
 
+                obj = Core.Instance.KitHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, kit)).FirstOrDefault();
                 if (Core.Instance.Settings.Levenshtein.KitMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
                     player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);
@@ -39,7 +39,7 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.KitHandler.Name), obj.Name);
                 return;
             }
-            if (Core.Instance.KitsCooldownHandler.IsCooldown(player.svPlayer, obj.Name, obj.Delay))
+            if (Core.Instance.KitsCooldownHandler.HasCooldown(player.svPlayer, obj.Name, obj.Delay))
             {
                 player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.KitHandler.Name), Core.Instance.KitsCooldownHandler.GetCooldown(player.svPlayer, obj.Name, obj.Delay).ToString());
                 return;
@@ -53,11 +53,13 @@ namespace BPEssentials.Commands
                 }
                 player.TransferMoney(DeltaInv.RemoveFromMe, obj.Price, true);
             }
+
             obj.GiveItems(player);
             if (obj.Delay > 0)
             {
                 Core.Instance.KitsCooldownHandler.AddCooldown(player.svPlayer, obj.Name);
             }
+
             player.SendChatMessage(
                 player.TC(Core.Instance.KitHandler.Name + "_received", obj.Name) +
                 (obj.Price > 0 ? player.TC(Core.Instance.KitHandler.Name + "_received_Price", obj.Price.ToString()) : "") +

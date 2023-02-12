@@ -5,6 +5,7 @@ using BrokeProtocol.Entities;
 using BrokeProtocol.LiteDB;
 using System.Linq;
 using System.Text;
+using BPCoreLib.ExtensionMethods;
 using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
@@ -16,14 +17,13 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string targetStr)
         {
             StringBuilder sb;
-
             if (EntityCollections.TryGetPlayerByNameOrID(targetStr, out ShPlayer shPlayer))
             {
                 sb = GetOnlineInfo(shPlayer);
             }
             else
             {
-                var target = SvManager.Instance.database.Users.FindById(targetStr);
+                User target = SvManager.Instance.database.Users.FindById(targetStr);
                 if (target != null)
                 {
                     sb = GetOfflineInfo(target);
@@ -34,6 +34,7 @@ namespace BPEssentials.Commands
                     return;
                 }
             }
+
             player.svPlayer.SendTextMenu(player.T("info_title"), sb.ToString());
         }
 
@@ -41,9 +42,9 @@ namespace BPEssentials.Commands
         // TODO: There might be a better way to do this, for example using reflection.
         private StringBuilder GetOfflineInfo(User target)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb
-            .Append("accountID64: ").AppendLine(target.ID.ToString())
+            .Append("accountID64: ").AppendLine(target.ID)
             .Append("Last Updated: ").AppendLine(target.LastUpdated.ToString())
 
             .AppendLine("Character:")
@@ -76,7 +77,7 @@ namespace BPEssentials.Commands
 
         private StringBuilder GetOnlineInfo(ShPlayer target)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb
             .Append("ID: ").AppendLine(target.ID.ToString())
             .Append("Username: ").Append(target.username.CleanerMessage()).AppendLine(" (Sanitized)")
@@ -85,7 +86,7 @@ namespace BPEssentials.Commands
             .Append("Position: ").AppendLine(target.GetPosition.ToString())
             .Append("Rotation: ").AppendLine(target.GetRotation.ToString())
             .Append("Stats: ").AppendLine(string.Join("\n    - ", target.stats))
-            .Append("Expecting more info? Type '/info ").Append(target.username.ToString()).AppendLine("'.");
+            .Append("Expecting more info? Type '/info ").Append(target.username).AppendLine("'.");
             return sb;
         }
     }

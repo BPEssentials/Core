@@ -1,4 +1,5 @@
-﻿using BPEssentials.ExtendedPlayer;
+﻿using BPCoreLib.PlayerFactory;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.Utils.Formatter.Response;
 using BrokeProtocol.Entities;
 using BrokeProtocol.GameSource;
@@ -11,7 +12,7 @@ namespace BPEssentials.ExtensionMethods
     {
         public static PlayerItem GetExtendedPlayer(this ShPlayer player)
         {
-            return Core.Instance.PlayerHandler.GetSafe(player.ID);
+            return player.svPlayer.GetExtended<PlayerItem>();
         }
 
         public static string TC(this SvPlayer player, string node, params object[] formatting)
@@ -39,7 +40,6 @@ namespace BPEssentials.ExtensionMethods
             return player.svPlayer.T(node, formatting);
         }
 
-
         public static void TS(this ShPlayer player, string node, params object[] formatting)
         {
             player.SendChatMessage(player.TC(node, formatting));
@@ -49,11 +49,6 @@ namespace BPEssentials.ExtensionMethods
         {
             message = useColors ? message.ParseColorCodes() : message;
             player.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
-        }
-
-        public static bool IsPrisoner(this SvPlayer player)
-        {
-            return ((MyJobInfo)player.job.info).groupIndex == GroupIndex.Prisoner;
         }
     }
 }

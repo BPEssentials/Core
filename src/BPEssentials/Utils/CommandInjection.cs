@@ -11,7 +11,7 @@ namespace BPEssentials.Utils
 {
     public static class CommandInjection
     {
-        public static bool TryInstanciateAndInjectDependencies(string typeName, out Abstractions.BpeCommand instance, out Type type)
+        public static bool TryInstantiateAndInjectDependencies(string typeName, out Abstractions.BpeCommand instance, out Type type)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace BPEssentials.Utils
             del = null;
             try
             {
-                if (!TryInstanciateAndInjectDependencies($"BPEssentials.Commands.{typeName}", out instance, out var type))
+                if (!TryInstantiateAndInjectDependencies($"BPEssentials.Commands.{typeName}", out instance, out var type))
                 {
                     return false;
                 }

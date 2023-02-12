@@ -6,7 +6,7 @@ namespace BPEssentials.ExtendedPlayer
     {
         public override void AddOrReplace(ShPlayer player)
         {
-            Players[player.ID] = new PlayerItem(player);
+            this[player.ID] = new PlayerItem(player);
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using BPEssentials.Abstractions;
+﻿using System.Collections.Generic;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
-
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
 using System.Linq;
+using BPCoreLib.ExtensionMethods;
 
 namespace BPEssentials.Commands
 {
@@ -13,7 +14,7 @@ namespace BPEssentials.Commands
         public void Invoke(ShPlayer player, string name, int amount = 1, ShPlayer target = null)
         {
             target = target ?? player;
-            var item = Core.Instance.EntityHandler.Items.FirstOrDefault(x => x.Key == name);
+            KeyValuePair<string, ShItem> item = Core.Instance.EntityHandler.Items.FirstOrDefault(x => x.Key == name);
             if (item.Value == null)
             {
                 if (Core.Instance.Settings.Levenshtein.GiveMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
@@ -21,6 +22,7 @@ namespace BPEssentials.Commands
                     player.TS("give_notFound", name);
                     return;
                 }
+
                 item = Core.Instance.EntityHandler.Items.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Key, name)).FirstOrDefault();
                 if (Core.Instance.Settings.Levenshtein.GiveMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
                 {
@@ -29,6 +31,7 @@ namespace BPEssentials.Commands
                     return;
                 }
             }
+
             target.TransferItem(DeltaInv.AddToMe, item.Value.index, amount, true);
             player.TS("player_give", target.username.CleanerMessage(), item.Key, amount.ToString());
         }

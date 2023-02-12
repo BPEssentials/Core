@@ -11,7 +11,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, int homeNumber = 1)
         {
-            var apartments = new List<ShApartment>(player.ownedApartments.Keys);
+            List<ShApartment> apartments = new List<ShApartment>(player.ownedApartments.Keys);
             if (apartments.Count == 0)
             {
                 player.TS("no_appartments");
@@ -23,12 +23,13 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            var offset = new Vector3(-1, 0, -1);
-            var apartment = apartments[Math.Max(0, --homeNumber)];
+            Vector3 offset = new Vector3(-1, 0, -1);
+            ShApartment apartment = apartments[Math.Max(0, --homeNumber)];
             if (apartment.GetRotation.y < 0.9)
             {
                 offset = new Vector3(1, 0, 2);
             }
+
             player.GetExtendedPlayer().ResetAndSavePosition(apartment.GetPosition + offset, apartment.GetRotation, apartment.GetPlaceIndex);
         }
     }

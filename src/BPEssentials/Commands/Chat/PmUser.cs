@@ -1,5 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.Enums;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -11,12 +12,13 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, ShPlayer target, string message)
         {
-            var eTarget = target.GetExtendedPlayer();
+            PlayerItem eTarget = target.GetExtendedPlayer();
             if (eTarget.CurrentChat == Chat.Disabled)
             {
                 player.SendChatMessage($"{player.T("user_has_chat_disabled")} {player.T("message_not_sent")}");
                 return;
             }
+
             player.GetExtendedPlayer().SendPmMessage(eTarget, message);
         }
     }

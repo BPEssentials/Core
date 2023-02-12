@@ -1,15 +1,15 @@
-﻿using BrokeProtocol.API;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Utility;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace BPEssentials.RegisteredEvents
+namespace BPEssentials.Events
 {
     public class OnDropDead : IScript
     {
-        private readonly int[] LicenseIDs = new[] { -700261193, 607710552, 499504400, 1695812550, -568534809 };
+        private readonly int[] LicenseIDs = { -700261193, 607710552, 499504400, 1695812550, -568534809 };
 
         [Target(GameSourceEvent.PlayerRemoveItemsDeath, ExecutionMode.Override)]
         protected void OnRemoveItemsDeath(ShPlayer player, bool dropItems)
@@ -29,7 +29,6 @@ namespace BPEssentials.RegisteredEvents
                 if (Core.Instance.Settings.KeptItemsOnDeath.KeptItemNames.Contains(myItem.item.itemName)) { continue; }
                 if (Core.Instance.Settings.KeptItemsOnDeath.KeepAllPhones && myItem.item is ShPhone) { continue; }
                 if (Core.Instance.Settings.KeptItemsOnDeath.KeepAllLicenses && LicenseIDs.Contains(myItem.item.index)) { continue; }
-
                 // BPE EXTEND --
 
                 int extra = myItem.count;

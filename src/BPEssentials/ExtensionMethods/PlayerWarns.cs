@@ -32,7 +32,7 @@ namespace BPEssentials.ExtensionMethods.Warns
 
             public string ToString(ShPlayer player)
             {
-                var issuer = SvManager.Instance.database.Users.FindById(IssueraccountID);
+                User issuer = SvManager.Instance.database.Users.FindById(IssueraccountID);
                 return player.T("warn_toString", Reason, issuer?.ID ?? IssueraccountID, Date.ToUniversalTime().ToString(CultureInfo.InvariantCulture), Expired ? player.T("warn_expired") : "-");
             }
         }
@@ -49,7 +49,7 @@ namespace BPEssentials.ExtensionMethods.Warns
 
         public static void AddWarn(this CustomData customData, ShPlayer issuer, string reason)
         {
-            var warns = customData.GetWarns();
+            List<SerializableWarn> warns = customData.GetWarns();
             warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now));
             customData.AddOrUpdate(CustomDataKey, warns);
         }
@@ -66,7 +66,7 @@ namespace BPEssentials.ExtensionMethods.Warns
 
         public static void RemoveWarn(this CustomData customData, int warnId)
         {
-            var warns = customData.GetWarns();
+            List<SerializableWarn> warns = customData.GetWarns();
             warns.Remove(warns[warnId]);
             customData.AddOrUpdate(CustomDataKey, warns);
         }
@@ -74,7 +74,6 @@ namespace BPEssentials.ExtensionMethods.Warns
         public static List<SerializableWarn> GetWarns(this ShPlayer player)
         {
             return player.svPlayer.CustomData.GetWarns();
-
         }
 
         public static List<SerializableWarn> GetWarns(this User user)
@@ -84,10 +83,11 @@ namespace BPEssentials.ExtensionMethods.Warns
 
         private static List<SerializableWarn> GetWarns(this CustomData customData)
         {
-            if (!customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out var warns))
+            if (!customData.TryFetchCustomData<List<SerializableWarn>>(CustomDataKey, out List<SerializableWarn> warns))
             {
                 return new List<SerializableWarn>();
             }
+
             // Checking for expired Warns
             for (int i = warns.Count - 1; i >= 0; i--)
             {
@@ -99,12 +99,12 @@ namespace BPEssentials.ExtensionMethods.Warns
                 {
                     continue;
                 }
-
                 if (Core.Instance.Settings.Warns.DeleteExpiredWarns)
                 {
                     warns.RemoveAt(i);
                     continue;
                 }
+
                 warns[i].Expired = true;
             }
 

@@ -1,5 +1,6 @@
 ﻿using BPEssentials.Abstractions;
 using BPEssentials.Enums;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 
@@ -11,18 +12,20 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, string message)
         {
-            var ePlayer = player.GetExtendedPlayer();
+            PlayerItem ePlayer = player.GetExtendedPlayer();
             if (ePlayer.ReplyToUser == null)
             {
                 player.TS("no_user_found_or_offline");
                 return;
             }
-            var eTarget = ePlayer.ReplyToUser.GetExtendedPlayer();
+
+            PlayerItem eTarget = ePlayer.ReplyToUser.GetExtendedPlayer();
             if (eTarget.CurrentChat == Chat.Disabled)
             {
                 player.SendChatMessage($"{player.T("user_has_chat_disabled")} {player.T("message_not_sent")}");
                 return;
             }
+
             player.GetExtendedPlayer().SendPmMessage(eTarget, message);
         }
     }

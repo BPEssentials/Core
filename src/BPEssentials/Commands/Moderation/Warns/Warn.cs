@@ -1,9 +1,11 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.ExtensionMethods.Warns;
 using BPEssentials.Utils;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
+using BrokeProtocol.LiteDB;
 using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
@@ -14,7 +16,7 @@ namespace BPEssentials.Commands
 
         public void Invoke(ShPlayer player, string target, string reason)
         {
-            if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
+            if (EntityCollections.TryGetPlayerByNameOrID(target, out ShPlayer shTarget))
             {
                 shTarget.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), shTarget.username.CleanerMessage(), reason.CleanerMessage());
@@ -22,8 +24,7 @@ namespace BPEssentials.Commands
                 shTarget.TS("target_warn", shTarget.username.CleanerMessage(), reason.CleanerMessage());
                 return;
             }
-
-            if (SvManager.Instance.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out User user))
             {
                 user.AddWarn(player, reason);
                 ChatUtils.SendToAllEnabledChatT("all_warned", player.username.CleanerMessage(), target.CleanerMessage(), reason.CleanerMessage());

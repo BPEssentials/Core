@@ -1,7 +1,7 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Utility;
 
 namespace BPEssentials.Commands
 {
@@ -20,6 +20,7 @@ namespace BPEssentials.Commands
                 player.TS("promoted_max_rank", target.username.CleanerMessage());
                 return;
             }
+
             target.svPlayer.Reward(target.GetMaxExperience() - target.experience + 1, 0);
             player.TS("promoted", target.username.CleanerMessage(), (target.rank + 1).ToString());
         }

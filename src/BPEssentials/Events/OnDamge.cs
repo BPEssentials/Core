@@ -1,27 +1,30 @@
-﻿using BPEssentials.ExtensionMethods;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.ExtensionMethods;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Required;
 using UnityEngine;
 
-namespace BPEssentials.RegisteredEvents
+namespace BPEssentials.Events
 {
-    public class OnDamge : IScript
+    public class OnDamage : IScript
     {
         [Target(GameSourceEvent.PlayerDamage, ExecutionMode.PreEvent)]
-        public void OnDamage(ShDestroyable destroyable, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider, Vector3 source, Vector3 hitPoint)
+        public void OnEvent(ShDestroyable destroyable, DamageIndex damageIndex, float amount, ShPlayer attacker, Collider collider, Vector3 source, Vector3 hitPoint)
         {
-            var player = destroyable.Player;
-            if (player.svPlayer.godMode)
+            ShPlayer player = destroyable.Player;
+            if (!player.svPlayer.godMode)
             {
-                if (attacker)
-                {
-                    player.TS("god_damage_blocked", amount, attacker.ID, attacker.username.CleanerMessage());
-                }
-                else
-                {
-                    player.TS("god_damage_blocked_minimal", amount);
-                }
+                return;
+            }
+
+            if (attacker)
+            {
+                player.TS("god_damage_blocked", amount, attacker.ID, attacker.username.CleanerMessage());
+            }
+            else
+            {
+                player.TS("god_damage_blocked_minimal", amount);
             }
         }
     }

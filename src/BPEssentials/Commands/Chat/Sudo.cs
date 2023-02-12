@@ -7,7 +7,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, ShPlayer target, string message)
         {
-            target.svPlayer.SvGlobalChatMessage(message);
+            target.svPlayer.SvChatGlobal(message);
         }
     }
 }

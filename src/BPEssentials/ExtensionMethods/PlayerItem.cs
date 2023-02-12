@@ -10,15 +10,18 @@ namespace BPEssentials.ExtensionMethods
         {
             player.SavePosition(player.Client.GetPosition, player.Client.GetRotation, player.Client.GetPlaceIndex);
         }
+
         public static void SavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
             player.LastLocation.Update(position, rotation, index);
         }
+
         public static void ResetAndSavePosition(this PlayerItem player, Vector3 position, Quaternion rotation, int index)
         {
             player.SavePosition();
             player.Client.svPlayer.SvRestore(position, rotation, index);
         }
+
         public static void ResetAndSavePosition(this PlayerItem player, ShPlayer targetPlayer)
         {
             player.SavePosition();

@@ -2,6 +2,7 @@
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using System.Linq;
+using BPCoreLib.ExtensionMethods;
 
 namespace BPEssentials.Commands
 {
@@ -9,7 +10,8 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player)
         {
-            player.TS("online_players", PlayerFactory.Players.Count.ToString(), string.Join(", ", PlayerFactory.Players.Select(x => x.Key + ": " + x.Value.Client.username.CleanerMessage())));
+            player.TS("online_players", PlayerFactory.Count.ToString(), string.Join(", ", PlayerFactory.Select(x =>
+                $"{x.Key}: {x.Value.Client.username.CleanerMessage()}")));
         }
     }
 }

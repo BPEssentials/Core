@@ -1,7 +1,8 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
-
 
 namespace BPEssentials.Commands
 {
@@ -9,12 +10,13 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player)
         {
-            var ePlayer = player.GetExtendedPlayer();
+            PlayerItem ePlayer = player.GetExtendedPlayer();
             if (ePlayer.TpaUser == null || ePlayer.TpaUser.Player == null)
             {
                 player.TS("no_tpa_requests");
                 return;
             }
+
             ePlayer.TpaUser.Player.TS("TpaUser_tpa_accepted", player.username.CleanerMessage());
             player.TS("player_tpa_accepted", ePlayer.TpaUser.Player.username.CleanerMessage());
             if (ePlayer.TpaUser.TpHere)
@@ -25,6 +27,7 @@ namespace BPEssentials.Commands
             {
                 ePlayer.TpaUser.Player.GetExtendedPlayer().ResetAndSavePosition(player);
             }
+
             ePlayer.TpaUser = null;
         }
     }

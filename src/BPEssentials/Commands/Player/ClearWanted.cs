@@ -1,8 +1,8 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using BrokeProtocol.GameSource;
-using BrokeProtocol.Utility.Networking;
 
 namespace BPEssentials.Commands
 {

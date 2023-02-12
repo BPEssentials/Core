@@ -13,8 +13,7 @@ namespace BPEssentials.Commands
 
         public void Run()
         {
-            Core.Instance.Logger.Log("Saving Game Status");
-            Utils.ChatUtils.SendToAllEnabledChatT("saving_game");
+            Core.Instance.Logger.LogWithTimestamp("Saving game status");
             SvManager.Instance.SaveAll();
         }
     }

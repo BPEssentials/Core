@@ -16,6 +16,7 @@ namespace BPEssentials.Commands
                 player.TS("TeleportCoordinates_invalidPlaceIndex", placeIndex.ToString());
                 return;
             }
+
             player.GetExtendedPlayer().ResetAndSavePosition(new Vector3(x, y, z), player.GetRotation, placeIndex);
             player.TS("TeleportCoordinates", x.ToString(CultureInfo.InvariantCulture), y.ToString(CultureInfo.InvariantCulture), z.ToString(CultureInfo.InvariantCulture), placeIndex.ToString());
         }

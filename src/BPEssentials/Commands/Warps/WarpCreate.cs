@@ -26,19 +26,21 @@ namespace BPEssentials.Commands
                 player.TS("warpCreate_error_inApartment");
                 return;
             }
-            var file = Path.Combine(Core.Instance.Paths.WarpsFolder, $"{warp}.json");
+
+            string file = Path.Combine(Paths.WarpsFolder, $"{warp}.json");
             if (File.Exists(file))
             {
                 player.TS("expFileHandler_create_error_alreadyExists", player.T(Core.Instance.WarpHandler.Name), warp);
                 return;
             }
-            var obj = new WarpHandler.JsonModel
+
+            WarpHandler.JsonModel obj = new WarpHandler.JsonModel
             {
                 Delay = Math.Max(0, delay),
                 Price = Math.Max(0, price),
                 Name = warp,
                 Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition), PlaceIndex = player.GetPlaceIndex },
-                SerializableQuaternion = new SerializableQuaternion(player.GetRotation)
+                SerializableQuaternion = new SerializableQuaternion(player.GetRotation),
             };
             Core.Instance.WarpHandler.CreateNew(obj, warp);
             player.TS("warpCreate_created", warp, price.ToString(), delay.ToString());

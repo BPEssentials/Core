@@ -8,11 +8,13 @@ using BPEssentials.Modules;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Entities;
-using BrokeProtocol.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using BPCoreLib.ExtensionMethods;
+using BPCoreLib.PlayerFactory;
+using BPEssentials.Abstractions;
 using BrokeProtocol.GameSource;
 
 namespace BPEssentials
@@ -26,21 +28,18 @@ namespace BPEssentials
         public static string Git { get; } = "https://github.com/BPEssentials/Core";
 
         public static string[] Authors { get; } = { "PLASMA_chicken", "UserR00T" };
-
-        // TODO: This can get confusing real fast, need a new name for this.
-        public BPCoreLib.PlayerFactory.ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
+        
+        public ExtendedPlayerFactory<PlayerItem> PlayerHandler { get; internal set; } = new ExtendedPlayerFactory();
 
         public ILogger Logger { get; } = new Logger();
 
-        public Paths Paths { get; } = new Paths();
+        public IReader<Settings> SettingsReader { get; } = new Reader<Settings>(Paths.SettingsFile);
 
-        public IReader<Settings> SettingsReader { get; } = new Reader<Settings>();
+        public Settings Settings => SettingsReader.Content;
 
-        public Settings Settings => SettingsReader.Parsed;
+        public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>(Paths.CustomCommandsFile);
 
-        public IReader<List<CustomCommand>> CustomCommandsReader { get; } = new Reader<List<CustomCommand>>();
-
-        public I18n I18n { get; set; }
+        public I18n I18n { get; set; } = new I18n(Paths.LocalizationFile);
 
         public ICooldownHandler KitsCooldownHandler { get; set; }
 
@@ -62,11 +61,12 @@ namespace BPEssentials
                 Description = "Basic commands for powerful moderation.",
                 Website = "https://bpessentials.github.io/Docs/"
             };
-            KitsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:kits");
-            WarpsCooldownHandler = new CooldownHandler(Info.GroupNamespace + ":cooldowns:warps");
+            KitsCooldownHandler = new CooldownHandler($"{Info.GroupNamespace}:cooldowns:kits");
+            WarpsCooldownHandler = new CooldownHandler($"{Info.GroupNamespace}:cooldowns:warps");
+            
+            ExtendedPlayerFactories.Instance.Register<PlayerItem>(PlayerHandler);
 
             WarpHandler = new WarpHandler();
-
             KitHandler = new KitHandler();
 
             OnReloadRequestAsync();
@@ -79,7 +79,6 @@ namespace BPEssentials
             ModuleHandler.Initialize();
 
             EventsHandler.Add("bpe:reload", new Action(OnReloadRequestAsync));
-            EventsHandler.Add("bpe:version", new Action<string>(OnVersionRequest));
             Logger.LogInfo($"BP Essentials {(IsDevelopmentBuild() ? "[DEVELOPMENT-BUILD] " : "")}v{Version} loaded in successfully!");
         }
 
@@ -103,7 +102,7 @@ namespace BPEssentials
             foreach (var command in Settings.Commands)
             {
                 Logger.LogInfo($"[C] Registering command {command.CommandName}..");
-                if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out var del, out var instance))
+                if (!CommandInjection.TryGetCommandMethodDelegateByTypeName(command.CommandName, out Delegate del, out BpeCommand _))
                 {
                     Logger.LogError($"[C] Cannot register command {command.CommandName}. Delegate was null.");
                     continue;
@@ -150,7 +149,7 @@ namespace BPEssentials
 
         public void RegisterCustomCommands()
         {
-            foreach (var customCommand in CustomCommandsReader.Parsed)
+            foreach (var customCommand in CustomCommandsReader.Content)
             {
                 Logger.LogInfo($"[CC] Registering custom command(s) {string.Join(", ", customCommand.Commands)} by name '{customCommand.Name}'..");
                 var permission = "cc." + customCommand.Name;
@@ -163,8 +162,7 @@ namespace BPEssentials
 
         public void SetupI18n()
         {
-            I18n = new I18n();
-            I18n.ParseLocalization(Paths.LocalizationFile);
+            I18n.Reader.Read();
             Logger.LogInfo("I18n loaded!");
         }
 
@@ -176,8 +174,8 @@ namespace BPEssentials
 
         public void ReadConfigurationFiles()
         {
-            SettingsReader.ReadAndParse();
-            CustomCommandsReader.ReadAndParse();
+            SettingsReader.Read();
+            CustomCommandsReader.Read();
         }
 
         public async void OnReloadRequestAsync()
@@ -190,15 +188,6 @@ namespace BPEssentials
             SetupI18n();
             WarpHandler.ReloadAll();
             KitHandler.ReloadAll();
-        }
-
-        public void OnVersionRequest(string callback)
-        {
-            if (callback.StartsWith("bpe:"))
-            {
-                return;
-            }
-            EventsHandler.Exec(callback, Version, IsDevelopmentBuild());
         }
     }
 }

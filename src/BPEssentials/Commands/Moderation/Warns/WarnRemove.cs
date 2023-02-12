@@ -4,6 +4,8 @@ using BPEssentials.ExtensionMethods.Warns;
 using BrokeProtocol.Collections;
 using BrokeProtocol.Entities;
 using System.Collections.Generic;
+using BPCoreLib.ExtensionMethods;
+using BrokeProtocol.LiteDB;
 using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
@@ -17,23 +19,23 @@ namespace BPEssentials.Commands
                 player.TS("warn_remove_error_null_or_negative", warnId.ToString());
                 return;
             }
-
-            if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
+            if (EntityCollections.TryGetPlayerByNameOrID(target, out ShPlayer shTarget))
             {
                 if (CheckWarnCount(player, warnId, shTarget.GetWarns()))
                 {
                     return;
                 }
+
                 shTarget.RemoveWarn(warnId - 1);
                 return;
             }
-
-            if (SvManager.Instance.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out User user))
             {
                 if (CheckWarnCount(player, warnId, user.GetWarns()))
                 {
                     return;
                 }
+
                 user.RemoveWarn(warnId - 1);
                 SvManager.Instance.database.Users.Upsert(user);
                 return;
@@ -49,6 +51,7 @@ namespace BPEssentials.Commands
                 player.TS("warn_remove_error_notExistent", warnId.ToString());
                 return true;
             }
+
             player.TS("player_warn_removed", warns[warnId - 1].ToString(player));
             return false;
         }

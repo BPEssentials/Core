@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Enums;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
@@ -11,18 +12,20 @@ namespace BPEssentials.ChatHandlers
     {
         private static LimitQueue<ShPlayer> chatted = new LimitQueue<ShPlayer>(8, 20f);
 
-        [Target(GameSourceEvent.PlayerGlobalChatMessage, ExecutionMode.Override)]
+        [Target(GameSourceEvent.PlayerChatGlobal, ExecutionMode.Override)]
         public void OnEvent(ShPlayer player, string message)
         {
             if (chatted.Limit(player))
             {
                 return;
             }
-            if (CommandHandler.OnEvent(player, message)) // 'true' if message starts with command prefix
+            if (CommandHandler.OnEvent(player, message))
             {
                 return;
             }
-            if (player.GetExtendedPlayer().Muted)
+
+            PlayerItem ePlayer = player.GetExtendedPlayer();
+            if (ePlayer.Muted)
             {
                 player.TS("muted_player");
                 return;
@@ -30,7 +33,7 @@ namespace BPEssentials.ChatHandlers
 
             Core.Instance.Logger.LogInfo($"[GLOBAL] {player.username}: {message}");
 
-            switch (player.GetExtendedPlayer().CurrentChat)
+            switch (ePlayer.CurrentChat)
             {
                 case Chat.StaffChat:
                     ChatUtils.SendStaffChatMessage(player, message);

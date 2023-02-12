@@ -1,4 +1,5 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;

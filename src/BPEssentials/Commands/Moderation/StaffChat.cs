@@ -1,4 +1,5 @@
 ﻿using BPEssentials.Abstractions;
+using BPEssentials.ExtendedPlayer;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
@@ -9,7 +10,7 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string text = "")
         {
-            var ePlayer = player.GetExtendedPlayer();
+            PlayerItem ePlayer = player.GetExtendedPlayer();
             if (string.IsNullOrWhiteSpace(text))
             {
                 if (ePlayer.CurrentChat == Enums.Chat.StaffChat)
@@ -24,6 +25,7 @@ namespace BPEssentials.Commands
                 }
                 return;
             }
+
             ChatUtils.SendStaffChatMessage(player, text);
         }
     }

@@ -6,6 +6,8 @@ using BrokeProtocol.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BPCoreLib.ExtensionMethods;
+using BrokeProtocol.LiteDB;
 using BrokeProtocol.Managers;
 
 namespace BPEssentials.Commands
@@ -19,20 +21,17 @@ namespace BPEssentials.Commands
                 player.TS("warns_noPermission_viewOtherPlayers");
                 return;
             }
-
             if (target == null)
             {
                 SendWarnList(player, player.username, player.GetWarns());
                 return;
             }
-
-            if (EntityCollections.TryGetPlayerByNameOrID(target, out var shTarget))
+            if (EntityCollections.TryGetPlayerByNameOrID(target, out ShPlayer shTarget))
             {
                 SendWarnList(player, shTarget.username, shTarget.GetWarns());
                 return;
             }
-
-            if (SvManager.Instance.TryGetUserData(target, out var user))
+            if (SvManager.Instance.TryGetUserData(target, out User user))
             {
                 SendWarnList(player, user.ID, user.GetWarns());
                 return;
@@ -43,8 +42,8 @@ namespace BPEssentials.Commands
 
         public void SendWarnList(ShPlayer player, string username, List<ExtensionPlayerWarns.SerializableWarn> warnList)
         {
-            var warns = warnList.Select(warn => warn.ToString(player)).ToArray();
-            var stringBuilder = new StringBuilder();
+            string[] warns = warnList.Select(warn => warn.ToString(player)).ToArray();
+            StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(player.T("warns_for", username.CleanerMessage()));
             if (warns.Length == 0)
             {
@@ -63,6 +62,7 @@ namespace BPEssentials.Commands
                     stringBuilder.AppendLine($"{i + 1} - {warns[i]}");
                 }
             }
+
             player.svPlayer.SendTextMenu(player.T("warn_list_title"), stringBuilder.ToString());
         }
     }
