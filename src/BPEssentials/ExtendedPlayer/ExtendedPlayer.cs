@@ -3,11 +3,12 @@ using BPEssentials.ExtensionMethods;
 using BPEssentials.Models;
 using BrokeProtocol.Entities;
 using System;
+using BPCoreLib.ExtensionMethods;
 
 namespace BPEssentials.ExtendedPlayer
 {
     [Serializable]
-    public class PlayerItem : BPCoreLib.Abstractions.ExtendedPlayer
+    public class PlayerItem : BPCoreLib.PlayerFactory.ExtendedPlayer
     {
         public PlayerItem(ShPlayer player) : base(player)
         {
@@ -21,7 +22,7 @@ namespace BPEssentials.ExtendedPlayer
 
         public Chat CurrentChat { get; set; } = Chat.Global;
 
-        public bool CanRecieveStaffChat => Client.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
+        public bool CanReceiveStaffChat => Client.svPlayer.HasPermission($"{Core.Instance.Info.GroupNamespace}.receivestaffchat");
 
         public ShPlayer ReplyToUser { get; set; }
 
@@ -42,9 +43,9 @@ namespace BPEssentials.ExtendedPlayer
             Client.SendChatMessage($"[SPYCHAT] {target.username.CleanerMessage()}: {command.CleanerMessage()}");
         }
 
-        public void SetTpaUser(ShPlayer target, bool TpHere = false)
+        public void SetTpaUser(ShPlayer target, bool tpHere = false)
         {
-            TpaUser = new TpaUserStore() { Player = target, TpHere = TpHere };
+            TpaUser = new TpaUserStore { Player = target, TpHere = tpHere };
         }
     }
 

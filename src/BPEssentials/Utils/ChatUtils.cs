@@ -6,6 +6,8 @@ using BrokeProtocol.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BPCoreLib.ExtensionMethods;
+using BrokeProtocol.API;
 
 namespace BPEssentials.Utils
 {
@@ -13,31 +15,33 @@ namespace BPEssentials.Utils
     {
         public static void SendStaffChatMessage(ShPlayer player, string message)
         {
-            foreach (var currPlayer in EntityCollections.Humans)
+            foreach (ShPlayer currPlayer in EntityCollections.Humans)
             {
-                if (!currPlayer.GetExtendedPlayer().CanRecieveStaffChat)
+                if (!currPlayer.GetExtendedPlayer().CanReceiveStaffChat)
                 {
                     continue;
                 }
-                currPlayer.SendChatMessage(ChatUtils.FormatMessage(player, message, "staffformat"), false);
+
+                currPlayer.SendChatMessage(FormatMessage(player, message, "staffformat"), false);
             }
         }
 
         public static void SendToAllEnabledChatT(string node, params string[] formatting)
         {
-            foreach (var currPlayer in EntityCollections.Humans)
+            foreach (ShPlayer currPlayer in EntityCollections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
                 {
                     continue;
                 }
+
                 currPlayer.TS(node, formatting);
             }
         }
 
         public static string FormatMessage(ShPlayer player, string message, string formatKey = "format")
         {
-            var formatGroup = player.svPlayer.Groups.SelectMany(groupType => groupType.Value).FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
+            Group formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
             if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
             {
                 try
@@ -49,37 +53,43 @@ namespace BPEssentials.Utils
                     Core.Instance.Logger.LogException(err);
                 }
             }
+
             return $"{player.username}: {message.CleanerMessage()}";
         }
 
 
         public static void SendToAllEnabledChat(string message, bool useColors = true)
         {
-            foreach (var currPlayer in EntityCollections.Humans)
+            foreach (ShPlayer currPlayer in EntityCollections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
                 {
                     continue;
                 }
+
                 currPlayer.SendChatMessage(message, useColors);
             }
         }
 
         public static void SendToAllEnabledChat(string[] messages)
         {
-            foreach (var currPlayer in EntityCollections.Humans)
+            foreach (ShPlayer currPlayer in EntityCollections.Humans)
             {
                 if (currPlayer.GetExtendedPlayer().CurrentChat == Chat.Disabled)
                 {
                     continue;
                 }
-                foreach (var message in messages)
+
+                foreach (string message in messages)
                 {
                     currPlayer.SendChatMessage(message);
                 }
             }
         }
 
-        public static void SendToAllEnabledChat(List<string> messages) => SendToAllEnabledChat(messages.ToArray());
+        public static void SendToAllEnabledChat(List<string> messages)
+        {
+            SendToAllEnabledChat(messages.ToArray());
+        }
     }
 }

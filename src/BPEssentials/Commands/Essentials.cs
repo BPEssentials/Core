@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class Essentials : Command
+    public class Essentials : BpeCommand
     {
         public override bool LastArgSpaces => true;
 

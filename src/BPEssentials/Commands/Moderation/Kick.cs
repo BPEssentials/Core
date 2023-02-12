@@ -1,11 +1,12 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Kick : Command
+    public class Kick : BpeCommand
     {
         public override bool LastArgSpaces { get; } = true;
 

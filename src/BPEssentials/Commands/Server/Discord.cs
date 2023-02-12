@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Discord : Command
+    public class Discord : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {

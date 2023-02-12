@@ -1,17 +1,19 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Required;
+using UnityEngine;
 
 namespace BPEssentials.Commands
 {
-    public class Slap : Command
+    public class Slap : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {
-            var amount = new System.Random().Next(4, 15);
-            target.svPlayer.Damage(DamageIndex.Null, amount, null, null);
-            target.svPlayer.SvForce(new UnityEngine.Vector3(500f, 0f, 500f));
+            int amount = Random.Range(4, 15);
+            target.svPlayer.Damage(DamageIndex.Null, amount);
+            target.svPlayer.SvForce(new Vector3(500f, 0f, 500f));
             target.TS("target_slap", player.username.CleanerMessage(), amount.ToString());
             player.TS("player_slap", target.username.CleanerMessage(), amount.ToString());
         }

@@ -1,6 +1,6 @@
 {
   "General": {
-    "Version": "3.0.0",
+    "Version": "3.2.1",
     "LocalChatOverHead": true,
     "LocalChatInChat": false,
     // Makes NEW Usernames only contain letters: A-Z a-z 0-9 _ - 
@@ -18,9 +18,9 @@
     "KeepAllLicenses": false
   },
   "Messages": {
-    "DiscordLink": "http://discord.gg/WpdNCDw",
-    "InfoColor": "#179b43",
-    "ArgColor": "#178d9b"
+    "DiscordLink": "https://discord.gg/WpdNCDw",
+    "InfoColor": "#4ee045",
+    "ArgColor": "#5c8fe0"
   },
   "Levenshtein": {
     "GiveMode": "Automatic",
@@ -29,8 +29,8 @@
     "SetJobMode": "Suggest"
   },
   "Warns" : {
-      "WarnsExpirationInDays" : 30,
-      "DeleteExpiredWarns" : true
+    "WarnsExpirationInDays" : 30,
+    "DeleteExpiredWarns" : true
    },
   "Commands": [
     {

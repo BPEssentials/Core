@@ -1,16 +1,14 @@
-﻿using BPCoreLib.Util;
+﻿using BPCoreLib.Interval;
 using BrokeProtocol.API;
-using BrokeProtocol.Managers;
 
-namespace BPEssentials.RegisteredEvents
+namespace BPEssentials.Events
 {
     public class OnStarted : IScript
     {
         [Target(GameSourceEvent.ManagerStart, ExecutionMode.Event)]
-        public void OnEvent(SvManager svManager)
+        public void OnEvent()
         {
-            Core.Instance.SvManager = svManager;
-            Core.Instance.SvManager.StartCoroutine(Interval.Start(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run));
+            Interval.StartNew(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run);
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using BPEssentials.Abstractions;
+﻿using BPCoreLib.ExtensionMethods;
+using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Required;
 
 namespace BPEssentials.Commands
 {
-    public class Knockout : Command
+    public class Knockout : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

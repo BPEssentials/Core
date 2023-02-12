@@ -1,10 +1,11 @@
+using BPCoreLib.ExtensionMethods;
 using BPEssentials.Abstractions;
 using BPEssentials.ExtensionMethods;
 using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class Arrest : Command
+    public class Arrest : BpeCommand
     {
         public void Invoke(ShPlayer player, ShPlayer target)
         {

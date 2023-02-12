@@ -9,7 +9,7 @@ namespace BPEssentials
         {
             Name = "warp";
             FileExtension = "json";
-            FilesDirectory = Core.Instance.Paths.WarpsFolder;
+            FilesDirectory = Paths.WarpsFolder;
         }
 
         public class JsonModel : IExpandableFile, IExpandableFileDelayable, IExpandableFileHasPrice

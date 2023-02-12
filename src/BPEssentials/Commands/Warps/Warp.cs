@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class Warp : Command
+    public class Warp : BpeCommand
     {
         public void Invoke(ShPlayer player, string warp)
         {
-            var obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name.Equals(warp, StringComparison.OrdinalIgnoreCase));
+            WarpHandler.JsonModel obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name.Equals(warp, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
                 if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.None)
@@ -22,10 +22,14 @@ namespace BPEssentials.Commands
                 }
                 obj = Core.Instance.WarpHandler.List.OrderByDescending(x => LevenshteinDistance.CalculateSimilarity(x.Name, warp)).FirstOrDefault();
 
-                if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest)
+                if (Core.Instance.Settings.Levenshtein.WarpMode == Configuration.Models.SettingsModel.LevenshteinMode.Suggest || obj == null)
                 {
                     player.TS("expFileHandler_error_notFound", player.T(Core.Instance.WarpHandler.Name), warp);
-                    player.TS("levenshteinSuggest", obj.Name);
+                    if (obj != null)
+                    {
+                        player.TS("levenshteinSuggest", obj.Name);
+                    }
+
                     return;
                 }
             }
@@ -39,7 +43,7 @@ namespace BPEssentials.Commands
                 player.TS("expFileHandler_error_disabled", player.T(Core.Instance.WarpHandler.Name), obj.Name);
                 return;
             }
-            if (Core.Instance.WarpsCooldownHandler.IsCooldown(player.svPlayer, obj.Name, obj.Delay))
+            if (Core.Instance.WarpsCooldownHandler.HasCooldown(player.svPlayer, obj.Name, obj.Delay))
             {
                 player.TS("expFileHandler_error_cooldown", player.T(Core.Instance.WarpHandler.Name), Core.Instance.WarpsCooldownHandler.GetCooldown(player.svPlayer, obj.Name, obj.Delay).ToString());
                 return;

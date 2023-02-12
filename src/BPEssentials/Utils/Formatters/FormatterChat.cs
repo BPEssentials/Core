@@ -2,6 +2,7 @@
 using BrokeProtocol.Utility;
 using System;
 using System.Globalization;
+using BPCoreLib.ExtensionMethods;
 
 
 namespace BPEssentials.Utils.Formatter.Chat
@@ -14,10 +15,8 @@ namespace BPEssentials.Utils.Formatter.Chat
             {
                 return this;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public string Format(string format, object arg, IFormatProvider formatProvider)
@@ -26,38 +25,36 @@ namespace BPEssentials.Utils.Formatter.Chat
             {
                 return string.Empty;
             }
-            if (format == "lcase")
+
+            switch (format)
             {
-                return arg.ToString().ToLowerInvariant();
+                case "lcase":
+                    return arg.ToString().ToLowerInvariant();
+
+                case "ucase":
+                    return arg.ToString().ToUpperInvariant();
+
+                case "nospace":
+                    return arg.ToString().Replace(" ", "");
+
+                case "parsecolor":
+                    return arg.ToString().CleanerMessage().ParseColorCodes();
+
+                case "unsanitized":
+                    return arg.ToString().ParseColorCodes();
+
+                case "sanitized":
+                    return arg.ToString().CleanerMessage();
+
+                default:
+                    if (arg is IFormattable formatter)
+                    {
+                        return formatter.ToString(format, CultureInfo.CurrentCulture).CleanerMessage();
+                    }
+
+                    break;
             }
-            else if (format == "ucase")
-            {
-                return arg.ToString().ToUpperInvariant();
-            }
-            else if (format == "nospace")
-            {
-                return arg.ToString().Replace(" ", "");
-            }
-            else if (format == "parsecolor")
-            {
-                return arg.ToString().CleanerMessage().ParseColorCodes();
-            }
-            else if (format == "unsanitized")
-            {
-                return arg.ToString().ParseColorCodes();
-            }
-            else if (format == "sanitized")
-            {
-                return arg.ToString().CleanerMessage();
-            }
-            else
-            {
-                var arg_IFormattable = arg as IFormattable;
-                if (arg_IFormattable != null)
-                {
-                    return (arg_IFormattable).ToString(format, CultureInfo.CurrentCulture).CleanerMessage();
-                }
-            }
+
             return arg.ToString().CleanerMessage();
         }
     }

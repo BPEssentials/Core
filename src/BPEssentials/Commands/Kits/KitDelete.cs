@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace BPEssentials.Commands
 {
-    public class KitDelete : Command
+    public class KitDelete : BpeCommand
     {
         public void Invoke(ShPlayer player, string kit)
         {
-            var file = Path.Combine(Core.Instance.Paths.KitsFolder, $"{kit}.json");
+            string file = Path.Combine(Paths.KitsFolder, $"{kit}.json");
             if (!File.Exists(file))
             {
                 player.TS("expFileHandler_error_notFound", player.T(Core.Instance.KitHandler.Name), kit);

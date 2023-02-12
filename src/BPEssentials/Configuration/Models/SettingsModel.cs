@@ -93,8 +93,6 @@ namespace BPEssentials.Configuration.Models.SettingsModel
 
         public int SaveInterval { get; set; } = 15;
 
-        public bool LocalChatOverHead { get; set; } = true;
-
         public bool LocalChatInChat { get; set; }
 
         public bool LimitNames { get; set; }

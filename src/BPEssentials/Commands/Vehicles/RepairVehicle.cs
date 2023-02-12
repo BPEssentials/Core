@@ -4,7 +4,7 @@ using BrokeProtocol.Entities;
 
 namespace BPEssentials.Commands
 {
-    public class RepairVehicle : Command
+    public class RepairVehicle : BpeCommand
     {
         public void Invoke(ShPlayer player)
         {
@@ -14,7 +14,7 @@ namespace BPEssentials.Commands
                 player.TS("player_notInVehicle");
                 return;
             }
-            vehicle.svTransport.SvHeal(vehicle.maxStat);
+            vehicle.svTransport.HealFull();
             player.TS("player_vehicle_repaired", vehicle.name);
         }
     }
