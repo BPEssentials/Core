@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
             }
 
             Vector3 offset = new Vector3(-1, 0, -1);
-            ShApartment apartment = apartments[Math.Max(0, --homeNumber)];
+            ShApartment apartment = apartments[Math.Max(0, homeNumber - 1)];
             if (apartment.GetRotation.y < 0.9)
             {
                 offset = new Vector3(1, 0, 2);

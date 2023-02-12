@@ -1,4 +1,5 @@
-﻿using BPEssentials.ExtensionMethods;
+﻿using System;
+using BPEssentials.ExtensionMethods;
 using BPEssentials.Utils;
 using BrokeProtocol.API;
 using BrokeProtocol.Collections;
@@ -54,6 +55,9 @@ namespace BPEssentials.ChatHandlers
                         p.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.ChatChannel, player.ID, ChatUtils.FormatMessage(player, message, "format.local.channel"));
                     }
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(player.chatMode));
             }
             if (Core.Instance.Settings.General.LocalChatInChat)
             {
