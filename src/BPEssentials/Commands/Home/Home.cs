@@ -24,7 +24,7 @@ namespace BPEssentials.Commands
             }
 
             ShApartment apartment = apartments[Math.Max(0, homeNumber - 1)];
-            player.GetExtendedPlayer().ResetAndSavePosition(apartment.GetPosition + offset, apartment.GetRotation, apartment.GetPlaceIndex);
+            player.GetExtendedPlayer().ResetAndSavePosition(apartment.spawnPoint.position, apartment.spawnPoint.rotation, apartment.GetPlaceIndex);
         }
     }
 }
