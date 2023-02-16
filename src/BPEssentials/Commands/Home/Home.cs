@@ -23,14 +23,8 @@ namespace BPEssentials.Commands
                 return;
             }
 
-            Vector3 offset = new Vector3(-1, 0, -1);
             ShApartment apartment = apartments[Math.Max(0, homeNumber - 1)];
-            if (apartment.GetRotation.y < 0.9)
-            {
-                offset = new Vector3(1, 0, 2);
-            }
-
-            player.GetExtendedPlayer().ResetAndSavePosition(apartment.GetPosition + offset, apartment.GetRotation, apartment.GetPlaceIndex);
+            player.GetExtendedPlayer().ResetAndSavePosition(apartment.spawnPoint.position, apartment.spawnPoint.rotation, apartment.GetPlaceIndex);
         }
     }
 }
