@@ -61,7 +61,7 @@ namespace BPEssentials.ChatHandlers
             }
             if (Core.Instance.Settings.General.LocalChatInChat)
             {
-                player.svPlayer.Send(SvSendType.LocalOthers, Channel.Unsequenced, ClPacket.GameMessage, ChatUtils.FormatMessage(player, message, "format.local"));
+                player.svPlayer.Send(SvSendType.LocalOthers, Channel.Reliable, ClPacket.GameMessage, ChatUtils.FormatMessage(player, message, "format.local"));
             }
         }
     }

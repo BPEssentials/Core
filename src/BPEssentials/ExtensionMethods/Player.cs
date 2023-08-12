@@ -48,7 +48,7 @@ namespace BPEssentials.ExtensionMethods
         public static void SendChatMessage(this ShPlayer player, string message, bool useColors = false)
         {
             message = useColors ? message.ParseColorCodes() : message;
-            player.svPlayer.Send(SvSendType.Self, Channel.Unsequenced, ClPacket.GameMessage, message);
+            player.svPlayer.Send(SvSendType.Self, Channel.Reliable, ClPacket.GameMessage, message);
         }
     }
 }
