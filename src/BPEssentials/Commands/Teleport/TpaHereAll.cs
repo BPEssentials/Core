@@ -17,13 +17,13 @@ namespace BPEssentials.Commands
             {
                 if (eTarget.Key == player.ID)
                 {
-                    return;
+                    continue;
                 }
 
                 eTarget.Value.SetTpaUser(player, true);
                 if (eTarget.Value.CurrentChat == Chat.Disabled)
                 {
-                    return;
+                    continue;
                 }
 
                 eTarget.Value.Client.TS("target_tpahere_sent", player.username.CleanerMessage());
