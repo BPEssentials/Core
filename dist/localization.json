@@ -70,6 +70,7 @@
     "player_vehicle_locked": "You have locked your {0}.",
     "player_vehicle_repaired": "Repaired {0}.",
     "player_vehicle_spawned": "Spawned {0}.",
+    "player_vehicle_destroyed": "Destroyed {0}.",
     "player_give": "Gave {0} {2} {1}.",
     "discord": "Our Discord: {0}",
     "all_warned": "{0} warned {1} for {2}",
