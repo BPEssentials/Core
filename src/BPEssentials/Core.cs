@@ -118,7 +118,7 @@ namespace BPEssentials
                     {
                         if (!command.AllowWhileDead && player.IsDead)
                         {
-                            player.TS("command_failed_crimes", command.CommandName);
+                            player.TS("command_failed_dead", command.CommandName);
                             return false;
                         }
                         if (!command.AllowWhileKO && player.IsKnockedOut)
