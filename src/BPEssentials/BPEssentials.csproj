@@ -10,9 +10,9 @@
   </PropertyGroup>
 
   <!-- Only needed for windows as it is suggested to create a soft link/symlink on unix -->
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <PostBuildEvent>copy /Y "$(TargetFileName)" "$(BPDIR)\Plugins"</PostBuildEvent>
-  </PropertyGroup>
+    <Target  Condition="'$(OS)' == 'Windows_NT'" Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;$(BPDIR)\Plugins&quot;" />
+    </Target>
 
   <!-- <PropertyGroup Condition="'$(OS)' == 'UNIX'">
     <PostBuildEvent>cp "$(TargetFileName)" "$(BPDIR)/Plugins"</PostBuildEvent>
