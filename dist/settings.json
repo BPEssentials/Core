@@ -320,6 +320,13 @@
       ]
     },
     {
+      "CommandName": "DestroyVehicle",
+      "Commands": [
+        "destroyvehicle",
+        "dv"
+      ]
+    },
+    {
       "CommandName": "Discord",
       "Commands": [
         "discord",
