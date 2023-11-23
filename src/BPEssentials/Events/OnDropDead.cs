@@ -19,7 +19,9 @@ namespace BPEssentials.Events
             // BPE EXTEND --
 
             // List for removed items for dropping into briefcase
-            List<InventoryItem> removedItems = new List<InventoryItem>();
+            var removedItems = new List<InventoryItem>();
+
+            var upgrades = player.svPlayer.job.info.shared.upgrades;
 
             // Allows players to keep items/rewards from job ranks
             foreach (InventoryItem myItem in player.myItems.Values.ToArray())
@@ -31,12 +33,13 @@ namespace BPEssentials.Events
                 if (Core.Instance.Settings.KeptItemsOnDeath.KeepAllLicenses && LicenseIDs.Contains(myItem.item.index)) { continue; }
                 // BPE EXTEND --
 
-                int extra = myItem.count;
-                if (player.svPlayer.job.info.shared.upgrades.Length > player.rank)
+                var extra = myItem.count;
+
+                if (upgrades.Length > player.rank)
                 {
-                    for (int rankIndex = player.rank; rankIndex >= 0; rankIndex--)
+                    for (var rankIndex = player.rank; rankIndex >= 0; rankIndex--)
                     {
-                        foreach (var i in player.svPlayer.job.info.shared.upgrades[rankIndex].items)
+                        foreach (var i in upgrades[rankIndex].items)
                         {
                             if (myItem.item.name == i.itemName)
                             {
@@ -47,39 +50,26 @@ namespace BPEssentials.Events
                 }
 
                 // Remove everything except legal items currently worn
-                if (extra > 0 && (myItem.item.illegal || !(myItem.item is ShWearable w) || player.curWearables[(int)w.type].index != w.index))
+                if (extra > 0 && (myItem.item.illegal || myItem.item is not ShWearable w || player.curWearables[(int)w.type].index != w.index))
                 {
                     removedItems.Add(new InventoryItem(myItem.item, extra));
-                    player.TransferItem(DeltaInv.RemoveFromMe, myItem.item.index, extra, true);
+                    player.TransferItem(DeltaInv.RemoveFromMe, myItem.item.index, extra);
                 }
             }
 
-            if (dropItems)
+            // Only drop items if attacker present, to prevent AI suicide item farming
+            if (dropItems && removedItems.Count > 0)
             {
-                // Only drop items if attacker present, to prevent AI suicide item farming
-                if (Physics.Raycast(
-                    player.GetPosition + Vector3.up,
-                    Vector3.down,
-                    out RaycastHit hit,
-                    10f,
-                    MaskIndex.world))
-                {
-                    ShEntity briefcase = player.manager.svManager.AddNewEntity(
-                        player.manager.svManager.briefcasePrefabs.GetRandom(),
-                        player.GetPlace,
-                        hit.point,
-                        Quaternion.LookRotation(player.transform.forward),
-                        false);
+                var briefcase = player.svPlayer.SpawnBriefcase();
 
-                    if (briefcase)
+                if (briefcase)
+                {
+                    foreach (var invItem in removedItems)
                     {
-                        foreach (var invItem in removedItems)
+                        if (Random.value < 0.8f)
                         {
-                            if (Random.value < 0.8f)
-                            {
-                                invItem.count = Mathf.CeilToInt(invItem.count * Random.Range(0.05f, 0.3f));
-                                briefcase.myItems.Add(invItem.item.index, invItem);
-                            }
+                            invItem.count = Mathf.CeilToInt(invItem.count * Random.Range(0.1f, 0.4f));
+                            briefcase.myItems.Add(invItem.item.index, invItem);
                         }
                     }
                 }
