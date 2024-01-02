@@ -21,7 +21,7 @@ namespace BPEssentials.Commands
                 player.TS("price_error_negative");
                 return;
             }
-            if (player.InApartment)
+            if (player.GetPlace.GetEntranceDoor is ShApartment)
             {
                 player.TS("warpCreate_error_inApartment");
                 return;
