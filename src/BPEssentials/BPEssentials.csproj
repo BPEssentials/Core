@@ -4,14 +4,14 @@
 
     <PackageId>BP-Essentials</PackageId>
     <Description>Basic commands for powerful moderation.</Description>
-    <FileVersion>3.2.1</FileVersion>
-    <AssemblyVersion>3.2.1</AssemblyVersion>
-    <Version>3.2.1</Version>
+    <FileVersion>3.2.2</FileVersion>
+    <AssemblyVersion>3.2.2</AssemblyVersion>
+    <Version>3.2.2</Version>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <!-- Only needed for windows as it is suggested to create a soft link/symlink on unix -->
-    <Target  Condition="'$(OS)' == 'Windows_NT'" Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Target Condition="'$(OS)' == 'Windows_NT'" Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;$(BPDIR)\Plugins&quot;" />
     </Target>
 
