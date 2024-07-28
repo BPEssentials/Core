@@ -30,6 +30,8 @@ namespace BPEssentials.ExtensionMethods.Warns
                 Date = dateTime;
             }
 
+            public SerializableWarn() { }
+
             public string ToString(ShPlayer player)
             {
                 User issuer = SvManager.Instance.database.Users.FindById(IssueraccountID);
