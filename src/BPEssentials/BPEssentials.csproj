@@ -4,9 +4,9 @@
 
     <PackageId>BP-Essentials</PackageId>
     <Description>Basic commands for powerful moderation.</Description>
-    <FileVersion>3.2.2</FileVersion>
-    <AssemblyVersion>3.2.2</AssemblyVersion>
-    <Version>3.2.2</Version>
+    <FileVersion>3.2.3</FileVersion>
+    <AssemblyVersion>3.2.3</AssemblyVersion>
+    <Version>3.2.3</Version>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
