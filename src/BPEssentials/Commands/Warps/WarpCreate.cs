@@ -39,7 +39,7 @@ namespace BPEssentials.Commands
                 Delay = Math.Max(0, delay),
                 Price = Math.Max(0, price),
                 Name = warp,
-                Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition), PlaceIndex = player.GetPlaceIndex },
+                Position = new WarpHandler.Position { SerializableVector3 = new SerializableVector3(player.GetPosition), PlaceIndex = player.GetPlaceIndex() },
                 SerializableQuaternion = new SerializableQuaternion(player.GetRotation),
             };
             Core.Instance.WarpHandler.CreateNew(obj, warp);

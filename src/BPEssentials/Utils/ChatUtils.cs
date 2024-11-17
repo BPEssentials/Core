@@ -42,7 +42,7 @@ namespace BPEssentials.Utils
         public static string FormatMessage(ShPlayer player, string message, string formatKey = "format")
         {
             Group formatGroup = player.svPlayer.Groups.FirstOrDefault(group => group.CustomData.Data.ContainsKey($"{Core.Instance.Info.GroupNamespace}:{formatKey}"));
-            if (formatGroup != null && formatGroup.CustomData.TryFetchCustomData($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
+            if (formatGroup != null && formatGroup.CustomData.TryGetValue($"{Core.Instance.Info.GroupNamespace}:{formatKey}", out string formatter))
             {
                 try
                 {

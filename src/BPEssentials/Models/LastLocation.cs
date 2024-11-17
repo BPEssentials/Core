@@ -20,7 +20,7 @@ namespace BPEssentials.Models
 
         public void Update(ShPlayer player)
         {
-            Update(player.GetPosition, player.GetRotation, player.GetPlaceIndex);
+            Update(player.Position, player.Rotation, player.GetPlaceIndex());
         }
 
         public bool HasPositionSet()

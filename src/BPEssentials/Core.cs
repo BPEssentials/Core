@@ -84,8 +84,8 @@ namespace BPEssentials
 
         private void SetCustomData()
         {
-            CustomData.AddOrUpdate("version", Version);
-            CustomData.AddOrUpdate("devbuild", IsDevelopmentBuild());
+            CustomData.Add("version", Version);
+            CustomData.Add("devbuild", IsDevelopmentBuild());
         }
 
         public static bool IsDevelopmentBuild()

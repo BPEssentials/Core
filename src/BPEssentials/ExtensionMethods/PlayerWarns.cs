@@ -53,7 +53,7 @@ namespace BPEssentials.ExtensionMethods.Warns
         {
             List<SerializableWarn> warns = customData.GetWarns();
             warns.Add(new SerializableWarn(issuer.username, reason, DateTimeOffset.Now));
-            customData.AddOrUpdate(CustomDataKey, warns);
+            customData.Add(CustomDataKey, warns);
         }
 
         public static void RemoveWarn(this ShPlayer player, int warnId)
@@ -70,7 +70,7 @@ namespace BPEssentials.ExtensionMethods.Warns
         {
             List<SerializableWarn> warns = customData.GetWarns();
             warns.Remove(warns[warnId]);
-            customData.AddOrUpdate(CustomDataKey, warns);
+            customData.Add(CustomDataKey, warns);
         }
 
         public static List<SerializableWarn> GetWarns(this ShPlayer player)
