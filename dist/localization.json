@@ -115,7 +115,7 @@
     "user_not_ban": "{0} is not banned.",
     "pm>": "[PM] {0} > {1}",
     "pm<": "[PM] {0} < {1}",
-    "god_damage_blocked_minimal":  "Damage blocked: {0}HP.",
+    "god_damage_blocked_minimal": "Damage blocked: {0}HP.",
     "info_title": "User Info",
     "warn_list_title": "Warn List",
     "expFileHandler_deleted": "The {0} {1} has been deleted!",
@@ -126,7 +126,9 @@
     "player_giveammo_fail": "You do not have a weapon that needs ammo in your hands!",
     "player_tpahere_all": "Tpa here request sent to everyone!",
     "target_tpahere_sent": "{0} sent you a TPAHere request! Type /tpaccept to accept it.",
-    "player_tpahere_sent": "Sent a TPAHere request to {0}."
+    "player_tpahere_sent": "Sent a TPAHere request to {0}.",
+    "expFileHandler_error_none": "There is no {0} configured on this Server!"
+
   },
   "BR": {
     "arrested": "Preso {0}.",

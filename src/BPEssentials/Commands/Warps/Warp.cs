@@ -12,6 +12,12 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string warp)
         {
+            if(Core.Instance.WarpHandler.List.Count == 0)
+            {
+                player.TS("expFileHandler_error_none", player.T(Core.Instance.WarpHandler.Name));
+                return;
+            }
+
             WarpHandler.JsonModel obj = Core.Instance.WarpHandler.List.FirstOrDefault(x => x.Name.Equals(warp, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
