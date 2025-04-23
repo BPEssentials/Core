@@ -12,6 +12,12 @@ namespace BPEssentials.Commands
     {
         public void Invoke(ShPlayer player, string kit)
         {
+            if (Core.Instance.KitHandler.List.Count == 0)
+            {
+                player.TS("expFileHandler_error_none", player.T(Core.Instance.KitHandler.Name));
+                return;
+            }
+
             KitHandler.JsonModel obj = Core.Instance.KitHandler.List.FirstOrDefault(x => x.Name.Equals(kit, StringComparison.OrdinalIgnoreCase));
             if (obj == null)
             {
