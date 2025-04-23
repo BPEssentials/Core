@@ -8,7 +8,7 @@ namespace BPEssentials.Events
         [Target(GameSourceEvent.ManagerStart, ExecutionMode.Event)]
         public void OnEvent()
         {
-            Interval.StartNew(Core.Instance.Settings.General.SaveInterval * 60, new Commands.Save().Run);
+            Interval.StartNew(Core.Instance.Settings.General.SaveInterval * 60, Commands.Save.Run);
         }
     }
 }

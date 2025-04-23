@@ -1,6 +1,7 @@
 ﻿using BPEssentials.Abstractions;
 using BrokeProtocol.Entities;
 using BrokeProtocol.Managers;
+using System;
 
 namespace BPEssentials.Commands
 {
@@ -11,10 +12,17 @@ namespace BPEssentials.Commands
             Run();
         }
 
-        public void Run()
+        public static void Run()
         {
             Core.Instance.Logger.LogWithTimestamp("Saving game status");
-            SvManager.Instance.SaveAll();
+            try
+            {
+                SvManager.Instance.SaveAll();
+            }
+            catch (Exception ex)
+            {
+                Core.Instance.Logger.LogError($"Error while saving game status: {ex}");
+            }
         }
     }
 }
